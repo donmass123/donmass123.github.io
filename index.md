@@ -1,13 +1,16 @@
-# Welcome to My Simple Website!
+# Welcome to My Simple Website
 
-This is a simple website built with Markdown on GitHub.
+Welcome to my simple website built using GitHub Pages and Markdown.
 
-## About
+## Navigation
+- [Home](index.md)
+- [About](about.md)
+- [Contact](contact.md)
 
-GitHub Pages allows you to turn Markdown files into static websites.
+## Features:
+- Easy to set up
+- No hosting fees
+- Works with Markdown files
 
-## Features
-
-- Easy to use
-- GitHub-hosted
-- Supports basic Markdown features like headers, lists, images, and links
+## Latest Updates:
+- The website is being updated to include a simple navigation system!
