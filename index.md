@@ -6,14 +6,14 @@ Welcome to **My Simple Website**, built using [GitHub Pages](https://pages.githu
 
 ## 📍 Navigation
 
-| 📑 **Pages**                                        | 🛠 **Features**                              |
-|---------------------------------------------------|---------------------------------------------|
-| [Add Sub-Category Filter to Product Index in POS](1.md) | 🔍 Filter products by sub-categories        |
-| [Stock Report Filter Enhancement](2.md)           | 📊 Improved stock tracking and reporting   |
-| [Enhanced Label Printing for Ultimate POS](3.md)  | 🏷️ More efficient label printing          |
-| [Due Collections Feature](4.md)                   | 💵 Better management of due collections    |
-| [Huge Db size in Ultimate POS​](5.md)                   | 📈 Optimized performance with huge data handling    |
-| [Delete Transaction, Product, Inventory](6.md)     | 🗑️ Efficient data deletion system          |
+| 📑 **Pages**                                        | 🛠 **Features**                              | 📊 **Level**                              |
+|---------------------------------------------------|---------------------------------------------|---------------------------------------------|
+| [Add Sub-Category Filter to Product Index in POS](1.md) | 🔍 Filter products by sub-categories        | Beginner |
+| [Stock Report Filter Enhancement](2.md)           | 📊 Improved stock tracking and reporting   | Intermediate |
+| [Enhanced Label Printing for Ultimate POS](3.md)  | 🏷️ More efficient label printing          | Intermediate |
+| [Due Collections Feature](4.md)                   | 💵 Better management of due collections    | Intermediate |
+| [Huge Db size in Ultimate POS​](5.md)                   | 📈 Optimized performance with huge data handling    | Beginner |
+| [Delete Transaction, Product, Inventory](6.md)     | 🗑️ Efficient data deletion system          | Rizk | 
 
 ---
 
