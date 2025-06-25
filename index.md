@@ -13,6 +13,7 @@ Welcome to **My Simple Website**, built using [GitHub Pages](https://pages.githu
 | [Enhanced Label Printing for Ultimate POS](3.md)  | 🏷️ More efficient label printing          |
 | [Due Collections Feature](4.md)                   | 💵 Better management of due collections    |
 | [Huge Db size in Ultimate POS​](5.md)                   | 📈 Optimized performance with huge data handling    |
+| [Delete Transaction, Product, Inventory](6.md)     | 🗑️ Efficient data deletion system          |
 
 ---
 
