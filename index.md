@@ -9,7 +9,7 @@ Welcome to my **simple website**, built using [GitHub Pages](https://pages.githu
 | 📑 **Pages**                       | 🛠 **Features**                            |
 |------------------------------------|-------------------------------------------|
 | [Add Sub-Category Filter to Product Index in POS](1.md) | 🔍 Filter products by sub-categories      |
-| [About Me](about.md)               | 🧑‍💻 Learn more about the creator         |
+| [Stock Report Filter Enhancement](2.md)               | 🧑‍💻 Learn more about the creator         |
 | [Contact Me](contact.md)           | 📞 Get in touch with the creator         |
 
 ---
