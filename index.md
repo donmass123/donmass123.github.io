@@ -3,7 +3,7 @@
 Welcome to my simple website built using GitHub Pages and Markdown.
 
 ## Navigation
-- [Home](index.md)
+- [Home](1.md)
 - [About](about.md)
 - [Contact](contact.md)
 
