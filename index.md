@@ -3,7 +3,7 @@
 Welcome to my simple website built using GitHub Pages and Markdown.
 
 ## Navigation
-- [Home](1.md)
+- [Adding Sub-Category Filter to Product Index in POS](1.md)
 - [About](about.md)
 - [Contact](contact.md)
 
