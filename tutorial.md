@@ -11,7 +11,4 @@
 ---
 
 ## Lupa Password
-<video width="600" height="400" autoplay loop>
-  <source src="https://drive.google.com/file/d/1tALwu1O8Y54oDyMY1eYfkNvU6ZRjgvmR/view?usp=sharing" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
+<iframe width="600" height="400" src="https://youtu.be/oQEymQIna_Q?list=TLPQMjcwNjIwMjXYrIotxuHJPA" frameborder="0" allowfullscreen></iframe>
