@@ -11,4 +11,4 @@
 ---
 
 ## Lupa Password
-<img src="https://drive.google.com/file/d/1XBztztDfT1RkUXwmjVN_hXCLZkOIF8ET/view?usp=drive_link" width="600" height="400" />
+<img src="https://drive.google.com/uc?export=view&id=1XBztztDfT1RkUXwmjVN_hXCLZkOIF8ET" width="600" height="400" />
