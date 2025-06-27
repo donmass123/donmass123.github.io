@@ -4,6 +4,17 @@ Welcome to **My Simple Website**, built using [GitHub Pages](https://pages.githu
 
 ---
 
+## 📚 Daftar Isi
+
+- [🚀 Selamat Datang](#-welcome-to-my-awesome-website)
+- [📍 Tutorial Point Of Sales](#-tutorial-point-of-sales)
+- [✨ Daftar File Kostum](#-daftar-file-kostum)
+- [✨ Modul Terbaru](#-modul-terbaru)
+- [🌟 Mengaktifkan Module](#-mengaktifkan-module)
+- [🎨 Design Updates](#-design-updates)
+- [💬 Feedback](#-feedback)
+---
+
 ## 📍 Tutorial Point Of Sales
 
 | 📑 **Halaman**                                        | 🛠 **Fitur**                              | 📊 **Level**                              |
