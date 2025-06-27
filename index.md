@@ -31,9 +31,17 @@ Welcome to **My Simple Website**, built using [GitHub Pages](https://pages.githu
 
 ---
 
-## 📰 Latest Updates:
+# ✨ Modul Terbaru
 
-- 🚀 The website is **getting a new navigation system** for even easier browsing! Stay tuned for more cool updates. ✨
+| 📑 **Nama File**                                                                                                    | 🛠 **Link Download**                                                                                                                                  |
+|---------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Catalog**                                                                                           | [🔍 Download File](https://drive.google.com/file/d/1LWjHGvmYsvEbsMq-6U64RnvT_qFaFc6w/view?usp=sharing)                                                |
+| **Kostum Barcode dan Label**                                                                                        | [🔍 Download File](https://drive.google.com/file/d/1KYcL6IuSWVZDR-figEbOIxSijf6cnlGn/view?usp=sharing)                                                |
+| **Pengurutan Data Bagian Rentang Kustom Tanggal. Kalender sisi Tanggal Mulai dan Tanggal Akhir 2 dengan menu tarik-turun. Ganti file `pos/public/js/common.js`** | [🔍 Download Folder](https://drive.google.com/drive/folders/1k-fc5hVEOqwfDb-qdO4Y8h006XR7jA4j?usp=drive_link)                                         |
+| **Kostum Tambah dan Edit**                                                                                          | [🔍 Download File](https://drive.google.com/file/d/1VADZpKrLUVslkOiXwwQY4GPC45pqIbn4/view?usp=sharing)                                                |
+| **Huge Db Size in Ultimate POS**                                                                                    | 🔍 (tidak ada link)                                                                                                                                   |
+| **Delete Transaction, Product, Inventory**                                                                          | 🔍 (tidak ada link)                                                                                                                                   |
+
 
 ---
 
