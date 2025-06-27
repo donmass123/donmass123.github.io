@@ -3,10 +3,7 @@
 ---
 
 ## Login 
-![Alt text](https://drive.google.com/file/d/1U-iBiideAcdHOiLFfkIV8PYZj_6jB0FO/view?usp=sharing)
-
-https://github.com/user-attachments/assets/d237d93e-6d6a-4512-bcd9-aeced345b6c1
-
+![Alt text](https://pos.bland.id/uploads/product/1.mp4)
 
 - step 1 : klik Masuk
 - step 2 : masukan username dan password
