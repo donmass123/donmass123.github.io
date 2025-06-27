@@ -4,7 +4,7 @@
 
 ## Login 
 <video width="640" height="360" controls>
-  <source src="https://pos.bland.id/uploads/product/1.mp4" type="video/mp4">
+  <source src="https://pos.bland.id/uploads/product/video/1.mp4" type="video/mp4">
   Browser Anda tidak mendukung pemutaran video.
 </video>
 
@@ -15,7 +15,7 @@
 
 ## Lupa Password
 <video width="640" height="360" controls>
-  <source src="https://pos.bland.id/uploads/product/2.mp4" type="video/mp4">
+  <source src="https://pos.bland.id/uploads/product/video/2.mp4" type="video/mp4">
   Browser Anda tidak mendukung pemutaran video.
 </video>
 
