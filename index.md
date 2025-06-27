@@ -40,7 +40,7 @@ Welcome to **My Simple Website**, built using [GitHub Pages](https://pages.githu
 | **Whatapps** | [🔍 Download Folder](https://drive.google.com/file/d/1tBZodbDvRsZE81g7mYd5tLJ0lFxuPiLH/view?usp=sharing)                                         |
 | **Asset**                                                                                          | [🔍 Download File](https://drive.google.com/file/d/19JmP4XQKfVamkRoBsp01OQipvS4H7KYl/view?usp=drive_link)                                                |
 | **Laporan penuaan**                                                                                    | [🔍 Download File](https://drive.google.com/file/d/1E2U6GK5-kFT1wm_D9d0LgetQeuNnLMIL/view?usp=drive_link)                                                                                                                                          |
-| **Delete Transaction, Product, Inventory**                                                                          | 🔍 (tidak ada link)                                                                                                                                   |
+| **API**                                                                          | [🔍 Download File](https://drive.google.com/file/d/1q4dpSlthykEtrFVqPPK1rimBabrrKAuS/view?usp=drive_link)                                                                                                                                   |
 
 
 ---
