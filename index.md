@@ -45,9 +45,41 @@ Welcome to **My Simple Website**, built using [GitHub Pages](https://pages.githu
 
 ---
 
-## 🌟 Upcoming Features:
-- **Dark Mode**: A night-friendly theme for a better browsing experience. 🌙
-- **Interactive Components**: More interactive elements coming soon! 🎮
+## 🌟 Mengaktifkan Module:
+```json
+{
+  "Essentials": true,
+  "Accounting": true,
+  "AssetManagement": true,
+  "Cms": true,
+  "Connector": true,
+  "Crm": true,
+  "Ecommerce": true,
+  "FieldForce": true,
+  "Manufacturing": true,
+  "ProductCatalogue": true,
+  "Project": true,
+  "Repair": true,
+  "Spreadsheet": true,
+  "Superadmin": true,
+  "Woocommerce": true,
+  "AiAssistance": true,
+  "Hms": true,
+  "InboxReport": true,
+  "CustomDashboard": true,
+  "Gym": true,
+  "Installment": true,
+  "AgeingReport": true,
+  "PosCustom": true,
+  "Inventory": true,
+  "WhatsApp": true,
+  "InventoryManagement": true,
+  "Partners": true,
+  "Restaurant": true,
+  "ZatcaIntegrationKsa": true
+}
+
+```
 
 ---
 
