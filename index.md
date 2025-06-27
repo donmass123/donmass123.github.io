@@ -4,7 +4,7 @@ Welcome to **My Simple Website**, built using [GitHub Pages](https://pages.githu
 
 ---
 
-## 📍 File
+## 📍 Tutorial Point Of Sales
 
 | 📑 **Halaman**                                        | 🛠 **Fitur**                              | 📊 **Level**                              |
 |---------------------------------------------------|---------------------------------------------|---------------------------------------------|
