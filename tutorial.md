@@ -11,4 +11,6 @@
 ---
 
 ## Lupa Password
-![Alt text](https://drive.google.com/file/d/14zl5Pj2SZ43yla4x5YXmTrxEg2tpjaWo/view?usp=sharing)
+
+https://github.com/user-attachments/assets/83e24fca-9f80-4240-8b64-1d7afd8ee3b0
+
