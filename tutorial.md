@@ -11,4 +11,4 @@
 ---
 
 ## Lupa Password
-https://drive.google.com/file/d/1tALwu1O8Y54oDyMY1eYfkNvU6ZRjgvmR/view?usp=sharing
+![Alt text](https://drive.google.com/file/d/14zl5Pj2SZ43yla4x5YXmTrxEg2tpjaWo/view?usp=sharing)
