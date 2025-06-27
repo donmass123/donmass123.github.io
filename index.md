@@ -94,9 +94,8 @@ Welcome to **My Simple Website**, built using [GitHub Pages](https://pages.githu
 
 ---
 
-## 🎨 Design Updates:
-- **Modern Look**: Clean and minimalist design for a smooth, user-friendly experience.
-- **Responsive Layout**: Looks great on all devices, from mobile to desktop.
+## 🎨 Dokumen Tutorial:
+[Klik Disini untuk liat tutorial](tutorial.md)
 
 ---
 
