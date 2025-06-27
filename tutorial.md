@@ -12,6 +12,6 @@
 
 ## Lupa Password
 <video width="600" height="400" autoplay loop>
-  <source src="https://drive.google.com/uc?export=download&id=1tALwu1O8Y54oDyMY1eYfkNvU6ZRjgvmR" type="video/mp4">
+  <source src="https://drive.google.com/file/d/1tALwu1O8Y54oDyMY1eYfkNvU6ZRjgvmR/view?usp=sharing" type="video/mp4">
   Your browser does not support the video tag.
 </video>
