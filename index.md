@@ -11,7 +11,7 @@ Welcome to **My Simple Website**, built using [GitHub Pages](https://pages.githu
 - [✨ Daftar File Kostum](#-daftar-file-kostum)
 - [✨ Modul Terbaru](#-modul-terbaru)
 - [🌟 Mengaktifkan Module](#-mengaktifkan-module)
-- [🎨 Design Updates](#-design-updates)
+- [🎨 Design Updates](#-dokumen-tutorial)
 - [💬 Feedback](#-feedback)
 ---
 
@@ -95,7 +95,7 @@ Welcome to **My Simple Website**, built using [GitHub Pages](https://pages.githu
 ---
 
 ## 🎨 Dokumen Tutorial:
-[Klik Disini untuk liat tutorial](tutorial.md)
+**[Klik Disini untuk liat tutorial](tutorial.md)**
 
 ---
 
