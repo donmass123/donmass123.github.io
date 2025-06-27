@@ -18,7 +18,7 @@ Welcome to **My Simple Website**, built using [GitHub Pages](https://pages.githu
 ---
 
 ## ✨ File Kostum:
-| 📑 **File**                                        | 🛠 **Download File**                              |
+| 📑 **File**                                        | 🛠 **Download File** |
 |---------------------------------------------------|---------------------------------------------|
 | **Background Login File** | 🔍 [Download File](https://drive.google.com/file/d/1LWjHGvmYsvEbsMq-6U64RnvT_qFaFc6w/view?usp=sharing)|
 | **Kostum Barcode Dan Label**          | 🔍 [Download File](https://drive.google.com/file/d/1KYcL6IuSWVZDR-figEbOIxSijf6cnlGn/view?usp=sharing)|
