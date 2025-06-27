@@ -6,23 +6,23 @@ Welcome to **My Simple Website**, built using [GitHub Pages](https://pages.githu
 
 ## 📍 File
 
-| 📑 **Pages**                                        | 🛠 **Features**                              | 📊 **Level**                              |
+| 📑 **Halaman**                                        | 🛠 **Fitur**                              | 📊 **Level**                              |
 |---------------------------------------------------|---------------------------------------------|---------------------------------------------|
-| [Add Sub-Category Filter to Product Index in POS](1.md) | 🔍 Filter products by sub-categories        | Beginner |
-| [Stock Report Filter Enhancement](2.md)           | 📊 Improved stock tracking and reporting   | Intermediate |
-| [Enhanced Label Printing for Ultimate POS](3.md)  | 🏷️ More efficient label printing          | Intermediate |
-| [Due Collections Feature](4.md)                   | 💵 Better management of due collections    | Intermediate |
-| [Huge Db size in Ultimate POS​](5.md)                   | 📈 Optimized performance with huge data handling    | Beginner |
-| [Delete Transaction, Product, Inventory](6.md)     | 🗑️ Efficient data deletion system          | Rizk | 
+| [Menambahkan Filter Sub-Kategori ke Indeks Produk di POS](1.md) | 🔍 filter produk berdasarkan sub-kategori        | Pemula |
+| [Peningkatan Filter Laporan Stok](2.md)           | 📊 Pelacakan dan pelaporan stok yang lebih baik   | Menengah |
+| [Pencetakan Label yang Disempurnakan untuk POS](3.md)  | 🏷️ Pencetakan label yang lebih efisien          | Menengah |
+| [Fitur Penagihan Jatuh Tempo](4.md)                   | 💵 Manajemen penagihan jatuh tempo yang lebih baik    | Menengah |
+| [Ukuran Db yang besar di POS​](5.md)                   | 📈 Performa yang dioptimalkan dengan penanganan data yang besar    | Pemula |
+| [Hapus Transaksi, Produk, Inventaris](6.md)     | 🗑️ Sistem penghapusan data yang efisien          | Bahaya | 
 
 ---
 
-## ✨ Key Features:
-| 📑 **Pages**                                        | 🛠 **Download File**                              |
+## ✨ File Kostum:
+| 📑 **File**                                        | 🛠 **Download File**                              |
 |---------------------------------------------------|---------------------------------------------|
-| [Background Login File] | 🔍 [Download File](https://drive.google.com/file/d/1LWjHGvmYsvEbsMq-6U64RnvT_qFaFc6w/view?usp=sharing)
+| **Background Login File** | 🔍 [Download File](https://drive.google.com/file/d/1LWjHGvmYsvEbsMq-6U64RnvT_qFaFc6w/view?usp=sharing)
         |
-| [Stock Report Filter Enhancement]          | 🔍   |
+| **Kostum Barcode Dan Label**          | 🔍 [Download File](https://drive.google.com/file/d/1KYcL6IuSWVZDR-figEbOIxSijf6cnlGn/view?usp=sharing)  |
 | [Enhanced Label Printing for Ultimate POS]  | 🔍        |
 | [Due Collections Feature]                | 🔍   |
 | [Huge Db size in Ultimate POS​]                  | 🔍    |
