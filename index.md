@@ -17,14 +17,42 @@ Welcome to **My Simple Website**, built using [GitHub Pages](https://pages.githu
 
 ## 📍 Tutorial Point Of Sales
 
-| 📑 **Halaman**                                        | 🛠 **Fitur**                              | 📊 **Level**                              |
-|---------------------------------------------------|---------------------------------------------|---------------------------------------------|
-| [Menambahkan Filter Sub-Kategori ke Indeks Produk di POS](1.md) | 🔍 filter produk berdasarkan sub-kategori        | Pemula |
-| [Peningkatan Filter Laporan Stok](2.md)           | 📊 Pelacakan dan pelaporan stok yang lebih baik   | Menengah |
-| [Pencetakan Label yang Disempurnakan untuk POS](3.md)  | 🏷️ Pencetakan label yang lebih efisien          | Menengah |
-| [Fitur Penagihan Jatuh Tempo](4.md)                   | 💵 Manajemen penagihan jatuh tempo yang lebih baik    | Menengah |
-| [Ukuran Db yang besar di POS​](5.md)                   | 📈 Performa yang dioptimalkan dengan penanganan data yang besar    | Pemula |
-| [Hapus Transaksi, Produk, Inventaris](6.md)     | 🗑️ Sistem penghapusan data yang efisien          | Bahaya | 
+<details>
+  <summary>📑 Menambahkan Filter Sub-Kategori ke Indeks Produk di POS</summary>
+  🔍 filter produk berdasarkan sub-kategori  
+  📊 Level: Pemula
+</details>
+
+<details>
+  <summary>📑 Peningkatan Filter Laporan Stok</summary>
+  📊 Pelacakan dan pelaporan stok yang lebih baik  
+  📊 Level: Menengah
+</details>
+
+<details>
+  <summary>📑 Pencetakan Label yang Disempurnakan untuk POS</summary>
+  🏷️ Pencetakan label yang lebih efisien  
+  📊 Level: Menengah
+</details>
+
+<details>
+  <summary>📑 Fitur Penagihan Jatuh Tempo</summary>
+  💵 Manajemen penagihan jatuh tempo yang lebih baik  
+  📊 Level: Menengah
+</details>
+
+<details>
+  <summary>📑 Ukuran Db yang besar di POS</summary>
+  📈 Performa yang dioptimalkan dengan penanganan data yang besar  
+  📊 Level: Pemula
+</details>
+
+<details>
+  <summary>📑 Hapus Transaksi, Produk, Inventaris</summary>
+  🗑️ Sistem penghapusan data yang efisien  
+  📊 Level: Bahaya
+</details>
+
 
 ---
 
