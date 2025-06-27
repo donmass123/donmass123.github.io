@@ -11,4 +11,5 @@
 ---
 
 ## Lupa Password
-<iframe width="600" height="400" src="https://youtu.be/oQEymQIna_Q?list=TLPQMjcwNjIwMjXYrIotxuHJPA" frameborder="0" allowfullscreen></iframe>
+<iframe width="600" height="400" src="https://www.youtube.com/embed/dQw4w9WgXcQ0" frameborder="0" allowfullscreen></iframe>
+
