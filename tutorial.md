@@ -4,7 +4,7 @@
 
 ## Login 
 
-https://github.com/user-attachments/assets/d237d93e-6d6a-4512-bcd9-aeced345b6c1
+![Contoh Gambar](https://github.com/user-attachments/assets/d237d93e-6d6a-4512-bcd9-aeced345b6c1)
 
 
 - step 1 : klik Masuk
@@ -14,5 +14,5 @@ https://github.com/user-attachments/assets/d237d93e-6d6a-4512-bcd9-aeced345b6c1
 
 ## Lupa Password
 
-https://github.com/user-attachments/assets/83e24fca-9f80-4240-8b64-1d7afd8ee3b0
+![Contoh Gambar](https://github.com/user-attachments/assets/83e24fca-9f80-4240-8b64-1d7afd8ee3b0)
 
