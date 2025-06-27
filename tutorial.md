@@ -8,8 +8,8 @@
   Browser Anda tidak mendukung pemutaran video.
 </video>
 
-- step 1 : klik Masuk
-- step 2 : masukan username dan password
+- **step 1** : klik Masuk
+- **step 2** : masukan username dan password
 
 ---
 
