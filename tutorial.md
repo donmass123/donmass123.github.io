@@ -11,4 +11,4 @@
 ---
 
 ## Lupa Password
-<img src="tutor/#.gif" width="600" height="400" />
+<img src="tutor/lupa.gif" width="600" height="400" />
