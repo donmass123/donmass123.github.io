@@ -4,7 +4,7 @@ Welcome to **My Simple Website**, built using [GitHub Pages](https://pages.githu
 
 ---
 
-## 📍 Navigation
+## 📍 File
 
 | 📑 **Pages**                                        | 🛠 **Features**                              | 📊 **Level**                              |
 |---------------------------------------------------|---------------------------------------------|---------------------------------------------|
@@ -18,10 +18,15 @@ Welcome to **My Simple Website**, built using [GitHub Pages](https://pages.githu
 ---
 
 ## ✨ Key Features:
-- **Effortless Setup**: Get started in minutes with GitHub Pages and Markdown, no complex setup required.
-- **Zero Hosting Fees**: Host your website for **free** with GitHub.
-- **Markdown Powered**: Focus on content, not code—just write in Markdown and let GitHub Pages handle the rest.
-- **Sleek Navigation**: Easy-to-use interface for seamless browsing.
+| 📑 **Pages**                                        | 🛠 **Download File**                              |
+|---------------------------------------------------|---------------------------------------------|
+| [Background Login File] | 🔍 [Download File](https://drive.google.com/file/d/1LWjHGvmYsvEbsMq-6U64RnvT_qFaFc6w/view?usp=sharing)
+        |
+| [Stock Report Filter Enhancement]          | 🔍   |
+| [Enhanced Label Printing for Ultimate POS]  | 🔍        |
+| [Due Collections Feature]                | 🔍   |
+| [Huge Db size in Ultimate POS​]                  | 🔍    |
+| [Delete Transaction, Product, Inventory]     | 🔍        |
 
 ---
 
