@@ -95,7 +95,7 @@
 
 ## 🎨 Dokumen Tutorial:
 
-[https://as1.ftcdn.net/jpg/00/30/14/94/1000_F_30149473_uM8rqqkj6aGbnkINikbbbVSOwa4jsTed.jpg](tutorial.md)
+[![Deskripsi Gambar](https://as1.ftcdn.net/jpg/00/30/14/94/1000_F_30149473_uM8rqqkj6aGbnkINikbbbVSOwa4jsTed.jpg)](tutorial.md)
 
 ---
 
