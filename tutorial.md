@@ -9,8 +9,9 @@
 </video>
 
 
-- **step 1** : klik Masuk
-- **step 2** : masukan username dan password
+- **step 1** : Klik Masuk
+- **step 2** : Masukan username dan password
+- **step 3** : Login
 
 ---
 
@@ -20,4 +21,13 @@
   Browser Anda tidak mendukung pemutaran video.
 </video>
 
+- **Step 1** : Klik "Lupa kata sandi anda?"
+- **Step 2** : Masukan email yang terdaftar dan kirim tautan
+- **Step 3** : Buka Email -> Spam
+- **Step 3** : Klik "reset password"
+- **Step 4** : Masukan password baru dan kofirmasi password
+- **Step 5** : Kembali ke Login dan masukan username dan password
+- **Step 6** : Login
+
+---
 
