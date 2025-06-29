@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Point Of Sales Tutorial</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        header {
+            background-color: #2d2d2d;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 2em;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            text-align: center;
+            background-color: #333;
+        }
+
+        nav ul li {
+            display: inline;
+            margin: 10px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            background-color: #444;
+            border-radius: 5px;
+        }
+
+        nav ul li a:hover {
+            background-color: #ddd;
+            color: #333;
+        }
+
+        section {
+            padding: 20px;
+            margin: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        table th, table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        table tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        pre {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            font-size: 1em;
+            overflow-x: auto;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #333;
+            color: white;
+        }
+
+        footer p {
+            margin: 0;
+        }
+
+        @media (max-width: 768px) {
+            nav ul li {
+                display: block;
+                margin: 5px 0;
+            }
+
+            section {
+                margin: 10px;
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🚀 Tutorial Point Of Sales</h1>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#welcome">🚀 Selamat Datang</a></li>
+            <li><a href="#tutorial">📍 Tutorial Point Of Sales</a></li>
+            <li><a href="#kostum">✨ Daftar File Kostum</a></li>
+            <li><a href="#modul">✨ Modul Terbaru</a></li>
+            <li><a href="#mengaktifkan">🌟 Mengaktifkan Module</a></li>
+            <li><a href="#dokumen">🎨 Dokumen Tutorial</a></li>
+            <li><a href="#sql">💬 SQL</a></li>
+        </ul>
+    </nav>
+
+    <section id="tutorial">
+        <h2>📍 Tutorial Point Of Sales</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>📑 Halaman</th>
+                    <th>🛠 Fitur</th>
+                    <th>📊 Level</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><a href="1.md">Menambahkan Filter Sub-Kategori ke Indeks Produk di POS</a></td>
+                    <td>🔍 filter produk berdasarkan sub-kategori</td>
+                    <td>Pemula</td>
+                </tr>
+                <tr>
+                    <td><a href="2.md">Peningkatan Filter Laporan Stok</a></td>
+                    <td>📊 Pelacakan dan pelaporan stok yang lebih baik</td>
+                    <td>Menengah</td>
+                </tr>
+                <tr>
+                    <td><a href="3.md">Pencetakan Label yang Disempurnakan untuk POS</a></td>
+                    <td>🏷️ Pencetakan label yang lebih efisien</td>
+                    <td>Menengah</td>
+                </tr>
+                <tr>
+                    <td><a href="4.md">Fitur Penagihan Jatuh Tempo</a></td>
+                    <td>💵 Manajemen penagihan jatuh tempo yang lebih baik</td>
+                    <td>Menengah</td>
+                </tr>
+                <tr>
+                    <td><a href="5.md">Ukuran Db yang besar di POS​</a></td>
+                    <td>📈 Performa yang dioptimalkan dengan penanganan data yang besar</td>
+                    <td>Pemula</td>
+                </tr>
+                <tr>
+                    <td><a href="6.md">Hapus Transaksi, Produk, Inventaris</a></td>
+                    <td>🗑️ Sistem penghapusan data yang efisien</td>
+                    <td>Bahaya</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <section id="kostum">
+        <h2>✨ Daftar File Kostum</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>📑 Nama File</th>
+                    <th>🛠 Link Download</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Background Login File</td>
+                    <td><a href="https://drive.google.com/file/d/1LWjHGvmYsvEbsMq-6U64RnvT_qFaFc6w/view?usp=sharing">🔍 Download File</a></td>
+                </tr>
+                <tr>
+                    <td>Kostum Barcode dan Label</td>
+                    <td><a href="https://drive.google.com/file/d/1KYcL6IuSWVZDR-figEbOIxSijf6cnlGn/view?usp=sharing">🔍 Download File</a></td>
+                </tr>
+                <tr>
+                    <td>Kostum Tanggal `pos/public/js/common.js`</td>
+                    <td><a href="https://drive.google.com/drive/folders/1k-fc5hVEOqwfDb-qdO4Y8h006XR7jA4j?usp=drive_link">🔍 Download Folder</a></td>
+                </tr>
+                <tr>
+                    <td>Kostum Tambah dan Edit</td>
+                    <td><a href="https://drive.google.com/file/d/1VADZpKrLUVslkOiXwwQY4GPC45pqIbn4/view?usp=sharing">🔍 Download File</a></td>
+                </tr>
+                <tr>
+                    <td>Huge Db Size in Ultimate POS</td>
+                    <td>🔍 (tidak ada link)</td>
+                </tr>
+                <tr>
+                    <td>Delete Transaction, Product, Inventory</td>
+                    <td>🔍 (tidak ada link)</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <section id="modul">
+        <h2>✨ Modul Terbaru</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>📑 Nama File</th>
+                    <th>🛠 Link Download</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Catalog</td>
+                    <td><a href="https://drive.google.com/file/d/1fsafNy1r-j7lvW7iXvyjUavJiSKhFt5E/view?usp=sharing">🔍 Download File</a></td>
+                </tr>
+                <tr>
+                    <td>Inventory</td>
+                    <td><a href="https://drive.google.com/file/d/1BNZWbVEdrOsv2eaIHtB-Jin9ODYKeuHr/view?usp=sharing">🔍 Download File</a></td>
+                </tr>
+                <tr>
+                    <td>Whatapps</td>
+                    <td><a href="https://drive.google.com/file/d/1tBZodbDvRsZE81g7mYd5tLJ0lFxuPiLH/view?usp=sharing">🔍 Download Folder</a></td>
+                </tr>
+                <tr>
+                    <td>Asset</td>
+                    <td><a href="https://drive.google.com/file/d/19JmP4XQKfVamkRoBsp01OQipvS4H7KYl/view?usp=drive_link">🔍 Download File</a></td>
+                </tr>
+                <tr>
+                    <td>Laporan penuaan</td>
+                    <td><a href="https://drive.google.com/file/d/1E2U6GK5-kFT1wm_D9d0LgetQeuNnLMIL/view?usp=drive_link">🔍 Download File</a></td>
+                </tr>
+                <tr>
+                    <td>API</td>
+                    <td><a href="https://drive.google.com/file/d/1q4dpSlthykEtrFVqPPK1rimBabrrKAuS/view?usp=drive_link">🔍 Download File</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <section id="mengaktifkan">
+        <h2>🌟 Mengaktifkan Module</h2>
+        <pre>
+        {
+            "Essentials": true,
+            "Accounting": true,
+            "AssetManagement": true,
+            "Cms": true,
+            "Connector": true,
+            "Crm": true,
+            "Ecommerce": true,
+            "FieldForce": true,
+            "Manufacturing": true,
+            "ProductCatalogue": true,
+            "Project": true,
+            "Repair": true,
+            "Spreadsheet": true,
+            "Superadmin": true,
+            "Woocommerce": true,
+            "AiAssistance": true,
+            "Hms": true,
+            "InboxReport": true,
+            "CustomDashboard": true,
+            "Gym": true,
+            "Installment": true,
+            "AgeingReport": true,
+            "PosCustom": true,
+            "Inventory": true,
+            "WhatsApp": true,
+            "InventoryManagement": true,
+            "Partners": true,
+            "Restaurant": true,
+            "ZatcaIntegrationKsa": true
+        }
+        </pre>
+    </section>
+
+    <section id="dokumen">
+        <h2>🎨 Dokumen Tutorial</h2>
+        <a href="tutorial.html"><img src="https://as1.ftcdn.net/jpg/00/30/14/94/1000_F_30149473_uM8rqqkj6aGbnkINikbbbVSOwa4jsTed.jpg" alt="Deskripsi Gambar"></a>
+    </section>
+
+    <section id="sql">
+        <h2>💬 SQL</h2>
+        <img src="https://pos.bland.id/uploads/product/video/sasas.png" alt="SQL">
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Tutorial Point Of Sales</p>
+    </footer>
+</body>
+</html>
