@@ -28,7 +28,7 @@
         }
 
         nav {
-            background-color: #333;
+            background-color: #2d2d2d;
             font-family: 'Arial', sans-serif;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             margin: 0;
@@ -36,6 +36,7 @@
             position: sticky;
             top: 0;
             z-index: 1000;
+            transition: background-color 0.3s ease-in-out;
         }
 
         nav ul {
@@ -49,6 +50,7 @@
         nav ul li {
             position: relative;
             margin: 0 20px;
+            transition: transform 0.3s ease;
         }
 
         nav ul li a {
@@ -57,6 +59,8 @@
             font-size: 1.2em;
             padding: 15px 20px;
             display: block;
+            text-transform: uppercase;
+            letter-spacing: 1px;
             transition: background-color 0.3s ease, transform 0.3s ease;
         }
 
@@ -122,6 +126,7 @@
                 background-color: #333;
                 text-align: center;
                 z-index: 999;
+                transition: transform 0.3s ease-in-out;
             }
 
             nav ul li {
