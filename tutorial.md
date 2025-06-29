@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -23,11 +22,22 @@
             color: #333;
             margin: 40px 0 20px;
         }
-        .video-container {
-            text-align: center;
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
+        .col {
+            flex: 1;
+            min-width: 48%;
             margin-bottom: 20px;
         }
+        .video-container {
+            text-align: center;
+        }
         .video-container video {
+            width: 100%;
             border-radius: 10px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
@@ -65,6 +75,11 @@
             font-size: 0.9rem;
             color: #888;
         }
+        @media (max-width: 768px) {
+            .col {
+                min-width: 100%;
+            }
+        }
     </style>
 </head>
 <body>
@@ -75,18 +90,26 @@
     <!-- Login Section -->
     <section>
         <h3 class="section-title">Login</h3>
-        <div class="video-container">
-            <video width="640" height="360" controls autoplay loop>
-                <source src="https://pos.bland.id/uploads/product/video/1.mp4" type="video/mp4">
-                Browser Anda tidak mendukung pemutaran video.
-            </video>
+        <div class="row">
+            <!-- Video Column -->
+            <div class="col">
+                <div class="video-container">
+                    <video width="640" height="360" controls autoplay loop>
+                        <source src="https://pos.bland.id/uploads/product/video/1.mp4" type="video/mp4">
+                        Browser Anda tidak mendukung pemutaran video.
+                    </video>
+                </div>
+            </div>
+            <!-- Explanation Column -->
+            <div class="col">
+                <p class="step">Ikuti langkah-langkah berikut untuk login:</p>
+                <ol class="steps-list">
+                    <li><span class="step-title">Step 1:</span> Klik Masuk</li>
+                    <li><span class="step-title">Step 2:</span> Masukan username dan password</li>
+                    <li><span class="step-title">Step 3:</span> Klik Login</li>
+                </ol>
+            </div>
         </div>
-        <p class="step">Ikuti langkah-langkah berikut untuk login:</p>
-        <ol class="steps-list">
-            <li><span class="step-title">Step 1:</span> Klik Masuk</li>
-            <li><span class="step-title">Step 2:</span> Masukan username dan password</li>
-            <li><span class="step-title">Step 3:</span> Klik Login</li>
-        </ol>
     </section>
 
     <hr>
@@ -94,22 +117,30 @@
     <!-- Forgot Password Section -->
     <section>
         <h3 class="section-title">Lupa Password</h3>
-        <div class="video-container">
-            <video width="640" height="360" controls autoplay loop>
-                <source src="https://pos.bland.id/uploads/product/video/2.mp4" type="video/mp4">
-                Browser Anda tidak mendukung pemutaran video.
-            </video>
+        <div class="row">
+            <!-- Video Column -->
+            <div class="col">
+                <div class="video-container">
+                    <video width="640" height="360" controls autoplay loop>
+                        <source src="https://pos.bland.id/uploads/product/video/2.mp4" type="video/mp4">
+                        Browser Anda tidak mendukung pemutaran video.
+                    </video>
+                </div>
+            </div>
+            <!-- Explanation Column -->
+            <div class="col">
+                <p class="step">Ikuti langkah-langkah berikut untuk mereset kata sandi:</p>
+                <ol class="steps-list">
+                    <li><span class="step-title">Step 1:</span> Klik "Lupa kata sandi anda?"</li>
+                    <li><span class="step-title">Step 2:</span> Masukan email yang terdaftar dan kirim tautan</li>
+                    <li><span class="step-title">Step 3:</span> Cek Email Anda -> Spam</li>
+                    <li><span class="step-title">Step 4:</span> Klik "Reset Password"</li>
+                    <li><span class="step-title">Step 5:</span> Masukan password baru dan konfirmasi password</li>
+                    <li><span class="step-title">Step 6:</span> Kembali ke halaman Login dan masukan username dan password</li>
+                    <li><span class="step-title">Step 7:</span> Klik Login</li>
+                </ol>
+            </div>
         </div>
-        <p class="step">Ikuti langkah-langkah berikut untuk mereset kata sandi:</p>
-        <ol class="steps-list">
-            <li><span class="step-title">Step 1:</span> Klik "Lupa kata sandi anda?"</li>
-            <li><span class="step-title">Step 2:</span> Masukan email yang terdaftar dan kirim tautan</li>
-            <li><span class="step-title">Step 3:</span> Cek Email Anda -> Spam</li>
-            <li><span class="step-title">Step 4:</span> Klik "Reset Password"</li>
-            <li><span class="step-title">Step 5:</span> Masukan password baru dan konfirmasi password</li>
-            <li><span class="step-title">Step 6:</span> Kembali ke halaman Login dan masukan username dan password</li>
-            <li><span class="step-title">Step 7:</span> Klik Login</li>
-        </ol>
     </section>
 
     <div class="footer">
