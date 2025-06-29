@@ -22,22 +22,11 @@
             color: #333;
             margin: 40px 0 20px;
         }
-        .row {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            margin-bottom: 30px;
-        }
-        .col {
-            flex: 1;
-            min-width: 48%;
-            margin-bottom: 20px;
-        }
         .video-container {
             text-align: center;
+            margin-bottom: 20px;
         }
         .video-container video {
-            width: 100%;
             border-radius: 10px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
@@ -69,15 +58,43 @@
             color: #28a745;
             margin-right: 15px;
         }
+        .dropdown-content {
+            display: none;
+            padding-left: 20px;
+        }
+        .dropdown-btn {
+            background-color: #0066cc;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+        .dropdown-btn:hover {
+            background-color: #0057a1;
+        }
+        .dropdown-content p {
+            margin: 5px 0;
+        }
         .footer {
             text-align: center;
             margin-top: 40px;
             font-size: 0.9rem;
             color: #888;
         }
-        @media (max-width: 768px) {
-            .col {
-                min-width: 100%;
+
+        /* Animation for Dropdown */
+        .dropdown-content {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
             }
         }
     </style>
@@ -90,25 +107,19 @@
     <!-- Login Section -->
     <section>
         <h3 class="section-title">Login</h3>
-        <div class="row">
-            <!-- Video Column -->
-            <div class="col">
-                <div class="video-container">
-                    <video width="640" height="360" controls autoplay loop>
-                        <source src="https://pos.bland.id/uploads/product/video/1.mp4" type="video/mp4">
-                        Browser Anda tidak mendukung pemutaran video.
-                    </video>
-                </div>
-            </div>
-            <!-- Explanation Column -->
-            <div class="col">
-                <p class="step">Ikuti langkah-langkah berikut untuk login:</p>
-                <ol class="steps-list">
-                    <li><span class="step-title">Step 1:</span> Klik Masuk</li>
-                    <li><span class="step-title">Step 2:</span> Masukan username dan password</li>
-                    <li><span class="step-title">Step 3:</span> Klik Login</li>
-                </ol>
-            </div>
+        <div class="video-container">
+            <video width="640" height="360" controls autoplay loop>
+                <source src="https://pos.bland.id/uploads/product/video/1.mp4" type="video/mp4">
+                Browser Anda tidak mendukung pemutaran video.
+            </video>
+        </div>
+        <button class="dropdown-btn" onclick="toggleDropdown('login-steps')">Tampilkan Langkah-langkah Login</button>
+        <div id="login-steps" class="dropdown-content">
+            <ol class="steps-list">
+                <li><span class="step-title">Step 1:</span> Klik Masuk</li>
+                <li><span class="step-title">Step 2:</span> Masukan username dan password</li>
+                <li><span class="step-title">Step 3:</span> Klik Login</li>
+            </ol>
         </div>
     </section>
 
@@ -117,29 +128,23 @@
     <!-- Forgot Password Section -->
     <section>
         <h3 class="section-title">Lupa Password</h3>
-        <div class="row">
-            <!-- Video Column -->
-            <div class="col">
-                <div class="video-container">
-                    <video width="640" height="360" controls autoplay loop>
-                        <source src="https://pos.bland.id/uploads/product/video/2.mp4" type="video/mp4">
-                        Browser Anda tidak mendukung pemutaran video.
-                    </video>
-                </div>
-            </div>
-            <!-- Explanation Column -->
-            <div class="col">
-                <p class="step">Ikuti langkah-langkah berikut untuk mereset kata sandi:</p>
-                <ol class="steps-list">
-                    <li><span class="step-title">Step 1:</span> Klik "Lupa kata sandi anda?"</li>
-                    <li><span class="step-title">Step 2:</span> Masukan email yang terdaftar dan kirim tautan</li>
-                    <li><span class="step-title">Step 3:</span> Cek Email Anda -> Spam</li>
-                    <li><span class="step-title">Step 4:</span> Klik "Reset Password"</li>
-                    <li><span class="step-title">Step 5:</span> Masukan password baru dan konfirmasi password</li>
-                    <li><span class="step-title">Step 6:</span> Kembali ke halaman Login dan masukan username dan password</li>
-                    <li><span class="step-title">Step 7:</span> Klik Login</li>
-                </ol>
-            </div>
+        <div class="video-container">
+            <video width="640" height="360" controls autoplay loop>
+                <source src="https://pos.bland.id/uploads/product/video/2.mp4" type="video/mp4">
+                Browser Anda tidak mendukung pemutaran video.
+            </video>
+        </div>
+        <button class="dropdown-btn" onclick="toggleDropdown('forgot-password-steps')">Tampilkan Langkah-langkah Reset Password</button>
+        <div id="forgot-password-steps" class="dropdown-content">
+            <ol class="steps-list">
+                <li><span class="step-title">Step 1:</span> Klik "Lupa kata sandi anda?"</li>
+                <li><span class="step-title">Step 2:</span> Masukan email yang terdaftar dan kirim tautan</li>
+                <li><span class="step-title">Step 3:</span> Cek Email Anda -> Spam</li>
+                <li><span class="step-title">Step 4:</span> Klik "Reset Password"</li>
+                <li><span class="step-title">Step 5:</span> Masukan password baru dan konfirmasi password</li>
+                <li><span class="step-title">Step 6:</span> Kembali ke halaman Login dan masukan username dan password</li>
+                <li><span class="step-title">Step 7:</span> Klik Login</li>
+            </ol>
         </div>
     </section>
 
@@ -147,6 +152,13 @@
         <p>&copy; 2025 Point of Sales System. All rights reserved.</p>
     </div>
 </div>
+
+<script>
+    function toggleDropdown(id) {
+        var content = document.getElementById(id);
+        content.style.display = (content.style.display === "block") ? "none" : "block";
+    }
+</script>
 
 </body>
 </html>
