@@ -10,7 +10,7 @@
 - [✨ Modul Terbaru](#-modul-terbaru)
 - [🌟 Mengaktifkan Module](#-mengaktifkan-module)
 - [🎨 Tutorial](#-dokumen-tutorial)
-- [💬 SQL](#-SQL)
+- [💬 SQL](#-sql)
 
 ---
 
@@ -94,8 +94,17 @@
 ---
 
 ## 🎨 Dokumen Tutorial:
-**[Klik Disini untuk liat tutorial](tutorial.md)**
 
+<div class="container">
+    <div class="download-section">
+        <h2>Download File `resources/views/product/index.blade.php`</h2>
+        <div class="download-button-container">
+            <a href="tutorial.md">
+                <img src="https://as1.ftcdn.net/jpg/00/30/14/94/1000_F_30149473_uM8rqqkj6aGbnkINikbbbVSOwa4jsTed.jpg" alt="Download Button" class="download-image">
+            </a>
+        </div>
+    </div>
+</div>
 ---
 
 ## 💬 SQL :
