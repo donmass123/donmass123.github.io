@@ -90,6 +90,63 @@
             background-color: #ff6f61;
         }
 
+        /* Hamburger menu (tombol tiga garis) */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 25px;
+            position: absolute;
+            top: 15px;
+            right: 15px;
+        }
+
+        .hamburger div {
+            background-color: white;
+            height: 4px;
+            width: 100%;
+            border-radius: 2px;
+        }
+
+        /* Mengubah tampilan menu untuk layar kecil */
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+                display: none;
+                width: 100%;
+                position: absolute;
+                top: 50px;
+                left: 0;
+                background-color: #333;
+                text-align: center;
+                z-index: 999;
+            }
+
+            nav ul li {
+                margin: 10px 0;
+                width: 100%;
+            }
+
+            nav ul li a {
+                font-size: 1.2em;
+                padding: 15px;
+            }
+
+            nav ul li:hover .dropdown {
+                display: block;
+            }
+
+            nav ul.active {
+                display: block;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+        }
+
         section {
             padding: 30px;
             margin: 20px;
@@ -142,26 +199,6 @@
             margin: 0;
         }
 
-        @media (max-width: 768px) {
-            nav ul {
-                flex-direction: column;
-            }
-
-            nav ul li {
-                margin: 10px 0;
-            }
-
-            nav ul li a {
-                font-size: 1.2em;
-                padding: 15px 25px;
-            }
-
-            section {
-                margin: 10px;
-                padding: 10px;
-            }
-        }
-
         /* CSS untuk gambar responsif */
         section#dokumen img {
             max-width: 100%;
@@ -177,6 +214,11 @@
     </header>
 
     <nav>
+        <div class="hamburger" onclick="toggleMenu()">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
         <ul>
             <li><a href="#welcome">🚀 Selamat Datang</a></li>
             <li><a href="#tutorial">📍 Tutorial Point Of Sales</a></li>
@@ -362,5 +404,12 @@
     <footer>
         <p>&copy; 2025 Tutorial Point Of Sales</p>
     </footer>
+
+    <script>
+        function toggleMenu() {
+            const navUl = document.querySelector('nav ul');
+            navUl.classList.toggle('active');
+        }
+    </script>
 </body>
 </html>
