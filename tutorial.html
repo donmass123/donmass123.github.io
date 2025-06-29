@@ -13,6 +13,52 @@
             color: #333;
         }
 
+        header {
+            background: linear-gradient(135deg, #0066cc, #004d99); /* Gradient untuk latar belakang */
+            color: white;
+            text-align: center;
+            padding: 50px 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); /* Bayangan agar header terkesan melayang */
+            position: relative;
+            overflow: hidden;
+            animation: slideIn 1s ease-out;
+        }
+
+        .header-content h1 {
+            font-size: 3rem; /* Membuat judul lebih besar */
+            font-weight: bold;
+            margin: 0;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        .header-content p {
+            font-size: 1.2rem;
+            font-weight: 300;
+            margin-top: 10px;
+            animation: fadeIn 2s ease-out;
+        }
+
+        /* Animasi untuk judul dan deskripsi */
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideIn {
+            0% {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
         .container {
             width: 90%;
             max-width: 1200px;
@@ -146,6 +192,13 @@
     </style>
 </head>
 <body>
+
+<header>
+    <div class="header-content">
+        <h1>🎯 Point of Sales Tutorial</h1>
+        <p>Belajar Sistem Point of Sales dengan Mudah dan Cepat!</p>
+    </div>
+</header>
 
 <div class="container">
     <h2 class="section-title">Tutorial Point of Sales</h2>
