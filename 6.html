@@ -1,0 +1,62 @@
+<h1
+id="hapus-transaksi-produk-inventaris-stok-database---sangat-berbahaya-dan-hati-hati-dalam-penggunaannya">Hapus
+Transaksi, Produk, Inventaris, Stok Database - Sangat Berbahaya dan
+Hati-hati dalam penggunaannya</h1>
+<h2
+id="buatlah-backup-dan-uji-coba-di-lingkungan-lain-sebelum-mencoba-di-produksi-db-anda">Buatlah
+backup dan uji coba di lingkungan lain sebelum mencoba di produksi DB
+anda!!!</h2>
+<h1 id="gunakan-dengan-resiko-anda-sendiri">GUNAKAN DENGAN RESIKO ANDA
+SENDIRI!!!</h1>
+<p>Salin file di folder ini
+<code>app\Console\Commands\TruncateIniYearDb.php</code></p>
+<p><strong>dari terminal jalankan perintah ini</strong>:
+<code>php artisan truncate:iniYearDb</code></p>
+<p><strong>Pertama!!!</strong> Harap baca file untuk memahami tabel mana
+yang <code>"truncate"</code> di DB dan mana yang <code>"update"</code>
+yang harus dimiliki dan mengosongkan DB</p>
+<h3 id="prosesnya">Prosesnya…</h3>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode php"><code class="sourceCode php"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">-</span>bash<span class="op">-</span><span class="fl">4.2</span>$ php artisan truncate<span class="ot">:</span>iniYearDb</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="op">********************</span> <span class="cn">B</span>egin <span class="cn">P</span>rocess <span class="cn">T</span>runcate <span class="op">********************</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="dv">2024</span><span class="op">-</span><span class="bn">01</span><span class="op">-</span><span class="dv">0</span><span class="er">8</span> <span class="dv">12</span><span class="ot">:</span><span class="dv">57</span><span class="ot">:</span><span class="dv">37</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="cn">D</span>isabling <span class="cn">F</span>oreign <span class="fu">key</span> ckeck...</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="op">---------------------------------------------------------------</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="cn">S</span>tep <span class="dv">1</span><span class="ot">:</span> truncate cash_registers <span class="op">&amp;</span> cash_register_transactions</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="cn">S</span>tep <span class="dv">2</span><span class="ot">:</span> truncate inventory <span class="op">&amp;</span> inventory_products</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="cn">S</span>tep <span class="dv">3</span><span class="ot">:</span> truncate purchase_lines</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="cn">S</span>tep <span class="dv">4</span><span class="ot">:</span> truncate stock_adjustment_lines</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="cn">S</span>tep <span class="dv">5</span><span class="ot">:</span> truncate transaction_sell_lines_purchase_lines</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="cn">S</span>tep <span class="dv">6</span><span class="ot">:</span> truncate transaction_sell_lines</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="cn">S</span>tep <span class="dv">7</span><span class="ot">:</span> truncate transaction_payments</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="cn">S</span>tep <span class="dv">8</span><span class="ot">:</span> truncate transactions</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>¿<span class="cn">D</span>o you have to initialize payroll<span class="op">-</span>essentials<span class="ot">?</span> (yes<span class="op">/</span>no) [no]<span class="ot">:</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> yes</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="cn">B</span>egin <span class="cn">P</span>rocess <span class="cn">T</span>runcate <span class="cn">E</span>ssentials <span class="op">*******************</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="op">-----------------------------------------------------</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="cn">S</span>tep <span class="dv">9</span><span class="ot">:</span> truncate essentials_payroll_groups</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="cn">S</span>tep <span class="dv">10</span><span class="ot">:</span> truncate essentials_payroll_group_transactions</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="op">--------------------</span><span class="fu">END</span><span class="op">------------------------------</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="fu">End</span> <span class="cn">P</span>rocess <span class="cn">T</span>runcate <span class="cn">E</span>ssentials <span class="op">*********************</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="op">---------------------------------------------------------------</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="cn">S</span>tep <span class="dv">91</span><span class="ot">:</span> variation_location_details<span class="op">.</span>qty_available <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="cn">S</span>tep <span class="dv">92</span><span class="ot">:</span> update reference_counts purchase<span class="ot">,</span> purchase_payment<span class="ot">,</span> expense</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>sell_payment<span class="ot">,</span> stock_transfer<span class="ot">,</span> expense_payment<span class="ot">,</span> stock_adjustment<span class="ot">,</span> draft</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="cn">E</span>nabling <span class="cn">F</span>oreign <span class="fu">key</span> ckeck...</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="op">*********************</span> <span class="fu">END</span> <span class="cn">P</span>rocess <span class="cn">T</span>runcate <span class="op">*********************</span></span></code></pre></div>
+<div class="container">
+<pre><code>&lt;div class=&quot;download-section&quot;&gt;
+    &lt;h2&gt;Download File &lt;/h2&gt;
+    &lt;div class=&quot;download-button-container&quot;&gt;
+        &lt;a href=&quot;https://drive.google.com/file/d/1SpLTVX4nRgkRNmouvKsRh1lckyUNrRBP/view?usp=sharing&quot;&gt;
+            &lt;img src=&quot;https://as1.ftcdn.net/jpg/00/30/14/94/1000_F_30149473_uM8rqqkj6aGbnkINikbbbVSOwa4jsTed.jpg&quot; alt=&quot;Download Button&quot; class=&quot;download-image&quot;&gt;
+        &lt;/a&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+</div>
+<hr />
+<p><a href="5.md">← Previous: Ukuran Db yang besar di Ultimate POS</a> |
+<a href="7.md">Next →: Hapus Transaksi, Produk, Inventaris</a></p>
