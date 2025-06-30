@@ -1,37 +1,24 @@
-<h1 id="menambahkan-filter-sub-kategori-ke-indeks-produk-di-ultimate-pos">
-  Menambahkan Filter Sub-Kategori ke Indeks Produk di Ultimate POS
-</h1>
-<p>
-  <strong
-    >Dalam tutorial ini, kita akan menambahkan filter sub-kategori dinamis ke
-    indeks produk yang secara otomatis terisi berdasarkan kategori yang
-    dipilih.</strong
-  >
-</p>
+<h1
+id="menambahkan-filter-sub-kategori-ke-indeks-produk-di-ultimate-pos">Menambahkan
+Filter Sub-Kategori ke Indeks Produk di Ultimate POS</h1>
+<p><strong>Dalam tutorial ini, kita akan menambahkan filter sub-kategori
+dinamis ke indeks produk yang secara otomatis terisi berdasarkan
+kategori yang dipilih.</strong></p>
 <h2 id="prasyarat">Prasyarat</h2>
-<p>
-  Ultimate POS sudah terinstal dan terkonfigurasi Pemahaman dasar tentang
-  template Laravel dan Blade Akses database untuk pengujian
-</p>
-<h2 id="langkah-1-aktifkan-sub-kategori-di-pengaturan-bisnis">
-  Langkah 1: Aktifkan Sub-Kategori di Pengaturan Bisnis
-</h2>
-<p>
-  Langkah pertama yang penting: Buka <code>/business/settings</code> → bagian
-  Produk dan pastikan <code>Sub-Kategori diaktifkan</code>. Tanpa ini, menu
-  tarik-turun akan disembunyikan!
-</p>
-<h2 id="langkah-2-tambahkan-dropdown-sub-kategori-ke-tampilan">
-  Langkah 2: Tambahkan Dropdown Sub-Kategori ke Tampilan
-</h2>
-<p>
-  Di <code>resources/views/product/index.blade.php</code>, temukan bagian filter
-  kategori dan tambahkan kode ini tepat setelah dropdown kategori:
-</p>
-<div class="sourceCode" id="cb1">
-  <pre
-    class="sourceCode php"
-  ><code class="sourceCode php"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>div</span>
+<p>Ultimate POS sudah terinstal dan terkonfigurasi Pemahaman dasar
+tentang template Laravel dan Blade Akses database untuk pengujian</p>
+<h2 id="langkah-1-aktifkan-sub-kategori-di-pengaturan-bisnis">Langkah 1:
+Aktifkan Sub-Kategori di Pengaturan Bisnis</h2>
+<p>Langkah pertama yang penting: Buka <code>/business/settings</code> →
+bagian Produk dan pastikan <code>Sub-Kategori diaktifkan</code>. Tanpa
+ini, menu tarik-turun akan disembunyikan!</p>
+<h2 id="langkah-2-tambahkan-dropdown-sub-kategori-ke-tampilan">Langkah
+2: Tambahkan Dropdown Sub-Kategori ke Tampilan</h2>
+<p>Di <code>resources/views/product/index.blade.php</code>, temukan
+bagian filter kategori dan tambahkan kode ini tepat setelah dropdown
+kategori:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode php"><code class="sourceCode php"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>div</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">class</span><span class="op">=</span><span class="st">&quot;col-sm-3 @if(!(session(&#39;business.enable_category&#39;) &amp;&amp; session(&#39;business.enable_sub_category&#39;))) hide @endif&quot;</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;</span>div <span class="kw">class</span><span class="op">=</span><span class="st">&quot;form-group&quot;</span><span class="op">&gt;</span></span>
@@ -40,19 +27,12 @@
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>        <span class="cn">__</span>(<span class="st">&#39;messages.please_select&#39;</span>)<span class="ot">,</span> <span class="st">&#39;class&#39;</span> =&gt; <span class="st">&#39;form-control select2&#39;</span><span class="ot">,</span><span class="st">&#39;style&#39;</span></span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>        =&gt; <span class="st">&#39;width:100%&#39;</span><span class="ot">,</span> <span class="st">&#39;id&#39;</span> =&gt; <span class="st">&#39;product_list_filter_sub_category_id&#39;</span>])<span class="ot">;</span> <span class="op">!!</span>}</span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;/</span>div<span class="op">&gt;</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;/</span>div<span class="op">&gt;</span></span></code></pre>
-</div>
-<h2 id="langkah-3-tambahkan-javascript-untuk-pemuatan-dinamis">
-  Langkah 3: Tambahkan JavaScript untuk Pemuatan Dinamis
-</h2>
-<p>
-  Pada berkas yang sama, di dalam bagian <code>@section(‘javascript’)</code>,
-  tambahkan:
-</p>
-<div class="sourceCode" id="cb2">
-  <pre
-    class="sourceCode js"
-  ><code class="sourceCode javascript"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">$</span>(<span class="bu">document</span>)<span class="op">.</span><span class="fu">ready</span>(<span class="kw">function</span> () {</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;/</span>div<span class="op">&gt;</span></span></code></pre></div>
+<h2 id="langkah-3-tambahkan-javascript-untuk-pemuatan-dinamis">Langkah
+3: Tambahkan JavaScript untuk Pemuatan Dinamis</h2>
+<p>Pada berkas yang sama, di dalam bagian
+<code>@section(‘javascript’)</code>, tambahkan:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">$</span>(<span class="bu">document</span>)<span class="op">.</span><span class="fu">ready</span>(<span class="kw">function</span> () {</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">$</span>(<span class="bu">document</span>)<span class="op">.</span><span class="fu">on</span>(<span class="st">&#39;change&#39;</span><span class="op">,</span> <span class="st">&#39;#product_list_filter_category_id&#39;</span><span class="op">,</span> <span class="kw">function</span> () {</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>        <span class="fu">get_sub_categories</span>()<span class="op">;</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    })<span class="op">;</span></span>
@@ -76,47 +56,28 @@
 <span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>            }<span class="op">,</span></span>
 <span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>        })<span class="op">;</span></span>
 <span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code></pre>
-</div>
-<h2 id="langkah-4-menambahkan-sub-kategori-ke-datatable-data-ajax">
-  Langkah 4: Menambahkan Sub-Kategori ke DataTable Data Ajax
-</h2>
-<p>
-  <code>Penting</code>: Pada file yang sama, cari kode inisialisasi DataTable
-  dan tambahkan baris ini pada bagian <code>data: function(d)</code>:
-</p>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div>
+<h2
+id="langkah-4-menambahkan-sub-kategori-ke-datatable-data-ajax">Langkah
+4: Menambahkan Sub-Kategori ke DataTable Data Ajax</h2>
+<p><code>Penting</code>: Pada file yang sama, cari kode inisialisasi
+DataTable dan tambahkan baris ini pada bagian
+<code>data: function(d)</code>:</p>
 <h3 id="untuk-tabel-produk">Untuk Tabel Produk:</h3>
-<div class="sourceCode" id="cb3">
-  <pre
-    class="sourceCode js"
-  ><code class="sourceCode javascript"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>d<span class="op">.</span><span class="at">sub_category_id</span> <span class="op">=</span> <span class="fu">$</span>(<span class="st">&#39;#product_list_filter_sub_category_id&#39;</span>)<span class="op">.</span><span class="fu">val</span>()<span class="op">;</span></span></code></pre>
-</div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>d<span class="op">.</span><span class="at">sub_category_id</span> <span class="op">=</span> <span class="fu">$</span>(<span class="st">&#39;#product_list_filter_sub_category_id&#39;</span>)<span class="op">.</span><span class="fu">val</span>()<span class="op">;</span></span></code></pre></div>
 <h3 id="untuk-tabel-laporan-stok">Untuk Tabel Laporan Stok:</h3>
-<div class="sourceCode" id="cb4">
-  <pre
-    class="sourceCode js"
-  ><code class="sourceCode javascript"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>d<span class="op">.</span><span class="at">sub_category_id</span> <span class="op">=</span> <span class="fu">$</span>(<span class="st">&#39;#product_list_filter_sub_category_id&#39;</span>)<span class="op">.</span><span class="fu">val</span>()<span class="op">;</span></span></code></pre>
-</div>
-<p>
-  Tambahkan setelah baris <code>category_id</code> di DataTable laporan stok:
-</p>
-<div class="sourceCode" id="cb5">
-  <pre
-    class="sourceCode js"
-  ><code class="sourceCode javascript"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>d<span class="op">.</span><span class="at">category_id</span> <span class="op">=</span> <span class="fu">$</span>(<span class="st">&#39;#product_list_filter_category_id&#39;</span>)<span class="op">.</span><span class="fu">val</span>()<span class="op">;</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>d<span class="op">.</span><span class="at">sub_category_id</span> <span class="op">=</span> <span class="fu">$</span>(<span class="st">&#39;#product_list_filter_sub_category_id&#39;</span>)<span class="op">.</span><span class="fu">val</span>()<span class="op">;</span></span></code></pre>
-</div>
-<h2 id="langkah-5-tambahkan-filter-sub-kategori-untuk-mengubah-acara">
-  Langkah 5: Tambahkan Filter Sub-Kategori untuk Mengubah Acara
-</h2>
-<p>
-  <code>Penting</code>: Temukan pendengar peristiwa perubahan dan tambahkan
-  <code>#product_list_filter_sub_category_id</code> ke pemilih:
-</p>
-<div class="sourceCode" id="cb6">
-  <pre
-    class="sourceCode js"
-  ><code class="sourceCode javascript"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">$</span>(<span class="bu">document</span>)<span class="op">.</span><span class="fu">on</span>(</span>
+<div class="sourceCode" id="cb4"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>d<span class="op">.</span><span class="at">sub_category_id</span> <span class="op">=</span> <span class="fu">$</span>(<span class="st">&#39;#product_list_filter_sub_category_id&#39;</span>)<span class="op">.</span><span class="fu">val</span>()<span class="op">;</span></span></code></pre></div>
+<p>Tambahkan setelah baris <code>category_id</code> di DataTable laporan
+stok:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>d<span class="op">.</span><span class="at">category_id</span> <span class="op">=</span> <span class="fu">$</span>(<span class="st">&#39;#product_list_filter_category_id&#39;</span>)<span class="op">.</span><span class="fu">val</span>()<span class="op">;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>d<span class="op">.</span><span class="at">sub_category_id</span> <span class="op">=</span> <span class="fu">$</span>(<span class="st">&#39;#product_list_filter_sub_category_id&#39;</span>)<span class="op">.</span><span class="fu">val</span>()<span class="op">;</span></span></code></pre></div>
+<h2
+id="langkah-5-tambahkan-filter-sub-kategori-untuk-mengubah-acara">Langkah
+5: Tambahkan Filter Sub-Kategori untuk Mengubah Acara</h2>
+<p><code>Penting</code>: Temukan pendengar peristiwa perubahan dan
+tambahkan <code>#product_list_filter_sub_category_id</code> ke
+pemilih:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">$</span>(<span class="bu">document</span>)<span class="op">.</span><span class="fu">on</span>(</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;change&#39;</span><span class="op">,</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;#product_list_filter_type, #product_list_filter_category_id, #product_list_filter_brand_id, #product_list_filter_unit_id, #product_list_filter_tax_id, #location_id, #active_state, #repair_model_id, #product_list_filter_sub_category_id&#39;</span><span class="op">,</span></span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">function</span> () {</span>
@@ -128,82 +89,52 @@
 <span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>            stock_report_table<span class="op">.</span><span class="at">ajax</span><span class="op">.</span><span class="fu">reload</span>()<span class="op">;</span></span>
 <span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>        }</span>
 <span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>)<span class="op">;</span></span></code></pre>
-</div>
-<div class="container">
-  <pre><code>&lt;div class=&quot;download-section&quot;&gt;
-    &lt;h2&gt;Download File `resources/views/product/index.blade.php`&lt;/h2&gt;
-    &lt;div class=&quot;download-button-container&quot;&gt;
-        &lt;a href=&quot;https://drive.google.com/file/d/1RGPAiZoHBV_80RDnG2tFELoKIYN-CVzf/view?usp=drive_link&quot;&gt;
-            &lt;img src=&quot;https://as1.ftcdn.net/jpg/00/30/14/94/1000_F_30149473_uM8rqqkj6aGbnkINikbbbVSOwa4jsTed.jpg&quot; alt=&quot;Download Button&quot; class=&quot;download-image&quot;&gt;
-        &lt;/a&gt;
-    &lt;/div&gt;
-&lt;/div&gt;</code></pre>
-</div>
-<h2 id="langkah-6-perbarui-logika-controller">
-  Langkah 6: Perbarui Logika Controller
-</h2>
-<p>
-  Di <code>app/Http/Controllers/ProductController.php</code>, dalam metode
-  <code>index()</code>, tambahkan kode pemfilteran ini setelah filter kategori:
-</p>
-<div class="sourceCode" id="cb8">
-  <pre
-    class="sourceCode php"
-  ><code class="sourceCode php"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="va">$sub_category_id</span> <span class="op">=</span> request()-&gt;get(<span class="st">&#39;sub_category_id&#39;</span><span class="ot">,</span> <span class="kw">null</span>)<span class="ot">;</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="op">!</span> <span class="kw">empty</span>(<span class="va">$sub_category_id</span>)) {</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">$products</span>-&gt;where(<span class="st">&#39;products.sub_category_id&#39;</span><span class="ot">,</span> <span class="va">$sub_category_id</span>)<span class="ot">;</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre>
-</div>
-<div class="container">
-  <pre><code>&lt;div class=&quot;download-section&quot;&gt;
-    &lt;h2&gt;Download File `app/Http/Controllers/ProductController.php`&lt;/h2&gt;
-    &lt;div class=&quot;download-button-container&quot;&gt;
-        &lt;a href=&quot;https://drive.google.com/file/d/1_O6h2hPiqxDyeJvLB-kHDcpXGUr2LNy8/view?usp=drive_link&quot;&gt;
-            &lt;img src=&quot;https://as1.ftcdn.net/jpg/00/30/14/94/1000_F_30149473_uM8rqqkj6aGbnkINikbbbVSOwa4jsTed.jpg&quot; alt=&quot;Download Button&quot; class=&quot;download-image&quot;&gt;
-        &lt;/a&gt;
-    &lt;/div&gt;
-&lt;/div&gt;</code></pre>
-</div>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>)<span class="op">;</span></span></code></pre></div>
+<h2 id="download-file-resourcesviewsproductindex.blade.php">Download
+File <code>resources/views/product/index.blade.php</code></h2>
+<p><a
+href="https://drive.google.com/file/d/1RGPAiZoHBV_80RDnG2tFELoKIYN-CVzf/view?usp=drive_link">[Download
+Button]</a></p>
+<h2 id="langkah-6-perbarui-logika-controller">Langkah 6: Perbarui Logika
+Controller</h2>
+<p>Di <code>app/Http/Controllers/ProductController.php</code>, dalam
+metode <code>index()</code>, tambahkan kode pemfilteran ini setelah
+filter kategori:</p>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode php"><code class="sourceCode php"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="va">$sub_category_id</span> <span class="op">=</span> request()-&gt;get(<span class="st">&#39;sub_category_id&#39;</span><span class="ot">,</span> <span class="kw">null</span>)<span class="ot">;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="op">!</span> <span class="kw">empty</span>(<span class="va">$sub_category_id</span>)) {</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">$products</span>-&gt;where(<span class="st">&#39;products.sub_category_id&#39;</span><span class="ot">,</span> <span class="va">$sub_category_id</span>)<span class="ot">;</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h2 id="download-file-apphttpcontrollersproductcontroller.php">Download
+File <code>app/Http/Controllers/ProductController.php</code></h2>
+<p><a
+href="https://drive.google.com/file/d/1_O6h2hPiqxDyeJvLB-kHDcpXGUr2LNy8/view?usp=drive_link">[Download
+Button]</a></p>
 <h2 id="menguji-fitur">Menguji Fitur</h2>
 <ul>
-  <li><code>Mengaktifkan sub-kategori</code> dalam pengaturan bisnis</li>
-  <li><code>Buat kategori pengujian</code> dengan sub-kategori</li>
-  <li>
-    <code>Tambahkan produk</code> dengan penetapan sub-kategori yang berbeda
-  </li>
-  <li>
-    <code>Uji pemfilteran</code> - pilih kategori dan verifikasi pemuatan
-    sub-kategori
-  </li>
-  <li>
-    <code>Verifikasi pemfilteran berfungsi</code> - pilih sub-kategori dan
-    periksa hasilnya
-  </li>
+<li><code>Mengaktifkan sub-kategori</code> dalam pengaturan bisnis</li>
+<li><code>Buat kategori pengujian</code> dengan sub-kategori</li>
+<li><code>Tambahkan produk</code> dengan penetapan sub-kategori yang
+berbeda</li>
+<li><code>Uji pemfilteran</code> - pilih kategori dan verifikasi
+pemuatan sub-kategori</li>
+<li><code>Verifikasi pemfilteran berfungsi</code> - pilih sub-kategori
+dan periksa hasilnya</li>
 </ul>
 <h2 id="pemecahan-masalah">Pemecahan masalah</h2>
 <h3 id="masalah-umum">Masalah Umum:</h3>
 <ul>
-  <li>
-    <code>Dropdown tidak muncul</code>: Periksa apakah sub-kategori diaktifkan
-    di pengaturan bisnis
-  </li>
-  <li>
-    <code>Sub-kategori tidak dimuat</code>: Verifikasi rute AJAX
-    <code>/produk/get_sub_kategori</code> sudah ada
-  </li>
-  <li>
-    <code>Pemfilteran tidak berfungsi</code>: Pastikan kode pemfilteran
-    pengontrol telah ditambahkan dengan benar
-  </li>
-  <li>
-    <code>Kesalahan JavaScript</code>: Periksa konsol browser untuk mengetahui
-    adanya kesalahan jQuery atau sintaksis yang hilang
-  </li>
+<li><code>Dropdown tidak muncul</code>: Periksa apakah sub-kategori
+diaktifkan di pengaturan bisnis</li>
+<li><code>Sub-kategori tidak dimuat</code>: Verifikasi rute AJAX
+<code>/produk/get_sub_kategori</code> sudah ada</li>
+<li><code>Pemfilteran tidak berfungsi</code>: Pastikan kode pemfilteran
+pengontrol telah ditambahkan dengan benar</li>
+<li><code>Kesalahan JavaScript</code>: Periksa konsol browser untuk
+mengetahui adanya kesalahan jQuery atau sintaksis yang hilang</li>
 </ul>
-<p>
-  <code>Itu dia!</code> Menu tarik-turun sub-kategori sekarang akan terisi
-  secara otomatis saat kategori dipilih, dan daftar produk akan memfilternya.
-</p>
+<p><code>Itu dia!</code> Menu tarik-turun sub-kategori sekarang akan
+terisi secara otomatis saat kategori dipilih, dan daftar produk akan
+memfilternya.</p>
 <hr />
 <p><a href="2.md">Berikutnya →: Peningkatan Filter Laporan Stok</a></p>
