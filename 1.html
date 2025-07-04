@@ -1,140 +1,213 @@
-<h1
-id="menambahkan-filter-sub-kategori-ke-indeks-produk-di-ultimate-pos">Menambahkan
-Filter Sub-Kategori ke Indeks Produk di Ultimate POS</h1>
-<p><strong>Dalam tutorial ini, kita akan menambahkan filter sub-kategori
-dinamis ke indeks produk yang secara otomatis terisi berdasarkan
-kategori yang dipilih.</strong></p>
-<h2 id="prasyarat">Prasyarat</h2>
-<p>Ultimate POS sudah terinstal dan terkonfigurasi Pemahaman dasar
-tentang template Laravel dan Blade Akses database untuk pengujian</p>
-<h2 id="langkah-1-aktifkan-sub-kategori-di-pengaturan-bisnis">Langkah 1:
-Aktifkan Sub-Kategori di Pengaturan Bisnis</h2>
-<p>Langkah pertama yang penting: Buka <code>/business/settings</code> →
-bagian Produk dan pastikan <code>Sub-Kategori diaktifkan</code>. Tanpa
-ini, menu tarik-turun akan disembunyikan!</p>
-<h2 id="langkah-2-tambahkan-dropdown-sub-kategori-ke-tampilan">Langkah
-2: Tambahkan Dropdown Sub-Kategori ke Tampilan</h2>
-<p>Di <code>resources/views/product/index.blade.php</code>, temukan
-bagian filter kategori dan tambahkan kode ini tepat setelah dropdown
-kategori:</p>
-<div class="sourceCode" id="cb1"><pre
-class="sourceCode php"><code class="sourceCode php"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>div</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">class</span><span class="op">=</span><span class="st">&quot;col-sm-3 @if(!(session(&#39;business.enable_category&#39;) &amp;&amp; session(&#39;business.enable_sub_category&#39;))) hide @endif&quot;</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;</span>div <span class="kw">class</span><span class="op">=</span><span class="st">&quot;form-group&quot;</span><span class="op">&gt;</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>        {<span class="op">!!</span> <span class="cn">F</span>orm::label(<span class="st">&#39;sub_category_id&#39;</span><span class="ot">,</span> <span class="cn">__</span>(<span class="st">&#39;product.sub_category&#39;</span>) <span class="op">.</span> <span class="st">&#39;:&#39;</span>) <span class="op">!!</span>}</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>        {<span class="op">!!</span> <span class="cn">F</span>orm::select(<span class="st">&#39;sub_category_id&#39;</span><span class="ot">,</span> []<span class="ot">,</span> <span class="kw">null</span><span class="ot">,</span> [<span class="st">&#39;placeholder&#39;</span> =&gt;</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>        <span class="cn">__</span>(<span class="st">&#39;messages.please_select&#39;</span>)<span class="ot">,</span> <span class="st">&#39;class&#39;</span> =&gt; <span class="st">&#39;form-control select2&#39;</span><span class="ot">,</span><span class="st">&#39;style&#39;</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>        =&gt; <span class="st">&#39;width:100%&#39;</span><span class="ot">,</span> <span class="st">&#39;id&#39;</span> =&gt; <span class="st">&#39;product_list_filter_sub_category_id&#39;</span>])<span class="ot">;</span> <span class="op">!!</span>}</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;/</span>div<span class="op">&gt;</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;/</span>div<span class="op">&gt;</span></span></code></pre></div>
-<h2 id="langkah-3-tambahkan-javascript-untuk-pemuatan-dinamis">Langkah
-3: Tambahkan JavaScript untuk Pemuatan Dinamis</h2>
-<p>Pada berkas yang sama, di dalam bagian
-<code>@section(‘javascript’)</code>, tambahkan:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">$</span>(<span class="bu">document</span>)<span class="op">.</span><span class="fu">ready</span>(<span class="kw">function</span> () {</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">$</span>(<span class="bu">document</span>)<span class="op">.</span><span class="fu">on</span>(<span class="st">&#39;change&#39;</span><span class="op">,</span> <span class="st">&#39;#product_list_filter_category_id&#39;</span><span class="op">,</span> <span class="kw">function</span> () {</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>        <span class="fu">get_sub_categories</span>()<span class="op">;</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    })<span class="op">;</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">function</span> <span class="fu">get_sub_categories</span>() {</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>        <span class="kw">var</span> cat <span class="op">=</span> <span class="fu">$</span>(<span class="st">&#39;#product_list_filter_category_id&#39;</span>)<span class="op">.</span><span class="fu">val</span>()<span class="op">;</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>        <span class="co">// Clear subcategory selection first</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>        <span class="fu">$</span>(<span class="st">&#39;#product_list_filter_sub_category_id&#39;</span>)<span class="op">.</span><span class="fu">val</span>(<span class="st">&#39;&#39;</span>)<span class="op">.</span><span class="fu">trigger</span>(<span class="st">&#39;change&#39;</span>)<span class="op">;</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>        $<span class="op">.</span><span class="fu">ajax</span>({</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>            <span class="dt">method</span><span class="op">:</span> <span class="st">&#39;POST&#39;</span><span class="op">,</span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>            <span class="dt">url</span><span class="op">:</span> <span class="st">&#39;/products/get_sub_categories&#39;</span><span class="op">,</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>            <span class="dt">dataType</span><span class="op">:</span> <span class="st">&#39;html&#39;</span><span class="op">,</span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>            <span class="dt">data</span><span class="op">:</span> { <span class="dt">cat_id</span><span class="op">:</span> cat }<span class="op">,</span></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>            <span class="dt">success</span><span class="op">:</span> <span class="kw">function</span> (result) {</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> (result) {</span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">$</span>(<span class="st">&#39;#product_list_filter_sub_category_id&#39;</span>)<span class="op">.</span><span class="fu">html</span>(result)<span class="op">;</span></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>                    <span class="co">// Trigger change to refresh DataTable</span></span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">$</span>(<span class="st">&#39;#product_list_filter_sub_category_id&#39;</span>)<span class="op">.</span><span class="fu">trigger</span>(<span class="st">&#39;change&#39;</span>)<span class="op">;</span></span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>                }</span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>            }<span class="op">,</span></span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>        })<span class="op">;</span></span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div>
-<h2
-id="langkah-4-menambahkan-sub-kategori-ke-datatable-data-ajax">Langkah
-4: Menambahkan Sub-Kategori ke DataTable Data Ajax</h2>
-<p><code>Penting</code>: Pada file yang sama, cari kode inisialisasi
-DataTable dan tambahkan baris ini pada bagian
-<code>data: function(d)</code>:</p>
-<h3 id="untuk-tabel-produk">Untuk Tabel Produk:</h3>
-<div class="sourceCode" id="cb3"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>d<span class="op">.</span><span class="at">sub_category_id</span> <span class="op">=</span> <span class="fu">$</span>(<span class="st">&#39;#product_list_filter_sub_category_id&#39;</span>)<span class="op">.</span><span class="fu">val</span>()<span class="op">;</span></span></code></pre></div>
-<h3 id="untuk-tabel-laporan-stok">Untuk Tabel Laporan Stok:</h3>
-<div class="sourceCode" id="cb4"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>d<span class="op">.</span><span class="at">sub_category_id</span> <span class="op">=</span> <span class="fu">$</span>(<span class="st">&#39;#product_list_filter_sub_category_id&#39;</span>)<span class="op">.</span><span class="fu">val</span>()<span class="op">;</span></span></code></pre></div>
-<p>Tambahkan setelah baris <code>category_id</code> di DataTable laporan
-stok:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>d<span class="op">.</span><span class="at">category_id</span> <span class="op">=</span> <span class="fu">$</span>(<span class="st">&#39;#product_list_filter_category_id&#39;</span>)<span class="op">.</span><span class="fu">val</span>()<span class="op">;</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>d<span class="op">.</span><span class="at">sub_category_id</span> <span class="op">=</span> <span class="fu">$</span>(<span class="st">&#39;#product_list_filter_sub_category_id&#39;</span>)<span class="op">.</span><span class="fu">val</span>()<span class="op">;</span></span></code></pre></div>
-<h2
-id="langkah-5-tambahkan-filter-sub-kategori-untuk-mengubah-acara">Langkah
-5: Tambahkan Filter Sub-Kategori untuk Mengubah Acara</h2>
-<p><code>Penting</code>: Temukan pendengar peristiwa perubahan dan
-tambahkan <code>#product_list_filter_sub_category_id</code> ke
-pemilih:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">$</span>(<span class="bu">document</span>)<span class="op">.</span><span class="fu">on</span>(</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;change&#39;</span><span class="op">,</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;#product_list_filter_type, #product_list_filter_category_id, #product_list_filter_brand_id, #product_list_filter_unit_id, #product_list_filter_tax_id, #location_id, #active_state, #repair_model_id, #product_list_filter_sub_category_id&#39;</span><span class="op">,</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">function</span> () {</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (<span class="fu">$</span>(<span class="st">&#39;#product_list_tab&#39;</span>)<span class="op">.</span><span class="fu">hasClass</span>(<span class="st">&#39;active&#39;</span>)) {</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>            product_table<span class="op">.</span><span class="at">ajax</span><span class="op">.</span><span class="fu">reload</span>()<span class="op">;</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>        }</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (<span class="fu">$</span>(<span class="st">&#39;#product_stock_report&#39;</span>)<span class="op">.</span><span class="fu">hasClass</span>(<span class="st">&#39;active&#39;</span>)) {</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>            stock_report_table<span class="op">.</span><span class="at">ajax</span><span class="op">.</span><span class="fu">reload</span>()<span class="op">;</span></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>        }</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>)<span class="op">;</span></span></code></pre></div>
-<h2 id="download-file-resourcesviewsproductindex.blade.php">Download
-File <code>resources/views/product/index.blade.php</code></h2>
-<p><a
-href="https://drive.google.com/file/d/1RGPAiZoHBV_80RDnG2tFELoKIYN-CVzf/view?usp=drive_link">[Download
-Button]</a></p>
-<h2 id="langkah-6-perbarui-logika-controller">Langkah 6: Perbarui Logika
-Controller</h2>
-<p>Di <code>app/Http/Controllers/ProductController.php</code>, dalam
-metode <code>index()</code>, tambahkan kode pemfilteran ini setelah
-filter kategori:</p>
-<div class="sourceCode" id="cb7"><pre
-class="sourceCode php"><code class="sourceCode php"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="va">$sub_category_id</span> <span class="op">=</span> request()-&gt;get(<span class="st">&#39;sub_category_id&#39;</span><span class="ot">,</span> <span class="kw">null</span>)<span class="ot">;</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="op">!</span> <span class="kw">empty</span>(<span class="va">$sub_category_id</span>)) {</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">$products</span>-&gt;where(<span class="st">&#39;products.sub_category_id&#39;</span><span class="ot">,</span> <span class="va">$sub_category_id</span>)<span class="ot">;</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-<h2 id="download-file-apphttpcontrollersproductcontroller.php">Download
-File <code>app/Http/Controllers/ProductController.php</code></h2>
-<p><a
-href="https://drive.google.com/file/d/1_O6h2hPiqxDyeJvLB-kHDcpXGUr2LNy8/view?usp=drive_link">[Download
-Button]</a></p>
-<h2 id="menguji-fitur">Menguji Fitur</h2>
-<ul>
-<li><code>Mengaktifkan sub-kategori</code> dalam pengaturan bisnis</li>
-<li><code>Buat kategori pengujian</code> dengan sub-kategori</li>
-<li><code>Tambahkan produk</code> dengan penetapan sub-kategori yang
-berbeda</li>
-<li><code>Uji pemfilteran</code> - pilih kategori dan verifikasi
-pemuatan sub-kategori</li>
-<li><code>Verifikasi pemfilteran berfungsi</code> - pilih sub-kategori
-dan periksa hasilnya</li>
-</ul>
-<h2 id="pemecahan-masalah">Pemecahan masalah</h2>
-<h3 id="masalah-umum">Masalah Umum:</h3>
-<ul>
-<li><code>Dropdown tidak muncul</code>: Periksa apakah sub-kategori
-diaktifkan di pengaturan bisnis</li>
-<li><code>Sub-kategori tidak dimuat</code>: Verifikasi rute AJAX
-<code>/produk/get_sub_kategori</code> sudah ada</li>
-<li><code>Pemfilteran tidak berfungsi</code>: Pastikan kode pemfilteran
-pengontrol telah ditambahkan dengan benar</li>
-<li><code>Kesalahan JavaScript</code>: Periksa konsol browser untuk
-mengetahui adanya kesalahan jQuery atau sintaksis yang hilang</li>
-</ul>
-<p><code>Itu dia!</code> Menu tarik-turun sub-kategori sekarang akan
-terisi secara otomatis saat kategori dipilih, dan daftar produk akan
-memfilternya.</p>
-<hr />
-<p><a href="2.md">Berikutnya →: Peningkatan Filter Laporan Stok</a></p>
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ultimate POS – Filter Sub-Kategori</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>
+          📦 Menambahkan Filter Sub-Kategori ke Indeks Produk di Ultimate POS
+        </h1>
+        <p>
+          Dalam tutorial ini, kita akan menambahkan filter sub-kategori dinamis
+          ke indeks produk yang secara otomatis terisi berdasarkan kategori yang
+          dipilih.
+        </p>
+      </header>
+
+      <div class="download-box">
+        <a
+          href="assets/ultimate-pos-filter.zip"
+          download
+          class="download-button"
+        >
+          ⬇️ Unduh File Contoh
+        </a>
+      </div>
+      <!-- HOME -->
+       <div class="home-button-wrapper">
+          <a href="index.html" class="home-button">🏠 Kembali ke Beranda</a>
+        </div>
+
+      <section>
+        <h2>🖼️ Prasyarat</h2>
+        <ul>
+          <li>Ultimate POS sudah terinstal dan terkonfigurasi</li>
+          <li>Pemahaman dasar tentang template Laravel dan Blade</li>
+          <li>Akses database untuk pengujian</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>✅ Langkah 1: Aktifkan Sub-Kategori di Pengaturan Bisnis</h2>
+        <p>
+          <strong>Langkah pertama yang penting</strong>: Buka
+          <strong>/business/settings</strong> → bagian Produk dan pastikan
+          Sub-Kategori diaktifkan. Tanpa ini, menu tarik-turun akan
+          disembunyikan!
+        </p>
+      </section>
+
+      <section>
+        <h2>✅ Langkah 2: Tambahkan Dropdown Sub-Kategori ke Tampilan</h2>
+        <p>
+          Pada <strong>resources/views/product/index.blade.php</strong>, temukan
+          bagian filter kategori dan tambahkan kode ini tepat setelah menu
+          tarik-turun kategori:
+        </p>
+        <pre><code>
+        <div
+    class="col-sm-3 @if(!(session('business.enable_category') && session('business.enable_sub_category'))) hide @endif"
+>
+    <div class="form-group">
+        {!! Form::label('sub_category_id', __('product.sub_category') . ':') !!}
+        {!! Form::select('sub_category_id', [], null, ['placeholder' =>
+        __('messages.please_select'), 'class' => 'form-control select2','style'
+        => 'width:100%', 'id' => 'product_list_filter_sub_category_id']); !!}
+    </div>
+</div>
+      </code></pre>
+      </section>
+
+      <section>
+        <h2>✅ Langkah 3 – JavaScript Load Dinamis</h2>
+        <p>
+          Pada berkas yang sama, di dalam bagian
+          <strong>@section('javascript')</strong>, tambahkan:
+        </p>
+        <pre><code>
+           $(document).ready(function () {
+    $(document).on('change', '#product_list_filter_category_id', function () {
+        get_sub_categories();
+    });
+    function get_sub_categories() {
+        var cat = $('#product_list_filter_category_id').val();
+
+        // Clear subcategory selection first
+        $('#product_list_filter_sub_category_id').val('').trigger('change');
+
+        $.ajax({
+            method: 'POST',
+            url: '/products/get_sub_categories',
+            dataType: 'html',
+            data: { cat_id: cat },
+            success: function (result) {
+                if (result) {
+                    $('#product_list_filter_sub_category_id').html(result);
+                    // Trigger change to refresh DataTable
+                    $('#product_list_filter_sub_category_id').trigger('change');
+                }
+            },
+        });
+    }
+});</code></pre>
+      </section>
+
+      <section>
+        <h2>✅ Langkah 4: Menambahkan Sub-Kategori ke DataTable Data Ajax</h2>
+        <p>
+          <strong>Penting</strong>: Pada file yang sama, temukan kode
+          inisialisasi DataTable dan tambahkan baris ini di bagian
+          <strong>data: function(d)</strong>:
+        </p>
+        <h3>Untuk Tabel Produk:</h3>
+        <pre><code>d.sub_category_id = $('#product_list_filter_sub_category_id').val();</code></pre>
+        <p>Tambahkan setelah baris category_id:</p>
+        <pre><code>
+            d.category_id = $('#product_list_filter_category_id').val();
+            d.sub_category_id = $('#product_list_filter_sub_category_id').val();
+        </code></pre>
+        <h3>Untuk Tabel Laporan Stok:</h3>
+        <pre><code>
+            d.sub_category_id = $('#product_list_filter_sub_category_id').val();
+        </code></pre>
+        <p>Tambahkan setelah baris category_id di DataTable laporan stok:</p>
+        <pre><code>
+            d.category_id = $('#product_list_filter_category_id').val();
+d.sub_category_id = $('#product_list_filter_sub_category_id').val();
+        </code></pre>
+      </section>
+
+      <section>
+        <h2>
+          ✅ Langkah 5: Tambahkan Filter Sub-Kategori untuk Mengubah Event
+        </h2>
+        <p>
+          <strong>Penting</strong>: Temukan pendengar peristiwa perubahan dan
+          tambahkan <strong>#product_list_filter_sub_category_id</strong> ke
+          pemilih:
+        </p>
+        <pre><code>
+            $(document).on(
+    'change',
+    '#product_list_filter_type, #product_list_filter_category_id, #product_list_filter_brand_id, #product_list_filter_unit_id, #product_list_filter_tax_id, #location_id, #active_state, #repair_model_id, #product_list_filter_sub_category_id',
+    function () {
+        if ($('#product_list_tab').hasClass('active')) {
+            product_table.ajax.reload();
+        }
+
+        if ($('#product_stock_report').hasClass('active')) {
+            stock_report_table.ajax.reload();
+        }
+    }
+);
+        </code></pre>
+        <div class="tip">
+          Masukkan ID ini ke dalam daftar event listener
+          <code>change</code> yang me-refresh tabel.
+        </div>
+      </section>
+
+      <section>
+        <h2>✅ Langkah 6: Perbarui Logika Controller</h2>
+        <p>
+          Di <strong>app/Http/Controllers/ProductController.php</strong>, pada
+          metode index(), tambahkan kode pemfilteran ini setelah filter
+          kategori:
+        </p>
+        <pre><code>
+            $sub_category_id = request()->get('sub_category_id', null);
+if (! empty($sub_category_id)) {
+    $products->where('products.sub_category_id', $sub_category_id);
+}
+</code></pre>
+      </section>
+
+      <section>
+        <h2>Menguji fitur</h2>
+        <ul>
+            <li>Mengaktifkan sub-kategori dalam pengaturan bisnis</li>
+            <li>Membuat kategori pengujian dengan sub-kategori</li>
+            <li>Menambahkan produk dengan penetapan sub-kategori yang berbeda</li>
+            <li>Menguji pemfilteran - pilih kategori dan memverifikasi pemuatan sub-kategori</li>
+            <li>Memverifikasi pemfilteran berfungsi - pilih sub-kategori dan periksa hasilnya</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Mengatasi masalah</h2>
+        <p>Masalah-masalah Umum:</p>
+        <ul>
+            <li>Menu tarik-turun tidak muncul: Periksa apakah sub-kategori diaktifkan di pengaturan bisnis</li>
+            <li>Sub-kategori tidak dimuat: Verifikasi rute AJAX /products/get_sub_categories yang ada</li>
+            <li>Pemfilteran tidak berfungsi: Pastikan kode pemfilteran pengontrol ditambahkan dengan benar</li>
+            <li>Kesalahan JavaScript: Periksa konsol browser untuk mengetahui adanya kesalahan jQuery atau sintaksis</li>
+        </ul>
+        <div class="tip">
+          Selesai! Menu tarik-turun sub-kategori sekarang akan terisi secara otomatis ketika kategori dipilih, dan daftar produk akan menyaringnya.
+        </div>
+      </section>
+
+      <footer>
+        <!-- HOME -->
+       <div class="home-button-wrapper">
+          <a href="index.html" class="home-button">🏠 Kembali ke Beranda</a>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>
