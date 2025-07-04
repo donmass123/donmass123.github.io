@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ultimate POS – Filter Sub-Kategori</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="style1.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>📦 Panduan Implementasi Modal Tambah Produk Cepat</h1>
+        <p>
+          Panduan ini akan memandu Anda dalam mengimplementasikan modal quick
+          add product di aplikasi Laravel Anda. Modal ini memungkinkan pengguna
+          untuk menambahkan produk baru dengan cepat tanpa meninggalkan halaman
+          indeks produk.
+        </p>
+      </header>
+
+      <div class="download-box">
+        <a
+          href="assets/ultimate-pos-filter.zip"
+          download
+          class="download-button"
+        >
+          ⬇️ Unduh File Contoh
+        </a>
+      </div>
+      <!-- HOME -->
+      <div class="home-button-wrapper">
+        <a href="index.html" class="home-button">🏠 Kembali ke Beranda</a>
+      </div>
+
+      <section>
+        <h2>📁 Pohon Implementasi Lengkap</h2>
+        <ul class="tree">
+          <li>
+            <details open>
+              <summary>your-laravel-app/</summary>
+              <ul class="tree">
+                <li>
+                  <details>
+                    <summary>app/</summary>
+                    <ul class="tree">
+                      <li>
+                        <details>
+                          <summary>Http/</summary>
+                          <ul class="tree">
+                            <li>
+                              <details>
+                                <summary>Controllers/</summary>
+                                <ul class="tree">
+                                  <li class="file">
+                                    ProductController.php
+                                    <span class="tag tag-add"
+                                      >ADD METHOD: quickAddProductModal()</span
+                                    >
+                                  </li>
+                                </ul>
+                              </details>
+                            </li>
+                          </ul>
+                        </details>
+                      </li>
+                    </ul>
+                  </details>
+                </li>
+                <li>
+                  <details>
+                    <summary>lang/</summary>
+                    <ul class="tree">
+                      <li>
+                        <details>
+                          <summary>en/</summary>
+                          <ul class="tree">
+                            <li class="file">
+                              lang_v1.php
+                              <span class="tag tag-add"
+                                >ADD: 'save_and_redirect_to_label'</span
+                              >
+                            </li>
+                          </ul>
+                        </details>
+                      </li>
+                    </ul>
+                  </details>
+                </li>
+                <li>
+                  <details>
+                    <summary>resources/</summary>
+                    <ul class="tree">
+                      <li>
+                        <details>
+                          <summary>views/</summary>
+                          <ul class="tree">
+                            <li>
+                              <details>
+                                <summary>product/</summary>
+                                <ul class="tree">
+                                  <li class="file">
+                                    index.blade.php
+                                    <span class="tag tag-add"
+                                      >ADD: Button + Modal + JavaScript</span
+                                    >
+                                  </li>
+                                  <li>
+                                    <details>
+                                      <summary>partials/</summary>
+                                      <ul class="tree">
+                                        <li class="file">
+                                          quick_add_product_modal.blade.php
+                                          <span class="tag tag-new"
+                                            >NEW FILE</span
+                                          >
+                                        </li>
+                                      </ul>
+                                    </details>
+                                  </li>
+                                </ul>
+                              </details>
+                            </li>
+                          </ul>
+                        </details>
+                      </li>
+                    </ul>
+                  </details>
+                </li>
+                <li>
+                  <details>
+                    <summary>routes/</summary>
+                    <ul class="tree">
+                      <li class="file">
+                        web.php
+                        <span class="tag tag-add"
+                          >ADD: Route::get('/products/quick_add_mini_form',
+                          ...)</span
+                        >
+                      </li>
+                    </ul>
+                  </details>
+                </li>
+              </ul>
+            </details>
+          </li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Gambaran Umum</h2>
+        <p>Modal Tambah Produk Cepat menyediakan antarmuka yang ramping untuk menambahkan produk baru dengan bidang-bidang penting seperti nama produk, SKU, unit, kategori, merek, dan informasi harga. Modal ini menggunakan AJAX untuk mengirimkan formulir dan menyediakan opsi untuk menyimpan, menyimpan & menambahkan yang lain, atau menyimpan & mengalihkan ke label.</p>
+        <div class="image-box">
+          <img
+            src="https://ultimate-pos-tutorials.vercel.app/assets/images/button-quick-add-product-a34451c1a6ebe1c8cb405b602c76a953.png"
+            alt="#"
+          />
+          <p class="caption">
+            Gambar: Gambaran Umum.
+          </p>
+        </div>
+        <div class="image-box">
+          <img
+            src="https://ultimate-pos-tutorials.vercel.app/assets/images/preview-quick-add-product-c61a45d92d8262ffc6575e571b9b2d90.png"
+            alt="#"
+          />
+          <p class="caption">
+            Gambar: Gambaran Umum.
+          </p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🎯 Langkah-langkah Implementasi</h2>
+        <h3>1️⃣ Pendaftaran Routes</h3>
+        <pre><code>
+            // routes/web.php
+            Route::get('/products/quick_add_mini_form', [ProductController::class, 'quickAddProductModal']);
+        </code></pre>
+        <h3>2️⃣ Metode Controller</h3>
+        <pre><code>
+            // app/Http/Controllers/ProductController.php
+public function quickAddProductModal()
+{
+    // Controller implementation
+}
+        </code></pre>
+        <h3>3️⃣ Tampilan Blade</h3>
+        <pre><code>
+            !-- resources/views/product/partials/quick_add_product_modal.blade.php --
+            div class="modal-dialog modal-lg" role="document">
+            !-- Modal content --
+            /div>
+        </code></pre>
+        <h3>4️⃣ Pembaruan Indeks Produk</h3>
+        <pre><code>
+            !-- resources/views/product/index.blade.php --
+
+            !-- ADD: Quick Add Button --
+            a class="tw-dw-btn ... product_add_quick_product">Quick Add/a>
+
+            !-- ADD: Modal Container --
+            div class="modal fade quick_add_product_modal">/div>
+
+            !-- ADD: JavaScript Handler --
+            script>
+            $(document).on('click', '.product_add_quick_product', function() {
+            // Modal handling code
+            });
+            /script>
+        </code></pre>
+        <div class="tip">
+          Tambahkan `<` di setiap kodingan
+        </div>
+        <h3>5️⃣ File Bahasa</h3>
+        <pre><code>
+            // lang/en/lang_v1.php
+            'quick_add' => 'Quick Add',
+            'save_and_redirect_to_label' => 'Save and Redirect to Label',
+        </code></pre>
+      </section>
+
+      <section>
+        <h2>✅ Langkah 1: Aktifkan Sub-Kategori di Pengaturan Bisnis</h2>
+        <p>
+          <strong>Langkah pertama yang penting</strong>: Buka
+          <strong>/business/settings</strong> → bagian Produk dan pastikan
+          Sub-Kategori diaktifkan. Tanpa ini, menu tarik-turun akan
+          disembunyikan!
+        </p>
+      </section>
+
+      <section>
+        <h2>✅ Langkah 2: Tambahkan Dropdown Sub-Kategori ke Tampilan</h2>
+        <p>
+          Pada <strong>resources/views/product/index.blade.php</strong>, temukan
+          bagian filter kategori dan tambahkan kode ini tepat setelah menu
+          tarik-turun kategori:
+        </p>
+        <pre><code>
+        <div
+    class="col-sm-3 @if(!(session('business.enable_category') && session('business.enable_sub_category'))) hide @endif"
+>
+    <div class="form-group">
+        {!! Form::label('sub_category_id', __('product.sub_category') . ':') !!}
+        {!! Form::select('sub_category_id', [], null, ['placeholder' =>
+        __('messages.please_select'), 'class' => 'form-control select2','style'
+        => 'width:100%', 'id' => 'product_list_filter_sub_category_id']); !!}
+    </div>
+</div>
+      </code></pre>
+      </section>
+
+      <section>
+        <h2>✅ Langkah 3 – JavaScript Load Dinamis</h2>
+        <p>
+          Pada berkas yang sama, di dalam bagian
+          <strong>@section('javascript')</strong>, tambahkan:
+        </p>
+        <pre><code>
+           $(document).ready(function () {
+    $(document).on('change', '#product_list_filter_category_id', function () {
+        get_sub_categories();
+    });
+    function get_sub_categories() {
+        var cat = $('#product_list_filter_category_id').val();
+
+        // Clear subcategory selection first
+        $('#product_list_filter_sub_category_id').val('').trigger('change');
+
+        $.ajax({
+            method: 'POST',
+            url: '/products/get_sub_categories',
+            dataType: 'html',
+            data: { cat_id: cat },
+            success: function (result) {
+                if (result) {
+                    $('#product_list_filter_sub_category_id').html(result);
+                    // Trigger change to refresh DataTable
+                    $('#product_list_filter_sub_category_id').trigger('change');
+                }
+            },
+        });
+    }
+});</code></pre>
+      </section>
+
+      <section>
+        <h2>✅ Langkah 4: Menambahkan Sub-Kategori ke DataTable Data Ajax</h2>
+        <p>
+          <strong>Penting</strong>: Pada file yang sama, temukan kode
+          inisialisasi DataTable dan tambahkan baris ini di bagian
+          <strong>data: function(d)</strong>:
+        </p>
+        <h3>Untuk Tabel Produk:</h3>
+        <pre><code>d.sub_category_id = $('#product_list_filter_sub_category_id').val();</code></pre>
+        <p>Tambahkan setelah baris category_id:</p>
+        <pre><code>
+            d.category_id = $('#product_list_filter_category_id').val();
+            d.sub_category_id = $('#product_list_filter_sub_category_id').val();
+        </code></pre>
+        <h3>Untuk Tabel Laporan Stok:</h3>
+        <pre><code>
+            d.sub_category_id = $('#product_list_filter_sub_category_id').val();
+        </code></pre>
+        <p>Tambahkan setelah baris category_id di DataTable laporan stok:</p>
+        <pre><code>
+            d.category_id = $('#product_list_filter_category_id').val();
+d.sub_category_id = $('#product_list_filter_sub_category_id').val();
+        </code></pre>
+      </section>
+
+      <section>
+        <h2>
+          ✅ Langkah 5: Tambahkan Filter Sub-Kategori untuk Mengubah Event
+        </h2>
+        <p>
+          <strong>Penting</strong>: Temukan pendengar peristiwa perubahan dan
+          tambahkan <strong>#product_list_filter_sub_category_id</strong> ke
+          pemilih:
+        </p>
+        <pre><code>
+            $(document).on(
+    'change',
+    '#product_list_filter_type, #product_list_filter_category_id, #product_list_filter_brand_id, #product_list_filter_unit_id, #product_list_filter_tax_id, #location_id, #active_state, #repair_model_id, #product_list_filter_sub_category_id',
+    function () {
+        if ($('#product_list_tab').hasClass('active')) {
+            product_table.ajax.reload();
+        }
+
+        if ($('#product_stock_report').hasClass('active')) {
+            stock_report_table.ajax.reload();
+        }
+    }
+);
+        </code></pre>
+        <div class="tip">
+          Masukkan ID ini ke dalam daftar event listener
+          <code>change</code> yang me-refresh tabel.
+        </div>
+      </section>
+
+      <section>
+        <h2>✅ Langkah 6: Perbarui Logika Controller</h2>
+        <p>
+          Di <strong>app/Http/Controllers/ProductController.php</strong>, pada
+          metode index(), tambahkan kode pemfilteran ini setelah filter
+          kategori:
+        </p>
+        <pre><code>
+            $sub_category_id = request()->get('sub_category_id', null);
+if (! empty($sub_category_id)) {
+    $products->where('products.sub_category_id', $sub_category_id);
+}
+</code></pre>
+      </section>
+
+      <section>
+        <h2>Menguji fitur</h2>
+        <ul>
+          <li>Mengaktifkan sub-kategori dalam pengaturan bisnis</li>
+          <li>Membuat kategori pengujian dengan sub-kategori</li>
+          <li>Menambahkan produk dengan penetapan sub-kategori yang berbeda</li>
+          <li>
+            Menguji pemfilteran - pilih kategori dan memverifikasi pemuatan
+            sub-kategori
+          </li>
+          <li>
+            Memverifikasi pemfilteran berfungsi - pilih sub-kategori dan periksa
+            hasilnya
+          </li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Mengatasi masalah</h2>
+        <p>Masalah-masalah Umum:</p>
+        <ul>
+          <li>
+            Menu tarik-turun tidak muncul: Periksa apakah sub-kategori
+            diaktifkan di pengaturan bisnis
+          </li>
+          <li>
+            Sub-kategori tidak dimuat: Verifikasi rute AJAX
+            /products/get_sub_categories yang ada
+          </li>
+          <li>
+            Pemfilteran tidak berfungsi: Pastikan kode pemfilteran pengontrol
+            ditambahkan dengan benar
+          </li>
+          <li>
+            Kesalahan JavaScript: Periksa konsol browser untuk mengetahui adanya
+            kesalahan jQuery atau sintaksis
+          </li>
+        </ul>
+        <div class="tip">
+          Selesai! Menu tarik-turun sub-kategori sekarang akan terisi secara
+          otomatis ketika kategori dipilih, dan daftar produk akan menyaringnya.
+        </div>
+      </section>
+
+      <footer>
+        <!-- HOME -->
+        <div class="home-button-wrapper">
+          <a href="index.html" class="home-button">🏠 Kembali ke Beranda</a>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>

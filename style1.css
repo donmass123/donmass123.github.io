@@ -1,0 +1,36 @@
+ul.tree {
+      list-style: none;
+      padding-left: 1rem;
+    }
+    ul.tree li {
+      position: relative;
+      margin: 0.4rem 0;
+    }
+    ul.tree li::before {
+      content: '📁';
+      margin-right: 0.5rem;
+    }
+    ul.tree li.file::before {
+      content: '📄';
+    }
+    li span.tag {
+      background-color: #4caf50;
+      color: white;
+      font-size: 0.75rem;
+      border-radius: 4px;
+      padding: 0 6px;
+      margin-left: 0.5rem;
+    }
+    li span.tag-add {
+      background-color: #03a9f4;
+    }
+    li span.tag-new {
+      background-color: #f44336;
+    }
+    details summary {
+      cursor: pointer;
+      font-weight: bold;
+    }
+    summary::marker {
+      color: #fff;
+    }

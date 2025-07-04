@@ -1,102 +1,58 @@
-<h1 id="ukuran-db-yang-sangat-besar-di-ultimate-pos">Ukuran Db yang
-sangat besar di Ultimate POS</h1>
-<p><strong>Tujuan</strong>: Mengurangi ukuran database dengan menghapus
-entri duplikat yang dibuat secara otomatis dengan aman di
-<code>transaction_sell_lines_purchase_lines</code> - salah satu tabel
-yang paling besar di UltimatePOS.</p>
-<h3 id="apa-yang-perbaikan-ini-lakukan-untuk-saya">✅ Apa yang Perbaikan
-Ini Lakukan untuk Saya</h3>
-<ul>
-<li><strong>Database Sebelum</strong>: ~ 4 GB</li>
-<li><strong>Database Setelah Pembersihan</strong>: ~80 MB 😲</li>
-<li><strong>✅ Tidak ada masalah atau kehilangan data dalam penjualan
-atau inventaris setelah pembersihan</strong></li>
-</ul>
-<p>Jalankan SQL ini di <code>phpMyAdmin</code> (atau alat SQL
-lainnya):</p>
-<div class="sourceCode" id="cb1"><pre
-class="sourceCode sql"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> remaining_duplicates</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> transaction_sell_lines_purchase_lines t</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> (</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> purchase_line_id, <span class="fu">MIN</span>(<span class="kw">id</span>) <span class="kw">AS</span> min_id</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> transaction_sell_lines_purchase_lines</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> sell_line_id <span class="kw">IS</span> <span class="kw">NULL</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> purchase_line_id</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="kw">HAVING</span> <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="op">&gt;</span> <span class="dv">1</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>) grouped <span class="kw">ON</span> t.purchase_line_id <span class="op">=</span> grouped.purchase_line_id</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> t.sell_line_id <span class="kw">IS</span> <span class="kw">NULL</span> <span class="kw">AND</span> t.<span class="kw">id</span> <span class="op">!=</span> grouped.min_id;</span></code></pre></div>
-<h3
-id="ini-menunjukkan-berapa-banyak-baris-duplikat-yang-ada-di-mana-sell_line_id-adalah-null-masalah-duplikasi-yang-umum.">🔍
-Ini menunjukkan berapa banyak baris duplikat yang ada di mana
-sell_line_id adalah NULL (masalah duplikasi yang umum).</h3>
-<h2 id="langkah-2-pratinjau-100-rekaman-duplikat">🧾 LANGKAH 2:
-Pratinjau 100 Rekaman Duplikat</h2>
-<p><strong>Tinjau 100 duplikat sebelum penghapusan</strong>:</p>
-<div class="sourceCode" id="cb2"><pre
-class="sourceCode sql"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> dup.<span class="op">*</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> transaction_sell_lines_purchase_lines <span class="kw">AS</span> dup</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> (</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> sell_line_id, purchase_line_id, <span class="fu">MIN</span>(<span class="kw">id</span>) <span class="kw">AS</span> min_id</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> transaction_sell_lines_purchase_lines</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> sell_line_id, purchase_line_id</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="kw">HAVING</span> <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="op">&gt;</span> <span class="dv">1</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>) <span class="kw">AS</span> grouped</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="kw">ON</span> dup.sell_line_id <span class="op">=</span> grouped.sell_line_id</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="kw">AND</span> dup.purchase_line_id <span class="op">=</span> grouped.purchase_line_id</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="kw">AND</span> dup.<span class="kw">id</span> <span class="op">!=</span> grouped.min_id</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="kw">LIMIT</span> <span class="dv">100</span>;</span></code></pre></div>
-<h3
-id="tip-ini-tidak-akan-menghapus-apa-pun---hanya-mencantumkan-duplikat-untuk-pemeriksaan-anda.">🧠
-TIP: Ini tidak akan menghapus apa pun - hanya mencantumkan duplikat
-untuk pemeriksaan Anda.</h3>
-<h2 id="langkah-3-menghapus-duplikat-dengan-aman-dalam-batch">LANGKAH 3:
-Menghapus Duplikat dengan Aman dalam Batch</h2>
-<p>Mulailah dari yang kecil! Coba hapus 100 sekaligus:</p>
-<div class="sourceCode" id="cb3"><pre
-class="sourceCode sql"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">DELETE</span> <span class="kw">FROM</span> transaction_sell_lines_purchase_lines</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> <span class="kw">id</span> <span class="kw">IN</span> (</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="kw">id</span> <span class="kw">FROM</span> (</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> t.<span class="kw">id</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> transaction_sell_lines_purchase_lines t</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> (</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> sell_line_id, purchase_line_id, <span class="fu">MIN</span>(<span class="kw">id</span>) <span class="kw">AS</span> min_id</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> transaction_sell_lines_purchase_lines</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> sell_line_id, purchase_line_id</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="kw">HAVING</span> <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="op">&gt;</span> <span class="dv">1</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>) grouped <span class="kw">ON</span> (t.sell_line_id <span class="op">&lt;=&gt;</span> grouped.sell_line_id <span class="kw">AND</span> t.purchase_line_id <span class="op">=</span> grouped.purchase_line_id)</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> t.<span class="kw">id</span> <span class="op">!=</span> grouped.min_id</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="kw">LIMIT</span> <span class="dv">100</span></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>) <span class="kw">AS</span> subquery</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>);</span></code></pre></div>
-<p><strong>💡 Anda dapat mengubah LIMIT 100 menjadi 500, 1000, atau
-lebih berdasarkan</strong>:</p>
-<p>Daya server (hosting bersama, VPS, cloud) Beban saat ini (hanya
-berjalan selama waktu idle/di luar jam sibuk)</p>
-<p><strong>Sekarang lakukan kueri pengoptimalan</strong>:</p>
-<p>OPTIMALKAN TABEL
-<code>transaction_sell_lines_purchase_lines</code>;</p>
-<p>📌 Catatan Penting</p>
-<h2 id="apa-yang-harus-dilakukan.">✅ Apa yang harus dilakukan.</h2>
-<ul>
-<li>✔️ Backup database anda terlebih dahulu!</li>
-<li>✔️ Jalankan selama penggunaan rendah atau nol (tengah malam / di
-luar jam kerja)</li>
-<li>✔️ Mulailah dengan LIMIT 100 sebelum meningkat</li>
-<li>✔️ Pantau sistem POS Anda setelah setiap proses penghapusan</li>
-<li>✔️ Jumlah total dokumen sebelum/sesudah pembersihan</li>
-</ul>
-<h2 id="apa-yang-tidak-boleh-dilakukan.">❌ Apa yang TIDAK BOLEH
-DILAKUKAN.</h2>
-<ul>
-<li>❌ Jangan dijalankan selama jam kerja</li>
-<li>❌ Jangan menghapus tanpa meninjau sampel terlebih dahulu</li>
-<li>❌ Jangan menghapus secara membabi buta sekaligus pada server
-bersama</li>
-<li>❌ Jangan melewatkan pencadangan - jangan pernah!</li>
-</ul>
-<p><strong>Anda dapat menghubungi saya, saya akan membantu :</strong>
-Saya sangat menderita dan mencapai solusi bahkan saya dapat melakukan di
-server langsung Tidak ada kehilangan data yang akan terjadi</p>
-<hr />
-<p><a href="4.md">← Previous: Fitur Penagihan Jatuh Tempo</a> | <a
-href="6.md">Next →: Menghapus Transaksi, Produk, Persediaan</a></p>
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ultimate POS – Filter Sub-Kategori</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>
+          📦 Ukuran Db yang sangat besar di POS
+        </h1>
+        <p>
+          Tujuan: Mengurangi ukuran database dengan menghapus entri duplikat yang dibuat secara otomatis dengan aman di `transaction_sell_lines_purchase_lines` - salah satu tabel yang paling besar di POS.
+        </p>
+      </header>
+
+      <div class="download-box">
+        <a
+          href="assets/ultimate-pos-filter.zip"
+          download
+          class="download-button"
+        >
+          ⬇️ Unduh File Contoh
+        </a>
+      </div>
+      <!-- HOME -->
+       <div class="home-button-wrapper">
+          <a href="index.html" class="home-button">🏠 Kembali ke Beranda</a>
+        </div>
+
+      <section>
+        <h2>✅ Apa yang Perbaikan Ini Lakukan untuk Saya</h2>
+        <ul>
+          <li>Database Sebelum: ~ 4 GB</li>
+          <li>Database Setelah Pembersihan: ~80 MB 😲</li>
+          <li>✅ Tidak ada masalah atau kehilangan data dalam penjualan atau inventaris setelah pembersihan</li>
+        </ul>
+      </section>
+      
+      <section>
+        
+        <div class="tip">
+          Selesai! Menu tarik-turun sub-kategori sekarang akan terisi secara otomatis ketika kategori dipilih, dan daftar produk akan menyaringnya.
+        </div>
+      </section>
+
+      <footer>
+        <!-- HOME -->
+       <div class="home-button-wrapper">
+          <a href="index.html" class="home-button">🏠 Kembali ke Beranda</a>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>
