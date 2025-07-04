@@ -1,897 +1,470 @@
-<h1 id="adding-due-collections-to-cash-register">Adding Due Collections
-to Cash Register</h1>
-<p><strong>Learn how to add a comprehensive due collections display to
-your POS cash register that shows collected payments, pending dues, and
-overdue amounts.</strong></p>
-<h2 id="apa-yang-akan-anda-buat">📋 Apa yang Akan Anda Buat</h2>
-<p>Pratinjau Tagihan Jatuh Tempo <img
-src="https://ultimate-pos-tutorials.vercel.app/assets/images/due-collections-preview-97e82cea377112d6b45fdd95619c2a7e.png"
-alt="Alt text" /> Pada akhir tutorial ini, mesin kasir Anda akan
-ditampilkan: - ✅ <strong>Tagihan Hari Ini</strong>: Semua pembayaran
-jatuh tempo yang diterima hari ini (di seluruh bisnis) - ⚠️
-<strong>Tertunda Jatuh Tempo Hari Ini</strong>: Jumlah yang belum
-dibayar dari penjualan hari ini - 🔴 <strong>Jumlah Tertunggak</strong>:
-Iuran yang belum dibayar pada hari sebelumnya (ditampilkan jika ada)</p>
-<h3 id="fitur-fitur">Fitur-fitur</h3>
-<p>Visibilitas di seluruh bisnis (tidak hanya kasir saat ini) Data
-real-time dengan jumlah transaksi Tampilan bersyarat yang cerdas (kotak
-tunggakan hanya muncul ketika dibutuhkan) Desain responsif yang indah
-dengan ikon-ikon Penataan yang mudah dicetak Dapat digunakan pada detail
-kasir dan modal kasir tutup ### 📚 Prasyarat Sistem POS berbasis Laravel
-Pengetahuan dasar tentang PHP dan template Blade Akses ke file
-controller dan tampilan Pemahaman tentang hubungan database ### 🚀
-Langkah-langkah Implementasi ## Langkah 1: Perbarui Kelas
-CashRegisterUtil Pertama, kita akan menambahkan logika koleksi jatuh
-tempo ke <code>app/Utils/CashRegisterUtil.php</code>.</p>
-<h3 id="menambahkan-metode-penagihan-jatuh-tempo">1.1 Menambahkan Metode
-Penagihan Jatuh Tempo</h3>
-<p>Tambahkan metode ini ke
-<code>app/Utils/CashRegisterUtil.php</code>:</p>
-<div class="sourceCode" id="cb1"><pre
-class="sourceCode php"><code class="sourceCode php"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> getTodayDueCollections(<span class="va">$user_id</span><span class="ot">,</span> <span class="va">$open_time</span><span class="ot">,</span> <span class="va">$close_time</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">$business_id</span> <span class="op">=</span> request()-&gt;session()-&gt;get(<span class="st">&#39;user.business_id&#39;</span>)<span class="ot">;</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">// COLLECTED TODAY - All due payments received today</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="va">$today_due</span> <span class="op">=</span> <span class="cn">DB</span>::table(<span class="st">&#39;transaction_payments as tp&#39;</span>)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>        -&gt;<span class="fu">join</span>(<span class="st">&#39;transactions as t&#39;</span><span class="ot">,</span> <span class="st">&#39;tp.transaction_id&#39;</span><span class="ot">,</span> <span class="st">&#39;=&#39;</span><span class="ot">,</span> <span class="st">&#39;t.id&#39;</span>)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>        -&gt;whereDate(<span class="st">&#39;tp.paid_on&#39;</span><span class="ot">,</span> now()-&gt;toDateString())</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>        -&gt;where(<span class="st">&#39;t.type&#39;</span><span class="ot">,</span> <span class="st">&#39;sell&#39;</span>)</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>        -&gt;where(<span class="st">&#39;t.status&#39;</span><span class="ot">,</span> <span class="st">&#39;final&#39;</span>)</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>        -&gt;where(<span class="st">&#39;t.business_id&#39;</span><span class="ot">,</span> <span class="va">$business_id</span>)</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>        -&gt;where(<span class="st">&#39;t.payment_status&#39;</span><span class="ot">,</span> <span class="st">&#39;!=&#39;</span><span class="ot">,</span> <span class="st">&#39;paid&#39;</span>)</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>        -&gt;select(</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>            <span class="cn">DB</span>::raw(<span class="st">&#39;SUM(tp.amount) as total_due_collected&#39;</span>)<span class="ot">,</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>            <span class="cn">DB</span>::raw(<span class="st">&#39;COUNT(DISTINCT tp.transaction_id) as total_due_transactions&#39;</span>)</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>        -&gt;first()<span class="ot">;</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    <span class="co">// PENDING DUES TODAY - Today&#39;s transactions with pending amounts</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    <span class="va">$pending_dues</span> <span class="op">=</span> <span class="cn">DB</span>::table(<span class="st">&#39;transactions as t&#39;</span>)</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>        -&gt;leftJoin(<span class="st">&#39;transaction_payments as tp&#39;</span><span class="ot">,</span> <span class="st">&#39;t.id&#39;</span><span class="ot">,</span> <span class="st">&#39;=&#39;</span><span class="ot">,</span> <span class="st">&#39;tp.transaction_id&#39;</span>)</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>        -&gt;whereDate(<span class="st">&#39;t.transaction_date&#39;</span><span class="ot">,</span> now()-&gt;toDateString())</span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>        -&gt;where(<span class="st">&#39;t.type&#39;</span><span class="ot">,</span> <span class="st">&#39;sell&#39;</span>)</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>        -&gt;where(<span class="st">&#39;t.status&#39;</span><span class="ot">,</span> <span class="st">&#39;final&#39;</span>)</span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>        -&gt;where(<span class="st">&#39;t.business_id&#39;</span><span class="ot">,</span> <span class="va">$business_id</span>)</span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>        -&gt;where(<span class="st">&#39;t.payment_status&#39;</span><span class="ot">,</span> <span class="st">&#39;!=&#39;</span><span class="ot">,</span> <span class="st">&#39;paid&#39;</span>)</span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>        -&gt;select(</span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>            <span class="cn">DB</span>::raw(<span class="st">&#39;SUM(t.final_total - COALESCE(tp_total.total_paid, 0)) as total_pending_due&#39;</span>)<span class="ot">,</span></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>            <span class="cn">DB</span>::raw(<span class="st">&#39;COUNT(t.id) as total_pending_transactions&#39;</span>)</span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>        -&gt;leftJoin(</span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>            <span class="cn">DB</span>::raw(<span class="st">&#39;(SELECT transaction_id, SUM(amount) as total_paid FROM transaction_payments GROUP BY transaction_id) as tp_total&#39;</span>)<span class="ot">,</span></span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;t.id&#39;</span><span class="ot">,</span> <span class="st">&#39;=&#39;</span><span class="ot">,</span> <span class="st">&#39;tp_total.transaction_id&#39;</span></span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>        -&gt;first()<span class="ot">;</span></span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>    <span class="co">// OVERDUE AMOUNTS - Previous days&#39; unpaid transactions</span></span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>    <span class="va">$overdue_amounts</span> <span class="op">=</span> <span class="cn">DB</span>::table(<span class="st">&#39;transactions as t&#39;</span>)</span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>        -&gt;leftJoin(<span class="st">&#39;transaction_payments as tp&#39;</span><span class="ot">,</span> <span class="st">&#39;t.id&#39;</span><span class="ot">,</span> <span class="st">&#39;=&#39;</span><span class="ot">,</span> <span class="st">&#39;tp.transaction_id&#39;</span>)</span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>        -&gt;whereDate(<span class="st">&#39;t.transaction_date&#39;</span><span class="ot">,</span> <span class="st">&#39;&lt;&#39;</span><span class="ot">,</span> now()-&gt;toDateString())</span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>        -&gt;where(<span class="st">&#39;t.type&#39;</span><span class="ot">,</span> <span class="st">&#39;sell&#39;</span>)</span>
-<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>        -&gt;where(<span class="st">&#39;t.status&#39;</span><span class="ot">,</span> <span class="st">&#39;final&#39;</span>)</span>
-<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>        -&gt;where(<span class="st">&#39;t.business_id&#39;</span><span class="ot">,</span> <span class="va">$business_id</span>)</span>
-<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>        -&gt;where(<span class="st">&#39;t.payment_status&#39;</span><span class="ot">,</span> <span class="st">&#39;!=&#39;</span><span class="ot">,</span> <span class="st">&#39;paid&#39;</span>)</span>
-<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>        -&gt;select(</span>
-<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>            <span class="cn">DB</span>::raw(<span class="st">&#39;SUM(t.final_total - COALESCE(tp_total.total_paid, 0)) as total_overdue&#39;</span>)<span class="ot">,</span></span>
-<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>            <span class="cn">DB</span>::raw(<span class="st">&#39;COUNT(t.id) as total_overdue_transactions&#39;</span>)</span>
-<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>        -&gt;leftJoin(</span>
-<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>            <span class="cn">DB</span>::raw(<span class="st">&#39;(SELECT transaction_id, SUM(amount) as total_paid FROM transaction_payments GROUP BY transaction_id) as tp_total&#39;</span>)<span class="ot">,</span></span>
-<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;t.id&#39;</span><span class="ot">,</span> <span class="st">&#39;=&#39;</span><span class="ot">,</span> <span class="st">&#39;tp_total.transaction_id&#39;</span></span>
-<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>        -&gt;first()<span class="ot">;</span></span>
-<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [</span>
-<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;due_collected_today&#39;</span> =&gt; <span class="va">$today_due</span>-&gt;total_due_collected <span class="op">??</span> <span class="dv">0</span><span class="ot">,</span></span>
-<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;due_transactions_count&#39;</span> =&gt; <span class="va">$today_due</span>-&gt;total_due_transactions <span class="op">??</span> <span class="dv">0</span><span class="ot">,</span></span>
-<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;pending_due_today&#39;</span> =&gt; <span class="va">$pending_dues</span>-&gt;total_pending_due <span class="op">??</span> <span class="dv">0</span><span class="ot">,</span></span>
-<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;pending_transactions_count&#39;</span> =&gt; <span class="va">$pending_dues</span>-&gt;total_pending_transactions <span class="op">??</span> <span class="dv">0</span><span class="ot">,</span></span>
-<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;overdue_amount&#39;</span> =&gt; <span class="va">$overdue_amounts</span>-&gt;total_overdue <span class="op">??</span> <span class="dv">0</span><span class="ot">,</span></span>
-<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;overdue_transactions_count&#39;</span> =&gt; <span class="va">$overdue_amounts</span>-&gt;total_overdue_transactions <span class="op">??</span> <span class="dv">0</span><span class="ot">,</span></span>
-<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a>    ]<span class="ot">;</span></span>
-<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-<h3 id="menambahkan-impor-db-ke-cashregisterutil">1.2 Menambahkan Impor
-DB ke <code>CashRegisterUtil</code></h3>
-<p>Pastikan Anda telah mengimpor tampilan DB di bagian atas
-<code>CashRegisterUtil.php</code>:</p>
-<p><code>use Illuminate\Support\Facades\DB;</code></p>
-<div class="container">
-<pre><code>&lt;div class=&quot;download-section&quot;&gt;
-    &lt;h2&gt;Download File `app/Utils/CashRegisterUtil.php`&lt;/h2&gt;
-    &lt;div class=&quot;download-button-container&quot;&gt;
-        &lt;a href=&quot;https://drive.google.com/file/d/1bZfduzWPglFuaBYXj1HGVfvvI4aNNiXF/view?usp=drive_link&quot;&gt;
-            &lt;img src=&quot;https://as1.ftcdn.net/jpg/00/30/14/94/1000_F_30149473_uM8rqqkj6aGbnkINikbbbVSOwa4jsTed.jpg&quot; alt=&quot;Download Button&quot; class=&quot;download-image&quot;&gt;
-        &lt;/a&gt;
-    &lt;/div&gt;
-&lt;/div&gt;</code></pre>
-</div>
-<h2 id="langkah-2-perbarui-controller">Langkah 2: Perbarui
-Controller</h2>
-<p>Sekarang perbarui
-<code>app/Http/Controllers/CashRegisterController.php</code> untuk
-memanggil metode utilitas.</p>
-<h3 id="perbarui-metode-getregisterdetails">2.1 Perbarui Metode
-<code>getRegisterDetails</code></h3>
-<p>Perbarui metode <code>getRegisterDetails()</code> yang ada di
-controller:</p>
-<div class="sourceCode" id="cb3"><pre
-class="sourceCode php"><code class="sourceCode php"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> getRegisterDetails()</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="op">!</span>auth()-&gt;user()-&gt;can(<span class="st">&#39;view_cash_register&#39;</span>)) {</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>        abort(<span class="dv">403</span><span class="ot">,</span> <span class="st">&#39;Unauthorized action.&#39;</span>)<span class="ot">;</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="va">$business_id</span> <span class="op">=</span> request()-&gt;session()-&gt;get(<span class="st">&#39;user.business_id&#39;</span>)<span class="ot">;</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="va">$register_details</span> <span class="op">=</span> <span class="va">$this</span>-&gt;cashRegisterUtil-&gt;getRegisterDetails()<span class="ot">;</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="va">$user_id</span> <span class="op">=</span> auth()-&gt;user()-&gt;id<span class="ot">;</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="va">$open_time</span> <span class="op">=</span> <span class="va">$register_details</span>[<span class="st">&#39;open_time&#39;</span>]<span class="ot">;</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="va">$close_time</span> <span class="op">=</span> \<span class="cn">C</span>arbon::now()-&gt;toDateTimeString()<span class="ot">;</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    <span class="va">$is_types_of_service_enabled</span> <span class="op">=</span> <span class="va">$this</span>-&gt;moduleUtil-&gt;isModuleEnabled(<span class="st">&#39;types_of_service&#39;</span>)<span class="ot">;</span></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    <span class="va">$details</span> <span class="op">=</span> <span class="va">$this</span>-&gt;cashRegisterUtil-&gt;getRegisterTransactionDetails(<span class="va">$user_id</span><span class="ot">,</span> <span class="va">$open_time</span><span class="ot">,</span> <span class="va">$close_time</span><span class="ot">,</span> <span class="va">$is_types_of_service_enabled</span>)<span class="ot">;</span></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Add due collections data using utility method</span></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    <span class="va">$due_collections</span> <span class="op">=</span> <span class="va">$this</span>-&gt;cashRegisterUtil-&gt;getTodayDueCollections(<span class="va">$user_id</span><span class="ot">,</span> <span class="va">$open_time</span><span class="ot">,</span> <span class="va">$close_time</span>)<span class="ot">;</span></span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    <span class="va">$details</span>[<span class="st">&#39;due_collections&#39;</span>] <span class="op">=</span> <span class="va">$due_collections</span><span class="ot">;</span></span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    <span class="va">$payment_types</span> <span class="op">=</span> <span class="va">$this</span>-&gt;cashRegisterUtil-&gt;payment_types(<span class="va">$register_details</span>-&gt;location_id<span class="ot">,</span> <span class="kw">true</span><span class="ot">,</span> <span class="va">$business_id</span>)<span class="ot">;</span></span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> view(<span class="st">&#39;cash_register.register_details&#39;</span>)</span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>        -&gt;with(<span class="fu">compact</span>(<span class="st">&#39;register_details&#39;</span><span class="ot">,</span> <span class="st">&#39;details&#39;</span><span class="ot">,</span> <span class="st">&#39;payment_types&#39;</span><span class="ot">,</span> <span class="st">&#39;close_time&#39;</span>))<span class="ot">;</span></span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-<h3 id="memperbarui-metode-closeregister-opsional">2.2 Memperbarui
-Metode closeRegister (Opsional)</h3>
-<p>Jika Anda menginginkan fitur yang sama pada modal close register
-Anda, perbarui metode <code>closeRegister()</code> dengan cara yang
-sama:</p>
-<div class="sourceCode" id="cb4"><pre
-class="sourceCode php"><code class="sourceCode php"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> closeRegister()</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">// ... existing code ...</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="va">$details</span> <span class="op">=</span> <span class="va">$this</span>-&gt;cashRegisterUtil-&gt;getRegisterTransactionDetails(<span class="va">$user_id</span><span class="ot">,</span> <span class="va">$open_time</span><span class="ot">,</span> <span class="va">$close_time</span><span class="ot">,</span> <span class="va">$is_types_of_service_enabled</span>)<span class="ot">;</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Add due collections data for close register modal too</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="va">$due_collections</span> <span class="op">=</span> <span class="va">$this</span>-&gt;cashRegisterUtil-&gt;getTodayDueCollections(<span class="va">$user_id</span><span class="ot">,</span> <span class="va">$open_time</span><span class="ot">,</span> <span class="va">$close_time</span>)<span class="ot">;</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="va">$details</span>[<span class="st">&#39;due_collections&#39;</span>] <span class="op">=</span> <span class="va">$due_collections</span><span class="ot">;</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    <span class="co">// ... rest of existing code ...</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-<div class="container">
-<pre><code>&lt;div class=&quot;download-section&quot;&gt;
-    &lt;h2&gt;Download File `app/Http/Controllers/CashRegisterController.php`&lt;/h2&gt;
-    &lt;div class=&quot;download-button-container&quot;&gt;
-        &lt;a href=&quot;https://drive.google.com/file/d/1SHz2MRtQwpmojfTujGOh68K8iQPgA8PJ/view?usp=drive_link&quot;&gt;
-            &lt;img src=&quot;https://as1.ftcdn.net/jpg/00/30/14/94/1000_F_30149473_uM8rqqkj6aGbnkINikbbbVSOwa4jsTed.jpg&quot; alt=&quot;Download Button&quot; class=&quot;download-image&quot;&gt;
-        &lt;/a&gt;
-    &lt;/div&gt;
-&lt;/div&gt;</code></pre>
-</div>
-<h2 id="langkah-3-perbarui-tampilan-detail-register">Langkah 3: Perbarui
-Tampilan Detail Register</h2>
-<p>Perbarui file
-<code>resources/views/cash_register/register_details.blade.php</code>.</p>
-<h3 id="menambahkan-bagian-tagihan-jatuh-tempo">3.1 Menambahkan Bagian
-Tagihan Jatuh Tempo</h3>
-<div class="sourceCode" id="cb6"><pre
-class="sourceCode php"><code class="sourceCode php"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>div <span class="kw">class</span><span class="op">=</span><span class="st">&quot;modal-dialog modal-lg&quot;</span> role<span class="op">=</span><span class="st">&quot;document&quot;</span><span class="op">&gt;</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="op">&lt;</span>div <span class="kw">class</span><span class="op">=</span><span class="st">&quot;modal-content&quot;</span><span class="op">&gt;</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;</span>div <span class="kw">class</span><span class="op">=</span><span class="st">&quot;modal-header mini_print&quot;</span><span class="op">&gt;</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>      <span class="op">&lt;</span>button type<span class="op">=</span><span class="st">&quot;button&quot;</span> <span class="kw">class</span><span class="op">=</span><span class="st">&quot;close no-print&quot;</span> data<span class="op">-</span>dismiss<span class="op">=</span><span class="st">&quot;modal&quot;</span> aria<span class="op">-</span>label<span class="op">=</span><span class="st">&quot;Close&quot;</span><span class="op">&gt;&lt;</span>span</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>          aria<span class="op">-</span>hidden<span class="op">=</span><span class="st">&quot;true&quot;</span><span class="op">&gt;&amp;</span>times<span class="ot">;</span><span class="op">&lt;/</span>span<span class="op">&gt;&lt;/</span>button<span class="op">&gt;</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>      <span class="op">&lt;</span>h3 <span class="kw">class</span><span class="op">=</span><span class="st">&quot;modal-title&quot;</span><span class="op">&gt;</span><span class="pp">@</span>lang( <span class="st">&#39;cash_register.register_details&#39;</span> ) ( {{ \<span class="cn">C</span>arbon::createFromFormat(<span class="st">&#39;Y-m-d H:i:s&#39;</span><span class="ot">,</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>        <span class="va">$register_details</span>-&gt;open_time)-&gt;format(<span class="st">&#39;jS M, Y h:i A&#39;</span>) }} <span class="op">-</span> {{\<span class="cn">C</span>arbon::createFromFormat(<span class="st">&#39;Y-m-d H:i:s&#39;</span><span class="ot">,</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>        <span class="va">$close_time</span>)-&gt;format(<span class="st">&#39;jS M, Y h:i A&#39;</span>)}} )<span class="op">&lt;/</span>h3<span class="op">&gt;</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;/</span>div<span class="op">&gt;</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;</span>div <span class="kw">class</span><span class="op">=</span><span class="st">&quot;modal-body&quot;</span><span class="op">&gt;</span></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>      <span class="pp">@</span><span class="kw">include</span>(<span class="st">&#39;cash_register.payment_details&#39;</span>)</span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>      <span class="op">&lt;!--</span> <span class="cn">A</span>dd <span class="cn">D</span>ue <span class="cn">C</span>ollections <span class="cn">S</span>ection <span class="op">-</span>-&gt;</span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>      <span class="pp">@</span><span class="cf">if</span>(<span class="kw">isset</span>(<span class="va">$details</span>[<span class="st">&#39;due_collections&#39;</span>]))</span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>      <span class="op">&lt;</span>hr <span class="kw">class</span><span class="op">=</span><span class="st">&quot;no-print&quot;</span><span class="op">&gt;</span></span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>      <span class="op">&lt;</span>div <span class="kw">class</span><span class="op">=</span><span class="st">&quot;row no-print&quot;</span><span class="op">&gt;</span></span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>        <span class="op">&lt;</span>div <span class="kw">class</span><span class="op">=</span><span class="st">&quot;col-md-12&quot;</span><span class="op">&gt;</span></span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>          <span class="op">&lt;</span>h4<span class="op">&gt;&lt;</span>i <span class="kw">class</span><span class="op">=</span><span class="st">&quot;fa fa-clock-o&quot;</span><span class="op">&gt;&lt;/</span>i<span class="op">&gt;</span> <span class="pp">@</span>lang(<span class="st">&#39;lang_v1.due_collections_today&#39;</span>)<span class="op">&lt;/</span>h4<span class="op">&gt;</span></span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>          <span class="op">&lt;</span>div <span class="kw">class</span><span class="op">=</span><span class="st">&quot;row&quot;</span><span class="op">&gt;</span></span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>            <span class="op">&lt;</span>div <span class="kw">class</span><span class="op">=</span><span class="st">&quot;col-md-4&quot;</span><span class="op">&gt;</span></span>
-<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>              <span class="op">&lt;</span>div <span class="kw">class</span><span class="op">=</span><span class="st">&quot;info-box bg-green due-collection-box&quot;</span><span class="op">&gt;</span></span>
-<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>                <span class="op">&lt;</span>span <span class="kw">class</span><span class="op">=</span><span class="st">&quot;info-box-icon due-collection-icon&quot;</span><span class="op">&gt;</span></span>
-<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>                  <span class="op">&lt;</span>i <span class="kw">class</span><span class="op">=</span><span class="st">&quot;fa fa-check-circle&quot;</span><span class="op">&gt;&lt;/</span>i<span class="op">&gt;</span></span>
-<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>                <span class="op">&lt;/</span>span<span class="op">&gt;</span></span>
-<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>                <span class="op">&lt;</span>div <span class="kw">class</span><span class="op">=</span><span class="st">&quot;info-box-content&quot;</span><span class="op">&gt;</span></span>
-<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>                  <span class="op">&lt;</span>span <span class="kw">class</span><span class="op">=</span><span class="st">&quot;info-box-text due-collection-title&quot;</span><span class="op">&gt;</span><span class="pp">@</span>lang(<span class="st">&#39;lang_v1.collected_today&#39;</span>)<span class="op">&lt;/</span>span<span class="op">&gt;</span></span>
-<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>                  <span class="op">&lt;</span>span <span class="kw">class</span><span class="op">=</span><span class="st">&quot;info-box-number due-collection-amount&quot;</span><span class="op">&gt;</span></span>
-<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>                    <span class="pp">@</span>format_currency(<span class="va">$details</span>[<span class="st">&#39;due_collections&#39;</span>][<span class="st">&#39;due_collected_today&#39;</span>])</span>
-<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>                  <span class="op">&lt;/</span>span<span class="op">&gt;</span></span>
-<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>                  <span class="op">&lt;</span>span <span class="kw">class</span><span class="op">=</span><span class="st">&quot;progress-description due-collection-desc&quot;</span><span class="op">&gt;</span></span>
-<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>                    {{ <span class="va">$details</span>[<span class="st">&#39;due_collections&#39;</span>][<span class="st">&#39;due_transactions_count&#39;</span>] }} <span class="pp">@</span>lang(<span class="st">&#39;lang_v1.transactions&#39;</span>)</span>
-<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>                  <span class="op">&lt;/</span>span<span class="op">&gt;</span></span>
-<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>                <span class="op">&lt;/</span>div<span class="op">&gt;</span></span>
-<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>              <span class="op">&lt;/</span>div<span class="op">&gt;</span></span>
-<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>            <span class="op">&lt;/</span>div<span class="op">&gt;</span></span>
-<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a>            <span class="op">&lt;</span>div <span class="kw">class</span><span class="op">=</span><span class="st">&quot;col-md-4&quot;</span><span class="op">&gt;</span></span>
-<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a>              <span class="op">&lt;</span>div <span class="kw">class</span><span class="op">=</span><span class="st">&quot;info-box bg-yellow due-collection-box&quot;</span><span class="op">&gt;</span></span>
-<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a>                <span class="op">&lt;</span>span <span class="kw">class</span><span class="op">=</span><span class="st">&quot;info-box-icon due-collection-icon&quot;</span><span class="op">&gt;</span></span>
-<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a>                  <span class="op">&lt;</span>i <span class="kw">class</span><span class="op">=</span><span class="st">&quot;fa fa-exclamation-triangle&quot;</span><span class="op">&gt;&lt;/</span>i<span class="op">&gt;</span></span>
-<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a>                <span class="op">&lt;/</span>span<span class="op">&gt;</span></span>
-<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a>                <span class="op">&lt;</span>div <span class="kw">class</span><span class="op">=</span><span class="st">&quot;info-box-content&quot;</span><span class="op">&gt;</span></span>
-<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a>                  <span class="op">&lt;</span>span <span class="kw">class</span><span class="op">=</span><span class="st">&quot;info-box-text due-collection-title&quot;</span><span class="op">&gt;</span><span class="pp">@</span>lang(<span class="st">&#39;lang_v1.pending_due_today&#39;</span>)<span class="op">&lt;/</span>span<span class="op">&gt;</span></span>
-<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a>                  <span class="op">&lt;</span>span <span class="kw">class</span><span class="op">=</span><span class="st">&quot;info-box-number due-collection-amount&quot;</span><span class="op">&gt;</span></span>
-<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a>                    <span class="pp">@</span>format_currency(<span class="va">$details</span>[<span class="st">&#39;due_collections&#39;</span>][<span class="st">&#39;pending_due_today&#39;</span>])</span>
-<span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a>                  <span class="op">&lt;/</span>span<span class="op">&gt;</span></span>
-<span id="cb6-47"><a href="#cb6-47" aria-hidden="true" tabindex="-1"></a>                  <span class="op">&lt;</span>span <span class="kw">class</span><span class="op">=</span><span class="st">&quot;progress-description due-collection-desc&quot;</span><span class="op">&gt;</span></span>
-<span id="cb6-48"><a href="#cb6-48" aria-hidden="true" tabindex="-1"></a>                    {{ <span class="va">$details</span>[<span class="st">&#39;due_collections&#39;</span>][<span class="st">&#39;pending_transactions_count&#39;</span>] }} <span class="pp">@</span>lang(<span class="st">&#39;lang_v1.transactions&#39;</span>)</span>
-<span id="cb6-49"><a href="#cb6-49" aria-hidden="true" tabindex="-1"></a>                  <span class="op">&lt;/</span>span<span class="op">&gt;</span></span>
-<span id="cb6-50"><a href="#cb6-50" aria-hidden="true" tabindex="-1"></a>                <span class="op">&lt;/</span>div<span class="op">&gt;</span></span>
-<span id="cb6-51"><a href="#cb6-51" aria-hidden="true" tabindex="-1"></a>              <span class="op">&lt;/</span>div<span class="op">&gt;</span></span>
-<span id="cb6-52"><a href="#cb6-52" aria-hidden="true" tabindex="-1"></a>            <span class="op">&lt;/</span>div<span class="op">&gt;</span></span>
-<span id="cb6-53"><a href="#cb6-53" aria-hidden="true" tabindex="-1"></a>            <span class="pp">@</span><span class="cf">if</span>(<span class="va">$details</span>[<span class="st">&#39;due_collections&#39;</span>][<span class="st">&#39;overdue_amount&#39;</span>] <span class="op">&gt;</span> <span class="dv">0</span>)</span>
-<span id="cb6-54"><a href="#cb6-54" aria-hidden="true" tabindex="-1"></a>            <span class="op">&lt;</span>div <span class="kw">class</span><span class="op">=</span><span class="st">&quot;col-md-4&quot;</span><span class="op">&gt;</span></span>
-<span id="cb6-55"><a href="#cb6-55" aria-hidden="true" tabindex="-1"></a>              <span class="op">&lt;</span>div <span class="kw">class</span><span class="op">=</span><span class="st">&quot;info-box bg-red due-collection-box&quot;</span><span class="op">&gt;</span></span>
-<span id="cb6-56"><a href="#cb6-56" aria-hidden="true" tabindex="-1"></a>                <span class="op">&lt;</span>span <span class="kw">class</span><span class="op">=</span><span class="st">&quot;info-box-icon due-collection-icon&quot;</span><span class="op">&gt;</span></span>
-<span id="cb6-57"><a href="#cb6-57" aria-hidden="true" tabindex="-1"></a>                  <span class="op">&lt;</span>i <span class="kw">class</span><span class="op">=</span><span class="st">&quot;fa fa-exclamation-circle&quot;</span><span class="op">&gt;&lt;/</span>i<span class="op">&gt;</span></span>
-<span id="cb6-58"><a href="#cb6-58" aria-hidden="true" tabindex="-1"></a>                <span class="op">&lt;/</span>span<span class="op">&gt;</span></span>
-<span id="cb6-59"><a href="#cb6-59" aria-hidden="true" tabindex="-1"></a>                <span class="op">&lt;</span>div <span class="kw">class</span><span class="op">=</span><span class="st">&quot;info-box-content&quot;</span><span class="op">&gt;</span></span>
-<span id="cb6-60"><a href="#cb6-60" aria-hidden="true" tabindex="-1"></a>                  <span class="op">&lt;</span>span <span class="kw">class</span><span class="op">=</span><span class="st">&quot;info-box-text due-collection-title&quot;</span><span class="op">&gt;</span><span class="pp">@</span>lang(<span class="st">&#39;lang_v1.overdue_amounts&#39;</span>)<span class="op">&lt;/</span>span<span class="op">&gt;</span></span>
-<span id="cb6-61"><a href="#cb6-61" aria-hidden="true" tabindex="-1"></a>                  <span class="op">&lt;</span>span <span class="kw">class</span><span class="op">=</span><span class="st">&quot;info-box-number due-collection-amount&quot;</span><span class="op">&gt;</span></span>
-<span id="cb6-62"><a href="#cb6-62" aria-hidden="true" tabindex="-1"></a>                    <span class="pp">@</span>format_currency(<span class="va">$details</span>[<span class="st">&#39;due_collections&#39;</span>][<span class="st">&#39;overdue_amount&#39;</span>])</span>
-<span id="cb6-63"><a href="#cb6-63" aria-hidden="true" tabindex="-1"></a>                  <span class="op">&lt;/</span>span<span class="op">&gt;</span></span>
-<span id="cb6-64"><a href="#cb6-64" aria-hidden="true" tabindex="-1"></a>                  <span class="op">&lt;</span>span <span class="kw">class</span><span class="op">=</span><span class="st">&quot;progress-description due-collection-desc&quot;</span><span class="op">&gt;</span></span>
-<span id="cb6-65"><a href="#cb6-65" aria-hidden="true" tabindex="-1"></a>                    {{ <span class="va">$details</span>[<span class="st">&#39;due_collections&#39;</span>][<span class="st">&#39;overdue_transactions_count&#39;</span>] }} <span class="pp">@</span>lang(<span class="st">&#39;lang_v1.transactions&#39;</span>)</span>
-<span id="cb6-66"><a href="#cb6-66" aria-hidden="true" tabindex="-1"></a>                  <span class="op">&lt;/</span>span<span class="op">&gt;</span></span>
-<span id="cb6-67"><a href="#cb6-67" aria-hidden="true" tabindex="-1"></a>                <span class="op">&lt;/</span>div<span class="op">&gt;</span></span>
-<span id="cb6-68"><a href="#cb6-68" aria-hidden="true" tabindex="-1"></a>              <span class="op">&lt;/</span>div<span class="op">&gt;</span></span>
-<span id="cb6-69"><a href="#cb6-69" aria-hidden="true" tabindex="-1"></a>            <span class="op">&lt;/</span>div<span class="op">&gt;</span></span>
-<span id="cb6-70"><a href="#cb6-70" aria-hidden="true" tabindex="-1"></a>            <span class="pp">@</span><span class="cf">endif</span></span>
-<span id="cb6-71"><a href="#cb6-71" aria-hidden="true" tabindex="-1"></a>          <span class="op">&lt;/</span>div<span class="op">&gt;</span></span>
-<span id="cb6-72"><a href="#cb6-72" aria-hidden="true" tabindex="-1"></a>        <span class="op">&lt;/</span>div<span class="op">&gt;</span></span>
-<span id="cb6-73"><a href="#cb6-73" aria-hidden="true" tabindex="-1"></a>      <span class="op">&lt;/</span>div<span class="op">&gt;</span></span>
-<span id="cb6-74"><a href="#cb6-74" aria-hidden="true" tabindex="-1"></a>      <span class="pp">@</span><span class="cf">endif</span></span>
-<span id="cb6-75"><a href="#cb6-75" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-76"><a href="#cb6-76" aria-hidden="true" tabindex="-1"></a>      <span class="op">&lt;</span>hr<span class="op">&gt;</span></span>
-<span id="cb6-77"><a href="#cb6-77" aria-hidden="true" tabindex="-1"></a>      <span class="pp">@</span><span class="cf">if</span>(<span class="op">!</span><span class="kw">empty</span>(<span class="va">$register_details</span>-&gt;denominations))</span>
-<span id="cb6-78"><a href="#cb6-78" aria-hidden="true" tabindex="-1"></a>      <span class="pp">@</span>php</span>
-<span id="cb6-79"><a href="#cb6-79" aria-hidden="true" tabindex="-1"></a>      <span class="va">$total</span> <span class="op">=</span> <span class="dv">0</span><span class="ot">;</span></span>
-<span id="cb6-80"><a href="#cb6-80" aria-hidden="true" tabindex="-1"></a>      <span class="pp">@</span>endphp</span>
-<span id="cb6-81"><a href="#cb6-81" aria-hidden="true" tabindex="-1"></a>      <span class="op">&lt;</span>div <span class="kw">class</span><span class="op">=</span><span class="st">&quot;row&quot;</span><span class="op">&gt;</span></span>
-<span id="cb6-82"><a href="#cb6-82" aria-hidden="true" tabindex="-1"></a>        <span class="op">&lt;</span>div <span class="kw">class</span><span class="op">=</span><span class="st">&quot;col-md-8 col-sm-12&quot;</span><span class="op">&gt;</span></span>
-<span id="cb6-83"><a href="#cb6-83" aria-hidden="true" tabindex="-1"></a>          <span class="op">&lt;</span>h3<span class="op">&gt;</span><span class="pp">@</span>lang( <span class="st">&#39;lang_v1.cash_denominations&#39;</span> )<span class="op">&lt;/</span>h3<span class="op">&gt;</span></span>
-<span id="cb6-84"><a href="#cb6-84" aria-hidden="true" tabindex="-1"></a>          <span class="op">&lt;</span>table <span class="kw">class</span><span class="op">=</span><span class="st">&quot;table table-slim&quot;</span><span class="op">&gt;</span></span>
-<span id="cb6-85"><a href="#cb6-85" aria-hidden="true" tabindex="-1"></a>            <span class="op">&lt;</span>thead<span class="op">&gt;</span></span>
-<span id="cb6-86"><a href="#cb6-86" aria-hidden="true" tabindex="-1"></a>              <span class="op">&lt;</span>tr<span class="op">&gt;</span></span>
-<span id="cb6-87"><a href="#cb6-87" aria-hidden="true" tabindex="-1"></a>                <span class="op">&lt;</span>th width<span class="op">=</span><span class="st">&quot;20%&quot;</span> <span class="kw">class</span><span class="op">=</span><span class="st">&quot;text-right&quot;</span><span class="op">&gt;</span><span class="pp">@</span>lang(<span class="st">&#39;lang_v1.denomination&#39;</span>)<span class="op">&lt;/</span>th<span class="op">&gt;</span></span>
-<span id="cb6-88"><a href="#cb6-88" aria-hidden="true" tabindex="-1"></a>                <span class="op">&lt;</span>th width<span class="op">=</span><span class="st">&quot;20%&quot;</span><span class="op">&gt;&amp;</span>nbsp<span class="ot">;</span><span class="op">&lt;/</span>th<span class="op">&gt;</span></span>
-<span id="cb6-89"><a href="#cb6-89" aria-hidden="true" tabindex="-1"></a>                <span class="op">&lt;</span>th width<span class="op">=</span><span class="st">&quot;20%&quot;</span> <span class="kw">class</span><span class="op">=</span><span class="st">&quot;text-center&quot;</span><span class="op">&gt;</span><span class="pp">@</span>lang(<span class="st">&#39;lang_v1.count&#39;</span>)<span class="op">&lt;/</span>th<span class="op">&gt;</span></span>
-<span id="cb6-90"><a href="#cb6-90" aria-hidden="true" tabindex="-1"></a>                <span class="op">&lt;</span>th width<span class="op">=</span><span class="st">&quot;20%&quot;</span><span class="op">&gt;&amp;</span>nbsp<span class="ot">;</span><span class="op">&lt;/</span>th<span class="op">&gt;</span></span>
-<span id="cb6-91"><a href="#cb6-91" aria-hidden="true" tabindex="-1"></a>                <span class="op">&lt;</span>th width<span class="op">=</span><span class="st">&quot;20%&quot;</span> <span class="kw">class</span><span class="op">=</span><span class="st">&quot;text-left&quot;</span><span class="op">&gt;</span><span class="pp">@</span>lang(<span class="st">&#39;sale.subtotal&#39;</span>)<span class="op">&lt;/</span>th<span class="op">&gt;</span></span>
-<span id="cb6-92"><a href="#cb6-92" aria-hidden="true" tabindex="-1"></a>              <span class="op">&lt;/</span>tr<span class="op">&gt;</span></span>
-<span id="cb6-93"><a href="#cb6-93" aria-hidden="true" tabindex="-1"></a>            <span class="op">&lt;/</span>thead<span class="op">&gt;</span></span>
-<span id="cb6-94"><a href="#cb6-94" aria-hidden="true" tabindex="-1"></a>            <span class="op">&lt;</span>tbody<span class="op">&gt;</span></span>
-<span id="cb6-95"><a href="#cb6-95" aria-hidden="true" tabindex="-1"></a>              <span class="pp">@</span><span class="cf">foreach</span>(<span class="va">$register_details</span>-&gt;denominations <span class="kw">as</span> <span class="va">$key</span> =&gt; <span class="va">$value</span>)</span>
-<span id="cb6-96"><a href="#cb6-96" aria-hidden="true" tabindex="-1"></a>              <span class="op">&lt;</span>tr<span class="op">&gt;</span></span>
-<span id="cb6-97"><a href="#cb6-97" aria-hidden="true" tabindex="-1"></a>                <span class="op">&lt;</span>td <span class="kw">class</span><span class="op">=</span><span class="st">&quot;text-right&quot;</span><span class="op">&gt;</span>{{<span class="va">$key</span>}}<span class="op">&lt;/</span>td<span class="op">&gt;</span></span>
-<span id="cb6-98"><a href="#cb6-98" aria-hidden="true" tabindex="-1"></a>                <span class="op">&lt;</span>td <span class="kw">class</span><span class="op">=</span><span class="st">&quot;text-center&quot;</span><span class="op">&gt;</span><span class="cn">X</span><span class="op">&lt;/</span>td<span class="op">&gt;</span></span>
-<span id="cb6-99"><a href="#cb6-99" aria-hidden="true" tabindex="-1"></a>                <span class="op">&lt;</span>td <span class="kw">class</span><span class="op">=</span><span class="st">&quot;text-center&quot;</span><span class="op">&gt;</span>{{<span class="va">$value</span> <span class="op">??</span> <span class="dv">0</span>}}<span class="op">&lt;/</span>td<span class="op">&gt;</span></span>
-<span id="cb6-100"><a href="#cb6-100" aria-hidden="true" tabindex="-1"></a>                <span class="op">&lt;</span>td <span class="kw">class</span><span class="op">=</span><span class="st">&quot;text-center&quot;</span><span class="op">&gt;=&lt;/</span>td<span class="op">&gt;</span></span>
-<span id="cb6-101"><a href="#cb6-101" aria-hidden="true" tabindex="-1"></a>                <span class="op">&lt;</span>td <span class="kw">class</span><span class="op">=</span><span class="st">&quot;text-left&quot;</span><span class="op">&gt;</span></span>
-<span id="cb6-102"><a href="#cb6-102" aria-hidden="true" tabindex="-1"></a>                  <span class="pp">@</span>format_currency(<span class="va">$key</span> <span class="op">*</span> <span class="va">$value</span>)</span>
-<span id="cb6-103"><a href="#cb6-103" aria-hidden="true" tabindex="-1"></a>                <span class="op">&lt;/</span>td<span class="op">&gt;</span></span>
-<span id="cb6-104"><a href="#cb6-104" aria-hidden="true" tabindex="-1"></a>              <span class="op">&lt;/</span>tr<span class="op">&gt;</span></span>
-<span id="cb6-105"><a href="#cb6-105" aria-hidden="true" tabindex="-1"></a>              <span class="pp">@</span>php</span>
-<span id="cb6-106"><a href="#cb6-106" aria-hidden="true" tabindex="-1"></a>              <span class="va">$total</span> <span class="op">+=</span> (<span class="va">$key</span> <span class="op">*</span> <span class="va">$value</span>)<span class="ot">;</span></span>
-<span id="cb6-107"><a href="#cb6-107" aria-hidden="true" tabindex="-1"></a>              <span class="pp">@</span>endphp</span>
-<span id="cb6-108"><a href="#cb6-108" aria-hidden="true" tabindex="-1"></a>              <span class="pp">@</span><span class="cf">endforeach</span></span>
-<span id="cb6-109"><a href="#cb6-109" aria-hidden="true" tabindex="-1"></a>            <span class="op">&lt;/</span>tbody<span class="op">&gt;</span></span>
-<span id="cb6-110"><a href="#cb6-110" aria-hidden="true" tabindex="-1"></a>            <span class="op">&lt;</span>tfoot<span class="op">&gt;</span></span>
-<span id="cb6-111"><a href="#cb6-111" aria-hidden="true" tabindex="-1"></a>              <span class="op">&lt;</span>tr<span class="op">&gt;</span></span>
-<span id="cb6-112"><a href="#cb6-112" aria-hidden="true" tabindex="-1"></a>                <span class="op">&lt;</span>th colspan<span class="op">=</span><span class="st">&quot;4&quot;</span> <span class="kw">class</span><span class="op">=</span><span class="st">&quot;text-center&quot;</span><span class="op">&gt;</span><span class="pp">@</span>lang(<span class="st">&#39;sale.total&#39;</span>)<span class="op">&lt;/</span>th<span class="op">&gt;</span></span>
-<span id="cb6-113"><a href="#cb6-113" aria-hidden="true" tabindex="-1"></a>                <span class="op">&lt;</span>td<span class="op">&gt;</span><span class="pp">@</span>format_currency(<span class="va">$total</span>)<span class="op">&lt;/</span>td<span class="op">&gt;</span></span>
-<span id="cb6-114"><a href="#cb6-114" aria-hidden="true" tabindex="-1"></a>              <span class="op">&lt;/</span>tr<span class="op">&gt;</span></span>
-<span id="cb6-115"><a href="#cb6-115" aria-hidden="true" tabindex="-1"></a>            <span class="op">&lt;/</span>tfoot<span class="op">&gt;</span></span>
-<span id="cb6-116"><a href="#cb6-116" aria-hidden="true" tabindex="-1"></a>          <span class="op">&lt;/</span>table<span class="op">&gt;</span></span>
-<span id="cb6-117"><a href="#cb6-117" aria-hidden="true" tabindex="-1"></a>        <span class="op">&lt;/</span>div<span class="op">&gt;</span></span>
-<span id="cb6-118"><a href="#cb6-118" aria-hidden="true" tabindex="-1"></a>      <span class="op">&lt;/</span>div<span class="op">&gt;</span></span>
-<span id="cb6-119"><a href="#cb6-119" aria-hidden="true" tabindex="-1"></a>      <span class="pp">@</span><span class="cf">endif</span></span>
-<span id="cb6-120"><a href="#cb6-120" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-121"><a href="#cb6-121" aria-hidden="true" tabindex="-1"></a>      <span class="op">&lt;</span>div <span class="kw">class</span><span class="op">=</span><span class="st">&quot;row&quot;</span><span class="op">&gt;</span></span>
-<span id="cb6-122"><a href="#cb6-122" aria-hidden="true" tabindex="-1"></a>        <span class="op">&lt;</span>div <span class="kw">class</span><span class="op">=</span><span class="st">&quot;col-xs-6&quot;</span><span class="op">&gt;</span></span>
-<span id="cb6-123"><a href="#cb6-123" aria-hidden="true" tabindex="-1"></a>          <span class="op">&lt;</span>b<span class="op">&gt;</span><span class="pp">@</span>lang(<span class="st">&#39;report.user&#39;</span>)<span class="ot">:</span><span class="op">&lt;/</span>b<span class="op">&gt;</span> {{ <span class="va">$register_details</span>-&gt;user_name}}<span class="op">&lt;</span>br<span class="op">&gt;</span></span>
-<span id="cb6-124"><a href="#cb6-124" aria-hidden="true" tabindex="-1"></a>          <span class="op">&lt;</span>b<span class="op">&gt;</span><span class="pp">@</span>lang(<span class="st">&#39;business.email&#39;</span>)<span class="ot">:</span><span class="op">&lt;/</span>b<span class="op">&gt;</span> {{ <span class="va">$register_details</span>-&gt;email}}<span class="op">&lt;</span>br<span class="op">&gt;</span></span>
-<span id="cb6-125"><a href="#cb6-125" aria-hidden="true" tabindex="-1"></a>          <span class="op">&lt;</span>b<span class="op">&gt;</span><span class="pp">@</span>lang(<span class="st">&#39;business.business_location&#39;</span>)<span class="ot">:</span><span class="op">&lt;/</span>b<span class="op">&gt;</span> {{ <span class="va">$register_details</span>-&gt;location_name}}<span class="op">&lt;</span>br<span class="op">&gt;</span></span>
-<span id="cb6-126"><a href="#cb6-126" aria-hidden="true" tabindex="-1"></a>        <span class="op">&lt;/</span>div<span class="op">&gt;</span></span>
-<span id="cb6-127"><a href="#cb6-127" aria-hidden="true" tabindex="-1"></a>        <span class="pp">@</span><span class="cf">if</span>(<span class="op">!</span><span class="kw">empty</span>(<span class="va">$register_details</span>-&gt;closing_note))</span>
-<span id="cb6-128"><a href="#cb6-128" aria-hidden="true" tabindex="-1"></a>        <span class="op">&lt;</span>div <span class="kw">class</span><span class="op">=</span><span class="st">&quot;col-xs-6&quot;</span><span class="op">&gt;</span></span>
-<span id="cb6-129"><a href="#cb6-129" aria-hidden="true" tabindex="-1"></a>          <span class="op">&lt;</span>strong<span class="op">&gt;</span><span class="pp">@</span>lang(<span class="st">&#39;cash_register.closing_note&#39;</span>)<span class="ot">:</span><span class="op">&lt;/</span>strong<span class="op">&gt;&lt;</span>br<span class="op">&gt;</span></span>
-<span id="cb6-130"><a href="#cb6-130" aria-hidden="true" tabindex="-1"></a>          {{<span class="va">$register_details</span>-&gt;closing_note}}</span>
-<span id="cb6-131"><a href="#cb6-131" aria-hidden="true" tabindex="-1"></a>        <span class="op">&lt;/</span>div<span class="op">&gt;</span></span>
-<span id="cb6-132"><a href="#cb6-132" aria-hidden="true" tabindex="-1"></a>        <span class="pp">@</span><span class="cf">endif</span></span>
-<span id="cb6-133"><a href="#cb6-133" aria-hidden="true" tabindex="-1"></a>      <span class="op">&lt;/</span>div<span class="op">&gt;</span></span>
-<span id="cb6-134"><a href="#cb6-134" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;/</span>div<span class="op">&gt;</span></span>
-<span id="cb6-135"><a href="#cb6-135" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-136"><a href="#cb6-136" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;</span>div <span class="kw">class</span><span class="op">=</span><span class="st">&quot;modal-footer&quot;</span><span class="op">&gt;</span></span>
-<span id="cb6-137"><a href="#cb6-137" aria-hidden="true" tabindex="-1"></a>      <span class="op">&lt;</span>button type<span class="op">=</span><span class="st">&quot;button&quot;</span> <span class="kw">class</span><span class="op">=</span><span class="st">&quot;tw-dw-btn tw-dw-btn-primary tw-text-white no-print print-mini-button&quot;</span></span>
-<span id="cb6-138"><a href="#cb6-138" aria-hidden="true" tabindex="-1"></a>        aria<span class="op">-</span>label<span class="op">=</span><span class="st">&quot;Print&quot;</span><span class="op">&gt;</span></span>
-<span id="cb6-139"><a href="#cb6-139" aria-hidden="true" tabindex="-1"></a>        <span class="op">&lt;</span>i <span class="kw">class</span><span class="op">=</span><span class="st">&quot;fa fa-print&quot;</span><span class="op">&gt;&lt;/</span>i<span class="op">&gt;</span> <span class="pp">@</span>lang(<span class="st">&#39;messages.print_mini&#39;</span>)</span>
-<span id="cb6-140"><a href="#cb6-140" aria-hidden="true" tabindex="-1"></a>      <span class="op">&lt;/</span>button<span class="op">&gt;</span></span>
-<span id="cb6-141"><a href="#cb6-141" aria-hidden="true" tabindex="-1"></a>      <span class="op">&lt;</span>button type<span class="op">=</span><span class="st">&quot;button&quot;</span> <span class="kw">class</span><span class="op">=</span><span class="st">&quot;tw-dw-btn tw-dw-btn-primary tw-text-white no-print&quot;</span> aria<span class="op">-</span>label<span class="op">=</span><span class="st">&quot;Print&quot;</span></span>
-<span id="cb6-142"><a href="#cb6-142" aria-hidden="true" tabindex="-1"></a>        onclick<span class="op">=</span><span class="st">&quot;$(this).closest(&#39;div.modal&#39;).printThis();&quot;</span><span class="op">&gt;</span></span>
-<span id="cb6-143"><a href="#cb6-143" aria-hidden="true" tabindex="-1"></a>        <span class="op">&lt;</span>i <span class="kw">class</span><span class="op">=</span><span class="st">&quot;fa fa-print&quot;</span><span class="op">&gt;&lt;/</span>i<span class="op">&gt;</span> <span class="pp">@</span>lang( <span class="st">&#39;messages.print_detailed&#39;</span> )</span>
-<span id="cb6-144"><a href="#cb6-144" aria-hidden="true" tabindex="-1"></a>      <span class="op">&lt;/</span>button<span class="op">&gt;</span></span>
-<span id="cb6-145"><a href="#cb6-145" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-146"><a href="#cb6-146" aria-hidden="true" tabindex="-1"></a>      <span class="op">&lt;</span>button type<span class="op">=</span><span class="st">&quot;button&quot;</span> <span class="kw">class</span><span class="op">=</span><span class="st">&quot;tw-dw-btn tw-dw-btn-neutral tw-text-white no-print&quot;</span> data<span class="op">-</span>dismiss<span class="op">=</span><span class="st">&quot;modal&quot;</span><span class="op">&gt;</span><span class="pp">@</span>lang(</span>
-<span id="cb6-147"><a href="#cb6-147" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;messages.cancel&#39;</span> )</span>
-<span id="cb6-148"><a href="#cb6-148" aria-hidden="true" tabindex="-1"></a>      <span class="op">&lt;/</span>button<span class="op">&gt;</span></span>
-<span id="cb6-149"><a href="#cb6-149" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;/</span>div<span class="op">&gt;</span></span>
-<span id="cb6-150"><a href="#cb6-150" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-151"><a href="#cb6-151" aria-hidden="true" tabindex="-1"></a>  <span class="op">&lt;/</span>div<span class="op">&gt;&lt;!--</span> <span class="op">/.</span>modal<span class="op">-</span>content <span class="op">-</span>-&gt;</span>
-<span id="cb6-152"><a href="#cb6-152" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;/</span>div<span class="op">&gt;&lt;!--</span> <span class="op">/.</span>modal<span class="op">-</span>dialog <span class="op">-</span>-&gt;</span>
-<span id="cb6-153"><a href="#cb6-153" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-154"><a href="#cb6-154" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>style type<span class="op">=</span><span class="st">&quot;text/css&quot;</span><span class="op">&gt;</span></span>
-<span id="cb6-155"><a href="#cb6-155" aria-hidden="true" tabindex="-1"></a>  <span class="pp">@</span>media <span class="kw">print</span> {</span>
-<span id="cb6-156"><a href="#cb6-156" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span>modal {</span>
-<span id="cb6-157"><a href="#cb6-157" aria-hidden="true" tabindex="-1"></a>      position<span class="ot">:</span> absolute<span class="ot">;</span></span>
-<span id="cb6-158"><a href="#cb6-158" aria-hidden="true" tabindex="-1"></a>      left<span class="ot">:</span> <span class="dv">0</span><span class="ot">;</span></span>
-<span id="cb6-159"><a href="#cb6-159" aria-hidden="true" tabindex="-1"></a>      top<span class="ot">:</span> <span class="dv">0</span><span class="ot">;</span></span>
-<span id="cb6-160"><a href="#cb6-160" aria-hidden="true" tabindex="-1"></a>      margin<span class="ot">:</span> <span class="dv">0</span><span class="ot">;</span></span>
-<span id="cb6-161"><a href="#cb6-161" aria-hidden="true" tabindex="-1"></a>      padding<span class="ot">:</span> <span class="dv">0</span><span class="ot">;</span></span>
-<span id="cb6-162"><a href="#cb6-162" aria-hidden="true" tabindex="-1"></a>      overflow<span class="ot">:</span> visible <span class="op">!</span>important<span class="ot">;</span></span>
-<span id="cb6-163"><a href="#cb6-163" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb6-164"><a href="#cb6-164" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-165"><a href="#cb6-165" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span>info<span class="op">-</span>box {</span>
-<span id="cb6-166"><a href="#cb6-166" aria-hidden="true" tabindex="-1"></a>      border<span class="ot">:</span> <span class="dv">1</span>px solid <span class="co">#ddd;</span></span>
-<span id="cb6-167"><a href="#cb6-167" aria-hidden="true" tabindex="-1"></a>      margin<span class="op">-</span>bottom<span class="ot">:</span> <span class="er">10</span>px<span class="ot">;</span></span>
-<span id="cb6-168"><a href="#cb6-168" aria-hidden="true" tabindex="-1"></a>      padding<span class="ot">:</span> <span class="er">10</span>px<span class="ot">;</span></span>
-<span id="cb6-169"><a href="#cb6-169" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb6-170"><a href="#cb6-170" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-171"><a href="#cb6-171" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span>info<span class="op">-</span>box<span class="op">-</span>icon {</span>
-<span id="cb6-172"><a href="#cb6-172" aria-hidden="true" tabindex="-1"></a>      display<span class="ot">:</span> none<span class="ot">;</span></span>
-<span id="cb6-173"><a href="#cb6-173" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb6-174"><a href="#cb6-174" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb6-175"><a href="#cb6-175" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-176"><a href="#cb6-176" aria-hidden="true" tabindex="-1"></a>  <span class="co">/* Due Collection Styling */</span></span>
-<span id="cb6-177"><a href="#cb6-177" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span>due<span class="op">-</span>collection<span class="op">-</span>box {</span>
-<span id="cb6-178"><a href="#cb6-178" aria-hidden="true" tabindex="-1"></a>    border<span class="op">-</span>radius<span class="ot">:</span> <span class="dv">8</span>px<span class="ot">;</span></span>
-<span id="cb6-179"><a href="#cb6-179" aria-hidden="true" tabindex="-1"></a>    box<span class="op">-</span>shadow<span class="ot">:</span> <span class="dv">0</span> <span class="dv">2</span>px <span class="dv">4</span>px rgba(<span class="dv">0</span><span class="ot">,</span> <span class="dv">0</span><span class="ot">,</span> <span class="dv">0</span><span class="ot">,</span> <span class="fl">0.1</span>)<span class="ot">;</span></span>
-<span id="cb6-180"><a href="#cb6-180" aria-hidden="true" tabindex="-1"></a>    overflow<span class="ot">:</span> hidden<span class="ot">;</span></span>
-<span id="cb6-181"><a href="#cb6-181" aria-hidden="true" tabindex="-1"></a>    position<span class="ot">:</span> relative<span class="ot">;</span></span>
-<span id="cb6-182"><a href="#cb6-182" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb6-183"><a href="#cb6-183" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-184"><a href="#cb6-184" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span>due<span class="op">-</span>collection<span class="op">-</span>icon {</span>
-<span id="cb6-185"><a href="#cb6-185" aria-hidden="true" tabindex="-1"></a>    background<span class="ot">:</span> rgba(<span class="dv">255</span><span class="ot">,</span> <span class="dv">255</span><span class="ot">,</span> <span class="dv">255</span><span class="ot">,</span> <span class="fl">0.2</span>) <span class="op">!</span>important<span class="ot">;</span></span>
-<span id="cb6-186"><a href="#cb6-186" aria-hidden="true" tabindex="-1"></a>    color<span class="ot">:</span> white <span class="op">!</span>important<span class="ot">;</span></span>
-<span id="cb6-187"><a href="#cb6-187" aria-hidden="true" tabindex="-1"></a>    display<span class="ot">:</span> block <span class="op">!</span>important<span class="ot">;</span></span>
-<span id="cb6-188"><a href="#cb6-188" aria-hidden="true" tabindex="-1"></a>    width<span class="ot">:</span> <span class="er">70</span>px <span class="op">!</span>important<span class="ot">;</span></span>
-<span id="cb6-189"><a href="#cb6-189" aria-hidden="true" tabindex="-1"></a>    height<span class="ot">:</span> <span class="er">70</span>px <span class="op">!</span>important<span class="ot">;</span></span>
-<span id="cb6-190"><a href="#cb6-190" aria-hidden="true" tabindex="-1"></a>    line<span class="op">-</span>height<span class="ot">:</span> <span class="er">70</span>px <span class="op">!</span>important<span class="ot">;</span></span>
-<span id="cb6-191"><a href="#cb6-191" aria-hidden="true" tabindex="-1"></a>    text<span class="op">-</span>align<span class="ot">:</span> center <span class="op">!</span>important<span class="ot">;</span></span>
-<span id="cb6-192"><a href="#cb6-192" aria-hidden="true" tabindex="-1"></a>    <span class="dt">float</span><span class="ot">:</span> left <span class="op">!</span>important<span class="ot">;</span></span>
-<span id="cb6-193"><a href="#cb6-193" aria-hidden="true" tabindex="-1"></a>    font<span class="op">-</span>size<span class="ot">:</span> <span class="er">30</span>px <span class="op">!</span>important<span class="ot">;</span></span>
-<span id="cb6-194"><a href="#cb6-194" aria-hidden="true" tabindex="-1"></a>    border<span class="op">-</span>radius<span class="ot">:</span> <span class="dv">0</span> <span class="op">!</span>important<span class="ot">;</span></span>
-<span id="cb6-195"><a href="#cb6-195" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb6-196"><a href="#cb6-196" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-197"><a href="#cb6-197" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span>due<span class="op">-</span>collection<span class="op">-</span>icon i {</span>
-<span id="cb6-198"><a href="#cb6-198" aria-hidden="true" tabindex="-1"></a>    color<span class="ot">:</span> white <span class="op">!</span>important<span class="ot">;</span></span>
-<span id="cb6-199"><a href="#cb6-199" aria-hidden="true" tabindex="-1"></a>    font<span class="op">-</span>size<span class="ot">:</span> <span class="er">30</span>px <span class="op">!</span>important<span class="ot">;</span></span>
-<span id="cb6-200"><a href="#cb6-200" aria-hidden="true" tabindex="-1"></a>    display<span class="ot">:</span> inline<span class="op">-</span>block <span class="op">!</span>important<span class="ot">;</span></span>
-<span id="cb6-201"><a href="#cb6-201" aria-hidden="true" tabindex="-1"></a>    vertical<span class="op">-</span>align<span class="ot">:</span> middle <span class="op">!</span>important<span class="ot">;</span></span>
-<span id="cb6-202"><a href="#cb6-202" aria-hidden="true" tabindex="-1"></a>    line<span class="op">-</span>height<span class="ot">:</span> normal <span class="op">!</span>important<span class="ot">;</span></span>
-<span id="cb6-203"><a href="#cb6-203" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb6-204"><a href="#cb6-204" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-205"><a href="#cb6-205" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span>due<span class="op">-</span>collection<span class="op">-</span>title {</span>
-<span id="cb6-206"><a href="#cb6-206" aria-hidden="true" tabindex="-1"></a>    color<span class="ot">:</span> white <span class="op">!</span>important<span class="ot">;</span></span>
-<span id="cb6-207"><a href="#cb6-207" aria-hidden="true" tabindex="-1"></a>    font<span class="op">-</span>weight<span class="ot">:</span> bold<span class="ot">;</span></span>
-<span id="cb6-208"><a href="#cb6-208" aria-hidden="true" tabindex="-1"></a>    font<span class="op">-</span>size<span class="ot">:</span> <span class="er">14</span>px<span class="ot">;</span></span>
-<span id="cb6-209"><a href="#cb6-209" aria-hidden="true" tabindex="-1"></a>    text<span class="op">-</span>transform<span class="ot">:</span> uppercase<span class="ot">;</span></span>
-<span id="cb6-210"><a href="#cb6-210" aria-hidden="true" tabindex="-1"></a>    letter<span class="op">-</span>spacing<span class="ot">:</span> <span class="fl">0.5</span>px<span class="ot">;</span></span>
-<span id="cb6-211"><a href="#cb6-211" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb6-212"><a href="#cb6-212" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-213"><a href="#cb6-213" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span>due<span class="op">-</span>collection<span class="op">-</span>amount {</span>
-<span id="cb6-214"><a href="#cb6-214" aria-hidden="true" tabindex="-1"></a>    color<span class="ot">:</span> white <span class="op">!</span>important<span class="ot">;</span></span>
-<span id="cb6-215"><a href="#cb6-215" aria-hidden="true" tabindex="-1"></a>    font<span class="op">-</span>weight<span class="ot">:</span> bold<span class="ot">;</span></span>
-<span id="cb6-216"><a href="#cb6-216" aria-hidden="true" tabindex="-1"></a>    font<span class="op">-</span>size<span class="ot">:</span> <span class="er">24</span>px<span class="ot">;</span></span>
-<span id="cb6-217"><a href="#cb6-217" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb6-218"><a href="#cb6-218" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-219"><a href="#cb6-219" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span>due<span class="op">-</span>collection<span class="op">-</span>desc {</span>
-<span id="cb6-220"><a href="#cb6-220" aria-hidden="true" tabindex="-1"></a>    color<span class="ot">:</span> rgba(<span class="dv">255</span><span class="ot">,</span> <span class="dv">255</span><span class="ot">,</span> <span class="dv">255</span><span class="ot">,</span> <span class="fl">0.9</span>) <span class="op">!</span>important<span class="ot">;</span></span>
-<span id="cb6-221"><a href="#cb6-221" aria-hidden="true" tabindex="-1"></a>    font<span class="op">-</span>size<span class="ot">:</span> <span class="er">12</span>px<span class="ot">;</span></span>
-<span id="cb6-222"><a href="#cb6-222" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb6-223"><a href="#cb6-223" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-224"><a href="#cb6-224" aria-hidden="true" tabindex="-1"></a>  <span class="co">/* Ensure proper spacing and layout */</span></span>
-<span id="cb6-225"><a href="#cb6-225" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span>due<span class="op">-</span>collection<span class="op">-</span>box <span class="op">.</span>info<span class="op">-</span>box<span class="op">-</span>content {</span>
-<span id="cb6-226"><a href="#cb6-226" aria-hidden="true" tabindex="-1"></a>    margin<span class="op">-</span>left<span class="ot">:</span> <span class="er">85</span>px<span class="ot">;</span></span>
-<span id="cb6-227"><a href="#cb6-227" aria-hidden="true" tabindex="-1"></a>    padding<span class="ot">:</span> <span class="er">15</span>px <span class="er">10</span>px<span class="ot">;</span></span>
-<span id="cb6-228"><a href="#cb6-228" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb6-229"><a href="#cb6-229" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;/</span>style<span class="op">&gt;</span></span>
-<span id="cb6-230"><a href="#cb6-230" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-231"><a href="#cb6-231" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>script<span class="op">&gt;</span></span>
-<span id="cb6-232"><a href="#cb6-232" aria-hidden="true" tabindex="-1"></a>  $(document)<span class="op">.</span>ready(<span class="kw">function</span> () {</span>
-<span id="cb6-233"><a href="#cb6-233" aria-hidden="true" tabindex="-1"></a>      $(document)<span class="op">.</span>on(<span class="st">&#39;click&#39;</span><span class="ot">,</span> <span class="st">&#39;.print-mini-button&#39;</span><span class="ot">,</span> <span class="kw">function</span> () {</span>
-<span id="cb6-234"><a href="#cb6-234" aria-hidden="true" tabindex="-1"></a>          $(<span class="st">&#39;.mini_print&#39;</span>)<span class="op">.</span>printThis()<span class="ot">;</span></span>
-<span id="cb6-235"><a href="#cb6-235" aria-hidden="true" tabindex="-1"></a>      })<span class="ot">;</span></span>
-<span id="cb6-236"><a href="#cb6-236" aria-hidden="true" tabindex="-1"></a>  })<span class="ot">;</span></span>
-<span id="cb6-237"><a href="#cb6-237" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;/</span>script<span class="op">&gt;</span></span></code></pre></div>
-<h3 id="add-css-styling">3.2 Add CSS Styling</h3>
-<p>Add this CSS to your view file (before the closing
-<code>&lt;/div&gt;</code> tags):</p>
-<div class="sourceCode" id="cb7"><pre
-class="sourceCode css"><code class="sourceCode css"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>&lt;style type=&quot;text/css&quot;<span class="op">&gt;</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="im">@media</span> <span class="dv">print</span> {</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">.modal</span> {</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>        <span class="kw">position</span>: <span class="dv">absolute</span><span class="op">;</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>        <span class="kw">left</span>: <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>        <span class="kw">top</span>: <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>        <span class="kw">margin</span>: <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>        <span class="kw">padding</span>: <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>        <span class="kw">overflow</span>: <span class="dv">visible</span><span class="at">!important</span><span class="op">;</span></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">.info-box</span> {</span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>      <span class="kw">border</span>: <span class="dv">1</span><span class="dt">px</span> <span class="dv">solid</span> <span class="cn">#ddd</span><span class="op">;</span></span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>      <span class="kw">margin-bottom</span>: <span class="dv">10</span><span class="dt">px</span><span class="op">;</span></span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>      <span class="kw">padding</span>: <span class="dv">10</span><span class="dt">px</span><span class="op">;</span></span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">.info-box-icon</span> {</span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>      <span class="kw">display</span>: <span class="dv">none</span><span class="op">;</span></span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>  <span class="co">/* Due Collection Styling */</span></span>
-<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">.due-collection-box</span> {</span>
-<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>    <span class="kw">border-radius</span>: <span class="dv">8</span><span class="dt">px</span><span class="op">;</span></span>
-<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>    <span class="kw">box-shadow</span>: <span class="dv">0</span> <span class="dv">2</span><span class="dt">px</span> <span class="dv">4</span><span class="dt">px</span> <span class="fu">rgba(</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0.1</span><span class="fu">)</span><span class="op">;</span></span>
-<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>    <span class="kw">overflow</span>: <span class="dv">hidden</span><span class="op">;</span></span>
-<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>    <span class="kw">position</span>: <span class="dv">relative</span><span class="op">;</span></span>
-<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">.due-collection-icon</span> {</span>
-<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>    <span class="kw">background</span>: <span class="fu">rgba(</span><span class="dv">255</span><span class="op">,</span><span class="dv">255</span><span class="op">,</span><span class="dv">255</span><span class="op">,</span><span class="dv">0.2</span><span class="fu">)</span> <span class="at">!important</span><span class="op">;</span></span>
-<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>    <span class="kw">color</span>: <span class="cn">white</span> <span class="at">!important</span><span class="op">;</span></span>
-<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>    <span class="kw">display</span>: <span class="dv">block</span> <span class="at">!important</span><span class="op">;</span></span>
-<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>    <span class="kw">width</span>: <span class="dv">70</span><span class="dt">px</span> <span class="at">!important</span><span class="op">;</span></span>
-<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>    <span class="kw">height</span>: <span class="dv">70</span><span class="dt">px</span> <span class="at">!important</span><span class="op">;</span></span>
-<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>    <span class="kw">line-height</span>: <span class="dv">70</span><span class="dt">px</span> <span class="at">!important</span><span class="op">;</span></span>
-<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a>    <span class="kw">text-align</span>: <span class="dv">center</span> <span class="at">!important</span><span class="op">;</span></span>
-<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a>    <span class="kw">float</span>: <span class="dv">left</span> <span class="at">!important</span><span class="op">;</span></span>
-<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a>    <span class="kw">font-size</span>: <span class="dv">30</span><span class="dt">px</span> <span class="at">!important</span><span class="op">;</span></span>
-<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a>    <span class="kw">border-radius</span>: <span class="dv">0</span> <span class="at">!important</span><span class="op">;</span></span>
-<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">.due-collection-icon</span> i {</span>
-<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a>    <span class="kw">color</span>: <span class="cn">white</span> <span class="at">!important</span><span class="op">;</span></span>
-<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a>    <span class="kw">font-size</span>: <span class="dv">30</span><span class="dt">px</span> <span class="at">!important</span><span class="op">;</span></span>
-<span id="cb7-45"><a href="#cb7-45" aria-hidden="true" tabindex="-1"></a>    <span class="kw">display</span>: <span class="dv">inline-block</span> <span class="at">!important</span><span class="op">;</span></span>
-<span id="cb7-46"><a href="#cb7-46" aria-hidden="true" tabindex="-1"></a>    <span class="kw">vertical-align</span>: <span class="dv">middle</span> <span class="at">!important</span><span class="op">;</span></span>
-<span id="cb7-47"><a href="#cb7-47" aria-hidden="true" tabindex="-1"></a>    <span class="kw">line-height</span>: <span class="dv">normal</span> <span class="at">!important</span><span class="op">;</span></span>
-<span id="cb7-48"><a href="#cb7-48" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb7-49"><a href="#cb7-49" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-50"><a href="#cb7-50" aria-hidden="true" tabindex="-1"></a>  <span class="fu">.due-collection-title</span> {</span>
-<span id="cb7-51"><a href="#cb7-51" aria-hidden="true" tabindex="-1"></a>    <span class="kw">color</span>: <span class="cn">white</span> <span class="at">!important</span><span class="op">;</span></span>
-<span id="cb7-52"><a href="#cb7-52" aria-hidden="true" tabindex="-1"></a>    <span class="kw">font-weight</span>: <span class="dv">bold</span><span class="op">;</span></span>
-<span id="cb7-53"><a href="#cb7-53" aria-hidden="true" tabindex="-1"></a>    <span class="kw">font-size</span>: <span class="dv">14</span><span class="dt">px</span><span class="op">;</span></span>
-<span id="cb7-54"><a href="#cb7-54" aria-hidden="true" tabindex="-1"></a>    <span class="kw">text-transform</span>: <span class="dv">uppercase</span><span class="op">;</span></span>
-<span id="cb7-55"><a href="#cb7-55" aria-hidden="true" tabindex="-1"></a>    <span class="kw">letter-spacing</span>: <span class="dv">0.5</span><span class="dt">px</span><span class="op">;</span></span>
-<span id="cb7-56"><a href="#cb7-56" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb7-57"><a href="#cb7-57" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-58"><a href="#cb7-58" aria-hidden="true" tabindex="-1"></a>  <span class="fu">.due-collection-amount</span> {</span>
-<span id="cb7-59"><a href="#cb7-59" aria-hidden="true" tabindex="-1"></a>    <span class="kw">color</span>: <span class="cn">white</span> <span class="at">!important</span><span class="op">;</span></span>
-<span id="cb7-60"><a href="#cb7-60" aria-hidden="true" tabindex="-1"></a>    <span class="kw">font-weight</span>: <span class="dv">bold</span><span class="op">;</span></span>
-<span id="cb7-61"><a href="#cb7-61" aria-hidden="true" tabindex="-1"></a>    <span class="kw">font-size</span>: <span class="dv">24</span><span class="dt">px</span><span class="op">;</span></span>
-<span id="cb7-62"><a href="#cb7-62" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb7-63"><a href="#cb7-63" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-64"><a href="#cb7-64" aria-hidden="true" tabindex="-1"></a>  <span class="fu">.due-collection-desc</span> {</span>
-<span id="cb7-65"><a href="#cb7-65" aria-hidden="true" tabindex="-1"></a>    <span class="kw">color</span>: <span class="fu">rgba(</span><span class="dv">255</span><span class="op">,</span><span class="dv">255</span><span class="op">,</span><span class="dv">255</span><span class="op">,</span><span class="dv">0.9</span><span class="fu">)</span> <span class="at">!important</span><span class="op">;</span></span>
-<span id="cb7-66"><a href="#cb7-66" aria-hidden="true" tabindex="-1"></a>    <span class="kw">font-size</span>: <span class="dv">12</span><span class="dt">px</span><span class="op">;</span></span>
-<span id="cb7-67"><a href="#cb7-67" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb7-68"><a href="#cb7-68" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-69"><a href="#cb7-69" aria-hidden="true" tabindex="-1"></a>  <span class="fu">.due-collection-box</span> <span class="fu">.info-box-content</span> {</span>
-<span id="cb7-70"><a href="#cb7-70" aria-hidden="true" tabindex="-1"></a>    <span class="kw">margin-left</span>: <span class="dv">85</span><span class="dt">px</span><span class="op">;</span></span>
-<span id="cb7-71"><a href="#cb7-71" aria-hidden="true" tabindex="-1"></a>    <span class="kw">padding</span>: <span class="dv">15</span><span class="dt">px</span> <span class="dv">10</span><span class="dt">px</span><span class="op">;</span></span>
-<span id="cb7-72"><a href="#cb7-72" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb7-73"><a href="#cb7-73" aria-hidden="true" tabindex="-1"></a>&lt;/style<span class="op">&gt;</span></span></code></pre></div>
-<div class="container">
-<pre><code>&lt;div class=&quot;download-section&quot;&gt;
-    &lt;h2&gt;Download File `resources/views/cash_register/register_details.blade.php`&lt;/h2&gt;
-    &lt;div class=&quot;download-button-container&quot;&gt;
-        &lt;a href=&quot;https://drive.google.com/file/d/1De3wSx_dMEnpVwc9zVHuBuZUs1Q62Ij8/view?usp=drive_link&quot;&gt;
-            &lt;img src=&quot;https://as1.ftcdn.net/jpg/00/30/14/94/1000_F_30149473_uM8rqqkj6aGbnkINikbbbVSOwa4jsTed.jpg&quot; alt=&quot;Download Button&quot; class=&quot;download-image&quot;&gt;
-        &lt;/a&gt;
-    &lt;/div&gt;
-&lt;/div&gt;</code></pre>
-</div>
-<h2 id="langkah-3-menambahkan-entri-bahasa">Langkah 3: Menambahkan Entri
-Bahasa</h2>
-<p>Tambahkan entri-entri ini ke dalam berkas
-<code>resources/lang/en/lang_v1.php</code>:</p>
-<div class="sourceCode" id="cb9"><pre
-class="sourceCode php"><code class="sourceCode php"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="cf">return</span> [</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">// ... existing entries ...</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;due_collections_today&#39;</span> =&gt; <span class="st">&#39;Today</span><span class="sc">\&#39;</span><span class="st">s Due Collections&#39;</span><span class="ot">,</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;collected_today&#39;</span> =&gt; <span class="st">&#39;Collected Today&#39;</span><span class="ot">,</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;pending_due_today&#39;</span> =&gt; <span class="st">&#39;Pending Due Today&#39;</span><span class="ot">,</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;overdue_amounts&#39;</span> =&gt; <span class="st">&#39;Overdue Amounts&#39;</span><span class="ot">,</span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;transactions&#39;</span> =&gt; <span class="st">&#39;Transactions&#39;</span><span class="ot">,</span></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    <span class="co">// ... rest of your language entries ...</span></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>]<span class="ot">;</span></span></code></pre></div>
-<h2 id="langkah-4-perbarui-modal-tutup-register-opsional">Langkah 4:
-Perbarui Modal Tutup Register (Opsional)</h2>
-<p>Jika Anda menginginkan fitur yang sama pada modal tutup register
-Anda, perbarui
-<code>resources/views/cash_register/close_register.blade.php</code> Anda
-dengan bagian koleksi jatuh tempo dan CSS yang sama.</p>
-<div class="sourceCode" id="cb10"><pre
-class="sourceCode php"><code class="sourceCode php"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>div <span class="kw">class</span><span class="op">=</span><span class="st">&quot;modal-dialog modal-lg&quot;</span> role<span class="op">=</span><span class="st">&quot;document&quot;</span><span class="op">&gt;</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="op">&lt;</span>div <span class="kw">class</span><span class="op">=</span><span class="st">&quot;modal-content&quot;</span><span class="op">&gt;</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    {<span class="op">!!</span> <span class="cn">F</span>orm::open([<span class="st">&#39;url&#39;</span> =&gt; action([\<span class="cn">A</span>pp\<span class="cn">H</span>ttp\<span class="cn">C</span>ontrollers\<span class="cn">C</span>ashRegisterController::<span class="kw">class</span><span class="ot">,</span> <span class="st">&#39;postCloseRegister&#39;</span>])<span class="ot">,</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;method&#39;</span> =&gt; <span class="st">&#39;post&#39;</span> ]) <span class="op">!!</span>}</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    {<span class="op">!!</span> <span class="cn">F</span>orm::hidden(<span class="st">&#39;user_id&#39;</span><span class="ot">,</span> <span class="va">$register_details</span>-&gt;user_id)<span class="ot">;</span> <span class="op">!!</span>}</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;</span>div <span class="kw">class</span><span class="op">=</span><span class="st">&quot;modal-header&quot;</span><span class="op">&gt;</span></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>      <span class="op">&lt;</span>button type<span class="op">=</span><span class="st">&quot;button&quot;</span> <span class="kw">class</span><span class="op">=</span><span class="st">&quot;close&quot;</span> data<span class="op">-</span>dismiss<span class="op">=</span><span class="st">&quot;modal&quot;</span> aria<span class="op">-</span>label<span class="op">=</span><span class="st">&quot;Close&quot;</span><span class="op">&gt;&lt;</span>span</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>          aria<span class="op">-</span>hidden<span class="op">=</span><span class="st">&quot;true&quot;</span><span class="op">&gt;&amp;</span>times<span class="ot">;</span><span class="op">&lt;/</span>span<span class="op">&gt;&lt;/</span>button<span class="op">&gt;</span></span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>      <span class="op">&lt;</span>h3 <span class="kw">class</span><span class="op">=</span><span class="st">&quot;modal-title&quot;</span><span class="op">&gt;</span><span class="pp">@</span>lang( <span class="st">&#39;cash_register.current_register&#39;</span> ) ( {{ \<span class="cn">C</span>arbon::createFromFormat(<span class="st">&#39;Y-m-d H:i:s&#39;</span><span class="ot">,</span></span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>        <span class="va">$register_details</span>-&gt;open_time)-&gt;format(<span class="st">&#39;jS M, Y h:i A&#39;</span>) }} <span class="op">-</span> {{ \<span class="cn">C</span>arbon::now()-&gt;format(<span class="st">&#39;jS M, Y h:i A&#39;</span>) }})<span class="op">&lt;/</span>h3<span class="op">&gt;</span></span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;/</span>div<span class="op">&gt;</span></span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;</span>div <span class="kw">class</span><span class="op">=</span><span class="st">&quot;modal-body&quot;</span><span class="op">&gt;</span></span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>      <span class="pp">@</span><span class="kw">include</span>(<span class="st">&#39;cash_register.payment_details&#39;</span>)</span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>      <span class="op">&lt;!--</span> <span class="cn">A</span>dd <span class="cn">D</span>ue <span class="cn">C</span>ollections <span class="cn">S</span>ection <span class="op">-</span>-&gt;</span>
-<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>      <span class="pp">@</span><span class="cf">if</span>(<span class="kw">isset</span>(<span class="va">$details</span>[<span class="st">&#39;due_collections&#39;</span>]))</span>
-<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>      <span class="op">&lt;</span>hr <span class="kw">class</span><span class="op">=</span><span class="st">&quot;no-print&quot;</span><span class="op">&gt;</span></span>
-<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>      <span class="op">&lt;</span>div <span class="kw">class</span><span class="op">=</span><span class="st">&quot;row no-print&quot;</span><span class="op">&gt;</span></span>
-<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>        <span class="op">&lt;</span>div <span class="kw">class</span><span class="op">=</span><span class="st">&quot;col-md-12&quot;</span><span class="op">&gt;</span></span>
-<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>          <span class="op">&lt;</span>h4<span class="op">&gt;&lt;</span>i <span class="kw">class</span><span class="op">=</span><span class="st">&quot;fa fa-clock-o&quot;</span><span class="op">&gt;&lt;/</span>i<span class="op">&gt;</span> <span class="pp">@</span>lang(<span class="st">&#39;lang_v1.due_collections_today&#39;</span>)<span class="op">&lt;/</span>h4<span class="op">&gt;</span></span>
-<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>          <span class="op">&lt;</span>div <span class="kw">class</span><span class="op">=</span><span class="st">&quot;row&quot;</span><span class="op">&gt;</span></span>
-<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>            <span class="op">&lt;</span>div <span class="kw">class</span><span class="op">=</span><span class="st">&quot;col-md-4&quot;</span><span class="op">&gt;</span></span>
-<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>              <span class="op">&lt;</span>div <span class="kw">class</span><span class="op">=</span><span class="st">&quot;info-box bg-green due-collection-box&quot;</span><span class="op">&gt;</span></span>
-<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>                <span class="op">&lt;</span>span <span class="kw">class</span><span class="op">=</span><span class="st">&quot;info-box-icon due-collection-icon&quot;</span><span class="op">&gt;</span></span>
-<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>                  <span class="op">&lt;</span>i <span class="kw">class</span><span class="op">=</span><span class="st">&quot;fa fa-check-circle&quot;</span><span class="op">&gt;&lt;/</span>i<span class="op">&gt;</span></span>
-<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>                <span class="op">&lt;/</span>span<span class="op">&gt;</span></span>
-<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>                <span class="op">&lt;</span>div <span class="kw">class</span><span class="op">=</span><span class="st">&quot;info-box-content&quot;</span><span class="op">&gt;</span></span>
-<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a>                  <span class="op">&lt;</span>span <span class="kw">class</span><span class="op">=</span><span class="st">&quot;info-box-text due-collection-title&quot;</span><span class="op">&gt;</span><span class="pp">@</span>lang(<span class="st">&#39;lang_v1.collected_today&#39;</span>)<span class="op">&lt;/</span>span<span class="op">&gt;</span></span>
-<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>                  <span class="op">&lt;</span>span <span class="kw">class</span><span class="op">=</span><span class="st">&quot;info-box-number due-collection-amount&quot;</span><span class="op">&gt;</span></span>
-<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a>                    <span class="pp">@</span>format_currency(<span class="va">$details</span>[<span class="st">&#39;due_collections&#39;</span>][<span class="st">&#39;due_collected_today&#39;</span>])</span>
-<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a>                  <span class="op">&lt;/</span>span<span class="op">&gt;</span></span>
-<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a>                  <span class="op">&lt;</span>span <span class="kw">class</span><span class="op">=</span><span class="st">&quot;progress-description due-collection-desc&quot;</span><span class="op">&gt;</span></span>
-<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a>                    {{ <span class="va">$details</span>[<span class="st">&#39;due_collections&#39;</span>][<span class="st">&#39;due_transactions_count&#39;</span>] }} <span class="pp">@</span>lang(<span class="st">&#39;lang_v1.transactions&#39;</span>)</span>
-<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a>                  <span class="op">&lt;/</span>span<span class="op">&gt;</span></span>
-<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a>                <span class="op">&lt;/</span>div<span class="op">&gt;</span></span>
-<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a>              <span class="op">&lt;/</span>div<span class="op">&gt;</span></span>
-<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a>            <span class="op">&lt;/</span>div<span class="op">&gt;</span></span>
-<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a>            <span class="op">&lt;</span>div <span class="kw">class</span><span class="op">=</span><span class="st">&quot;col-md-4&quot;</span><span class="op">&gt;</span></span>
-<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a>              <span class="op">&lt;</span>div <span class="kw">class</span><span class="op">=</span><span class="st">&quot;info-box bg-yellow due-collection-box&quot;</span><span class="op">&gt;</span></span>
-<span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a>                <span class="op">&lt;</span>span <span class="kw">class</span><span class="op">=</span><span class="st">&quot;info-box-icon due-collection-icon&quot;</span><span class="op">&gt;</span></span>
-<span id="cb10-43"><a href="#cb10-43" aria-hidden="true" tabindex="-1"></a>                  <span class="op">&lt;</span>i <span class="kw">class</span><span class="op">=</span><span class="st">&quot;fa fa-exclamation-triangle&quot;</span><span class="op">&gt;&lt;/</span>i<span class="op">&gt;</span></span>
-<span id="cb10-44"><a href="#cb10-44" aria-hidden="true" tabindex="-1"></a>                <span class="op">&lt;/</span>span<span class="op">&gt;</span></span>
-<span id="cb10-45"><a href="#cb10-45" aria-hidden="true" tabindex="-1"></a>                <span class="op">&lt;</span>div <span class="kw">class</span><span class="op">=</span><span class="st">&quot;info-box-content&quot;</span><span class="op">&gt;</span></span>
-<span id="cb10-46"><a href="#cb10-46" aria-hidden="true" tabindex="-1"></a>                  <span class="op">&lt;</span>span <span class="kw">class</span><span class="op">=</span><span class="st">&quot;info-box-text due-collection-title&quot;</span><span class="op">&gt;</span><span class="pp">@</span>lang(<span class="st">&#39;lang_v1.pending_due_today&#39;</span>)<span class="op">&lt;/</span>span<span class="op">&gt;</span></span>
-<span id="cb10-47"><a href="#cb10-47" aria-hidden="true" tabindex="-1"></a>                  <span class="op">&lt;</span>span <span class="kw">class</span><span class="op">=</span><span class="st">&quot;info-box-number due-collection-amount&quot;</span><span class="op">&gt;</span></span>
-<span id="cb10-48"><a href="#cb10-48" aria-hidden="true" tabindex="-1"></a>                    <span class="pp">@</span>format_currency(<span class="va">$details</span>[<span class="st">&#39;due_collections&#39;</span>][<span class="st">&#39;pending_due_today&#39;</span>])</span>
-<span id="cb10-49"><a href="#cb10-49" aria-hidden="true" tabindex="-1"></a>                  <span class="op">&lt;/</span>span<span class="op">&gt;</span></span>
-<span id="cb10-50"><a href="#cb10-50" aria-hidden="true" tabindex="-1"></a>                  <span class="op">&lt;</span>span <span class="kw">class</span><span class="op">=</span><span class="st">&quot;progress-description due-collection-desc&quot;</span><span class="op">&gt;</span></span>
-<span id="cb10-51"><a href="#cb10-51" aria-hidden="true" tabindex="-1"></a>                    {{ <span class="va">$details</span>[<span class="st">&#39;due_collections&#39;</span>][<span class="st">&#39;pending_transactions_count&#39;</span>] }} <span class="pp">@</span>lang(<span class="st">&#39;lang_v1.transactions&#39;</span>)</span>
-<span id="cb10-52"><a href="#cb10-52" aria-hidden="true" tabindex="-1"></a>                  <span class="op">&lt;/</span>span<span class="op">&gt;</span></span>
-<span id="cb10-53"><a href="#cb10-53" aria-hidden="true" tabindex="-1"></a>                <span class="op">&lt;/</span>div<span class="op">&gt;</span></span>
-<span id="cb10-54"><a href="#cb10-54" aria-hidden="true" tabindex="-1"></a>              <span class="op">&lt;/</span>div<span class="op">&gt;</span></span>
-<span id="cb10-55"><a href="#cb10-55" aria-hidden="true" tabindex="-1"></a>            <span class="op">&lt;/</span>div<span class="op">&gt;</span></span>
-<span id="cb10-56"><a href="#cb10-56" aria-hidden="true" tabindex="-1"></a>            <span class="pp">@</span><span class="cf">if</span>(<span class="va">$details</span>[<span class="st">&#39;due_collections&#39;</span>][<span class="st">&#39;overdue_amount&#39;</span>] <span class="op">&gt;</span> <span class="dv">0</span>)</span>
-<span id="cb10-57"><a href="#cb10-57" aria-hidden="true" tabindex="-1"></a>            <span class="op">&lt;</span>div <span class="kw">class</span><span class="op">=</span><span class="st">&quot;col-md-4&quot;</span><span class="op">&gt;</span></span>
-<span id="cb10-58"><a href="#cb10-58" aria-hidden="true" tabindex="-1"></a>              <span class="op">&lt;</span>div <span class="kw">class</span><span class="op">=</span><span class="st">&quot;info-box bg-red due-collection-box&quot;</span><span class="op">&gt;</span></span>
-<span id="cb10-59"><a href="#cb10-59" aria-hidden="true" tabindex="-1"></a>                <span class="op">&lt;</span>span <span class="kw">class</span><span class="op">=</span><span class="st">&quot;info-box-icon due-collection-icon&quot;</span><span class="op">&gt;</span></span>
-<span id="cb10-60"><a href="#cb10-60" aria-hidden="true" tabindex="-1"></a>                  <span class="op">&lt;</span>i <span class="kw">class</span><span class="op">=</span><span class="st">&quot;fa fa-exclamation-circle&quot;</span><span class="op">&gt;&lt;/</span>i<span class="op">&gt;</span></span>
-<span id="cb10-61"><a href="#cb10-61" aria-hidden="true" tabindex="-1"></a>                <span class="op">&lt;/</span>span<span class="op">&gt;</span></span>
-<span id="cb10-62"><a href="#cb10-62" aria-hidden="true" tabindex="-1"></a>                <span class="op">&lt;</span>div <span class="kw">class</span><span class="op">=</span><span class="st">&quot;info-box-content&quot;</span><span class="op">&gt;</span></span>
-<span id="cb10-63"><a href="#cb10-63" aria-hidden="true" tabindex="-1"></a>                  <span class="op">&lt;</span>span <span class="kw">class</span><span class="op">=</span><span class="st">&quot;info-box-text due-collection-title&quot;</span><span class="op">&gt;</span><span class="pp">@</span>lang(<span class="st">&#39;lang_v1.overdue_amounts&#39;</span>)<span class="op">&lt;/</span>span<span class="op">&gt;</span></span>
-<span id="cb10-64"><a href="#cb10-64" aria-hidden="true" tabindex="-1"></a>                  <span class="op">&lt;</span>span <span class="kw">class</span><span class="op">=</span><span class="st">&quot;info-box-number due-collection-amount&quot;</span><span class="op">&gt;</span></span>
-<span id="cb10-65"><a href="#cb10-65" aria-hidden="true" tabindex="-1"></a>                    <span class="pp">@</span>format_currency(<span class="va">$details</span>[<span class="st">&#39;due_collections&#39;</span>][<span class="st">&#39;overdue_amount&#39;</span>])</span>
-<span id="cb10-66"><a href="#cb10-66" aria-hidden="true" tabindex="-1"></a>                  <span class="op">&lt;/</span>span<span class="op">&gt;</span></span>
-<span id="cb10-67"><a href="#cb10-67" aria-hidden="true" tabindex="-1"></a>                  <span class="op">&lt;</span>span <span class="kw">class</span><span class="op">=</span><span class="st">&quot;progress-description due-collection-desc&quot;</span><span class="op">&gt;</span></span>
-<span id="cb10-68"><a href="#cb10-68" aria-hidden="true" tabindex="-1"></a>                    {{ <span class="va">$details</span>[<span class="st">&#39;due_collections&#39;</span>][<span class="st">&#39;overdue_transactions_count&#39;</span>] }} <span class="pp">@</span>lang(<span class="st">&#39;lang_v1.transactions&#39;</span>)</span>
-<span id="cb10-69"><a href="#cb10-69" aria-hidden="true" tabindex="-1"></a>                  <span class="op">&lt;/</span>span<span class="op">&gt;</span></span>
-<span id="cb10-70"><a href="#cb10-70" aria-hidden="true" tabindex="-1"></a>                <span class="op">&lt;/</span>div<span class="op">&gt;</span></span>
-<span id="cb10-71"><a href="#cb10-71" aria-hidden="true" tabindex="-1"></a>              <span class="op">&lt;/</span>div<span class="op">&gt;</span></span>
-<span id="cb10-72"><a href="#cb10-72" aria-hidden="true" tabindex="-1"></a>            <span class="op">&lt;/</span>div<span class="op">&gt;</span></span>
-<span id="cb10-73"><a href="#cb10-73" aria-hidden="true" tabindex="-1"></a>            <span class="pp">@</span><span class="cf">endif</span></span>
-<span id="cb10-74"><a href="#cb10-74" aria-hidden="true" tabindex="-1"></a>          <span class="op">&lt;/</span>div<span class="op">&gt;</span></span>
-<span id="cb10-75"><a href="#cb10-75" aria-hidden="true" tabindex="-1"></a>        <span class="op">&lt;/</span>div<span class="op">&gt;</span></span>
-<span id="cb10-76"><a href="#cb10-76" aria-hidden="true" tabindex="-1"></a>      <span class="op">&lt;/</span>div<span class="op">&gt;</span></span>
-<span id="cb10-77"><a href="#cb10-77" aria-hidden="true" tabindex="-1"></a>      <span class="pp">@</span><span class="cf">endif</span></span>
-<span id="cb10-78"><a href="#cb10-78" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-79"><a href="#cb10-79" aria-hidden="true" tabindex="-1"></a>      <span class="op">&lt;</span>hr<span class="op">&gt;</span></span>
-<span id="cb10-80"><a href="#cb10-80" aria-hidden="true" tabindex="-1"></a>      <span class="op">&lt;</span>div <span class="kw">class</span><span class="op">=</span><span class="st">&quot;row&quot;</span><span class="op">&gt;</span></span>
-<span id="cb10-81"><a href="#cb10-81" aria-hidden="true" tabindex="-1"></a>        <span class="op">&lt;</span>div <span class="kw">class</span><span class="op">=</span><span class="st">&quot;col-sm-4&quot;</span><span class="op">&gt;</span></span>
-<span id="cb10-82"><a href="#cb10-82" aria-hidden="true" tabindex="-1"></a>          <span class="op">&lt;</span>div <span class="kw">class</span><span class="op">=</span><span class="st">&quot;form-group&quot;</span><span class="op">&gt;</span></span>
-<span id="cb10-83"><a href="#cb10-83" aria-hidden="true" tabindex="-1"></a>            {<span class="op">!!</span> <span class="cn">F</span>orm::label(<span class="st">&#39;closing_amount&#39;</span><span class="ot">,</span> <span class="cn">__</span>( <span class="st">&#39;cash_register.total_cash&#39;</span> ) <span class="op">.</span> <span class="st">&#39;:*&#39;</span>) <span class="op">!!</span>}</span>
-<span id="cb10-84"><a href="#cb10-84" aria-hidden="true" tabindex="-1"></a>            {<span class="op">!!</span> <span class="cn">F</span>orm::text(<span class="st">&#39;closing_amount&#39;</span><span class="ot">,</span> <span class="pp">@</span>num_format(<span class="va">$register_details</span>-&gt;cash_in_hand <span class="op">+</span> <span class="va">$register_details</span>-&gt;total_cash</span>
-<span id="cb10-85"><a href="#cb10-85" aria-hidden="true" tabindex="-1"></a>            <span class="op">-</span> <span class="va">$register_details</span>-&gt;total_cash_refund <span class="op">-</span> <span class="va">$register_details</span>-&gt;total_cash_expense)<span class="ot">,</span> [<span class="st">&#39;class&#39;</span> =&gt; <span class="st">&#39;form-control</span></span>
-<span id="cb10-86"><a href="#cb10-86" aria-hidden="true" tabindex="-1"></a><span class="st">            input_number&#39;</span><span class="ot">,</span> <span class="st">&#39;required&#39;</span><span class="ot">,</span> <span class="st">&#39;placeholder&#39;</span> =&gt; <span class="cn">__</span>( <span class="st">&#39;cash_register.total_cash&#39;</span> ) ])<span class="ot">;</span> <span class="op">!!</span>}</span>
-<span id="cb10-87"><a href="#cb10-87" aria-hidden="true" tabindex="-1"></a>          <span class="op">&lt;/</span>div<span class="op">&gt;</span></span>
-<span id="cb10-88"><a href="#cb10-88" aria-hidden="true" tabindex="-1"></a>        <span class="op">&lt;/</span>div<span class="op">&gt;</span></span>
-<span id="cb10-89"><a href="#cb10-89" aria-hidden="true" tabindex="-1"></a>        <span class="op">&lt;</span>div <span class="kw">class</span><span class="op">=</span><span class="st">&quot;col-sm-4&quot;</span><span class="op">&gt;</span></span>
-<span id="cb10-90"><a href="#cb10-90" aria-hidden="true" tabindex="-1"></a>          <span class="op">&lt;</span>div <span class="kw">class</span><span class="op">=</span><span class="st">&quot;form-group&quot;</span><span class="op">&gt;</span></span>
-<span id="cb10-91"><a href="#cb10-91" aria-hidden="true" tabindex="-1"></a>            {<span class="op">!!</span> <span class="cn">F</span>orm::label(<span class="st">&#39;total_card_slips&#39;</span><span class="ot">,</span> <span class="cn">__</span>( <span class="st">&#39;cash_register.total_card_slips&#39;</span> ) <span class="op">.</span> <span class="st">&#39;:*&#39;</span>) <span class="op">!!</span>}</span>
-<span id="cb10-92"><a href="#cb10-92" aria-hidden="true" tabindex="-1"></a>            <span class="pp">@</span>show_tooltip(<span class="cn">__</span>(<span class="st">&#39;tooltip.total_card_slips&#39;</span>))</span>
-<span id="cb10-93"><a href="#cb10-93" aria-hidden="true" tabindex="-1"></a>            {<span class="op">!!</span> <span class="cn">F</span>orm::number(<span class="st">&#39;total_card_slips&#39;</span><span class="ot">,</span> <span class="va">$register_details</span>-&gt;total_card_slips<span class="ot">,</span> [<span class="st">&#39;class&#39;</span> =&gt; <span class="st">&#39;form-control&#39;</span><span class="ot">,</span></span>
-<span id="cb10-94"><a href="#cb10-94" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;required&#39;</span><span class="ot">,</span> <span class="st">&#39;placeholder&#39;</span> =&gt; <span class="cn">__</span>( <span class="st">&#39;cash_register.total_card_slips&#39;</span> )<span class="ot">,</span> <span class="st">&#39;min&#39;</span> =&gt; <span class="dv">0</span> ])<span class="ot">;</span> <span class="op">!!</span>}</span>
-<span id="cb10-95"><a href="#cb10-95" aria-hidden="true" tabindex="-1"></a>          <span class="op">&lt;/</span>div<span class="op">&gt;</span></span>
-<span id="cb10-96"><a href="#cb10-96" aria-hidden="true" tabindex="-1"></a>        <span class="op">&lt;/</span>div<span class="op">&gt;</span></span>
-<span id="cb10-97"><a href="#cb10-97" aria-hidden="true" tabindex="-1"></a>        <span class="op">&lt;</span>div <span class="kw">class</span><span class="op">=</span><span class="st">&quot;col-sm-4&quot;</span><span class="op">&gt;</span></span>
-<span id="cb10-98"><a href="#cb10-98" aria-hidden="true" tabindex="-1"></a>          <span class="op">&lt;</span>div <span class="kw">class</span><span class="op">=</span><span class="st">&quot;form-group&quot;</span><span class="op">&gt;</span></span>
-<span id="cb10-99"><a href="#cb10-99" aria-hidden="true" tabindex="-1"></a>            {<span class="op">!!</span> <span class="cn">F</span>orm::label(<span class="st">&#39;total_cheques&#39;</span><span class="ot">,</span> <span class="cn">__</span>( <span class="st">&#39;cash_register.total_cheques&#39;</span> ) <span class="op">.</span> <span class="st">&#39;:*&#39;</span>) <span class="op">!!</span>}</span>
-<span id="cb10-100"><a href="#cb10-100" aria-hidden="true" tabindex="-1"></a>            <span class="pp">@</span>show_tooltip(<span class="cn">__</span>(<span class="st">&#39;tooltip.total_cheques&#39;</span>))</span>
-<span id="cb10-101"><a href="#cb10-101" aria-hidden="true" tabindex="-1"></a>            {<span class="op">!!</span> <span class="cn">F</span>orm::number(<span class="st">&#39;total_cheques&#39;</span><span class="ot">,</span> <span class="va">$register_details</span>-&gt;total_cheques<span class="ot">,</span> [<span class="st">&#39;class&#39;</span> =&gt; <span class="st">&#39;form-control&#39;</span><span class="ot">,</span> <span class="st">&#39;required&#39;</span><span class="ot">,</span></span>
-<span id="cb10-102"><a href="#cb10-102" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;placeholder&#39;</span> =&gt; <span class="cn">__</span>( <span class="st">&#39;cash_register.total_cheques&#39;</span> )<span class="ot">,</span> <span class="st">&#39;min&#39;</span> =&gt; <span class="dv">0</span> ])<span class="ot">;</span> <span class="op">!!</span>}</span>
-<span id="cb10-103"><a href="#cb10-103" aria-hidden="true" tabindex="-1"></a>          <span class="op">&lt;/</span>div<span class="op">&gt;</span></span>
-<span id="cb10-104"><a href="#cb10-104" aria-hidden="true" tabindex="-1"></a>        <span class="op">&lt;/</span>div<span class="op">&gt;</span></span>
-<span id="cb10-105"><a href="#cb10-105" aria-hidden="true" tabindex="-1"></a>        <span class="op">&lt;</span>hr<span class="op">&gt;</span></span>
-<span id="cb10-106"><a href="#cb10-106" aria-hidden="true" tabindex="-1"></a>        <span class="op">&lt;</span>div <span class="kw">class</span><span class="op">=</span><span class="st">&quot;col-md-8 col-sm-12&quot;</span><span class="op">&gt;</span></span>
-<span id="cb10-107"><a href="#cb10-107" aria-hidden="true" tabindex="-1"></a>          <span class="op">&lt;</span>h3<span class="op">&gt;</span><span class="pp">@</span>lang( <span class="st">&#39;lang_v1.cash_denominations&#39;</span> )<span class="op">&lt;/</span>h3<span class="op">&gt;</span></span>
-<span id="cb10-108"><a href="#cb10-108" aria-hidden="true" tabindex="-1"></a>          <span class="pp">@</span><span class="cf">if</span>(<span class="op">!</span><span class="kw">empty</span>(<span class="va">$pos_settings</span>[<span class="st">&#39;cash_denominations&#39;</span>]))</span>
-<span id="cb10-109"><a href="#cb10-109" aria-hidden="true" tabindex="-1"></a>          <span class="op">&lt;</span>table <span class="kw">class</span><span class="op">=</span><span class="st">&quot;table table-slim&quot;</span><span class="op">&gt;</span></span>
-<span id="cb10-110"><a href="#cb10-110" aria-hidden="true" tabindex="-1"></a>            <span class="op">&lt;</span>thead<span class="op">&gt;</span></span>
-<span id="cb10-111"><a href="#cb10-111" aria-hidden="true" tabindex="-1"></a>              <span class="op">&lt;</span>tr<span class="op">&gt;</span></span>
-<span id="cb10-112"><a href="#cb10-112" aria-hidden="true" tabindex="-1"></a>                <span class="op">&lt;</span>th width<span class="op">=</span><span class="st">&quot;20%&quot;</span> <span class="kw">class</span><span class="op">=</span><span class="st">&quot;text-right&quot;</span><span class="op">&gt;</span><span class="pp">@</span>lang(<span class="st">&#39;lang_v1.denomination&#39;</span>)<span class="op">&lt;/</span>th<span class="op">&gt;</span></span>
-<span id="cb10-113"><a href="#cb10-113" aria-hidden="true" tabindex="-1"></a>                <span class="op">&lt;</span>th width<span class="op">=</span><span class="st">&quot;20%&quot;</span><span class="op">&gt;&amp;</span>nbsp<span class="ot">;</span><span class="op">&lt;/</span>th<span class="op">&gt;</span></span>
-<span id="cb10-114"><a href="#cb10-114" aria-hidden="true" tabindex="-1"></a>                <span class="op">&lt;</span>th width<span class="op">=</span><span class="st">&quot;20%&quot;</span> <span class="kw">class</span><span class="op">=</span><span class="st">&quot;text-center&quot;</span><span class="op">&gt;</span><span class="pp">@</span>lang(<span class="st">&#39;lang_v1.count&#39;</span>)<span class="op">&lt;/</span>th<span class="op">&gt;</span></span>
-<span id="cb10-115"><a href="#cb10-115" aria-hidden="true" tabindex="-1"></a>                <span class="op">&lt;</span>th width<span class="op">=</span><span class="st">&quot;20%&quot;</span><span class="op">&gt;&amp;</span>nbsp<span class="ot">;</span><span class="op">&lt;/</span>th<span class="op">&gt;</span></span>
-<span id="cb10-116"><a href="#cb10-116" aria-hidden="true" tabindex="-1"></a>                <span class="op">&lt;</span>th width<span class="op">=</span><span class="st">&quot;20%&quot;</span> <span class="kw">class</span><span class="op">=</span><span class="st">&quot;text-left&quot;</span><span class="op">&gt;</span><span class="pp">@</span>lang(<span class="st">&#39;sale.subtotal&#39;</span>)<span class="op">&lt;/</span>th<span class="op">&gt;</span></span>
-<span id="cb10-117"><a href="#cb10-117" aria-hidden="true" tabindex="-1"></a>              <span class="op">&lt;/</span>tr<span class="op">&gt;</span></span>
-<span id="cb10-118"><a href="#cb10-118" aria-hidden="true" tabindex="-1"></a>            <span class="op">&lt;/</span>thead<span class="op">&gt;</span></span>
-<span id="cb10-119"><a href="#cb10-119" aria-hidden="true" tabindex="-1"></a>            <span class="op">&lt;</span>tbody<span class="op">&gt;</span></span>
-<span id="cb10-120"><a href="#cb10-120" aria-hidden="true" tabindex="-1"></a>              <span class="pp">@</span><span class="cf">foreach</span>(<span class="fu">explode</span>(<span class="st">&#39;,&#39;</span><span class="ot">,</span> <span class="va">$pos_settings</span>[<span class="st">&#39;cash_denominations&#39;</span>]) <span class="kw">as</span> <span class="va">$dnm</span>)</span>
-<span id="cb10-121"><a href="#cb10-121" aria-hidden="true" tabindex="-1"></a>              <span class="op">&lt;</span>tr<span class="op">&gt;</span></span>
-<span id="cb10-122"><a href="#cb10-122" aria-hidden="true" tabindex="-1"></a>                <span class="op">&lt;</span>td <span class="kw">class</span><span class="op">=</span><span class="st">&quot;text-right&quot;</span><span class="op">&gt;</span>{{<span class="va">$dnm</span>}}<span class="op">&lt;/</span>td<span class="op">&gt;</span></span>
-<span id="cb10-123"><a href="#cb10-123" aria-hidden="true" tabindex="-1"></a>                <span class="op">&lt;</span>td <span class="kw">class</span><span class="op">=</span><span class="st">&quot;text-center&quot;</span><span class="op">&gt;</span><span class="cn">X</span><span class="op">&lt;/</span>td<span class="op">&gt;</span></span>
-<span id="cb10-124"><a href="#cb10-124" aria-hidden="true" tabindex="-1"></a>                <span class="op">&lt;</span>td<span class="op">&gt;</span>{<span class="op">!!</span> <span class="cn">F</span>orm::number(<span class="st">&quot;denominations[</span><span class="va">$dnm</span><span class="st">]&quot;</span><span class="ot">,</span> <span class="kw">null</span><span class="ot">,</span> [<span class="st">&#39;class&#39;</span> =&gt; <span class="st">&#39;form-control cash_denomination input-sm&#39;</span><span class="ot">,</span></span>
-<span id="cb10-125"><a href="#cb10-125" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&#39;min&#39;</span> =&gt; <span class="dv">0</span><span class="ot">,</span> <span class="st">&#39;data-denomination&#39;</span> =&gt; <span class="va">$dnm</span><span class="ot">,</span> <span class="st">&#39;style&#39;</span> =&gt; <span class="st">&#39;width: 100px; margin:auto;&#39;</span> ])<span class="ot">;</span> <span class="op">!!</span>}<span class="op">&lt;/</span>td<span class="op">&gt;</span></span>
-<span id="cb10-126"><a href="#cb10-126" aria-hidden="true" tabindex="-1"></a>                <span class="op">&lt;</span>td <span class="kw">class</span><span class="op">=</span><span class="st">&quot;text-center&quot;</span><span class="op">&gt;=&lt;/</span>td<span class="op">&gt;</span></span>
-<span id="cb10-127"><a href="#cb10-127" aria-hidden="true" tabindex="-1"></a>                <span class="op">&lt;</span>td <span class="kw">class</span><span class="op">=</span><span class="st">&quot;text-left&quot;</span><span class="op">&gt;</span></span>
-<span id="cb10-128"><a href="#cb10-128" aria-hidden="true" tabindex="-1"></a>                  <span class="op">&lt;</span>span <span class="kw">class</span><span class="op">=</span><span class="st">&quot;denomination_subtotal&quot;</span><span class="op">&gt;</span><span class="dv">0</span><span class="op">&lt;/</span>span<span class="op">&gt;</span></span>
-<span id="cb10-129"><a href="#cb10-129" aria-hidden="true" tabindex="-1"></a>                <span class="op">&lt;/</span>td<span class="op">&gt;</span></span>
-<span id="cb10-130"><a href="#cb10-130" aria-hidden="true" tabindex="-1"></a>              <span class="op">&lt;/</span>tr<span class="op">&gt;</span></span>
-<span id="cb10-131"><a href="#cb10-131" aria-hidden="true" tabindex="-1"></a>              <span class="pp">@</span><span class="cf">endforeach</span></span>
-<span id="cb10-132"><a href="#cb10-132" aria-hidden="true" tabindex="-1"></a>            <span class="op">&lt;/</span>tbody<span class="op">&gt;</span></span>
-<span id="cb10-133"><a href="#cb10-133" aria-hidden="true" tabindex="-1"></a>            <span class="op">&lt;</span>tfoot<span class="op">&gt;</span></span>
-<span id="cb10-134"><a href="#cb10-134" aria-hidden="true" tabindex="-1"></a>              <span class="op">&lt;</span>tr<span class="op">&gt;</span></span>
-<span id="cb10-135"><a href="#cb10-135" aria-hidden="true" tabindex="-1"></a>                <span class="op">&lt;</span>th colspan<span class="op">=</span><span class="st">&quot;4&quot;</span> <span class="kw">class</span><span class="op">=</span><span class="st">&quot;text-center&quot;</span><span class="op">&gt;</span><span class="pp">@</span>lang(<span class="st">&#39;sale.total&#39;</span>)<span class="op">&lt;/</span>th<span class="op">&gt;</span></span>
-<span id="cb10-136"><a href="#cb10-136" aria-hidden="true" tabindex="-1"></a>                <span class="op">&lt;</span>td<span class="op">&gt;&lt;</span>span <span class="kw">class</span><span class="op">=</span><span class="st">&quot;denomination_total&quot;</span><span class="op">&gt;</span><span class="dv">0</span><span class="op">&lt;/</span>span<span class="op">&gt;&lt;/</span>td<span class="op">&gt;</span></span>
-<span id="cb10-137"><a href="#cb10-137" aria-hidden="true" tabindex="-1"></a>              <span class="op">&lt;/</span>tr<span class="op">&gt;</span></span>
-<span id="cb10-138"><a href="#cb10-138" aria-hidden="true" tabindex="-1"></a>            <span class="op">&lt;/</span>tfoot<span class="op">&gt;</span></span>
-<span id="cb10-139"><a href="#cb10-139" aria-hidden="true" tabindex="-1"></a>          <span class="op">&lt;/</span>table<span class="op">&gt;</span></span>
-<span id="cb10-140"><a href="#cb10-140" aria-hidden="true" tabindex="-1"></a>          <span class="pp">@</span><span class="cf">else</span></span>
-<span id="cb10-141"><a href="#cb10-141" aria-hidden="true" tabindex="-1"></a>          <span class="op">&lt;</span>p <span class="kw">class</span><span class="op">=</span><span class="st">&quot;help-block&quot;</span><span class="op">&gt;</span><span class="pp">@</span>lang(<span class="st">&#39;lang_v1.denomination_add_help_text&#39;</span>)<span class="op">&lt;/</span>p<span class="op">&gt;</span></span>
-<span id="cb10-142"><a href="#cb10-142" aria-hidden="true" tabindex="-1"></a>          <span class="pp">@</span><span class="cf">endif</span></span>
-<span id="cb10-143"><a href="#cb10-143" aria-hidden="true" tabindex="-1"></a>        <span class="op">&lt;/</span>div<span class="op">&gt;</span></span>
-<span id="cb10-144"><a href="#cb10-144" aria-hidden="true" tabindex="-1"></a>        <span class="op">&lt;</span>hr<span class="op">&gt;</span></span>
-<span id="cb10-145"><a href="#cb10-145" aria-hidden="true" tabindex="-1"></a>        <span class="op">&lt;</span>div <span class="kw">class</span><span class="op">=</span><span class="st">&quot;col-sm-12&quot;</span><span class="op">&gt;</span></span>
-<span id="cb10-146"><a href="#cb10-146" aria-hidden="true" tabindex="-1"></a>          <span class="op">&lt;</span>div <span class="kw">class</span><span class="op">=</span><span class="st">&quot;form-group&quot;</span><span class="op">&gt;</span></span>
-<span id="cb10-147"><a href="#cb10-147" aria-hidden="true" tabindex="-1"></a>            {<span class="op">!!</span> <span class="cn">F</span>orm::label(<span class="st">&#39;closing_note&#39;</span><span class="ot">,</span> <span class="cn">__</span>( <span class="st">&#39;cash_register.closing_note&#39;</span> ) <span class="op">.</span> <span class="st">&#39;:&#39;</span>) <span class="op">!!</span>}</span>
-<span id="cb10-148"><a href="#cb10-148" aria-hidden="true" tabindex="-1"></a>            {<span class="op">!!</span> <span class="cn">F</span>orm::textarea(<span class="st">&#39;closing_note&#39;</span><span class="ot">,</span> <span class="kw">null</span><span class="ot">,</span> [<span class="st">&#39;class&#39;</span> =&gt; <span class="st">&#39;form-control&#39;</span><span class="ot">,</span> <span class="st">&#39;placeholder&#39;</span> =&gt; <span class="cn">__</span>(</span>
-<span id="cb10-149"><a href="#cb10-149" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;cash_register.closing_note&#39;</span> )<span class="ot">,</span> <span class="st">&#39;rows&#39;</span> =&gt; <span class="dv">3</span> ])<span class="ot">;</span> <span class="op">!!</span>}</span>
-<span id="cb10-150"><a href="#cb10-150" aria-hidden="true" tabindex="-1"></a>          <span class="op">&lt;/</span>div<span class="op">&gt;</span></span>
-<span id="cb10-151"><a href="#cb10-151" aria-hidden="true" tabindex="-1"></a>        <span class="op">&lt;/</span>div<span class="op">&gt;</span></span>
-<span id="cb10-152"><a href="#cb10-152" aria-hidden="true" tabindex="-1"></a>      <span class="op">&lt;/</span>div<span class="op">&gt;</span></span>
-<span id="cb10-153"><a href="#cb10-153" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-154"><a href="#cb10-154" aria-hidden="true" tabindex="-1"></a>      <span class="op">&lt;</span>div <span class="kw">class</span><span class="op">=</span><span class="st">&quot;row&quot;</span><span class="op">&gt;</span></span>
-<span id="cb10-155"><a href="#cb10-155" aria-hidden="true" tabindex="-1"></a>        <span class="op">&lt;</span>div <span class="kw">class</span><span class="op">=</span><span class="st">&quot;col-xs-6&quot;</span><span class="op">&gt;</span></span>
-<span id="cb10-156"><a href="#cb10-156" aria-hidden="true" tabindex="-1"></a>          <span class="op">&lt;</span>b<span class="op">&gt;</span><span class="pp">@</span>lang(<span class="st">&#39;report.user&#39;</span>)<span class="ot">:</span><span class="op">&lt;/</span>b<span class="op">&gt;</span> {{ <span class="va">$register_details</span>-&gt;user_name}}<span class="op">&lt;</span>br<span class="op">&gt;</span></span>
-<span id="cb10-157"><a href="#cb10-157" aria-hidden="true" tabindex="-1"></a>          <span class="op">&lt;</span>b<span class="op">&gt;</span><span class="pp">@</span>lang(<span class="st">&#39;business.email&#39;</span>)<span class="ot">:</span><span class="op">&lt;/</span>b<span class="op">&gt;</span> {{ <span class="va">$register_details</span>-&gt;email}}<span class="op">&lt;</span>br<span class="op">&gt;</span></span>
-<span id="cb10-158"><a href="#cb10-158" aria-hidden="true" tabindex="-1"></a>          <span class="op">&lt;</span>b<span class="op">&gt;</span><span class="pp">@</span>lang(<span class="st">&#39;business.business_location&#39;</span>)<span class="ot">:</span><span class="op">&lt;/</span>b<span class="op">&gt;</span> {{ <span class="va">$register_details</span>-&gt;location_name}}<span class="op">&lt;</span>br<span class="op">&gt;</span></span>
-<span id="cb10-159"><a href="#cb10-159" aria-hidden="true" tabindex="-1"></a>        <span class="op">&lt;/</span>div<span class="op">&gt;</span></span>
-<span id="cb10-160"><a href="#cb10-160" aria-hidden="true" tabindex="-1"></a>        <span class="pp">@</span><span class="cf">if</span>(<span class="op">!</span><span class="kw">empty</span>(<span class="va">$register_details</span>-&gt;closing_note))</span>
-<span id="cb10-161"><a href="#cb10-161" aria-hidden="true" tabindex="-1"></a>        <span class="op">&lt;</span>div <span class="kw">class</span><span class="op">=</span><span class="st">&quot;col-xs-6&quot;</span><span class="op">&gt;</span></span>
-<span id="cb10-162"><a href="#cb10-162" aria-hidden="true" tabindex="-1"></a>          <span class="op">&lt;</span>strong<span class="op">&gt;</span><span class="pp">@</span>lang(<span class="st">&#39;cash_register.closing_note&#39;</span>)<span class="ot">:</span><span class="op">&lt;/</span>strong<span class="op">&gt;&lt;</span>br<span class="op">&gt;</span></span>
-<span id="cb10-163"><a href="#cb10-163" aria-hidden="true" tabindex="-1"></a>          {{<span class="va">$register_details</span>-&gt;closing_note}}</span>
-<span id="cb10-164"><a href="#cb10-164" aria-hidden="true" tabindex="-1"></a>        <span class="op">&lt;/</span>div<span class="op">&gt;</span></span>
-<span id="cb10-165"><a href="#cb10-165" aria-hidden="true" tabindex="-1"></a>        <span class="pp">@</span><span class="cf">endif</span></span>
-<span id="cb10-166"><a href="#cb10-166" aria-hidden="true" tabindex="-1"></a>      <span class="op">&lt;/</span>div<span class="op">&gt;</span></span>
-<span id="cb10-167"><a href="#cb10-167" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;/</span>div<span class="op">&gt;</span></span>
-<span id="cb10-168"><a href="#cb10-168" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;</span>div <span class="kw">class</span><span class="op">=</span><span class="st">&quot;modal-footer&quot;</span><span class="op">&gt;</span></span>
-<span id="cb10-169"><a href="#cb10-169" aria-hidden="true" tabindex="-1"></a>      <span class="op">&lt;</span>button type<span class="op">=</span><span class="st">&quot;button&quot;</span> <span class="kw">class</span><span class="op">=</span><span class="st">&quot;tw-dw-btn tw-dw-btn-neutral tw-text-white&quot;</span> data<span class="op">-</span>dismiss<span class="op">=</span><span class="st">&quot;modal&quot;</span><span class="op">&gt;</span><span class="pp">@</span>lang(</span>
-<span id="cb10-170"><a href="#cb10-170" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;messages.cancel&#39;</span> )<span class="op">&lt;/</span>button<span class="op">&gt;</span></span>
-<span id="cb10-171"><a href="#cb10-171" aria-hidden="true" tabindex="-1"></a>      <span class="op">&lt;</span>button type<span class="op">=</span><span class="st">&quot;submit&quot;</span> <span class="kw">class</span><span class="op">=</span><span class="st">&quot;tw-dw-btn tw-dw-btn-primary tw-text-white&quot;</span><span class="op">&gt;</span><span class="pp">@</span>lang( <span class="st">&#39;cash_register.close_register&#39;</span></span>
-<span id="cb10-172"><a href="#cb10-172" aria-hidden="true" tabindex="-1"></a>        )<span class="op">&lt;/</span>button<span class="op">&gt;</span></span>
-<span id="cb10-173"><a href="#cb10-173" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;/</span>div<span class="op">&gt;</span></span>
-<span id="cb10-174"><a href="#cb10-174" aria-hidden="true" tabindex="-1"></a>    {<span class="op">!!</span> <span class="cn">F</span>orm::close() <span class="op">!!</span>}</span>
-<span id="cb10-175"><a href="#cb10-175" aria-hidden="true" tabindex="-1"></a>  <span class="op">&lt;/</span>div<span class="op">&gt;&lt;!--</span> <span class="op">/.</span>modal<span class="op">-</span>content <span class="op">-</span>-&gt;</span>
-<span id="cb10-176"><a href="#cb10-176" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;/</span>div<span class="op">&gt;&lt;!--</span> <span class="op">/.</span>modal<span class="op">-</span>dialog <span class="op">-</span>-&gt;</span>
-<span id="cb10-177"><a href="#cb10-177" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-178"><a href="#cb10-178" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>style type<span class="op">=</span><span class="st">&quot;text/css&quot;</span><span class="op">&gt;</span></span>
-<span id="cb10-179"><a href="#cb10-179" aria-hidden="true" tabindex="-1"></a>  <span class="pp">@</span>media <span class="kw">print</span> {</span>
-<span id="cb10-180"><a href="#cb10-180" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span>modal {</span>
-<span id="cb10-181"><a href="#cb10-181" aria-hidden="true" tabindex="-1"></a>      position<span class="ot">:</span> absolute<span class="ot">;</span></span>
-<span id="cb10-182"><a href="#cb10-182" aria-hidden="true" tabindex="-1"></a>      left<span class="ot">:</span> <span class="dv">0</span><span class="ot">;</span></span>
-<span id="cb10-183"><a href="#cb10-183" aria-hidden="true" tabindex="-1"></a>      top<span class="ot">:</span> <span class="dv">0</span><span class="ot">;</span></span>
-<span id="cb10-184"><a href="#cb10-184" aria-hidden="true" tabindex="-1"></a>      margin<span class="ot">:</span> <span class="dv">0</span><span class="ot">;</span></span>
-<span id="cb10-185"><a href="#cb10-185" aria-hidden="true" tabindex="-1"></a>      padding<span class="ot">:</span> <span class="dv">0</span><span class="ot">;</span></span>
-<span id="cb10-186"><a href="#cb10-186" aria-hidden="true" tabindex="-1"></a>      overflow<span class="ot">:</span> visible <span class="op">!</span>important<span class="ot">;</span></span>
-<span id="cb10-187"><a href="#cb10-187" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb10-188"><a href="#cb10-188" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-189"><a href="#cb10-189" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span>info<span class="op">-</span>box {</span>
-<span id="cb10-190"><a href="#cb10-190" aria-hidden="true" tabindex="-1"></a>      border<span class="ot">:</span> <span class="dv">1</span>px solid <span class="co">#ddd;</span></span>
-<span id="cb10-191"><a href="#cb10-191" aria-hidden="true" tabindex="-1"></a>      margin<span class="op">-</span>bottom<span class="ot">:</span> <span class="er">10</span>px<span class="ot">;</span></span>
-<span id="cb10-192"><a href="#cb10-192" aria-hidden="true" tabindex="-1"></a>      padding<span class="ot">:</span> <span class="er">10</span>px<span class="ot">;</span></span>
-<span id="cb10-193"><a href="#cb10-193" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb10-194"><a href="#cb10-194" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-195"><a href="#cb10-195" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span>info<span class="op">-</span>box<span class="op">-</span>icon {</span>
-<span id="cb10-196"><a href="#cb10-196" aria-hidden="true" tabindex="-1"></a>      display<span class="ot">:</span> none<span class="ot">;</span></span>
-<span id="cb10-197"><a href="#cb10-197" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb10-198"><a href="#cb10-198" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb10-199"><a href="#cb10-199" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-200"><a href="#cb10-200" aria-hidden="true" tabindex="-1"></a>  <span class="co">/* Due Collection Styling for Close Register Modal */</span></span>
-<span id="cb10-201"><a href="#cb10-201" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span>due<span class="op">-</span>collection<span class="op">-</span>box {</span>
-<span id="cb10-202"><a href="#cb10-202" aria-hidden="true" tabindex="-1"></a>    border<span class="op">-</span>radius<span class="ot">:</span> <span class="dv">8</span>px<span class="ot">;</span></span>
-<span id="cb10-203"><a href="#cb10-203" aria-hidden="true" tabindex="-1"></a>    box<span class="op">-</span>shadow<span class="ot">:</span> <span class="dv">0</span> <span class="dv">2</span>px <span class="dv">4</span>px rgba(<span class="dv">0</span><span class="ot">,</span> <span class="dv">0</span><span class="ot">,</span> <span class="dv">0</span><span class="ot">,</span> <span class="fl">0.1</span>)<span class="ot">;</span></span>
-<span id="cb10-204"><a href="#cb10-204" aria-hidden="true" tabindex="-1"></a>    overflow<span class="ot">:</span> hidden<span class="ot">;</span></span>
-<span id="cb10-205"><a href="#cb10-205" aria-hidden="true" tabindex="-1"></a>    position<span class="ot">:</span> relative<span class="ot">;</span></span>
-<span id="cb10-206"><a href="#cb10-206" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb10-207"><a href="#cb10-207" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-208"><a href="#cb10-208" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span>due<span class="op">-</span>collection<span class="op">-</span>icon {</span>
-<span id="cb10-209"><a href="#cb10-209" aria-hidden="true" tabindex="-1"></a>    background<span class="ot">:</span> rgba(<span class="dv">255</span><span class="ot">,</span> <span class="dv">255</span><span class="ot">,</span> <span class="dv">255</span><span class="ot">,</span> <span class="fl">0.2</span>) <span class="op">!</span>important<span class="ot">;</span></span>
-<span id="cb10-210"><a href="#cb10-210" aria-hidden="true" tabindex="-1"></a>    color<span class="ot">:</span> white <span class="op">!</span>important<span class="ot">;</span></span>
-<span id="cb10-211"><a href="#cb10-211" aria-hidden="true" tabindex="-1"></a>    display<span class="ot">:</span> block <span class="op">!</span>important<span class="ot">;</span></span>
-<span id="cb10-212"><a href="#cb10-212" aria-hidden="true" tabindex="-1"></a>    width<span class="ot">:</span> <span class="er">70</span>px <span class="op">!</span>important<span class="ot">;</span></span>
-<span id="cb10-213"><a href="#cb10-213" aria-hidden="true" tabindex="-1"></a>    height<span class="ot">:</span> <span class="er">70</span>px <span class="op">!</span>important<span class="ot">;</span></span>
-<span id="cb10-214"><a href="#cb10-214" aria-hidden="true" tabindex="-1"></a>    line<span class="op">-</span>height<span class="ot">:</span> <span class="er">70</span>px <span class="op">!</span>important<span class="ot">;</span></span>
-<span id="cb10-215"><a href="#cb10-215" aria-hidden="true" tabindex="-1"></a>    text<span class="op">-</span>align<span class="ot">:</span> center <span class="op">!</span>important<span class="ot">;</span></span>
-<span id="cb10-216"><a href="#cb10-216" aria-hidden="true" tabindex="-1"></a>    <span class="dt">float</span><span class="ot">:</span> left <span class="op">!</span>important<span class="ot">;</span></span>
-<span id="cb10-217"><a href="#cb10-217" aria-hidden="true" tabindex="-1"></a>    font<span class="op">-</span>size<span class="ot">:</span> <span class="er">30</span>px <span class="op">!</span>important<span class="ot">;</span></span>
-<span id="cb10-218"><a href="#cb10-218" aria-hidden="true" tabindex="-1"></a>    border<span class="op">-</span>radius<span class="ot">:</span> <span class="dv">0</span> <span class="op">!</span>important<span class="ot">;</span></span>
-<span id="cb10-219"><a href="#cb10-219" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb10-220"><a href="#cb10-220" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-221"><a href="#cb10-221" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span>due<span class="op">-</span>collection<span class="op">-</span>icon i {</span>
-<span id="cb10-222"><a href="#cb10-222" aria-hidden="true" tabindex="-1"></a>    color<span class="ot">:</span> white <span class="op">!</span>important<span class="ot">;</span></span>
-<span id="cb10-223"><a href="#cb10-223" aria-hidden="true" tabindex="-1"></a>    font<span class="op">-</span>size<span class="ot">:</span> <span class="er">30</span>px <span class="op">!</span>important<span class="ot">;</span></span>
-<span id="cb10-224"><a href="#cb10-224" aria-hidden="true" tabindex="-1"></a>    display<span class="ot">:</span> inline<span class="op">-</span>block <span class="op">!</span>important<span class="ot">;</span></span>
-<span id="cb10-225"><a href="#cb10-225" aria-hidden="true" tabindex="-1"></a>    vertical<span class="op">-</span>align<span class="ot">:</span> middle <span class="op">!</span>important<span class="ot">;</span></span>
-<span id="cb10-226"><a href="#cb10-226" aria-hidden="true" tabindex="-1"></a>    line<span class="op">-</span>height<span class="ot">:</span> normal <span class="op">!</span>important<span class="ot">;</span></span>
-<span id="cb10-227"><a href="#cb10-227" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb10-228"><a href="#cb10-228" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-229"><a href="#cb10-229" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span>due<span class="op">-</span>collection<span class="op">-</span>title {</span>
-<span id="cb10-230"><a href="#cb10-230" aria-hidden="true" tabindex="-1"></a>    color<span class="ot">:</span> white <span class="op">!</span>important<span class="ot">;</span></span>
-<span id="cb10-231"><a href="#cb10-231" aria-hidden="true" tabindex="-1"></a>    font<span class="op">-</span>weight<span class="ot">:</span> bold<span class="ot">;</span></span>
-<span id="cb10-232"><a href="#cb10-232" aria-hidden="true" tabindex="-1"></a>    font<span class="op">-</span>size<span class="ot">:</span> <span class="er">14</span>px<span class="ot">;</span></span>
-<span id="cb10-233"><a href="#cb10-233" aria-hidden="true" tabindex="-1"></a>    text<span class="op">-</span>transform<span class="ot">:</span> uppercase<span class="ot">;</span></span>
-<span id="cb10-234"><a href="#cb10-234" aria-hidden="true" tabindex="-1"></a>    letter<span class="op">-</span>spacing<span class="ot">:</span> <span class="fl">0.5</span>px<span class="ot">;</span></span>
-<span id="cb10-235"><a href="#cb10-235" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb10-236"><a href="#cb10-236" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-237"><a href="#cb10-237" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span>due<span class="op">-</span>collection<span class="op">-</span>amount {</span>
-<span id="cb10-238"><a href="#cb10-238" aria-hidden="true" tabindex="-1"></a>    color<span class="ot">:</span> white <span class="op">!</span>important<span class="ot">;</span></span>
-<span id="cb10-239"><a href="#cb10-239" aria-hidden="true" tabindex="-1"></a>    font<span class="op">-</span>weight<span class="ot">:</span> bold<span class="ot">;</span></span>
-<span id="cb10-240"><a href="#cb10-240" aria-hidden="true" tabindex="-1"></a>    font<span class="op">-</span>size<span class="ot">:</span> <span class="er">24</span>px<span class="ot">;</span></span>
-<span id="cb10-241"><a href="#cb10-241" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb10-242"><a href="#cb10-242" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-243"><a href="#cb10-243" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span>due<span class="op">-</span>collection<span class="op">-</span>desc {</span>
-<span id="cb10-244"><a href="#cb10-244" aria-hidden="true" tabindex="-1"></a>    color<span class="ot">:</span> rgba(<span class="dv">255</span><span class="ot">,</span> <span class="dv">255</span><span class="ot">,</span> <span class="dv">255</span><span class="ot">,</span> <span class="fl">0.9</span>) <span class="op">!</span>important<span class="ot">;</span></span>
-<span id="cb10-245"><a href="#cb10-245" aria-hidden="true" tabindex="-1"></a>    font<span class="op">-</span>size<span class="ot">:</span> <span class="er">12</span>px<span class="ot">;</span></span>
-<span id="cb10-246"><a href="#cb10-246" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb10-247"><a href="#cb10-247" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-248"><a href="#cb10-248" aria-hidden="true" tabindex="-1"></a>  <span class="co">/* Ensure proper spacing and layout */</span></span>
-<span id="cb10-249"><a href="#cb10-249" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span>due<span class="op">-</span>collection<span class="op">-</span>box <span class="op">.</span>info<span class="op">-</span>box<span class="op">-</span>content {</span>
-<span id="cb10-250"><a href="#cb10-250" aria-hidden="true" tabindex="-1"></a>    margin<span class="op">-</span>left<span class="ot">:</span> <span class="er">85</span>px<span class="ot">;</span></span>
-<span id="cb10-251"><a href="#cb10-251" aria-hidden="true" tabindex="-1"></a>    padding<span class="ot">:</span> <span class="er">15</span>px <span class="er">10</span>px<span class="ot">;</span></span>
-<span id="cb10-252"><a href="#cb10-252" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb10-253"><a href="#cb10-253" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;/</span>style<span class="op">&gt;</span></span></code></pre></div>
-<div class="container">
-<pre><code>&lt;div class=&quot;download-section&quot;&gt;
-    &lt;h2&gt;Download File `resources/views/cash_register/close_register.blade.php`&lt;/h2&gt;
-    &lt;div class=&quot;download-button-container&quot;&gt;
-        &lt;a href=&quot;https://drive.google.com/file/d/1YlH6RUJuEv76H9BGI_CFN3NPku-LmkAk/view?usp=drive_link&quot;&gt;
-            &lt;img src=&quot;https://as1.ftcdn.net/jpg/00/30/14/94/1000_F_30149473_uM8rqqkj6aGbnkINikbbbVSOwa4jsTed.jpg&quot; alt=&quot;Download Button&quot; class=&quot;download-image&quot;&gt;
-        &lt;/a&gt;
-    &lt;/div&gt;
-&lt;/div&gt;</code></pre>
-</div>
-<h2 id="pengujian">🧪 Pengujian</h2>
-<h3 id="skenario-pengujian">Skenario Pengujian</h3>
-<ul>
-<li><strong>Buatlah penjualan kredit</strong>: Melakukan penjualan
-dengan pembayaran sebagian</li>
-<li><strong>Tagih pembayaran yang telah jatuh tempo</strong>: Bayar
-jumlah yang tersisa hari ini</li>
-<li><strong>Periksa detail pendaftaran</strong>: Verifikasi “Dikumpulkan
-Hari Ini” menunjukkan pembayaran</li>
-<li><strong>Buat transaksi yang sudah jatuh tempo</strong>: Melakukan
-penjualan dari hari-hari sebelumnya dengan jumlah yang belum
-dibayar</li>
-<li><strong>Verifikasi tampilan yang sudah jatuh tempo</strong>:
-Pastikan kotak merah yang telah jatuh tempo muncul jika ada ### Hasil
-yang diharapkan</li>
-<li>✅ <strong>Dikumpulkan Hari Ini</strong>: Menampilkan semua
-pembayaran jatuh tempo yang diterima hari ini</li>
-<li>✅ <strong>Tertunda Jatuh Tempo Hari Ini</strong>: Menunjukkan
-jumlah yang belum dibayar dari penjualan hari ini</li>
-<li>✅ <strong>Jumlah yang Jatuh Tempo</strong>: Menampilkan hanya
-ketika ada transaksi yang benar-benar jatuh tempo</li>
-<li>✅ <strong>Jumlah Transaksi</strong>: Hitungan akurat dari transaksi
-yang terpengaruh</li>
-<li>✅ <strong>Desain Responsif</strong>: Dapat digunakan di perangkat
-seluler dan desktop</li>
-<li>✅ <strong>Ramah Cetak</strong>: Terlihat bagus saat dicetak</li>
-</ul>
-<h3 id="kustomisasi">🎨 Kustomisasi</h3>
-<h4 id="mengubah-warna">Mengubah Warna</h4>
-<p>Anda dapat menyesuaikan warna kotak dengan memodifikasi kelas
-<code>Bootstrap</code>:</p>
-<div class="sourceCode" id="cb12"><pre
-class="sourceCode php"><code class="sourceCode php"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;!--</span> <span class="cn">G</span>reen <span class="cf">for</span> collected <span class="op">-</span>-&gt;</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>div <span class="kw">class</span><span class="op">=</span><span class="st">&quot;info-box bg-green due-collection-box&quot;</span><span class="op">&gt;</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;!--</span> <span class="cn">Y</span>ellow<span class="op">/</span><span class="cn">O</span>range <span class="cf">for</span> pending <span class="op">-</span>-&gt;</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>div <span class="kw">class</span><span class="op">=</span><span class="st">&quot;info-box bg-yellow due-collection-box&quot;</span><span class="op">&gt;</span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;!--</span> <span class="cn">R</span>ed <span class="cf">for</span> overdue <span class="op">-</span>-&gt;</span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>div <span class="kw">class</span><span class="op">=</span><span class="st">&quot;info-box bg-red due-collection-box&quot;</span><span class="op">&gt;</span></span></code></pre></div>
-<h4 id="menambahkan-lebih-banyak-ikon">Menambahkan Lebih Banyak
-Ikon</h4>
-<p>Mengganti ikon Font Awesome dengan ikon yang Anda sukai:</p>
-<div class="sourceCode" id="cb13"><pre
-class="sourceCode php"><code class="sourceCode php"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;!--</span> <span class="cn">A</span>vailable alternatives <span class="op">-</span>-&gt;</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>i <span class="kw">class</span><span class="op">=</span><span class="st">&quot;fa fa-money&quot;</span><span class="op">&gt;&lt;/</span>i<span class="op">&gt;</span>          <span class="op">&lt;!--</span> <span class="cn">M</span>oney icon <span class="op">-</span>-&gt;</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>i <span class="kw">class</span><span class="op">=</span><span class="st">&quot;fa fa-clock-o&quot;</span><span class="op">&gt;&lt;/</span>i<span class="op">&gt;</span>        <span class="op">&lt;!--</span> <span class="cn">C</span>lock icon <span class="op">-</span>-&gt;</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>i <span class="kw">class</span><span class="op">=</span><span class="st">&quot;fa fa-warning&quot;</span><span class="op">&gt;&lt;/</span>i<span class="op">&gt;</span>        <span class="op">&lt;!--</span> <span class="cn">W</span>arning icon <span class="op">-</span>-&gt;</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>i <span class="kw">class</span><span class="op">=</span><span class="st">&quot;fa fa-calendar&quot;</span><span class="op">&gt;&lt;/</span>i<span class="op">&gt;</span>       <span class="op">&lt;!--</span> <span class="cn">C</span>alendar icon <span class="op">-</span>-&gt;</span></code></pre></div>
-<h4 id="memodifikasi-tata-letak">Memodifikasi Tata Letak</h4>
-<p>Ubah dari 3 kotak menjadi 2 kotak dengan menghapus bagian yang sudah
-lewat waktu atau sesuaikan ukuran kolom:</p>
-<div class="sourceCode" id="cb14"><pre
-class="sourceCode php"><code class="sourceCode php"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;!--</span> <span class="cf">For</span> <span class="dv">2</span> equal boxes <span class="op">-</span>-&gt;</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>div <span class="kw">class</span><span class="op">=</span><span class="st">&quot;col-md-6&quot;</span><span class="op">&gt;</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;!--</span> <span class="cf">For</span> <span class="dv">3</span> equal boxes <span class="op">-</span>-&gt;</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>div <span class="kw">class</span><span class="op">=</span><span class="st">&quot;col-md-4&quot;</span><span class="op">&gt;</span></span></code></pre></div>
-<h2 id="pemecahan-masalah">🔧 Pemecahan Masalah</h2>
-<h3 id="masalah-umum">Masalah Umum</h3>
-<h4 id="masalah-ikon-tidak-muncul"><strong>Masalah</strong>: Ikon tidak
-muncul</h4>
-<p><strong>Solusi</strong>: Pastikan Font Awesome dimuat dalam tata
-letak Anda <strong>Alternatif</strong>: Gunakan simbol teks atau pustaka
-ikon yang berbeda</p>
-<h4 id="masalah-data-tidak-muncul"><strong>Masalah</strong>: Data tidak
-muncul</h4>
-<p><strong>Solusi</strong>: Periksa apakah
-<code>$details['due_collections']</code> sedang diteruskan ke tampilan
-<strong>Debug</strong>: Tambahkan <code>{{ dd($details) }}</code> untuk
-melihat data apa yang tersedia</p>
-<h4 id="masalah-jumlah-yang-salah"><strong>Masalah</strong>: Jumlah yang
-salah</h4>
-<p><strong>Solusi</strong>: Verifikasi hubungan database Anda sesuai
-dengan struktur kueri <strong>Periksa</strong>: Pastikan
-<code>business_id</code> diatur dengan benar dalam sesi</p>
-<h4 id="masalah-konflik-penataan"><strong>Masalah</strong>: Konflik
-penataan</h4>
-<p><strong>Solusi</strong>: Gunakan pemilih CSS yang lebih spesifik atau
-deklarasi <code>!important</code> <strong>Alternatif</strong>: Pindahkan
-CSS ke file terpisah</p>
-<h2 id="persyaratan-basis-data">Persyaratan Basis Data</h2>
-<p>Pastikan basis data Anda memiliki tabel dan relasi berikut ini:</p>
-<ul>
-<li>Tabel <code>transactions</code> dengan <code>business_id</code>,
-<code>payment_status</code>, <code>type</code>,
-<code>status columns</code></li>
-<li>Tabel <code>transaction_payments</code> dengan
-<code>id_transaksi</code>, <code>amount</code>,
-<code>paid_on columns</code></li>
-<li>Hubungan kunci asing yang tepat antar tabel</li>
-</ul>
-<h2 id="rangkuman">Rangkuman</h2>
-<p>Anda telah berhasil mengimplementasikan tampilan penagihan jatuh
-tempo yang komprehensif yang menyediakan:</p>
-<ul>
-<li><strong>Visibilitas waktu nyata</strong> ke dalam penagihan
-pembayaran</li>
-<li><strong>Data di seluruh bisnis</strong> untuk pengambilan keputusan
-yang lebih baik</li>
-<li><strong>Ultra Profesional</strong> dengan desain yang responsif</li>
-<li><strong>Tampilan kondisional yang cerdas</strong> untuk pengalaman
-pengguna yang optimal Fitur ini akan membantu bisnis Anda melacak
-penagihan yang jatuh tempo secara lebih efektif dan meningkatkan
-manajemen arus kas.</li>
-</ul>
-<hr />
-<p><a href="3.md">← Previous: Pencetakan Label yang Disempurnakan untuk
-Ultimate POS</a> | <a href="5.md">Next →: Ukuran Db yang besar di
-Ultimate POS</a></p>
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>POS – Filter Sub-Kategori</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>
+          📦 Menambahkan Tagihan Jatuh Tempo ke Mesin Kasir
+        </h1>
+        <p>
+          Pelajari cara menambahkan tampilan tagihan jatuh tempo yang komprehensif ke mesin kasir POS Anda yang menampilkan pembayaran yang telah ditagih, iuran yang tertunda, dan jumlah yang tertunggak.
+        </p>
+      </header>
+
+      <div class="download-box">
+        <a
+          href="assets/ultimate-pos-filter.zip"
+          download
+          class="download-button"
+        >
+          ⬇️ Unduh File Contoh
+        </a>
+      </div>
+      <!-- HOME -->
+       <div class="home-button-wrapper">
+          <a href="index.html" class="home-button">🏠 Kembali ke Beranda</a>
+        </div>
+
+      <section>
+        <h2>📋 Apa yang Akan Anda Bangun</h2>
+        <div class="image-box">
+          <img
+            src="https://ultimate-pos-tutorials.vercel.app/assets/images/due-collections-preview-97e82cea377112d6b45fdd95619c2a7e.png"
+            alt="#"
+          />
+          <p class="caption">
+            Gambar: Apa yang Akan Anda Bangun.
+          </p>
+        </div>
+        <p>Pada akhir tutorial ini, mesin kasir Anda akan ditampilkan:</p>
+        <ul>
+            <li>✅ Dikumpulkan Hari Ini: Semua pembayaran jatuh tempo yang diterima hari ini (di seluruh bisnis)</li>
+            <li>⚠️ Tertunda Jatuh Tempo Hari Ini: Jumlah yang belum dibayar dari penjualan hari ini</li>
+            <li>🔴 Jumlah Tertunggak: Iuran yang belum dibayar di hari sebelumnya (ditampilkan jika ada)</li>
+        </ul>
+      </section>
+      <section>
+        <h2>🎯 Fitur</h2>
+        <ul>
+            <li>Visibilitas ke seluruh bisnis (tidak hanya kasir saat ini)</li>
+            <li>Data real-time dengan jumlah transaksi</li>
+            <li>Tampilan bersyarat yang cerdas (kotak jatuh tempo hanya muncul jika diperlukan)</li>
+            <li>Desain responsif yang indah dengan ikon-ikon</li>
+            <li>Penataan yang ramah untuk dicetak</li>
+            <li>Dapat digunakan pada detail kasir dan modal kasir tutup</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>📚 Syarat</h2>
+        <ul>
+            <li>Sistem POS berbasis Laravel</li>
+            <li>Pengetahuan dasar tentang template PHP dan Blade</li>
+            <li>Akses ke file controller dan tampilan</li>
+            <li>Pemahaman tentang hubungan basis data</li>
+        </ul>
+      </section>
+      <section>
+        <h2>🚀 Langkah-langkah Implementasi</h2>
+      </section>
+
+      <section>
+        <h2>✅ Langkah 1: Perbarui Class CashRegisterUtil</h2>
+        <p>Pertama, kita akan menambahkan logika penagihan jatuh tempo ke <code>app/Utils/CashRegisterUtil.php</code>.</p>
+        <h3>1.1 Menambahkan Metode Penagihan Jatuh Tempo</h3>
+        <p>Tambahkan metode ini ke <code>app/Utils/CashRegisterUtil.php</code>:</p>
+        <pre><code>
+            public function getTodayDueCollections($user_id, $open_time, $close_time)
+    {
+        $business_id = request()->session()->get('user.business_id');
+
+        // COLLECTED TODAY - Payments made today that reduce existing due amounts
+        // This includes: payments on old invoices + additional payments on today's invoices
+        $today_due = DB::table('transaction_payments as tp')
+            ->join('transactions as t', 'tp.transaction_id', '=', 't.id')
+            ->whereDate('tp.paid_on', now()->toDateString()) // Payments made today
+            ->where('t.type', 'sell')
+            ->where('t.status', 'final')
+            ->where('t.business_id', $business_id)
+            // Exclude initial payments made at the time of sale creation
+            ->where(function($query) {
+                $query->whereRaw('DATE(tp.paid_on) != DATE(t.created_at)')  // Payment made on different day than sale
+                      ->orWhereRaw('tp.created_at > DATE_ADD(t.created_at, INTERVAL 5 MINUTE)'); // Or payment made more than 5 minutes after sale creation
+            })
+            ->select(
+                DB::raw('SUM(tp.amount) as total_due_collected'),
+                DB::raw('COUNT(DISTINCT tp.transaction_id) as total_due_transactions')
+            )
+            ->first();
+
+        // PENDING DUES TODAY - Transactions created today that still have pending amounts
+        $pending_dues = DB::table('transactions as t')
+            ->whereDate('t.transaction_date', now()->toDateString()) // Transactions created today
+            ->where('t.type', 'sell')
+            ->where('t.status', 'final')
+            ->where('t.business_id', $business_id)
+            ->where('t.payment_status', '!=', 'paid') // Not fully paid
+            ->select(
+                DB::raw('SUM(t.final_total - COALESCE(
+                    (SELECT SUM(amount) FROM transaction_payments WHERE transaction_id = t.id), 0
+                )) as total_pending_due'),
+                DB::raw('COUNT(t.id) as total_pending_transactions')
+            )
+            ->first();
+
+        // OVERDUE AMOUNTS - Previous days' unpaid transactions
+        $overdue_amounts = DB::table('transactions as t')
+            ->whereDate('t.transaction_date', '<', now()->toDateString()) // Previous days
+            ->where('t.type', 'sell')
+            ->where('t.status', 'final')
+            ->where('t.business_id', $business_id)
+            ->where('t.payment_status', '!=', 'paid') // Not fully paid
+            ->select(
+                DB::raw('SUM(t.final_total - COALESCE(
+                    (SELECT SUM(amount) FROM transaction_payments WHERE transaction_id = t.id), 0
+                )) as total_overdue'),
+                DB::raw('COUNT(t.id) as total_overdue_transactions')
+            )
+            ->first();
+
+        return [
+            'due_collected_today' => $today_due->total_due_collected ?? 0,
+            'due_transactions_count' => $today_due->total_due_transactions ?? 0,
+            'pending_due_today' => $pending_dues->total_pending_due ?? 0,
+            'pending_transactions_count' => $pending_dues->total_pending_transactions ?? 0,
+            'overdue_amount' => $overdue_amounts->total_overdue ?? 0,
+            'overdue_transactions_count' => $overdue_amounts->total_overdue_transactions ?? 0,
+        ];
+    }
+    public function getTodayDueCashCollections($register_id, $open_time, $close_time)
+    {
+        $business_id = request()->session()->get('user.business_id');
+
+        // Get cash payments made today for due collections
+        $due_cash_collections = DB::table('transaction_payments as tp')
+            ->join('transactions as t', 'tp.transaction_id', '=', 't.id')
+            ->whereDate('tp.paid_on', now()->toDateString()) // Payments made today
+            ->where('t.business_id', $business_id)
+            ->where('t.type', 'sell')
+            ->where('t.status', 'final')
+            ->where('tp.method', 'cash') // Only cash payments
+            // Exclude initial payments made at time of sale creation
+            ->where(function ($query) {
+                $query->whereRaw('DATE(tp.paid_on) != DATE(t.created_at)')  // Different day
+                    ->orWhereRaw('tp.created_at > DATE_ADD(t.created_at, INTERVAL 5 MINUTE)'); // Or 5+ minutes later
+            })
+            ->sum('tp.amount');
+
+        return $due_cash_collections ?? 0;
+    }
+        </code></pre>
+      </section>
+
+      <section>
+        <h2>✅ Langkah 2: Perbarui Controller</h2>
+        <p>Sekarang perbarui <code>app/Http/Controllers/CashRegisterController.php</code> untuk memanggil metode utilitas.</p>
+        <h3>2.1 Perbarui Metode getRegisterDetails</h3>
+        <p>Perbarui metode getRegisterDetails() yang sudah ada di controller:</p>
+        <pre><code>
+            public function getRegisterDetails()
+    {
+        if (!auth()->user()->can('view_cash_register')) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        $business_id = request()->session()->get('user.business_id');
+
+        $register_details = $this->cashRegisterUtil->getRegisterDetails();
+
+        $user_id = auth()->user()->id;
+        $open_time = $register_details['open_time'];
+        $close_time = \Carbon::now()->toDateTimeString();
+
+        $is_types_of_service_enabled = $this->moduleUtil->isModuleEnabled('types_of_service');
+
+        $details = $this->cashRegisterUtil->getRegisterTransactionDetails($user_id, $open_time, $close_time, $is_types_of_service_enabled);
+
+        // Add due collections data
+        $due_collections = $this->cashRegisterUtil->getTodayDueCollections($user_id, $open_time, $close_time);
+        $details['due_collections'] = $due_collections;
+
+        $payment_types = $this->cashRegisterUtil->payment_types($register_details->location_id, true, $business_id);
+
+        return view('cash_register.register_details')
+            ->with(compact('register_details', 'details', 'payment_types', 'close_time'));
+    }
+        </code></pre>
+
+        <h3>2.2 Perbarui metode getRegisterDetails yang sudah ada di <code>app/Utils/CashRegisterUtil.php</code></h3>
+        <pre><code>
+            public function getRegisterDetails($register_id = null)
+{
+    $query = CashRegister::leftjoin(
+        'cash_register_transactions as ct',
+        'ct.cash_register_id',
+        '=',
+        'cash_registers.id'
+    )
+    ->join(
+        'users as u',
+        'u.id',
+        '=',
+        'cash_registers.user_id'
+    )
+    ->leftJoin(
+        'business_locations as bl',
+        'bl.id',
+        '=',
+        'cash_registers.location_id'
+    );
+
+    if (empty($register_id)) {
+        $user_id = auth()->user()->id;
+        $query->where('user_id', $user_id)
+            ->where('cash_registers.status', 'open');
+    } else {
+        $query->where('cash_registers.id', $register_id);
+    }
+
+    $register_details = $query->select(
+        'cash_registers.id as register_id',
+        'cash_registers.created_at as open_time',
+        'cash_registers.closed_at as closed_at',
+        'cash_registers.user_id',
+        'cash_registers.closing_note',
+        'cash_registers.location_id',
+        'cash_registers.denominations',
+        DB::raw("SUM(IF(transaction_type='initial', amount, 0)) as cash_in_hand"),
+        DB::raw("SUM(IF(transaction_type='sell', amount, IF(transaction_type='refund', -1 * amount, 0))) as total_sale"),
+        DB::raw("SUM(IF(transaction_type='expense', IF(transaction_type='refund', -1 * amount, amount), 0)) as total_expense"),
+        DB::raw("SUM(IF(pay_method='cash', IF(transaction_type='sell', amount, 0), 0)) as total_cash"),
+        DB::raw("SUM(IF(pay_method='cash', IF(transaction_type='expense', amount, 0), 0)) as total_cash_expense"),
+        DB::raw("SUM(IF(pay_method='cheque', IF(transaction_type='sell', amount, 0), 0)) as total_cheque"),
+        DB::raw("SUM(IF(pay_method='cheque', IF(transaction_type='expense', amount, 0), 0)) as total_cheque_expense"),
+        DB::raw("SUM(IF(pay_method='card', IF(transaction_type='sell', amount, 0), 0)) as total_card"),
+        DB::raw("SUM(IF(pay_method='card', IF(transaction_type='expense', amount, 0), 0)) as total_card_expense"),
+        DB::raw("SUM(IF(pay_method='bank_transfer', IF(transaction_type='sell', amount, 0), 0)) as total_bank_transfer"),
+        DB::raw("SUM(IF(pay_method='bank_transfer', IF(transaction_type='expense', amount, 0), 0)) as total_bank_transfer_expense"),
+        DB::raw("SUM(IF(pay_method='other', IF(transaction_type='sell', amount, 0), 0)) as total_other"),
+        DB::raw("SUM(IF(pay_method='other', IF(transaction_type='expense', amount, 0), 0)) as total_other_expense"),
+        DB::raw("SUM(IF(pay_method='advance', IF(transaction_type='sell', amount, 0), 0)) as total_advance"),
+        DB::raw("SUM(IF(pay_method='advance', IF(transaction_type='expense', amount, 0), 0)) as total_advance_expense"),
+        DB::raw("SUM(IF(pay_method='custom_pay_1', IF(transaction_type='sell', amount, 0), 0)) as total_custom_pay_1"),
+        DB::raw("SUM(IF(pay_method='custom_pay_2', IF(transaction_type='sell', amount, 0), 0)) as total_custom_pay_2"),
+        DB::raw("SUM(IF(pay_method='custom_pay_3', IF(transaction_type='sell', amount, 0), 0)) as total_custom_pay_3"),
+        DB::raw("SUM(IF(pay_method='custom_pay_4', IF(transaction_type='sell', amount, 0), 0)) as total_custom_pay_4"),
+        DB::raw("SUM(IF(pay_method='custom_pay_5', IF(transaction_type='sell', amount, 0), 0)) as total_custom_pay_5"),
+        DB::raw("SUM(IF(pay_method='custom_pay_6', IF(transaction_type='sell', amount, 0), 0)) as total_custom_pay_6"),
+        DB::raw("SUM(IF(pay_method='custom_pay_7', IF(transaction_type='sell', amount, 0), 0)) as total_custom_pay_7"),
+        DB::raw("SUM(IF(pay_method='custom_pay_1', IF(transaction_type='expense', amount, 0), 0)) as total_custom_pay_1_expense"),
+        DB::raw("SUM(IF(pay_method='custom_pay_2', IF(transaction_type='expense', amount, 0), 0)) as total_custom_pay_2_expense"),
+        DB::raw("SUM(IF(pay_method='custom_pay_3', IF(transaction_type='expense', amount, 0), 0)) as total_custom_pay_3_expense"),
+        DB::raw("SUM(IF(pay_method='custom_pay_4', IF(transaction_type='expense', amount, 0), 0)) as total_custom_pay_4_expense"),
+        DB::raw("SUM(IF(pay_method='custom_pay_5', IF(transaction_type='expense', amount, 0), 0)) as total_custom_pay_5_expense"),
+        DB::raw("SUM(IF(pay_method='custom_pay_6', IF(transaction_type='expense', amount, 0), 0)) as total_custom_pay_6_expense"),
+        DB::raw("SUM(IF(pay_method='custom_pay_7', IF(transaction_type='expense', amount, 0), 0)) as total_custom_pay_7_expense"),
+        DB::raw("SUM(IF(transaction_type='refund', amount, 0)) as total_refund"),
+        DB::raw("SUM(IF(transaction_type='refund', IF(pay_method='cash', amount, 0), 0)) as total_cash_refund"),
+        DB::raw("SUM(IF(transaction_type='refund', IF(pay_method='cheque', amount, 0), 0)) as total_cheque_refund"),
+        DB::raw("SUM(IF(transaction_type='refund', IF(pay_method='card', amount, 0), 0)) as total_card_refund"),
+        DB::raw("SUM(IF(transaction_type='refund', IF(pay_method='bank_transfer', amount, 0), 0)) as total_bank_transfer_refund"),
+        DB::raw("SUM(IF(transaction_type='refund', IF(pay_method='other', amount, 0), 0)) as total_other_refund"),
+        DB::raw("SUM(IF(transaction_type='refund', IF(pay_method='advance', amount, 0), 0)) as total_advance_refund"),
+        DB::raw("SUM(IF(transaction_type='refund', IF(pay_method='custom_pay_1', amount, 0), 0)) as total_custom_pay_1_refund"),
+        DB::raw("SUM(IF(transaction_type='refund', IF(pay_method='custom_pay_2', amount, 0), 0)) as total_custom_pay_2_refund"),
+        DB::raw("SUM(IF(transaction_type='refund', IF(pay_method='custom_pay_3', amount, 0), 0)) as total_custom_pay_3_refund"),
+        DB::raw("SUM(IF(transaction_type='refund', IF(pay_method='custom_pay_4', amount, 0), 0)) as total_custom_pay_4_refund"),
+        DB::raw("SUM(IF(transaction_type='refund', IF(pay_method='custom_pay_5', amount, 0), 0)) as total_custom_pay_5_refund"),
+        DB::raw("SUM(IF(transaction_type='refund', IF(pay_method='custom_pay_6', amount, 0), 0)) as total_custom_pay_6_refund"),
+        DB::raw("SUM(IF(transaction_type='refund', IF(pay_method='custom_pay_7', amount, 0), 0)) as total_custom_pay_7_refund"),
+        DB::raw("SUM(IF(pay_method='cheque', 1, 0)) as total_cheques"),
+        DB::raw("SUM(IF(pay_method='card', 1, 0)) as total_card_slips"),
+        DB::raw("CONCAT(COALESCE(surname, ''), ' ', COALESCE(first_name, ''), ' ', COALESCE(last_name, '')) as user_name"),
+        'u.email',
+        'bl.name as location_name'
+    )->first();
+
+    // ADD DUE COLLECTION CASH TO TOTAL CASH
+    if ($register_details) {
+        $open_time = $register_details->open_time;
+        $close_time = \Carbon::now()->toDateTimeString();
+
+        // Get due collection cash payments
+        $due_cash_collections = $this->getTodayDueCashCollections($register_details->register_id, $open_time, $close_time);
+
+        // Add due collections to total cash
+        $register_details->total_cash = ($register_details->total_cash ?? 0) + $due_cash_collections;
+        $register_details->due_cash_collections = $due_cash_collections; // For reference
+    }
+
+    return $register_details;
+}
+        </code></pre>
+        <h3>2.3 Perbarui Metode getCloseRegister (Opsional)</h3>
+        <p>Jika Anda menginginkan fitur yang sama pada modal close register Anda, perbarui metode getCloseRegister() Anda: Sekarang perbarui app/Http/Controllers/CashRegisterController.php untuk memanggil metode utilitas.</p>
+        <pre><code>
+            public function getCloseRegister($id = null)
+{
+    if (! auth()->user()->can('close_cash_register')) {
+        abort(403, 'Unauthorized action.');
+    }
+
+    $business_id = request()->session()->get('user.business_id');
+    $register_details = $this->cashRegisterUtil->getRegisterDetails($id);
+
+    $user_id = $register_details->user_id;
+    $open_time = $register_details['open_time'];
+    $close_time = \Carbon::now()->toDateTimeString();
+
+    $is_types_of_service_enabled = $this->moduleUtil->isModuleEnabled('types_of_service');
+
+    $details = $this->cashRegisterUtil->getRegisterTransactionDetails($user_id, $open_time, $close_time, $is_types_of_service_enabled);
+
+    // Add due collections data for close register modal too
+    $due_collections = $this->cashRegisterUtil->getTodayDueCollections($user_id, $open_time, $close_time);
+    $details['due_collections'] = $due_collections;
+
+    $payment_types = $this->cashRegisterUtil->payment_types($register_details->location_id, true, $business_id);
+
+    $pos_settings = ! empty(request()->session()->get('business.pos_settings')) ? json_decode(request()->session()->get('business.pos_settings'), true) : [];
+
+    return view('cash_register.close_register_modal')
+        ->with(compact('register_details', 'details', 'payment_types', 'pos_settings'));
+}
+        </code></pre>
+      </section>
+
+      <section>
+        <h2>✅ Langkah 3: Perbarui Tampilan Detail Register</h2>
+        <p>Perbarui file resources/views/cash_register/register_details.blade.php Anda.</p>
+        <h3>3.1 Tambahkan Bagian Penagihan Jatuh Tempo</h3>
+        <a href="downloads/section2.html" download class="section-download"
+          >⬇️ Unduh
+          resources/views/cash_register/register_details.blade.php</a
+        >
+
+      </section>
+
+      <section>
+        <h2>✅ Langkah 4: Perbarui Modal Tutup Register (Opsional)</h2>
+        <p>Jika Anda menginginkan fitur yang sama pada modal close register Anda, perbarui <code>resources/views/cash_register/close_register.blade.php</code> dengan bagian due collections dan CSS yang sama.</p>
+        <a href="downloads/section2.html" download class="section-download"
+          >⬇️ Unduh
+          resources/views/cash_register/close_register.blade.php</a
+        >
+      </section>
+
+      <section>
+        <h2>🧪 Pengujian</h2>
+        <h3>Skenario Pengujian</h3>
+        <ul>
+            <li>Membuat penjualan kredit: Lakukan penjualan dengan pembayaran sebagian</li>
+            <li>Kumpulkan pembayaran yang sudah jatuh tempo: Bayar sisa pembayaran hari ini</li>
+            <li>Periksa detail register: Verifikasi "Dikumpulkan Hari Ini" menunjukkan pembayaran</li>
+            <li>Buat transaksi yang telah jatuh tempo: Lakukan penjualan dari hari-hari sebelumnya dengan jumlah yang belum dibayar</li>
+            <li>Verifikasi tampilan tunggakan: Periksa kotak merah yang telah jatuh tempo muncul jika ada</li>
+        </ul>
+        <h3>Hasil yang Diharapkan</h3>
+        <ul>
+            <li>✅ Ditagih Hari Ini: Menampilkan semua pembayaran jatuh tempo yang diterima hari ini</li>
+            <li>✅ Jatuh Tempo Tertunda Hari Ini: Menampilkan jumlah yang belum dibayar dari penjualan hari ini</li>
+            <li>✅ Jumlah Tertunggak: Hanya ditampilkan jika ada transaksi yang benar-benar jatuh tempo</li>
+            <li>✅ Jumlah Transaksi: Hitungan akurat dari transaksi yang terpengaruh</li>
+            <li>✅ Desain Responsif: Dapat digunakan di perangkat mobile dan desktop</li>
+            <li>✅ Print Friendly: Terlihat bagus saat dicetak</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>🎨 Kustomisasi</h2>
+        <h3>Mengubah Warna</h3>
+        <p>Anda dapat menyesuaikan warna kotak dengan memodifikasi kelas Bootstrap:</p>
+        <pre><code>
+           Green for collected
+            div class="info-box bg-green due-collection-box"
+
+            Yellow/Orange for pending
+            div class="info-box bg-yellow due-collection-box"
+
+            Red for overdue 
+            div class="info-box bg-red due-collection-box"
+        </code></pre>
+        <h3>Menambahkan Lebih Banyak Ikon</h3>
+        <p>Ganti ikon Font Awesome dengan yang Anda sukai:</p>
+        <pre><code>
+            Available alternatives
+            i class="fa fa-money"></i>          Money icon
+            i class="fa fa-clock-o"></i>        Clock icon
+            i class="fa fa-warning"></i>        Warning icon
+            i class="fa fa-calendar"></i>       Calendar icon
+        </code></pre>
+        <h3>Memodifikasi Tata Letak</h3>
+        <p>Ubah dari 3 kotak menjadi 2 kotak dengan menghapus bagian yang sudah lewat jatuh tempo atau sesuaikan ukuran kolom:</p>
+        <pre><code>
+            For 2 equal boxes
+            div class="col-md-6">
+
+            For 3 equal boxes
+            div class="col-md-4">
+        </code></pre>
+
+      </section>
+      <section>
+        <h2>🔧 Pemecahan masalah</h2>
+        <H3>Masalah Umum</H3>
+        <p>Masalah: Ikon tidak ditampilkan</p>
+        <ul>
+            <li>Solusi: Pastikan Font Awesome dimuat di tata letak Anda</li>
+            <li>Alternatif: Gunakan simbol teks atau pustaka ikon yang berbeda</li>
+        </ul>
+        <p>Masalah: Data tidak muncul</p>
+        <ul>
+            <li>Solusi: Pastikan bahwa <code>$details['due_collections']</code> diteruskan ke tampilan</li>
+            <li>Debug: Tambahkan <code>{{ dd($details) }}</code> untuk melihat data yang tersedia</li>
+        </ul>
+        <p>Masalah: Jumlah yang salah</p>
+        <ul>
+            <li>Solusi: Pastikan hubungan database Anda sesuai dengan struktur kueri</li>
+            <li>Periksa: Pastikan <code>business_id</code> diatur dengan benar dalam sesi</li>
+        </ul>
+
+        <p>Masalah: Menata konflik</p>
+        <ul>
+            <li>Solusi: Gunakan penyeleksi CSS yang lebih spesifik atau deklarasi !important</li>
+            <li>Alternatif: Pindahkan CSS ke file terpisah</li>
+        </ul>
+        <h3>Persyaratan Database</h3>
+        <p>Pastikan database Anda memiliki tabel dan hubungan berikut ini:</p>
+        <ul>
+            <li>tabel transaksi dengan kolom business_id, payment_status, type, status</li>
+            <li>tabel transaction_payments dengan kolom transaction_id, amount, paid_on</li>
+            <li>Hubungan foreign key yang tepat antar tabel</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Kesimpulan</h2>
+        <p>Anda telah berhasil mengimplementasikan tampilan penagihan jatuh tempo yang komprehensif yang menyediakan:</p>
+        <ul>
+            <li>Visibilitas real-time ke dalam penagihan pembayaran</li>
+            <li>Data di seluruh bisnis untuk pengambilan keputusan yang lebih baik</li>
+            <li>UI profesional dengan desain yang responsif</li>
+            <li>Tampilan bersyarat yang cerdas untuk pengalaman pengguna yang optimal</li>
+        </ul>
+        <p>Fitur ini akan membantu bisnis Anda melacak penagihan jatuh tempo secara lebih efektif dan meningkatkan manajemen arus kas.</p>
+      </section>
+
+      <footer>
+        <!-- HOME -->
+       <div class="home-button-wrapper">
+          <a href="index.html" class="home-button">🏠 Kembali ke Beranda</a>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>
