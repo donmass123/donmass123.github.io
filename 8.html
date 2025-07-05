@@ -15,7 +15,9 @@
         <h1>Panduan Integrasi Header Perintah Laravel</h1>
         <h1>📚🔧🚀💻</h1>
         <p>
-          Panduan komprehensif untuk menambahkan perintah pengoptimalan Laravel secara langsung ke header aplikasi Anda untuk akses cepat dan pemeliharaan sistem.
+          Panduan komprehensif untuk menambahkan perintah pengoptimalan Laravel
+          secara langsung ke header aplikasi Anda untuk akses cepat dan
+          pemeliharaan sistem.
         </p>
       </header>
 
@@ -35,27 +37,46 @@
 
       <section>
         <h2>Gambaran Umum</h2>
-        <p>Panduan ini akan membantu Anda mengimplementasikan menu tarik-turun yang nyaman di header aplikasi Anda yang memungkinkan administrator menjalankan perintah pengoptimalan Laravel yang umum tanpa mengakses baris perintah. Fitur ini meningkatkan produktivitas pengembang dan efisiensi pemeliharaan sistem.</p>
+        <p>
+          Panduan ini akan membantu Anda mengimplementasikan menu tarik-turun
+          yang nyaman di header aplikasi Anda yang memungkinkan administrator
+          menjalankan perintah pengoptimalan Laravel yang umum tanpa mengakses
+          baris perintah. Fitur ini meningkatkan produktivitas pengembang dan
+          efisiensi pemeliharaan sistem.
+        </p>
       </section>
 
       <section>
         <h2>Apa yang akan Anda Bangun</h2>
-        <p>Menu tarik-turun header dengan perintah-perintah Laravel berikut ini:</p>
+        <p>
+          Menu tarik-turun header dengan perintah-perintah Laravel berikut ini:
+        </p>
         <ul>
-            <li><strong>Optimalkan Hapus</strong>: Menghapus semua cache konfigurasi, rute, tampilan, dan layanan yang dikompilasi</li>
-            <li><strong>Route Clear</strong>: Menghapus cache route</li>
-            <li><strong>Config Clear</strong>: Menghapus cache konfigurasi</li>
-            <li><strong>View Clear</strong>: Menghapus file tampilan yang dikompilasi</li>
-            <li><strong>Cache Clear</strong>: Menghapus cache aplikasi</li>
-            <li><strong>System Logs</strong>: Akses cepat ke penampil log</li>
+          <li>
+            <strong>Optimalkan Hapus</strong>: Menghapus semua cache
+            konfigurasi, rute, tampilan, dan layanan yang dikompilasi
+          </li>
+          <li><strong>Route Clear</strong>: Menghapus cache route</li>
+          <li><strong>Config Clear</strong>: Menghapus cache konfigurasi</li>
+          <li>
+            <strong>View Clear</strong>: Menghapus file tampilan yang
+            dikompilasi
+          </li>
+          <li><strong>Cache Clear</strong>: Menghapus cache aplikasi</li>
+          <li><strong>System Logs</strong>: Akses cepat ke penampil log</li>
         </ul>
         <div class="image-box">
-        <img
-          src="https://ultimate-pos-tutorials.vercel.app/assets/images/laravel-commands-002af81fb6cfac37d92c85e4a5315300.png"
-          alt="#" />
-        <p class="caption">Gambar: Gambaran Umum.</p>
-      </div>
-      <p>Menu tarik-turun yang telah selesai yang menunjukkan semua perintah pengoptimalan Laravel yang diintegrasikan ke dalam tarik-turun profil pengguna</p>
+          <img
+            src="https://ultimate-pos-tutorials.vercel.app/assets/images/laravel-commands-002af81fb6cfac37d92c85e4a5315300.png"
+            alt="#"
+          />
+          <p class="caption">Gambar: Gambaran Umum.</p>
+        </div>
+        <p>
+          Menu tarik-turun yang telah selesai yang menunjukkan semua perintah
+          pengoptimalan Laravel yang diintegrasikan ke dalam tarik-turun profil
+          pengguna
+        </p>
       </section>
 
       <section>
@@ -144,40 +165,49 @@
           </li>
         </ul>
         <h2>📋 File yang akan dimodifikasi:</h2>
-        <table class="file-changes">
-          <thead>
-            <tr>
-              <th>File</th>
-              <th>Changes</th>
-              <th>Lines Added</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>routes/web.php</td>
-              <td>Add 5 command routes</td>
-              <td>~8 lines</td>
-            </tr>
-            <tr>
-              <td>app/Http/Controllers/HomeController.php</td>
-              <td>Add 5 cache command methods</td>
-              <td>~50 lines</td>
-            </tr>
-            <tr>
-              <td>
-                resources/views/layouts/partials/header.blade.php
-              </td>
-              <td>Update user dropdown with admin commands</td>
-              <td>~100 lines</td>
-            </tr>
-          </tbody>
-        </table>
+        <div class="table-wrapper">
+          <table class="file-changes">
+            <thead>
+              <tr>
+                <th>File</th>
+                <th>Changes</th>
+                <th>Lines Added</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td data-label="File">routes/web.php</td>
+                <td data-label="Changes">Add 5 command routes</td>
+                <td data-label="Lines Added">~8 lines</td>
+              </tr>
+              <tr>
+                <td data-label="File">
+                  app/Http/Controllers/HomeController.php
+                </td>
+                <td data-label="Changes">Add 5 cache command methods</td>
+                <td data-label="Lines Added">~50 lines</td>
+              </tr>
+              <tr>
+                <td data-label="File">
+                  resources/views/layouts/partials/header.blade.php
+                </td>
+                <td data-label="Changes">
+                  Update user dropdown with admin commands
+                </td>
+                <td data-label="Lines Added">~100 lines</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
         <h3>Ringkasan Implementasi:</h3>
         <ul>
-            <li>3 file dimodifikasi - Tidak ada file baru yang dibutuhkan</li>
-            <li>~158 total baris - Implementasi yang dapat dikelola</li>
-            <li>Nol ketergantungan - Menggunakan fitur Laravel & POS yang sudah ada</li>
-            <li>Keamanan berbasis peran - Hanya untuk akses admin</li>
+          <li>3 file dimodifikasi - Tidak ada file baru yang dibutuhkan</li>
+          <li>~158 total baris - Implementasi yang dapat dikelola</li>
+          <li>
+            Nol ketergantungan - Menggunakan fitur Laravel & POS yang sudah ada
+          </li>
+          <li>Keamanan berbasis peran - Hanya untuk akses admin</li>
         </ul>
       </section>
 
@@ -185,33 +215,49 @@
         <h2>Langkah 1: Perbarui Routes</h2>
         <p>Tambahkan perintah rute ke file <code>routes/web.php</code> Anda:</p>
         <div class="url-buttons">
-        <button class="view-modal-button" data-url="tutorial/📚🔧🚀💻/langkah1.txt">
-          routes/web.php
-        </button>
-      </div>
+          <button
+            class="view-modal-button"
+            data-url="tutorial/📚🔧🚀💻/langkah1.txt"
+          >
+            routes/web.php
+          </button>
+        </div>
       </section>
 
       <section>
         <h2>Langkah 2: Perbarui HomeController</h2>
-        <p>Tambahkan metode berikut ini ke <code>app/Http/Controllers/HomeController.php</code>:</p>
+        <p>
+          Tambahkan metode berikut ini ke
+          <code>app/Http/Controllers/HomeController.php</code>:
+        </p>
         <div class="url-buttons">
-        <button class="view-modal-button" data-url="tutorial/📚🔧🚀💻/langkah2.txt">
-          app/Http/Controllers/HomeController.php
-        </button>
-      </div>
+          <button
+            class="view-modal-button"
+            data-url="tutorial/📚🔧🚀💻/langkah2.txt"
+          >
+            app/Http/Controllers/HomeController.php
+          </button>
+        </div>
       </section>
 
       <section>
         <h2>Langkah 3: Perbarui Template Header</h2>
-        <p>Perbarui dropdown profil pengguna yang sudah ada di <code>resources/views/layouts/partials/header.blade.php</code> dengan menambahkan perintah Laravel ke elemen <code>"<"ul">"</code> yang sudah ada:</p>
+        <p>
+          Perbarui dropdown profil pengguna yang sudah ada di
+          <code>resources/views/layouts/partials/header.blade.php</code> dengan
+          menambahkan perintah Laravel ke elemen <code>"<"ul">"</code> yang
+          sudah ada:
+        </p>
         <div class="url-buttons">
-        <button class="view-modal-button" data-url="tutorial/📚🔧🚀💻/langkah3.txt">
-          resources/views/layouts/partials/header.blade.php
-        </button>
-      </div>
+          <button
+            class="view-modal-button"
+            data-url="tutorial/📚🔧🚀💻/langkah3.txt"
+          >
+            resources/views/layouts/partials/header.blade.php
+          </button>
+        </div>
       </section>
 
-      
       <footer>
         <!-- HOME -->
         <div class="home-button-wrapper">

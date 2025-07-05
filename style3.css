@@ -9,7 +9,7 @@
 /* Base Styling */
 table.file-changes {
     width: 100%;
-    min-width: 600px;
+    min-width: 600px; /* agar horizontal scroll muncul */
     border-collapse: collapse;
     background-color: #fff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -20,7 +20,7 @@ table.file-changes td {
     padding: 12px;
     text-align: left;
     border-bottom: 1px solid #ddd;
-    white-space: nowrap; /* mencegah teks pecah di mobile */
+    white-space: nowrap;
 }
 
 table.file-changes th {
@@ -39,11 +39,54 @@ table.file-changes code {
     font-size: 0.9rem;
 }
 
-/* Optional: Tambahan gaya di layar kecil agar nyaman */
+/* Responsif tambahan untuk layar kecil */
 @media (max-width: 768px) {
+    .table-wrapper {
+        padding: 0 10px;
+    }
+
+    table.file-changes {
+        font-size: 0.85rem;
+    }
+
     table.file-changes th,
     table.file-changes td {
-        padding: 10px 8px;
-        font-size: 0.9rem;
+        padding: 10px 6px;
+    }
+}
+
+/* Alternatif stack mode untuk ponsel sangat kecil (di bawah 480px) */
+@media (max-width: 480px) {
+    table.file-changes {
+        min-width: unset;
+        display: block;
+        overflow-x: auto;
+    }
+
+    table.file-changes thead {
+        display: none; /* Sembunyikan header */
+    }
+
+    table.file-changes tbody,
+    table.file-changes tr,
+    table.file-changes td {
+        display: block;
+        width: 100%;
+    }
+
+    table.file-changes tr {
+        margin-bottom: 1rem;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    table.file-changes td::before {
+        content: attr(data-label);
+        font-weight: bold;
+        display: block;
+        margin-bottom: 4px;
+        color: #4CAF50;
     }
 }
