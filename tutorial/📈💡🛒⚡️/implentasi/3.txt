@@ -1,0 +1,4 @@
+<!-- resources/views/product/partials/quick_add_product_modal.blade.php -->
+<div class="modal-dialog modal-lg" role="document">
+    <!-- Modal content -->
+</div>

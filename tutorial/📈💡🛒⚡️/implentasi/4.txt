@@ -1,0 +1,14 @@
+<!-- resources/views/product/index.blade.php -->
+
+<!-- ADD: Quick Add Button -->
+<a class="tw-dw-btn ... product_add_quick_product">Quick Add</a>
+
+<!-- ADD: Modal Container -->
+<div class="modal fade quick_add_product_modal"></div>
+
+<!-- ADD: JavaScript Handler -->
+<script>
+$(document).on('click', '.product_add_quick_product', function() {
+    // Modal handling code
+});
+</script>

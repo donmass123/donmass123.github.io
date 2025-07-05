@@ -1,0 +1,2 @@
+// Add this route to your web.php
+Route::get('/products/quick_add_mini_form', [ProductController::class, 'quickAddProductModal']);

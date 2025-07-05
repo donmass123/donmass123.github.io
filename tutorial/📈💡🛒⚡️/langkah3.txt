@@ -1,0 +1,170 @@
+<div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+        {!! Form::open(['url' => action([\App\Http\Controllers\ProductController::class, 'saveQuickProduct']), 'method' => 'post', 'id' => 'quick_add_product_form' ]) !!}
+
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="modal-title" id="modalTitle">@lang('product.add_new_product')</h4>
+        </div>
+
+        <div class="modal-body">
+            <div class="row">
+                <!-- Product Name -->
+                <div class="col-md-4">
+                    <div class="form-group">
+                        {!! Form::label('name', __('product.product_name') . ':*') !!}
+                        {!! Form::text('name', $product_name, ['class' => 'form-control', 'required', 'autofocus', 'placeholder' => __('product.product_name')]) !!}
+                        {!! Form::select('type', ['single' => 'Single', 'variable' => 'Variable'], 'single', ['class' => 'hide', 'id' => 'type']) !!}
+                    </div>
+                </div>
+
+                <!-- SKU -->
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        {!! Form::label('sku', __('product.sku') . ':') !!} @show_tooltip(__('tooltip.sku'))
+                        {!! Form::text('sku', null, ['class' => 'form-control', 'placeholder' => __('product.sku')]) !!}
+                    </div>
+                </div>
+
+                <!-- Unit -->
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        {!! Form::label('unit_id', __('product.unit') . ':*') !!}
+                        {!! Form::select('unit_id', $units, null, ['class' => 'form-control select2', 'required']) !!}
+                    </div>
+                </div>
+
+                <!-- Brand -->
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        {!! Form::label('brand_id', __('product.brand') . ':') !!}
+                        {!! Form::select('brand_id', $brands, null, ['placeholder' => __('messages.please_select'), 'class' => 'form-control select2']) !!}
+                    </div>
+                </div>
+
+                <!-- Category -->
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        {!! Form::label('category_id', __('product.category') . ':') !!}
+                        {!! Form::select('category_id', $categories, null, ['placeholder' => __('messages.please_select'), 'class' => 'form-control select2']) !!}
+                    </div>
+                </div>
+
+                <!-- Business Locations -->
+                @php
+                $default_location = null;
+                if(count($business_locations) == 1){
+                    $default_location = array_key_first($business_locations->toArray());
+                }
+                @endphp
+                <div class="col-sm-4 @if(count($business_locations) == 1) hide @endif">
+                    <div class="form-group">
+                        {!! Form::label('product_locations', __('business.business_locations') . ':') !!}
+                        @show_tooltip(__('lang_v1.product_location_help'))
+                        {!! Form::select('product_locations[]', $business_locations, $default_location, ['class' => 'form-control select2', 'multiple', 'id' => 'product_locations']) !!}
+                    </div>
+                </div>
+
+                <div class="clearfix"></div>
+
+                <!-- Product Form Part (Pricing) -->
+                <div class="row">
+                    <div class="form-group col-sm-12">
+                        @include('product.partials.single_product_form_part', ['profit_percent' => $default_profit_percent, 'quick_add' => true ])
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" id="submit_quick_product" class="btn btn-primary">@lang('messages.save')</button>
+            <button type="button" id="submit_quick_product_add_another" class="btn btn-success">@lang('lang_v1.save_n_add_another')</button>
+            <button type="button" id="submit_quick_product_redirect_to_label" class="btn btn-info">@lang('messages.save_and_redirect_to_label')</button>
+            <button type="button" class="btn btn-danger" data-dismiss="modal">@lang('messages.close')</button>
+        </div>
+
+        {!! Form::close() !!}
+    </div>
+</div>
+
+<script type="text/javascript">
+$(document).ready(function(){
+    $("form#quick_add_product_form").validate({
+        rules: {
+            sku: {
+                remote: {
+                    url: "/products/check_product_sku",
+                    type: "post",
+                    data: {
+                        sku: function() {
+                            return $("#sku").val();
+                        },
+                        product_id: function() {
+                            if($('#product_id').length > 0 ){
+                                return $('#product_id').val();
+                            } else {
+                                return '';
+                            }
+                        },
+                    }
+                }
+            }
+        },
+        messages: {
+            sku: {
+                remote: LANG.sku_already_exists
+            }
+        },
+        submitHandler: function (form) {
+            var form = $("form#quick_add_product_form");
+            var url = form.attr('action');
+            form.find('button[type="submit"]').attr('disabled', true);
+
+            $.ajax({
+                method: "POST",
+                url: url,
+                dataType: 'json',
+                data: $(form).serialize(),
+                success: function(data){
+                    if (data.success) {
+                        toastr.success(data.msg);
+                        $(document).trigger({type: "quickProductAdded", 'product': data.product, 'variation': data.variation });
+
+                        if (data.action === "add_another") {
+                            $("form#quick_add_product_form").trigger("reset");
+                            $("form#quick_add_product_form").find("input:visible:first").focus();
+                            $("form#quick_add_product_form").find("input[name='save_and_add_another']").remove();
+                        }
+                        else if (data.action === "redirect_to_label") {
+                            var labelUrl = "{{ action([\App\Http\Controllers\LabelsController::class, 'show']) }}?product_id=" + data.product.id;
+                            window.location.href = labelUrl;
+                        }
+                        else {
+                            $('.quick_add_product_modal').modal('hide');
+                        }
+                    } else {
+                        toastr.error(data.msg);
+                    }
+                }
+            });
+            return false;
+        }
+    });
+
+    $('#submit_quick_product').on('click', function() {
+        $("form#quick_add_product_form").submit();
+    });
+
+    $('#submit_quick_product_redirect_to_label').on('click', function() {
+        $("form#quick_add_product_form").append('<input type="hidden" name="redirect_to_label" value="1">');
+        $("form#quick_add_product_form").submit();
+    });
+
+    $("#submit_quick_product_add_another").on("click", function () {
+        $("form#quick_add_product_form").append('<input type="hidden" name="save_and_add_another" value="1">');
+        $("form#quick_add_product_form").submit();
+    });
+});
+</script>

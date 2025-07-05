@@ -1,0 +1,54 @@
+public function quickAddProductModal()
+{
+    // Check user permissions
+    if (! auth()->user()->can('product.create')) {
+        abort(403, 'Unauthorized action.');
+    }
+
+    // Get request parameters
+    $product_name = ! empty(request()->input('product_name')) ? request()->input('product_name') : '';
+    $product_for = ! empty(request()->input('product_for')) ? request()->input('product_for') : null;
+    $business_id = request()->session()->get('user.business_id');
+
+    // Load dropdown data
+    $categories = Category::forDropdown($business_id, 'product');
+    $brands = Brands::forDropdown($business_id);
+    $units = Unit::forDropdown($business_id, true);
+
+    // Load tax data
+    $tax_dropdown = TaxRate::forBusinessDropdown($business_id, true, true);
+    $taxes = $tax_dropdown['tax_rates'];
+    $tax_attributes = $tax_dropdown['attributes'];
+
+    // Load other required data
+    $barcode_types = $this->barcode_types;
+    $default_profit_percent = Business::where('id', $business_id)->value('default_profit_percent');
+    $locations = BusinessLocation::forDropdown($business_id);
+    $business_locations = BusinessLocation::forDropdown($business_id);
+    $common_settings = session()->get('business.common_settings');
+    $warranties = Warranty::forDropdown($business_id);
+
+    // Set additional variables
+    $enable_expiry = request()->session()->get('business.enable_product_expiry');
+    $enable_lot = request()->session()->get('business.enable_lot_number');
+    $module_form_parts = $this->moduleUtil->getModuleData('product_form_part');
+
+    return view('product.partials.quick_add_product_modal')->with(compact(
+        'categories',
+        'brands',
+        'units',
+        'taxes',
+        'barcode_types',
+        'default_profit_percent',
+        'tax_attributes',
+        'product_name',
+        'locations',
+        'product_for',
+        'enable_expiry',
+        'enable_lot',
+        'module_form_parts',
+        'business_locations',
+        'common_settings',
+        'warranties'
+    ));
+}

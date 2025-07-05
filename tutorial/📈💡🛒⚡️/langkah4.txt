@@ -1,0 +1,3 @@
+// In lang/en/lang_v1.php (or your language file)
+'quick_add' => 'Quick Add',
+'save_and_redirect_to_label' => 'Save and Redirect to Label',

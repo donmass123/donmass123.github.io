@@ -1,0 +1,5 @@
+// app/Http/Controllers/ProductController.php
+public function quickAddProductModal()
+{
+    // Controller implementation
+}

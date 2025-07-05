@@ -1,361 +1,356 @@
 <!DOCTYPE html>
 <html lang="id">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tutorial Point Of Sales</title>
-    <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="modal.css" />
 
-  </head>
-  <body>
-    <div class="container">
-      <header>
-        <h1>Pencetakan Label yang Ditingkatkan untuk POS</h1>
-        <h1>🖨️🏷️💳</h1>
-        <p>
-          Panduan ini mendemonstrasikan cara meningkatkan fungsionalitas
-          pencetakan label di POS dengan UI/UX yang lebih baik, pembuatan
-          barcode yang dioptimalkan, dan kemampuan cetak yang lebih baik.
-        </p>
-      </header>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tutorial Point Of Sales</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="modal.css" />
 
-      <div class="download-box">
-        <a
-          href="assets/ultimate-pos-filter.zip"
-          download
-          class="download-button"
-        >
-          ⬇️ Unduh File Contoh
-        </a>
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <h1>Pencetakan Label yang Ditingkatkan untuk POS</h1>
+      <h1>🖨️🏷️💳</h1>
+      <p>
+        Panduan ini mendemonstrasikan cara meningkatkan fungsionalitas
+        pencetakan label di POS dengan UI/UX yang lebih baik, pembuatan
+        barcode yang dioptimalkan, dan kemampuan cetak yang lebih baik.
+      </p>
+    </header>
+
+    <div class="download-box">
+      <a href="assets/ultimate-pos-filter.zip" download class="download-button">
+        ⬇️ Unduh File Contoh
+      </a>
+    </div>
+    <!-- HOME -->
+    <div class="home-button-wrapper">
+      <a href="index.html" class="home-button">🏠 Kembali ke Beranda</a>
+    </div>
+
+    <section>
+      <h2>Gambaran Umum</h2>
+      <p>Sistem pencetakan label yang diTingkatkan menyediakan:</p>
+      <ul>
+        <li>
+          Antarmuka yang modern dan responsif dengan sakelar sakelar dan
+          kontrol ukuran
+        </li>
+        <li>
+          Barcode yang dioptimalkan dan pembuatan kode QR untuk kualitas cetak
+          yang lebih baik
+        </li>
+        <li>Pratinjau yang diTingkatkan dengan pembaruan waktu nyata</li>
+        <li>Fungsionalitas cetak yang dioptimalkan untuk printer label</li>
+        <li>Penanganan gambar yang lebih baik dan pemformatan mata uang</li>
+      </ul>
+      <h2>Prasyarat: Pengaturan Dukungan Kode QR</h2>
+      <p>
+        Sebelum menggunakan sistem pencetakan label yang diTingkatkan dengan
+        kode QR, Anda perlu menambahkan dukungan kode QR ke pengaturan kode
+        batang jika belum ada.
+      </p>
+
+      <h2>Menambahkan Pengaturan Barcode Kode QR</h2>
+      <p>
+        Jika Anda ingin menambahkan "Untuk Kode QR" sebagai opsi pengaturan
+        barcode, jalankan perintah SQL ini di database Anda:
+      </p>
+      <pre><code>
+            INSERT INTO `barcodes` VALUES (7,'For Qr Code',NULL,0.9000,0.9000,10.0000,10.0000,0.0000,0.0000,0.1000,0.1000,1,0,0,1,1,'2025-06-07 00:00:00','2025-06-07 00:00:00');
+        </code></pre>
+      <div class="image-box">
+        <img
+          src="https://ultimate-pos-tutorials.vercel.app/assets/images/for-qrcode-3c833389b5bcf260dd5a701f362eecc8.png"
+          alt="#" />
+        <p class="caption">Gambar: Menambahkan Pengaturan Barcode Kode QR.</p>
       </div>
+      <p>
+        QR Code barcode setting "For Qr Code" available in the dropdown after
+        running the SQL command
+      </p>
+
+      <h2>Pratinjau Antarmuka yang Ditingkatkan</h2>
+      <div class="image-box">
+        <img
+          src="https://ultimate-pos-tutorials.vercel.app/assets/images/enhanced-labels-qr-interface-acb86261d58602ff586dd44d8862a83a.png"
+          alt="#" />
+        <p class="caption">Gambar: Pratinjau Antarmuka yang Ditingkatkan.</p>
+      </div>
+      <p>
+        Antarmuka pencetakan label yang diTingkatkan, menampilkan label kode
+        QR dengan kontrol sakelar modern
+      </p>
+
+      <h2>Fitur antarmuka yang diTingkatkan:</h2>
+      <ul>
+        <li>
+          Panel Kiri: Sakelar sakelar modern untuk mengaktifkan/menonaktifkan
+          elemen label
+        </li>
+        <li>
+          Kontrol Ukuran: Tombol plus/minus dengan input numerik untuk ukuran
+          yang tepat
+        </li>
+        <li>
+          Pratinjau Waktu Nyata: Pembaruan pratinjau instan saat Anda
+          menyesuaikan pengaturan
+        </li>
+        <li>
+          Beberapa Opsi Cetak: Pencetakan standar, pengoptimalan printer
+          label, dan mode khusus QR
+        </li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>✅ Langkah 1: Tambahkan Route</h2>
+      <p>
+        Tambahkan routes label yang telah diTingkatkan ke file
+        <code>routes/web.php</code> Anda:
+      </p>
+      <div class="url-buttons">
+        <button class="view-modal-button" data-url="tutorial/🖨️🏷️💳/langkah1.txt">
+          routes/web.php
+        </button>
+      </div>
+    </section>
+
+    <section>
+      <h2>✅ Langkah 2: Perbarui Controller</h2>
+      <p>
+        Tambahkan metode berikut ini ke aplikasi
+        <code>app/Http/Controllers/LabelsController.php</code>:
+      </p>
+      <h3>Metode Pertunjukan Yang Ditingkatkan</h3>
+      <div class="url-buttons">
+        <button class="view-modal-button" data-url="tutorial/🖨️🏷️💳/langkah2_1.txt">
+          app/Http/Controllers/LabelsController.php
+        </button>
+      </div>
+      <h3>Metode Pengoptimalan yang Ditingkatkan</h3>
+      <p>
+        Tambahkan metode pengoptimalan ini untuk meningkatkan kualitas kode
+        batang dan kode QR:
+      </p>
+      <div class="url-buttons">
+        <button class="view-modal-button" data-url="tutorial/🖨️🏷️💳/langkah2_2.txt">
+          app/Http/Controllers/LabelsController.php
+        </button>
+      </div>
+      <h3>Metode Pratinjau yang Ditingkatkan</h3>
+      <p>
+        Perbarui metode <code>show_label_preview</code> yang sudah ada untuk
+        menyertakan pengoptimalan:
+      </p>
+      <div class="url-buttons">
+        <button class="view-modal-button" data-url="tutorial/🖨️🏷️💳/langkah2_3.txt">
+          app/Http/Controllers/LabelsController.php
+        </button>
+      </div>
+    </section>
+
+    <section>
+      <h2>✅ Langkah 3: Menambahkan Item Menu</h2>
+      <p>
+        Tambahkan item menu label yang diTingkatkan ke
+        <code>app/Http/Middleware/AdminSidebarMenu.php</code> di bawah menu
+        label yang sudah ada:
+      </p>
+      <div class="url-buttons">
+        <button class="view-modal-button" data-url="tutorial/🖨️🏷️💳/langkah2_3.txt">
+          app/Http/Middleware/AdminSidebarMenu.php
+        </button>
+      </div>
+    </section>
+
+    <section>
+      <h2>✅ Langkah 4: Membuat Tampilan yang Ditingkatkan</h2>
+      <p>Tampilan Utama yang Ditingkatkan</p>
+      <p>Buat <code>resources/views/labels/enhanced-show.blade.php</code>:</p>
+      <div class="url-buttons">
+        <button class="view-modal-button" data-url="tutorial/🖨️🏷️💳/langkah4_1.txt">
+          resources/views/labels/enhanced-show.blade.php
+        </button>
+      </div>
+      <p>Template Pratinjau yang Ditingkatkan</p>
+      <p>
+        Buat
+        <code>resources/views/labels/partials/enhanced_preview.blade.php:</code>
+      </p>
+      <div class="url-buttons">
+        <button class="view-modal-button" data-url="tutorial/🖨️🏷️💳/langkah4_2.txt">
+          resources/views/labels/partials/enhanced_preview.blade.php
+        </button>
+      </div>
+    </section>
+
+    <section>
+      <h2>✅ Langkah 5: Buat Asset yang Ditingkatkan</h2>
+      <h3>Stylesheet CSS yang Ditingkatkan</h3>
+      <p>Buat public/css/enhanced-labels.css:</p>
+      <div class="url-buttons">
+        <button class="view-modal-button" data-url="tutorial/🖨️🏷️💳/langkah5_1.txt">
+          public/css/enhanced-labels.css
+        </button>
+      </div>
+      <h3>File JavaScript yang Ditingkatkan</h3>
+      <p>Buat <code>public/js/labels-enhancements.js</code>:</p>
+      <div class="url-buttons">
+        <button class="view-modal-button" data-url="tutorial/🖨️🏷️💳/langkah5_2.txt">
+          public/js/labels-enhancements.js
+        </button>
+      </div>
+    </section>
+
+    <section>
+      <h2>✅ Langkah 6: Perbarui JavaScript yang sudah ada</h2>
+      <p>
+        Perbarui file <code>public/js/labels.js</code> yang sudah ada dengan
+        menambahkan panggilan <code>fetchPreview()</code> di dalam fungsi
+        <code>get_label_product_row</code>:
+      </p>
+      <div class="url-buttons">
+        <button class="view-modal-button" data-url="tutorial/🖨️🏷️💳/langkah6.txt">
+          public/js/labels.js
+        </button>
+      </div>
+    </section>
+
+    <section>
+      <h2>✅ Langkah 7: Impor Dependencies</h2>
+      <p>Pastikan Anda memiliki dependensi yang diperlukan untuk pembuatan barcode di <code>composer.json</code> Anda:
+      </p>
+      <div class="url-buttons">
+        <button class="view-modal-button" data-url="tutorial/🖨️🏷️💳/langkah7.txt">
+          composer.json
+        </button>
+      </div>
+      <div class="tip">
+        Jalankan <code>composer install</code> untuk menginstal dependensi jika belum terinstal.
+      </div>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Fitur & Manfaat</h2>
+      <h3>Antarmuka Pengguna yang DiTingkatkan</h3>
+      <ul>
+        <li>Desain Modern: Antarmuka yang bersih dan responsif dengan tata letak berbasis kartu</li>
+        <li>Toggle Switch: Kontrol hidup/mati yang intuitif untuk elemen label</li>
+        <li>Kontrol Ukuran: Tombol plus/minus untuk penyesuaian ukuran yang mudah</li>
+        <li>Pratinjau Waktu Nyata: Pembaruan pratinjau instan saat Anda melakukan perubahan</li>
+      </ul>
+      <h3>Kualitas Cetak yang Dioptimalkan</h3>
+      <ul>
+        <li>Barcode Resolusi Tinggi: Ukuran dinamis berdasarkan dimensi label</li>
+        <li>Kode QR yang diTingkatkan: Koreksi dan resolusi kesalahan yang lebih baik</li>
+        <li>Dukungan Printer Label: Mode cetak khusus untuk printer label termal</li>
+        <li>Rendering Gambar yang lebih baik: Tepi yang tajam dan gaya cetak yang dioptimalkan</li>
+      </ul>
+      <h3>Fungsionalitas Tingkat Lanjut</h3>
+      <ul>
+        <li>Beberapa Sumber Gambar: Pilih antara logo bisnis atau URL khusus</li>
+        <li>Pemformatan Mata Uang: Penempatan simbol mata uang yang tepat</li>
+        <li>Dukungan Bidang Khusus: Penanganan otomatis bidang produk khusus</li>
+        <li>Desain Responsif: Dapat digunakan di desktop, tablet, dan perangkat seluler</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Penggunaan</h2>
+      <p>Akses Label yang DiTingkatkan: Buka Produk > Cetak Label (DiTingkatkan) di menu bilah sisi</p>
+      <p>Tambah Produk: Gunakan bidang pencarian untuk menemukan dan menambahkan produk ke kumpulan label Anda</p>
+      <p>Konfigurasi Pengaturan:</p>
+      <ul>
+        <li>Mengaktifkan/menonaktifkan elemen label menggunakan sakelar</li>
+        <li>Menyesuaikan ukuran menggunakan kontrol +/-</li>
+        <li>Memilih sumber gambar jika diperlukan</li>
+      </ul>
+      <p>Pratinjau & Cetak:</p>
+      <ul>
+        <li>Lihat pratinjau waktu nyata di sebelah kanan</li>
+        <li>Gunakan "Cetak Label" untuk pencetakan standar</li>
+        <li>Gunakan "Printer Label" untuk printer label termal</li>
+        <li>Gunakan "Kode QR" untuk label khusus kode QR</li>
+      </ul>
+
+      <h3>Contoh Label Barcode</h3>
+      <div class="image-box">
+        <img
+          src="https://ultimate-pos-tutorials.vercel.app/assets/images/enhanced-labels-barcode-interface-3b0589e1211961b7739f3f5b7a93983a.png"
+          alt="#" />
+        <p class="caption">Gambar: Contoh Label Barcode.</p>
+      </div>
+      <p>Antarmuka yang diTingkatkan yang menampilkan label barcode tradisional dengan nama bisnis, detail produk, dan
+        harga</p>
+
+      <h3>Tangkapan layar di atas menunjukkan:</h3>
+      <ul>
+        <li>Keluaran Barcode: Barcode tradisional berkualitas tinggi dengan tampilan nama bisnis "ERP"</li>
+        <li>Informasi Produk: Tata letak yang bersih dengan nama produk, harga, dan SKU</li>
+        <li>Tata Letak Kisi: Kisi label 5x10 yang terorganisir yang menampilkan 50 label secara efisien</li>
+        <li>Kontrol Pengalihan: Peralihan yang mudah antara mode kode batang dan kode QR</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Opsi Kustomisasi</h2>
+      <h3>Ukuran Pencetak Label</h3>
+      <p>Anda dapat menyesuaikan dimensi label dengan memanggil fungsi <code>setLabelPrinterSize()</code>:</p>
+      <div class="url-buttons">
+        <button class="view-modal-button" data-url="tutorial/🖨️🏷️💳/label.txt">
+          Label Setting
+        </button>
+      </div>
+      <h3>Kustomisasi Style</h3>
+      <p>Ubah enhanced-labels.css agar sesuai dengan warna dan preferensi merek Anda. CSS menggunakan properti khusus
+        CSS untuk memudahkan pengaturan tema.</p>
+    </section>
+    <section>
+      <h2>Pemecahan Masalah</h2>
+      <h3>Masalah Umum</h3>
+      <ul>
+        <li>Pratinjau tidak dapat dimuat: Periksa konsol browser untuk kesalahan JavaScript</li>
+        <li>Masalah kualitas cetak: Pastikan dimensi barcode yang tepat dalam pengaturan</li>
+        <li>Gambar tidak ditampilkan: Verifikasi aksesibilitas URL gambar dan pengaturan CORS</li>
+        <li>Format mata uang salah: Periksa pengaturan mata uang dalam konfigurasi bisnis</li>
+      </ul>
+      <h3>Kompatibilitas Peramban</h3>
+      <ul>
+        <li>Chrome 80+ (disarankan)</li>
+        <li>Firefox 75+</li>
+        <li>Safari 13+</li>
+        <li>Edge 80+</li>
+      </ul>
+      <h3>Kesimpulan</h3>
+      </code></pre>
+      <div class="tip">
+        Sistem pencetakan label yang disempurnakan memberikan peningkatan yang signifikan terhadap fungsionalitas label
+        Ultimate POS standar, menawarkan kegunaan yang lebih baik, kualitas cetak, dan opsi penyesuaian. Pendekatan
+        modular memastikan kompatibilitas dengan instalasi yang sudah ada sekaligus menyediakan fitur baru yang dahsyat
+        untuk kebutuhan pencetakan label modern.
+      </div>
+    </section>
+    <footer>
       <!-- HOME -->
       <div class="home-button-wrapper">
         <a href="index.html" class="home-button">🏠 Kembali ke Beranda</a>
       </div>
-
-      <section>
-        <h2>Gambaran Umum</h2>
-        <p>Sistem pencetakan label yang diTingkatkan menyediakan:</p>
-        <ul>
-          <li>
-            Antarmuka yang modern dan responsif dengan sakelar sakelar dan
-            kontrol ukuran
-          </li>
-          <li>
-            Barcode yang dioptimalkan dan pembuatan kode QR untuk kualitas cetak
-            yang lebih baik
-          </li>
-          <li>Pratinjau yang diTingkatkan dengan pembaruan waktu nyata</li>
-          <li>Fungsionalitas cetak yang dioptimalkan untuk printer label</li>
-          <li>Penanganan gambar yang lebih baik dan pemformatan mata uang</li>
-        </ul>
-        <h2>Prasyarat: Pengaturan Dukungan Kode QR</h2>
-        <p>
-          Sebelum menggunakan sistem pencetakan label yang diTingkatkan dengan
-          kode QR, Anda perlu menambahkan dukungan kode QR ke pengaturan kode
-          batang jika belum ada.
-        </p>
-
-        <h2>Menambahkan Pengaturan Barcode Kode QR</h2>
-        <p>
-          Jika Anda ingin menambahkan "Untuk Kode QR" sebagai opsi pengaturan
-          barcode, jalankan perintah SQL ini di database Anda:
-        </p>
-        <pre><code>
-            INSERT INTO `barcodes` VALUES (7,'For Qr Code',NULL,0.9000,0.9000,10.0000,10.0000,0.0000,0.0000,0.1000,0.1000,1,0,0,1,1,'2025-06-07 00:00:00','2025-06-07 00:00:00');
-        </code></pre>
-        <div class="image-box">
-          <img
-            src="https://ultimate-pos-tutorials.vercel.app/assets/images/for-qrcode-3c833389b5bcf260dd5a701f362eecc8.png"
-            alt="#"
-          />
-          <p class="caption">Gambar: Menambahkan Pengaturan Barcode Kode QR.</p>
-        </div>
-        <p>
-          QR Code barcode setting "For Qr Code" available in the dropdown after
-          running the SQL command
-        </p>
-
-        <h2>Pratinjau Antarmuka yang Ditingkatkan</h2>
-        <div class="image-box">
-          <img
-            src="https://ultimate-pos-tutorials.vercel.app/assets/images/enhanced-labels-qr-interface-acb86261d58602ff586dd44d8862a83a.png"
-            alt="#"
-          />
-          <p class="caption">Gambar: Pratinjau Antarmuka yang Ditingkatkan.</p>
-        </div>
-        <p>
-          Antarmuka pencetakan label yang diTingkatkan, menampilkan label kode
-          QR dengan kontrol sakelar modern
-        </p>
-
-        <h2>Fitur antarmuka yang diTingkatkan:</h2>
-        <ul>
-          <li>
-            Panel Kiri: Sakelar sakelar modern untuk mengaktifkan/menonaktifkan
-            elemen label
-          </li>
-          <li>
-            Kontrol Ukuran: Tombol plus/minus dengan input numerik untuk ukuran
-            yang tepat
-          </li>
-          <li>
-            Pratinjau Waktu Nyata: Pembaruan pratinjau instan saat Anda
-            menyesuaikan pengaturan
-          </li>
-          <li>
-            Beberapa Opsi Cetak: Pencetakan standar, pengoptimalan printer
-            label, dan mode khusus QR
-          </li>
-        </ul>
-      </section>
-
-      <section>
-        <h2>✅ Langkah 1: Tambahkan Route</h2>
-        <p>
-          Tambahkan routes label yang telah diTingkatkan ke file
-          <code>routes/web.php</code> Anda:
-        </p>
-        <div class="url-buttons">
-          <button class="view-modal-button" data-url="tutorial/🖨️🏷️💳/langkah1.txt">
-            routes/web.php
-          </button>
-        </div>
-      </section>
-
-      <section>
-        <h2>✅ Langkah 2: Perbarui Controller</h2>
-        <p>
-          Tambahkan metode berikut ini ke aplikasi
-          <code>app/Http/Controllers/LabelsController.php</code>:
-        </p>
-        <h3>Metode Pertunjukan Yang Ditingkatkan</h3>
-        <div class="url-buttons">
-          <button class="view-modal-button" data-url="tutorial/🖨️🏷️💳/langkah2_1.txt">
-            app/Http/Controllers/LabelsController.php
-          </button>
-        </div>
-        <h3>Metode Pengoptimalan yang Ditingkatkan</h3>
-        <p>
-          Tambahkan metode pengoptimalan ini untuk meningkatkan kualitas kode
-          batang dan kode QR:
-        </p>
-        <div class="url-buttons">
-          <button class="view-modal-button" data-url="tutorial/🖨️🏷️💳/langkah2_2.txt">
-            app/Http/Controllers/LabelsController.php
-          </button>
-        </div>
-        <h3>Metode Pratinjau yang Ditingkatkan</h3>
-        <p>
-          Perbarui metode <code>show_label_preview</code> yang sudah ada untuk
-          menyertakan pengoptimalan:
-        </p>
-        <div class="url-buttons">
-          <button class="view-modal-button" data-url="tutorial/🖨️🏷️💳/langkah2_3.txt">
-            app/Http/Controllers/LabelsController.php
-          </button>
-        </div>
-      </section>
-
-      <section>
-        <h2>✅ Langkah 3: Menambahkan Item Menu</h2>
-        <p>
-          Tambahkan item menu label yang diTingkatkan ke
-          <code>app/Http/Middleware/AdminSidebarMenu.php</code> di bawah menu
-          label yang sudah ada:
-        </p>
-        <div class="url-buttons">
-          <button class="view-modal-button" data-url="tutorial/🖨️🏷️💳/langkah2_3.txt">
-            app/Http/Middleware/AdminSidebarMenu.php
-          </button>
-        </div>
-      </section>
-
-      <section>
-        <h2>✅ Langkah 4: Membuat Tampilan yang Ditingkatkan</h2>
-        <p>Tampilan Utama yang Ditingkatkan</p>
-        <p>Buat <code>resources/views/labels/enhanced-show.blade.php</code>:</p>
-        <div class="url-buttons">
-          <button class="view-modal-button" data-url="tutorial/🖨️🏷️💳/langkah4_1.txt">
-            resources/views/labels/enhanced-show.blade.php
-          </button>
-        </div>
-        <p>Template Pratinjau yang Ditingkatkan</p>
-        <p>
-          Buat
-          <code
-            >resources/views/labels/partials/enhanced_preview.blade.php:</code
-          >
-        </p>
-        <div class="url-buttons">
-          <button class="view-modal-button" data-url="tutorial/🖨️🏷️💳/langkah4_2.txt">
-            resources/views/labels/partials/enhanced_preview.blade.php
-          </button>
-        </div>
-      </section>
-
-      <section>
-        <h2>✅ Langkah 5: Buat Asset yang Ditingkatkan</h2>
-        <h3>Stylesheet CSS yang Ditingkatkan</h3>
-        <p>Buat public/css/enhanced-labels.css:</p>
-        <div class="url-buttons">
-          <button class="view-modal-button" data-url="tutorial/🖨️🏷️💳/langkah5_1.txt">
-            public/css/enhanced-labels.css
-          </button>
-        </div>
-        <h3>File JavaScript yang Ditingkatkan</h3>
-        <p>Buat <code>public/js/labels-enhancements.js</code>:</p>
-        <div class="url-buttons">
-          <button class="view-modal-button" data-url="tutorial/🖨️🏷️💳/langkah5_2.txt">
-            public/js/labels-enhancements.js
-          </button>
-        </div>
-      </section>
-
-      <section>
-        <h2>✅ Langkah 6: Perbarui JavaScript yang sudah ada</h2>
-        <p>
-          Perbarui file <code>public/js/labels.js</code> yang sudah ada dengan
-          menambahkan panggilan <code>fetchPreview()</code> di dalam fungsi
-          <code>get_label_product_row</code>:
-        </p>
-        <div class="url-buttons">
-          <button class="view-modal-button" data-url="tutorial/🖨️🏷️💳/langkah6.txt">
-            public/js/labels.js
-          </button>
-        </div>
-      </section>
-
-      <section>
-        <h2>✅ Langkah 7: Impor Dependencies</h2>
-        <p>Pastikan Anda memiliki dependensi yang diperlukan untuk pembuatan barcode di <code>composer.json</code> Anda:</p>
-        <div class="url-buttons">
-          <button class="view-modal-button" data-url="tutorial/🖨️🏷️💳/langkah7.txt">
-            composer.json
-          </button>
-        </div>
-        <div class="tip">
-          Jalankan <code>composer install</code> untuk menginstal dependensi jika belum terinstal.
-        </div>
-        </ul>
-      </section>
-
-      <section>
-        <h2>Fitur & Manfaat</h2>
-        <h3>Antarmuka Pengguna yang DiTingkatkan</h3>
-        <ul>
-            <li>Desain Modern: Antarmuka yang bersih dan responsif dengan tata letak berbasis kartu</li>
-            <li>Toggle Switch: Kontrol hidup/mati yang intuitif untuk elemen label</li>
-            <li>Kontrol Ukuran: Tombol plus/minus untuk penyesuaian ukuran yang mudah</li>
-            <li>Pratinjau Waktu Nyata: Pembaruan pratinjau instan saat Anda melakukan perubahan</li>
-        </ul>
-        <h3>Kualitas Cetak yang Dioptimalkan</h3>
-        <ul>
-            <li>Barcode Resolusi Tinggi: Ukuran dinamis berdasarkan dimensi label</li>
-            <li>Kode QR yang diTingkatkan: Koreksi dan resolusi kesalahan yang lebih baik</li>
-            <li>Dukungan Printer Label: Mode cetak khusus untuk printer label termal</li>
-            <li>Rendering Gambar yang lebih baik: Tepi yang tajam dan gaya cetak yang dioptimalkan</li>
-        </ul>
-        <h3>Fungsionalitas Tingkat Lanjut</h3>
-        <ul>
-            <li>Beberapa Sumber Gambar: Pilih antara logo bisnis atau URL khusus</li>
-            <li>Pemformatan Mata Uang: Penempatan simbol mata uang yang tepat</li>
-            <li>Dukungan Bidang Khusus: Penanganan otomatis bidang produk khusus</li>
-            <li>Desain Responsif: Dapat digunakan di desktop, tablet, dan perangkat seluler</li>
-        </ul>
-      </section>
-
-      <section>
-        <h2>Penggunaan</h2>
-        <p>Akses Label yang DiTingkatkan: Buka Produk > Cetak Label (DiTingkatkan) di menu bilah sisi</p>
-        <p>Tambah Produk: Gunakan bidang pencarian untuk menemukan dan menambahkan produk ke kumpulan label Anda</p>
-        <p>Konfigurasi Pengaturan:</p>
-            <ul>
-                <li>Mengaktifkan/menonaktifkan elemen label menggunakan sakelar</li>
-                <li>Menyesuaikan ukuran menggunakan kontrol +/-</li>
-                <li>Memilih sumber gambar jika diperlukan</li>
-            </ul>
-        <p>Pratinjau & Cetak:</p>
-        <ul>
-            <li>Lihat pratinjau waktu nyata di sebelah kanan</li>
-            <li>Gunakan "Cetak Label" untuk pencetakan standar</li>
-            <li>Gunakan "Printer Label" untuk printer label termal</li>
-            <li>Gunakan "Kode QR" untuk label khusus kode QR</li>
-        </ul>
-
-        <h3>Contoh Label Barcode</h3>
-        <div class="image-box">
-          <img
-            src="https://ultimate-pos-tutorials.vercel.app/assets/images/enhanced-labels-barcode-interface-3b0589e1211961b7739f3f5b7a93983a.png"
-            alt="#"
-          />
-          <p class="caption">Gambar: Contoh Label Barcode.</p>
-        </div>
-        <p>Antarmuka yang diTingkatkan yang menampilkan label barcode tradisional dengan nama bisnis, detail produk, dan harga</p>
-
-        <h3>Tangkapan layar di atas menunjukkan:</h3>
-            <ul>
-                <li>Keluaran Barcode: Barcode tradisional berkualitas tinggi dengan tampilan nama bisnis "ERP"</li>
-                <li>Informasi Produk: Tata letak yang bersih dengan nama produk, harga, dan SKU</li>
-                <li>Tata Letak Kisi: Kisi label 5x10 yang terorganisir yang menampilkan 50 label secara efisien</li>
-                <li>Kontrol Pengalihan: Peralihan yang mudah antara mode kode batang dan kode QR</li>
-            </ul>
-      </section>
-
-      <section>
-        <h2>Opsi Kustomisasi</h2>
-        <h3>Ukuran Pencetak Label</h3>
-        <p>Anda dapat menyesuaikan dimensi label dengan memanggil fungsi <code>setLabelPrinterSize()</code>:</p>
-        <div class="url-buttons">
-          <button class="view-modal-button" data-url="tutorial/🖨️🏷️💳/label.txt">
-            Label Setting
-          </button>
-        </div>
-        <h3>Kustomisasi Style</h3>
-        <p>Ubah enhanced-labels.css agar sesuai dengan warna dan preferensi merek Anda. CSS menggunakan properti khusus CSS untuk memudahkan pengaturan tema.</p>
-      </section>
-      <section>
-        <h2>Pemecahan Masalah</h2>
-        <h3>Masalah Umum</h3>
-        <ul>
-            <li>Pratinjau tidak dapat dimuat: Periksa konsol browser untuk kesalahan JavaScript</li>
-            <li>Masalah kualitas cetak: Pastikan dimensi barcode yang tepat dalam pengaturan</li>
-            <li>Gambar tidak ditampilkan: Verifikasi aksesibilitas URL gambar dan pengaturan CORS</li>
-            <li>Format mata uang salah: Periksa pengaturan mata uang dalam konfigurasi bisnis</li>
-        </ul>
-        <h3>Kompatibilitas Peramban</h3>
-        <ul>
-            <li>Chrome 80+ (disarankan)</li>
-            <li>Firefox 75+</li>
-            <li>Safari 13+</li>
-            <li>Edge 80+</li>
-        </ul>
-        <h3>Kesimpulan</h3>
-        </code></pre>
-        <div class="tip">
-          Sistem pencetakan label yang disempurnakan memberikan peningkatan yang signifikan terhadap fungsionalitas label Ultimate POS standar, menawarkan kegunaan yang lebih baik, kualitas cetak, dan opsi penyesuaian. Pendekatan modular memastikan kompatibilitas dengan instalasi yang sudah ada sekaligus menyediakan fitur baru yang dahsyat untuk kebutuhan pencetakan label modern.
-        </div>
-      </section>
-      <footer>
-        <!-- HOME -->
-        <div class="home-button-wrapper">
-          <a href="index.html" class="home-button">🏠 Kembali ke Beranda</a>
-        </div>
-      </footer>
-      <div id="myModal" class="modal">
+    </footer>
+    <div id="myModal" class="modal">
       <div class="modal-content">
         <span class="close">&times;</span>
-        <iframe
-          id="modalFrame"
-          src=""
-          frameborder="0"
-          style="width: 100%; height: 400px"
-        ></iframe>
+        <iframe id="modalFrame" src="" frameborder="0" style="width: 100%; height: 400px"></iframe>
       </div>
     </div>
     <script src="scripts.js"></script>
     <!-- Link ke file JavaScript -->
-    </div>
-  </body>
+  </div>
+</body>
+
 </html>
