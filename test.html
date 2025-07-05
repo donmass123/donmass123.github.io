@@ -129,38 +129,38 @@
     <h3 class="fade-in" style="animation-delay: 3.3s;">Step 1: Update ReportController.php</h3>
     <h4 class="fade-in" style="animation-delay: 3.6s;">1.1 Add the Enhanced getStockValue Method</h4>
     <p class="fade-in" style="animation-delay: 3.9s;">Replace your existing getStockValue method with this enhanced version:</p>
-    <pre><code>app/Http/Controllers/ReportController.php</code></pre>
+    <pre><strong>app/Http/Controllers/ReportController.php</strong></pre>
 
     <h4 class="fade-in" style="animation-delay: 4.2s;">1.2 Add the processStockValueFilters Method</h4>
     <p class="fade-in" style="animation-delay: 4.5s;">Add this new private method to handle filter processing:</p>
-    <pre><code>app/Http/Controllers/ReportController.php</code></pre>
+    <pre><strong>app/Http/Controllers/ReportController.php</strong></pre>
 
     <h4 class="fade-in" style="animation-delay: 4.8s;">1.3 Update the getStockReport Method</h4>
     <p class="fade-in" style="animation-delay: 5.1s;">Update your existing getStockReport method to include the enhanced filter processing:</p>
-    <pre><code>app/Http/Controllers/ReportController.php</code></pre>
+    <pre><strong>app/Http/Controllers/ReportController.php</strong></pre>
 
     <h4 class="fade-in" style="animation-delay: 5.4s;">1.4 Add the processEnhancedStockReportFilters Method</h4>
     <p class="fade-in" style="animation-delay: 5.7s;">Add this method to handle enhanced stock report filtering:</p>
-    <pre><code>app/Http/Controllers/ReportController.php</code></pre>
+    <pre><strong>app/Http/Controllers/ReportController.php</strong></pre>
 
     <h3 class="fade-in" style="animation-delay: 6s;">Step 2: Update TransactionUtil.php</h3>
     <p class="fade-in" style="animation-delay: 6.3s;">Update your getOpeningClosingStock method to support multi-select filters:</p>
-    <pre><code>app/Utils/TransactionUtil.php</code></pre>
+    <pre><strong>app/Utils/TransactionUtil.php</strong></pre>
 
     <h3 class="fade-in" style="animation-delay: 6.6s;">Step 3: Update the Blade View</h3>
     <p class="fade-in" style="animation-delay: 6.9s;">Replace your resources/views/report/stock_report.blade.php file with this enhanced version:</p>
-    <pre><code>resources/views/report/stock_report.blade.php</code></pre>
+    <pre><strong>resources/views/report/stock_report.blade.php</strong></pre>
 
     <h3 class="fade-in" style="animation-delay: 7.2s;">Step 4: Update public/js/report.js</h3>
     <p class="fade-in" style="animation-delay: 7.5s;">Update your public/js/report.js file to include the stock level filter in the DataTable configuration and change handlers.</p>
 
     <h4 class="fade-in" style="animation-delay: 7.8s;">4.1 Add Stock Level to DataTable Configuration</h4>
     <p class="fade-in" style="animation-delay: 8.1s;">Find your stock_report_table DataTable initialization and add the stock level parameter:</p>
-    <pre><code>public/js/report.js</code></pre>
+    <pre><strong>public/js/report.js</strong></pre>
 
     <h4 class="fade-in" style="animation-delay: 8.4s;">4.2 Update Filter Change Handlers</h4>
     <p class="fade-in" style="animation-delay: 8.7s;">Update the change event handler to include the stock level filter:</p>
-    <pre><code>public/js/report.js</code></pre>
+    <pre><strong>public/js/report.js</strong></pre>
 
     <h3 class="fade-in" style="animation-delay: 9s;">Step 5: Add Subcategory Methods to ProductController</h3>
     <h4 class="fade-in" style="animation-delay: 9.3s;">5.1 Add getSubCategories Method</h4>
@@ -171,7 +171,7 @@
 
     <h4 class="fade-in" style="animation-delay: 10.5s;">5.3 Add Routes for Subcategory Methods</h4>
     <p class="fade-in" style="animation-delay: 10.8s;">Add these routes to your routes/web.php if they don't exist:</p>
-    <pre><code>routes/web.php</code></pre>
+    <pre><strong>routes/web.php</strong></pre>
 
     <h2 class="fade-in" style="animation-delay: 11.1s;">How It Works</h2>
     <h3 class="fade-in" style="animation-delay: 11.4s;">Multi-Select Filter Processing</h3>

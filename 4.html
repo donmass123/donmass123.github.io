@@ -79,9 +79,9 @@
 
       <section>
         <h2>✅ Langkah 1: Perbarui Class CashRegisterUtil</h2>
-        <p>Pertama, kita akan menambahkan logika penagihan jatuh tempo ke <code>app/Utils/CashRegisterUtil.php</code>.</p>
+        <p>Pertama, kita akan menambahkan logika penagihan jatuh tempo ke <strong>app/Utils/CashRegisterUtil.php</strong>.</p>
         <h3>1.1 Menambahkan Metode Penagihan Jatuh Tempo</h3>
-        <p>Tambahkan metode ini ke <code>app/Utils/CashRegisterUtil.php</code>:</p>
+        <p>Tambahkan metode ini ke <strong>app/Utils/CashRegisterUtil.php</strong>:</p>
         <div class="url-buttons">
           <button class="view-modal-button" data-url="tutorial/💸⏳🖥️/langkah1.txt">
             app/Utils/CashRegisterUtil.php
@@ -91,7 +91,7 @@
 
       <section>
         <h2>✅ Langkah 2: Perbarui Controller</h2>
-        <p>Sekarang perbarui <code>app/Http/Controllers/CashRegisterController.php</code> untuk memanggil metode utilitas.</p>
+        <p>Sekarang perbarui <strong>app/Http/Controllers/CashRegisterController.php</strong> untuk memanggil metode utilitas.</p>
         <h3>2.1 Perbarui Metode getRegisterDetails</h3>
         <p>Perbarui metode getRegisterDetails() yang sudah ada di controller:</p>
         <div class="url-buttons">
@@ -100,7 +100,7 @@
           </button>
         </div>
 
-        <h3>2.2 Perbarui metode getRegisterDetails yang sudah ada di <code>app/Utils/CashRegisterUtil.php</code></h3>
+        <h3>2.2 Perbarui metode getRegisterDetails yang sudah ada di <strong>app/Utils/CashRegisterUtil.php</strong></h3>
         <div class="url-buttons">
           <button class="view-modal-button" data-url="tutorial/💸⏳🖥️/langkah2_2.txt">
             app/Http/Controllers/CashRegisterController.php
@@ -133,7 +133,7 @@
 
       <section>
         <h2>✅ Langkah 4: Perbarui Modal Tutup Register (Opsional)</h2>
-        <p>Jika Anda menginginkan fitur yang sama pada modal close register Anda, perbarui <code>resources/views/cash_register/close_register.blade.php</code> dengan bagian due collections dan CSS yang sama.</p>
+        <p>Jika Anda menginginkan fitur yang sama pada modal close register Anda, perbarui <strong>resources/views/cash_register/close_register.blade.php</strong> dengan bagian due collections dan CSS yang sama.</p>
         <div class="url-buttons">
           <button class="view-modal-button" data-url="tutorial/💸⏳🖥️/langkah4.txt">
             resources/views/cash_register/close_register.blade.php
@@ -196,13 +196,13 @@
         </ul>
         <p>Masalah: Data tidak muncul</p>
         <ul>
-            <li>Solusi: Pastikan bahwa <code>$details['due_collections']</code> diteruskan ke tampilan</li>
-            <li>Debug: Tambahkan <code>{{ dd($details) }}</code> untuk melihat data yang tersedia</li>
+            <li>Solusi: Pastikan bahwa <strong>$details['due_collections']</strong> diteruskan ke tampilan</li>
+            <li>Debug: Tambahkan <strong>{{ dd($details) }}</strong> untuk melihat data yang tersedia</li>
         </ul>
         <p>Masalah: Jumlah yang salah</p>
         <ul>
             <li>Solusi: Pastikan hubungan database Anda sesuai dengan struktur kueri</li>
-            <li>Periksa: Pastikan <code>business_id</code> diatur dengan benar dalam sesi</li>
+            <li>Periksa: Pastikan <strong>business_id</strong> diatur dengan benar dalam sesi</li>
         </ul>
 
         <p>Masalah: Menata konflik</p>

@@ -88,21 +88,21 @@
           <strong>data: function(d)</strong>:
         </p>
         <h3>Untuk Tabel Produk:</h3>
-        <pre><code>d.sub_category_id = $('#product_list_filter_sub_category_id').val();</code></pre>
+        <pre><strong>d.sub_category_id = $('#product_list_filter_sub_category_id').val();</strong></pre>
         <p>Tambahkan setelah baris category_id:</p>
-        <pre><code>
+        <pre><strong>
             d.category_id = $('#product_list_filter_category_id').val();
             d.sub_category_id = $('#product_list_filter_sub_category_id').val();
-        </code></pre>
+        </strong></pre>
         <h3>Untuk Tabel Laporan Stok:</h3>
-        <pre><code>
+        <pre><strong>
             d.sub_category_id = $('#product_list_filter_sub_category_id').val();
-        </code></pre>
+        </strong></pre>
         <p>Tambahkan setelah baris category_id di DataTable laporan stok:</p>
-        <pre><code>
+        <pre><strong>
             d.category_id = $('#product_list_filter_category_id').val();
 d.sub_category_id = $('#product_list_filter_sub_category_id').val();
-        </code></pre>
+        </strong></pre>
       </section>
 
       <section>
@@ -121,7 +121,7 @@ d.sub_category_id = $('#product_list_filter_sub_category_id').val();
         </div>
         <div class="tip">
           Masukkan ID ini ke dalam daftar event listener
-          <code>change</code> yang me-refresh tabel.
+          <strong>change</strong> yang me-refresh tabel.
         </div>
       </section>
 

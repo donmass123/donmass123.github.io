@@ -210,7 +210,7 @@
       <p>
         <strong>Penting</strong>: Tempatkan route ini
         <strong>sebelum</strong> route wildcard seperti
-        <code>Route::resource(‘products’, ProductController::class)</code>
+        <strong>Route::resource(‘products’, ProductController::class)</strong>
         untuk menghindari konflik.
       </p>
     </section>
@@ -231,7 +231,7 @@
     <section>
       <h2>✅ Langkah 3: Buat View Modal</h2>
       <p>
-        Buat file <code>resources/views/product/partials/quick_add_product_modal.blade.php</code>:
+        Buat file <strong>resources/views/product/partials/quick_add_product_modal.blade.php</strong>:
       </p>
       <div class="url-buttons">
         <button class="view-modal-button" data-url="tutorial/📈💡🛒⚡️/langkah3.txt">
@@ -243,7 +243,7 @@
     <section>
       <h2>✅ Langkah 4: Tambahkan Terjemahan Bahasa</h2>
       <p>
-        Tambahkan kunci terjemahan ke file <code>lang_v1.php</code> Anda:
+        Tambahkan kunci terjemahan ke file <strong>lang_v1.php</strong> Anda:
       </p>
       <div class="url-buttons">
         <button class="view-modal-button" data-url="tutorial/📈💡🛒⚡️/langkah4.txt">
@@ -266,9 +266,9 @@
       </div>
       <P>Perbedaan utama di antara tombol-tombol tersebut:</P>
       <ul>
-        <li><strong>Tombol Tambah</strong>: Mengarahkan ke halaman pembuatan produk secara lengkap (<code>href</code> dengan aksi controller)</li>
-        <li><strong>Tombol Tambah Cepat</strong>: Membuka modal (<code>href = "javascript:void(0)"</code> dengan <code>data-href</code> untuk AJAX)</li>
-        <li><strong>class CSS</strong>: Tambah Cepat memiliki kelas <code>product_add_quick_product</code> tambahan untuk penargetan JavaScript</li>
+        <li><strong>Tombol Tambah</strong>: Mengarahkan ke halaman pembuatan produk secara lengkap (<strong>href</strong> dengan aksi controller)</li>
+        <li><strong>Tombol Tambah Cepat</strong>: Membuka modal (<strong>href = "javascript:void(0)"</strong> dengan <strong>data-href</strong> untuk AJAX)</li>
+        <li><strong>class CSS</strong>: Tambah Cepat memiliki kelas <strong>product_add_quick_product</strong> tambahan untuk penargetan JavaScript</li>
       </ul>
     </section>
 
@@ -284,15 +284,15 @@
       </div>
       <p>Catatan penempatan yang penting:</p>
       <ul>
-        <li>Tempatkan Container modal <strong>di dalam main content section</strong> (sebelum <code>@endsection</code>)</li>
-        <li>Modal harus berada <code>di luar</code> div konten tertentu, namun <code>di dalam</code> bagian templat utama</li>
+        <li>Tempatkan Container modal <strong>di dalam main content section</strong> (sebelum <strong>@endsection</strong>)</li>
+        <li>Modal harus berada <strong>di luar</strong> div konten tertentu, namun <strong>di dalam</strong> bagian templat utama</li>
         <li>Hal ini untuk memastikan bahwa modal tersedia untuk JavaScript namun tidak mengganggu tata letak halaman</li>
       </ul>
     </section>
 
     <section>
       <h2>✅ Langkah 7: Tambahkan Penangan JavaScript</h2>
-      <p>Tambahkan kode JavaScript untuk menangani pembukaan modal di halaman index produk Anda. Letakkan kode ini sebelum tag penutup <code>"<"/script">"</code> di bagian JavaScript yang ada:</p>
+      <p>Tambahkan kode JavaScript untuk menangani pembukaan modal di halaman index produk Anda. Letakkan kode ini sebelum tag penutup <strong>"<"/script">"</strong> di bagian JavaScript yang ada:</p>
       <div class="url-buttons">
         <button class="view-modal-button" data-url="tutorial/📈💡🛒⚡️/langkah7.txt">
           JavaScript
@@ -300,11 +300,11 @@
       </div>
       <p>Catatan implementasi penting:</p>
       <ul>
-        <li>Tempatkan kode ini di dalam fungsi <code>$(document).ready()</code> yang sudah ada jika Anda memilikinya</li>
+        <li>Tempatkan kode ini di dalam fungsi <strong>$(document).ready()</strong> yang sudah ada jika Anda memilikinya</li>
         <li>Jika Anda tidak memiliki JavaScript yang sudah ada, buatlah struktur yang ditunjukkan di atas</li>
-        <li>Kode ini harus diletakkan <strong>sebelum</strong> tag penutup <code>"<"/script">"</code></li>
+        <li>Kode ini harus diletakkan <strong>sebelum</strong> tag penutup <strong>"<"/script">"</strong></li>
         <li>
-          Menggunakan <code>$(document).on()</code> untuk delegasi peristiwa untuk menangani konten yang dimuat secara dinamis</li>
+          Menggunakan <strong>$(document).on()</strong> untuk delegasi peristiwa untuk menangani konten yang dimuat secara dinamis</li>
       </ul>
     </section>
 
@@ -333,7 +333,7 @@
       <h3>Modal Tidak Terbuka</h3>
       <ul>
         <li>Periksa konsol browser untuk kesalahan JavaScript</li>
-        <li>Verifikasi rute yang ada : <code>php artisan route:list | grep quick_add_mini_form</code></li>
+        <li>Verifikasi rute yang ada : <strong>php artisan route:list | grep quick_add_mini_form</strong></li>
         <li>Pastikan jQuery dan Bootstrap JS dimuat</li>
       </ul>
       <h3>Metode Controller Tidak Ditemukan</h3>
@@ -344,7 +344,7 @@
       </ul>
       <h3>View Tidak Ditemukan</h3>
       <ul>
-        <li>Verifikasi jalur file tampilan: <code>resources/views/product/partials/quick_add_product_modal.blade.php</code></li>
+        <li>Verifikasi jalur file tampilan: <strong>resources/views/product/partials/quick_add_product_modal.blade.php</strong></li>
         <li>Periksa izin file</li>
         <li>Memastikan sintaks Blade yang tepat</li>
       </ul>

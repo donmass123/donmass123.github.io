@@ -60,9 +60,9 @@
         Jika Anda ingin menambahkan "Untuk Kode QR" sebagai opsi pengaturan
         barcode, jalankan perintah SQL ini di database Anda:
       </p>
-      <pre><code>
+      <pre><strong>
             INSERT INTO `barcodes` VALUES (7,'For Qr Code',NULL,0.9000,0.9000,10.0000,10.0000,0.0000,0.0000,0.1000,0.1000,1,0,0,1,1,'2025-06-07 00:00:00','2025-06-07 00:00:00');
-        </code></pre>
+        </strong></pre>
       <div class="image-box">
         <img
           src="https://ultimate-pos-tutorials.vercel.app/assets/images/for-qrcode-3c833389b5bcf260dd5a701f362eecc8.png"
@@ -111,7 +111,7 @@
       <h2>✅ Langkah 1: Tambahkan Route</h2>
       <p>
         Tambahkan routes label yang telah diTingkatkan ke file
-        <code>routes/web.php</code> Anda:
+        <strong>routes/web.php</strong> Anda:
       </p>
       <div class="url-buttons">
         <button class="view-modal-button" data-url="tutorial/🖨️🏷️💳/langkah1.txt">
@@ -124,7 +124,7 @@
       <h2>✅ Langkah 2: Perbarui Controller</h2>
       <p>
         Tambahkan metode berikut ini ke aplikasi
-        <code>app/Http/Controllers/LabelsController.php</code>:
+        <strong>app/Http/Controllers/LabelsController.php</strong>:
       </p>
       <h3>Metode Pertunjukan Yang Ditingkatkan</h3>
       <div class="url-buttons">
@@ -144,7 +144,7 @@
       </div>
       <h3>Metode Pratinjau yang Ditingkatkan</h3>
       <p>
-        Perbarui metode <code>show_label_preview</code> yang sudah ada untuk
+        Perbarui metode <strong>show_label_preview</strong> yang sudah ada untuk
         menyertakan pengoptimalan:
       </p>
       <div class="url-buttons">
@@ -158,7 +158,7 @@
       <h2>✅ Langkah 3: Menambahkan Item Menu</h2>
       <p>
         Tambahkan item menu label yang diTingkatkan ke
-        <code>app/Http/Middleware/AdminSidebarMenu.php</code> di bawah menu
+        <strong>app/Http/Middleware/AdminSidebarMenu.php</strong> di bawah menu
         label yang sudah ada:
       </p>
       <div class="url-buttons">
@@ -171,7 +171,7 @@
     <section>
       <h2>✅ Langkah 4: Membuat Tampilan yang Ditingkatkan</h2>
       <p>Tampilan Utama yang Ditingkatkan</p>
-      <p>Buat <code>resources/views/labels/enhanced-show.blade.php</code>:</p>
+      <p>Buat <strong>resources/views/labels/enhanced-show.blade.php</strong>:</p>
       <div class="url-buttons">
         <button class="view-modal-button" data-url="tutorial/🖨️🏷️💳/langkah4_1.txt">
           resources/views/labels/enhanced-show.blade.php
@@ -180,7 +180,7 @@
       <p>Template Pratinjau yang Ditingkatkan</p>
       <p>
         Buat
-        <code>resources/views/labels/partials/enhanced_preview.blade.php:</code>
+        <strong>resources/views/labels/partials/enhanced_preview.blade.php:</strong>
       </p>
       <div class="url-buttons">
         <button class="view-modal-button" data-url="tutorial/🖨️🏷️💳/langkah4_2.txt">
@@ -199,7 +199,7 @@
         </button>
       </div>
       <h3>File JavaScript yang Ditingkatkan</h3>
-      <p>Buat <code>public/js/labels-enhancements.js</code>:</p>
+      <p>Buat <strong>public/js/labels-enhancements.js</strong>:</p>
       <div class="url-buttons">
         <button class="view-modal-button" data-url="tutorial/🖨️🏷️💳/langkah5_2.txt">
           public/js/labels-enhancements.js
@@ -210,9 +210,9 @@
     <section>
       <h2>✅ Langkah 6: Perbarui JavaScript yang sudah ada</h2>
       <p>
-        Perbarui file <code>public/js/labels.js</code> yang sudah ada dengan
-        menambahkan panggilan <code>fetchPreview()</code> di dalam fungsi
-        <code>get_label_product_row</code>:
+        Perbarui file <strong>public/js/labels.js</strong> yang sudah ada dengan
+        menambahkan panggilan <strong>fetchPreview()</strong> di dalam fungsi
+        <strong>get_label_product_row</strong>:
       </p>
       <div class="url-buttons">
         <button class="view-modal-button" data-url="tutorial/🖨️🏷️💳/langkah6.txt">
@@ -223,7 +223,7 @@
 
     <section>
       <h2>✅ Langkah 7: Impor Dependencies</h2>
-      <p>Pastikan Anda memiliki dependensi yang diperlukan untuk pembuatan barcode di <code>composer.json</code> Anda:
+      <p>Pastikan Anda memiliki dependensi yang diperlukan untuk pembuatan barcode di <strong>composer.json</strong> Anda:
       </p>
       <div class="url-buttons">
         <button class="view-modal-button" data-url="tutorial/🖨️🏷️💳/langkah7.txt">
@@ -231,7 +231,7 @@
         </button>
       </div>
       <div class="tip">
-        Jalankan <code>composer install</code> untuk menginstal dependensi jika belum terinstal.
+        Jalankan <strong>composer install</strong> untuk menginstal dependensi jika belum terinstal.
       </div>
       </ul>
     </section>
@@ -301,7 +301,7 @@
     <section>
       <h2>Opsi Kustomisasi</h2>
       <h3>Ukuran Pencetak Label</h3>
-      <p>Anda dapat menyesuaikan dimensi label dengan memanggil fungsi <code>setLabelPrinterSize()</code>:</p>
+      <p>Anda dapat menyesuaikan dimensi label dengan memanggil fungsi <strong>setLabelPrinterSize()</strong>:</p>
       <div class="url-buttons">
         <button class="view-modal-button" data-url="tutorial/🖨️🏷️💳/label.txt">
           Label Setting
@@ -328,7 +328,7 @@
         <li>Edge 80+</li>
       </ul>
       <h3>Kesimpulan</h3>
-      </code></pre>
+      </strong></pre>
       <div class="tip">
         Sistem pencetakan label yang disempurnakan memberikan peningkatan yang signifikan terhadap fungsionalitas label
         Ultimate POS standar, menawarkan kegunaan yang lebih baik, kualitas cetak, dan opsi penyesuaian. Pendekatan
