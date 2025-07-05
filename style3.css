@@ -1,3 +1,4 @@
+/* Base Styling */
 table.file-changes {
     width: 80%;
     margin: 30px auto;
@@ -6,7 +7,8 @@ table.file-changes {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-table.file-changes th, table.file-changes td {
+table.file-changes th,
+table.file-changes td {
     padding: 12px;
     text-align: left;
     border-bottom: 1px solid #ddd;
@@ -26,4 +28,19 @@ table.file-changes code {
     padding: 4px 8px;
     border-radius: 4px;
     font-size: 0.9rem;
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+  .table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    margin: 20px auto;
+  }
+
+  table.file-changes {
+    width: 100%;
+    min-width: 600px;
+    margin: 0;
+  }
 }
