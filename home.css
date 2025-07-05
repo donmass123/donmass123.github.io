@@ -1,0 +1,168 @@
+/* Style umum untuk body */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #fafafa;
+    color: #444;
+    box-sizing: border-box;
+}
+
+/* Header */
+header {
+    background-color: #1e1e1e;
+    color: #fff;
+    padding: 25px 15px;
+    text-align: center;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+header:hover {
+    background-color: #333;
+    transform: translateY(-4px);
+}
+
+h1 {
+    margin: 0;
+    font-size: 2.8em;
+    letter-spacing: 1px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+/* Bubble Menu */
+.bubble-menu {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 70px;
+    height: 70px;
+    background-color: #ff585d;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.3);
+    font-size: 2.2em;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    z-index: 9999;
+}
+
+.bubble-menu:hover {
+    transform: scale(1.2);
+    background-color: #f34551;
+}
+
+/* Sliding Navigation */
+nav {
+    position: fixed;
+    top: 0;
+    left: -300px;
+    width: 300px;
+    height: 100%;
+    background-color: #111;
+    transition: left 0.4s ease;
+    z-index: 1000;
+    padding-top: 60px;
+    box-shadow: 4px 0 6px rgba(0, 0, 0, 0.3);
+}
+
+nav.active {
+    left: 0;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+nav ul li {
+    margin: 25px 0;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.3em;
+    padding: 20px;
+    display: block;
+    text-align: center;
+    border-bottom: 2px solid transparent;
+    transition: all 0.3s ease;
+}
+
+nav ul li a:hover {
+    background-color: #ff585d;
+    border-bottom: 2px solid #fff;
+    transform: scale(1.1);
+}
+
+/* Section styling */
+section {
+    padding: 40px;
+    margin: 30px;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+section:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 25px 0;
+    background-color: #111;
+    color: white;
+    box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
+}
+
+footer p {
+    margin: 0;
+    font-size: 1.1em;
+}
+
+/* CSS untuk gambar responsif */
+section#dokumen img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 20px auto;
+    border-radius: 8px;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .bubble-menu {
+        bottom: 20px;
+        right: 20px;
+        width: 60px;
+        height: 60px;
+        font-size: 1.8em;
+    }
+
+    nav {
+        left: -100%;
+    }
+
+    nav.active {
+        left: 0;
+    }
+
+    section {
+        padding: 25px;
+        margin: 15px;
+    }
+
+    footer {
+        padding: 15px 0;
+    }
+}
