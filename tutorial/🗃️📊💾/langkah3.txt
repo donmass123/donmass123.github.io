@@ -1,0 +1,15 @@
+DELETE FROM transaction_sell_lines_purchase_lines
+WHERE id IN (
+SELECT id FROM (
+SELECT t.id
+FROM transaction_sell_lines_purchase_lines t
+JOIN (
+SELECT sell_line_id, purchase_line_id, MIN(id) AS min_id
+FROM transaction_sell_lines_purchase_lines
+GROUP BY sell_line_id, purchase_line_id
+HAVING COUNT(*) > 1
+) grouped ON (t.sell_line_id <=> grouped.sell_line_id AND t.purchase_line_id = grouped.purchase_line_id)
+WHERE t.id != grouped.min_id
+LIMIT 100
+) AS subquery
+);

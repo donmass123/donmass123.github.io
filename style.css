@@ -1,60 +1,63 @@
 :root {
-  --bg: #f9fafb;
+  --bg: #f4f4f9;
   --white: #ffffff;
-  --primary: #4f46e5;
-  --secondary: #6366f1;
-  --accent: #06b6d4;
-  --text: #111827;
-  --muted: #6b7280;
-  --code-bg: #f3f4f6;
-  --code-text: #111827;
-  --success: #10b981;
+  --primary: #2c3e50; /* Darker shade of blue */
+  --secondary: #2980b9; /* Elegant blue */
+  --accent: #e74c3c; /* Bold, rich accent color */
+  --text: #34495e; /* Dark grayish text */
+  --muted: #7f8c8d;
+  --code-bg: #ecf0f1;
+  --code-text: #34495e;
+  --success: #27ae60;
 }
 
 body {
-  font-family: "Segoe UI", sans-serif;
+  font-family: 'Roboto', sans-serif;
   background: var(--bg);
   color: var(--text);
   margin: 0;
   padding: 0;
-  line-height: 1.8;
+  line-height: 1.6;
 }
 
 .container {
   max-width: 960px;
   margin: auto;
-  padding: 40px 20px;
+  padding: 50px 30px;
 }
 
 header {
   text-align: center;
-  margin-bottom: 32px;
+  margin-bottom: 40px;
 }
 
 header h1 {
-  font-size: 30px;
-  margin-bottom: 8px;
+  font-size: 36px;
+  margin-bottom: 15px;
   color: var(--primary);
+  font-weight: bold;
+  letter-spacing: 1px;
 }
 
 header p {
   color: var(--muted);
-  font-size: 16px;
+  font-size: 18px;
 }
 
 .download-box {
   text-align: center;
-  margin-bottom: 40px;
+  margin-bottom: 50px;
 }
 
 .download-button {
   background-color: var(--primary);
-  color: #fff;
-  padding: 12px 24px;
-  border-radius: 8px;
+  color: var(--white);
+  padding: 15px 30px;
+  border-radius: 10px;
   text-decoration: none;
   font-weight: 600;
-  transition: background 0.2s ease;
+  font-size: 18px;
+  transition: all 0.3s ease;
 }
 
 .download-button:hover {
@@ -63,84 +66,85 @@ header p {
 
 section {
   background: var(--white);
-  border-left: 5px solid var(--accent);
-  border-radius: 8px;
-  padding: 24px;
-  margin-bottom: 32px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+  border-left: 6px solid var(--accent);
+  border-radius: 10px;
+  padding: 30px;
+  margin-bottom: 40px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
 }
 
 section h2 {
-  font-size: 20px;
+  font-size: 24px;
   color: var(--secondary);
   margin-top: 0;
+  font-weight: 600;
 }
 
 ul {
   padding-left: 20px;
+  margin-bottom: 20px;
 }
 
 pre {
   background: var(--code-bg);
   color: var(--code-text);
-  padding: 16px;
-  border-radius: 6px;
+  padding: 20px;
+  border-radius: 8px;
   overflow-x: auto;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 code {
-  background-color: #e5e7eb;
-  padding: 2px 6px;
-  border-radius: 4px;
-  font-family: monospace;
+  background-color: #f5f5f5;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-family: 'Courier New', monospace;
 }
 
 .tip {
-  background: #ecfdf5;
-  border-left: 4px solid var(--success);
-  padding: 12px 16px;
-  border-radius: 6px;
-  color: #065f46;
-  margin-top: 16px;
+  background: #f0fdf4;
+  border-left: 6px solid var(--success);
+  padding: 20px 25px;
+  border-radius: 8px;
+  color: #1e7d5e;
+  margin-top: 20px;
 }
 
 .image-box {
   text-align: center;
-  margin-top: 16px;
+  margin-top: 20px;
 }
 
 .image-box img {
   max-width: 100%;
   height: auto;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 6px;
 }
 
 .caption {
-  font-size: 14px;
+  font-size: 16px;
   color: var(--muted);
-  margin-top: 8px;
+  margin-top: 10px;
 }
 
 footer {
   text-align: center;
   font-weight: bold;
-  font-size: 16px;
+  font-size: 18px;
   color: var(--primary);
-  margin-top: 50px;
+  margin-top: 60px;
 }
 
-/* Responsive */
+/* Simplified for Mobile */
 @media (max-width: 768px) {
   header h1 {
-    font-size: 24px;
+    font-size: 28px;
   }
   .container {
-    padding: 20px;
+    padding: 30px 20px;
   }
   section {
-    padding: 20px;
+    padding: 25px;
   }
 }
 
@@ -148,38 +152,40 @@ footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 12px;
+  margin-bottom: 15px;
 }
+
 .section-download {
   background-color: var(--accent);
   color: white;
-  padding: 6px 12px;
-  border-radius: 6px;
-  font-size: 13px;
+  padding: 8px 15px;
+  border-radius: 8px;
+  font-size: 14px;
   text-decoration: none;
-  transition: background 0.2s ease;
+  transition: all 0.3s ease;
 }
+
 .section-download:hover {
-  background-color: #0891b2;
+  background-color: #c0392b;
 }
+
 .home-button-wrapper {
   text-align: center;
-  margin-bottom: 24px;
+  margin-bottom: 30px;
 }
 
 .home-button {
   display: inline-block;
   background-color: var(--accent);
   color: white;
-  padding: 10px 20px;
-  font-size: 14px;
+  padding: 12px 25px;
+  font-size: 16px;
   font-weight: bold;
-  border-radius: 8px;
+  border-radius: 12px;
   text-decoration: none;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-  transition: background 0.2s ease;
 }
 
 .home-button:hover {
-  background-color: #0891b2;
+  background-color: #c0392b;
 }
+

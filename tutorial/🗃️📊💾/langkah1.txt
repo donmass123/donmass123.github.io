@@ -1,0 +1,10 @@
+SELECT COUNT(*) AS remaining_duplicates
+FROM transaction_sell_lines_purchase_lines t
+JOIN (
+SELECT purchase_line_id, MIN(id) AS min_id
+FROM transaction_sell_lines_purchase_lines
+WHERE sell_line_id IS NULL
+GROUP BY purchase_line_id
+HAVING COUNT(*) > 1
+) grouped ON t.purchase_line_id = grouped.purchase_line_id
+WHERE t.sell_line_id IS NULL AND t.id != grouped.min_id;

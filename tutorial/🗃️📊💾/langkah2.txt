@@ -1,0 +1,12 @@
+SELECT dup.*
+FROM transaction_sell_lines_purchase_lines AS dup
+JOIN (
+SELECT sell_line_id, purchase_line_id, MIN(id) AS min_id
+FROM transaction_sell_lines_purchase_lines
+GROUP BY sell_line_id, purchase_line_id
+HAVING COUNT(*) > 1
+) AS grouped
+ON dup.sell_line_id = grouped.sell_line_id
+AND dup.purchase_line_id = grouped.purchase_line_id
+AND dup.id != grouped.min_id
+LIMIT 100;
