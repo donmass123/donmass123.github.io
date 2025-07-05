@@ -131,3 +131,43 @@
     transform: scale(1) rotateY(0);
   }
 }
+/* Base styling for url-buttons */
+.url-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin: 20px 0;
+}
+
+/* If there are multiple buttons in future */
+.url-buttons .view-modal-button {
+  flex: 1 1 auto;
+  max-width: 250px;
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+  .url-buttons {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .url-buttons .view-modal-button {
+    width: 100%;
+    max-width: 100%;
+    font-size: 17px;
+    padding: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .url-buttons {
+    margin: 16px 0;
+  }
+
+  .url-buttons .view-modal-button {
+    font-size: 16px;
+    padding: 12px;
+  }
+}
