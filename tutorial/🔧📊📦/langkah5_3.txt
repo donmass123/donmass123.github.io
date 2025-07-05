@@ -1,0 +1,2 @@
+ Route::get('/products/get-sub-categories', [\App\Http\Controllers\ProductController::class, 'getSubCategories']);
+            Route::post('/products/get_sub_categories_multi', [\App\Http\Controllers\ProductController::class, 'getSubCategoriesMulti']);

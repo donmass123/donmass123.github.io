@@ -1,0 +1,22 @@
+ /**
+ * Get subcategories for multiple selected categories
+ */
+public function getSubCategoriesMulti(Request $request)
+{
+    if (request()->ajax()) {
+        $cat_ids = request()->input('cat_ids', []);
+        $business_id = request()->session()->get('user.business_id');
+
+        if (empty($cat_ids)) {
+            return response()->json([]);
+        }
+
+        $sub_categories = Category::where('business_id', $business_id)
+            ->where('category_type', 'product')
+            ->whereIn('parent_id', $cat_ids)
+            ->pluck('name', 'id')
+            ->toArray();
+
+        return response()->json($sub_categories);
+    }
+}

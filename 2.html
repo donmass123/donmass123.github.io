@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>POS – Filter Sub-Kategori</title>
+    <title>Tutorial Point Of Sales</title>
 
     <!-- Link ke stylesheet eksternal -->
     <link rel="stylesheet" href="style.css" />
@@ -237,30 +237,11 @@
 
         <h3>5.2 Menambahkan metode getSubCategoriesMulti</h3>
         <p>app/Http/Controllers/ProductController.php</p>
-        <pre><code>
-            /**
- * Get subcategories for multiple selected categories
- */
-public function getSubCategoriesMulti(Request $request)
-{
-    if (request()->ajax()) {
-        $cat_ids = request()->input('cat_ids', []);
-        $business_id = request()->session()->get('user.business_id');
-
-        if (empty($cat_ids)) {
-            return response()->json([]);
-        }
-
-        $sub_categories = Category::where('business_id', $business_id)
-            ->where('category_type', 'product')
-            ->whereIn('parent_id', $cat_ids)
-            ->pluck('name', 'id')
-            ->toArray();
-
-        return response()->json($sub_categories);
-    }
-}
-        </code></pre>
+        <div class="url-buttons">
+          <button class="view-modal-button" data-url="tutorial/🔧📊📦/langkah5_2.txt">
+            app/Http/Controllers/ProductController.php
+          </button>
+        </div>
 
         <h3>5.3 Menambahkan Rute untuk Metode Subkategori</h3>
         <p>
@@ -269,10 +250,11 @@ public function getSubCategoriesMulti(Request $request)
         </p>
 
         <p>routes/web.php</p>
-        <pre><code>
-            Route::get('/products/get-sub-categories', [\App\Http\Controllers\ProductController::class, 'getSubCategories']);
-            Route::post('/products/get_sub_categories_multi', [\App\Http\Controllers\ProductController::class, 'getSubCategoriesMulti']);
-        </code></pre>
+        <div class="url-buttons">
+          <button class="view-modal-button" data-url="tutorial/🔧📊📦/langkah5_3.txt">
+            routes/web.php
+          </button>
+        </div>
       </section>
 
       <section>

@@ -1,0 +1,51 @@
+ /**
+ * Enhanced label printing interface
+ */
+public function enhancedShow(Request $request)
+{
+    $business_id = $request->session()->get('user.business_id');
+    $purchase_id = $request->get('purchase_id', false);
+    $product_id = $request->get('product_id', false);
+
+    //Get products for the business
+    $products = [];
+    $price_groups = [];
+    if ($purchase_id) {
+        $products = $this->transactionUtil->getPurchaseProducts($business_id, $purchase_id);
+    } elseif ($product_id) {
+        $products = $this->productUtil->getDetailsFromProduct($business_id, $product_id);
+    }
+
+    //get price groups
+    $price_groups = [];
+    if (! empty($purchase_id) || ! empty($product_id)) {
+        $price_groups = SellingPriceGroup::where('business_id', $business_id)
+            ->active()
+            ->pluck('name', 'id');
+    }
+
+    $barcode_settings = Barcode::where('business_id', $business_id)
+        ->orWhereNull('business_id')
+        ->select(DB::raw('CONCAT(name, ", ", COALESCE(description, "")) as name, id, is_default'))
+        ->get();
+    $default = $barcode_settings->where('is_default', 1)->first();
+    $barcode_settings = $barcode_settings->pluck('name', 'id');
+
+    // Fetch the business logo path
+    $business_logo = request()->session()->get('business.logo');
+    if (! empty($business_logo)) {
+        $business_logo = asset('uploads/business_logos/' . $business_logo);
+    }
+
+    return view('labels.enhanced-show')
+        ->with(compact('products', 'barcode_settings', 'default', 'price_groups', 'business_logo'));
+}
+
+/**
+ * Enhanced preview method (reuses existing logic)
+ */
+public function enhancedPreview(Request $request)
+{
+    // Reuse the existing show_label_preview method
+    return $this->show_label_preview($request);
+}

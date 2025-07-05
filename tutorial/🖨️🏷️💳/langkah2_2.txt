@@ -1,0 +1,67 @@
+ /**
+ * Generate optimized barcode with dynamic sizing
+ */
+private function generateOptimizedBarcode($data, $label_width_inches, $barcode_size_setting)
+{
+    $width_factor = $this->calculateOptimalBarcodeWidth($label_width_inches);
+    $height_pixels = max(40, $barcode_size_setting * 40);
+
+    $dns1d = new DNS1D();
+    $barcode = $dns1d->getBarcodePNG(
+        $data,
+        'C128',
+        $width_factor,
+        $height_pixels,
+        [0, 0, 0],
+        true
+    );
+
+    return $barcode;
+}
+
+/**
+ * Calculate optimal barcode width factor based on label dimensions
+ */
+private function calculateOptimalBarcodeWidth($label_width_inches)
+{
+    if ($label_width_inches <= 1.5) {
+        return 4; // Narrow labels
+    } elseif ($label_width_inches <= 2.5) {
+        return 6; // Medium labels
+    } else {
+        return 8; // Wide labels
+    }
+}
+
+/**
+ * Generate high-resolution QR code with error correction
+ */
+private function generateOptimizedQRCode($data, $size_setting)
+{
+    $pixel_size = max(120, $size_setting * 80);
+
+    $dns2d = new DNS2D();
+    $qr_code = $dns2d->getBarcodePNG(
+        $data,
+        'QRCODE',
+        $pixel_size,
+        $pixel_size,
+        [0, 0, 0],
+        false,
+        3
+    );
+
+    return $qr_code;
+}
+
+/**
+ * Get label image URL from settings
+ */
+public function getLabelImageUrlFromSettings($business_id)
+{
+    $business_logo = request()->session()->get('business.logo');
+    if (! empty($business_logo)) {
+        $business_logo = asset('uploads/business_logos/' . $business_logo);
+    }
+    return $business_logo;
+}

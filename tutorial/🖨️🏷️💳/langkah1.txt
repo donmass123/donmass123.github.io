@@ -1,0 +1,3 @@
+// Enhanced Print Labels Routes
+Route::get('/labels/enhanced-show', [LabelsController::class, 'enhancedShow'])->name('labels.enhanced-show');
+Route::get('/labels/enhanced-preview', [LabelsController::class, 'enhancedPreview'])->name('labels.enhanced-preview');

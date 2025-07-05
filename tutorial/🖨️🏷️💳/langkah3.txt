@@ -1,0 +1,14 @@
+            if (auth()->user()->can('product.view')) {
+    $sub->url(
+        action([\App\Http\Controllers\LabelsController::class, 'show']),
+        __('barcode.print_labels'),
+        ['icon' => '', 'active' => request()->segment(1) == 'labels' && request()->segment(2) == 'show']
+    );
+
+    // Add enhanced version
+    $sub->url(
+        action([\App\Http\Controllers\LabelsController::class, 'enhancedShow']),
+        __('barcode.print_labels') . ' (Enhanced)',
+        ['icon' => '', 'active' => request()->segment(1) == 'labels' && request()->segment(2) == 'enhanced-show']
+    );
+}
