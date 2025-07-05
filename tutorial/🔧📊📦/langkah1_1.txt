@@ -1,0 +1,78 @@
+
+            /**
+ * Enhanced getStockValue method for multi-select compatibility
+ *
+ * @param Request $request
+ * @return \Illuminate\Http\JsonResponse
+ */
+public function getStockValue(Request $request)
+{
+    try {
+        $business_id = $request->session()->get('user.business_id');
+        $end_date = \Carbon::now()->format('Y-m-d');
+        $permitted_locations = auth()->user()->permitted_locations();
+
+        // Process filters using enhanced logic
+        $filters = $this->processStockValueFilters($request);
+
+        // Handle location_id separately for getOpeningClosingStock method
+        $location_id = null;
+        if (isset($filters['location_id'])) {
+            $location_id = $filters['location_id'];
+            unset($filters['location_id']); // Remove from filters array
+        }
+
+        // Get Closing stock by purchase price
+        $closing_stock_by_pp = $this->transactionUtil->getOpeningClosingStock(
+            $business_id,
+            $end_date,
+            $location_id,
+            false, // is_opening = false
+            false, // by_sale_price = false (by purchase price)
+            $filters,
+            $permitted_locations
+        );
+
+        // Get Closing stock by selling price
+        $closing_stock_by_sp = $this->transactionUtil->getOpeningClosingStock(
+            $business_id,
+            $end_date,
+            $location_id,
+            false, // is_opening = false
+            true,  // by_sale_price = true
+            $filters,
+            $permitted_locations
+        );
+
+        // Calculate potential profit and margin
+        $potential_profit = $closing_stock_by_sp - $closing_stock_by_pp;
+        $profit_margin = empty($closing_stock_by_sp) ? 0 : ($potential_profit / $closing_stock_by_sp) * 100;
+
+        // Format the values using transactionUtil->num_f() with currency symbol
+        $response = [
+            'closing_stock_by_pp' => $this->transactionUtil->num_f($closing_stock_by_pp, true),
+            'closing_stock_by_sp' => $this->transactionUtil->num_f($closing_stock_by_sp, true),
+            'potential_profit' => $this->transactionUtil->num_f($potential_profit, true),
+            'profit_margin' => number_format($profit_margin, 1),
+
+            // Keep raw values for calculations if needed
+            'raw_closing_stock_by_pp' => round($closing_stock_by_pp, 2),
+            'raw_closing_stock_by_sp' => round($closing_stock_by_sp, 2),
+            'raw_potential_profit' => round($potential_profit, 2),
+            'raw_profit_margin' => round($profit_margin, 2),
+        ];
+
+        return response()->json($response);
+    } catch (\Exception $e) {
+        \Log::error('Error in getStockValue: ' . $e->getMessage());
+        \Log::error('Stack trace: ' . $e->getTraceAsString());
+
+        return response()->json([
+            'closing_stock_by_pp' => $this->transactionUtil->num_f(0, true),
+            'closing_stock_by_sp' => $this->transactionUtil->num_f(0, true),
+            'potential_profit' => $this->transactionUtil->num_f(0, true),
+            'profit_margin' => '0.0',
+        ], 500);
+    }
+}
+        

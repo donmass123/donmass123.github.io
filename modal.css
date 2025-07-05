@@ -1,0 +1,102 @@
+/* Modal Styles */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  padding-top: 60px;
+  text-align: center;
+  transition: opacity 0.3s ease-in-out;
+  opacity: 0;
+  animation: fadeIn 0.3s forwards;
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #fff;
+  margin: 5% auto;
+  padding: 30px;
+  border: 1px solid #888;
+  width: 90%;
+  max-width: 900px;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transform-origin: center;
+  animation: openBook 1s ease-out;
+}
+
+/* Close Button */
+.close {
+  color: #aaa;
+  font-size: 32px;
+  font-weight: bold;
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  transition: color 0.3s ease;
+}
+
+.close:hover,
+.close:focus {
+  color: #ff0000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Button Styles */
+.view-modal-button {
+  padding: 12px 24px;
+  margin: 10px;
+  background-color: #4f46e5;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.view-modal-button:hover {
+  background-color: #6366f1;
+  transform: scale(1.05);
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .modal-content {
+    width: 95%;
+    padding: 20px;
+  }
+
+  .view-modal-button {
+    width: 100%;
+    font-size: 18px;
+  }
+}
+
+/* Animation for Modal Fade In */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Animation for Modal Book Opening */
+@keyframes openBook {
+  0% {
+    transform: scale(0) rotateY(90deg); /* Start with no size and rotated */
+  }
+  50% {
+    transform: scale(1) rotateY(45deg); /* Halfway to open */
+  }
+  100% {
+    transform: scale(1) rotateY(0); /* Fully opened, normal state */
+  }
+}

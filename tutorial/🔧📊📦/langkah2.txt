@@ -1,0 +1,105 @@
+public function getOpeningClosingStock($business_id, $date, $location_id, $is_opening = false, $by_sale_price = false, $filters = [], $permitted_locations = null)
+{
+    $query = PurchaseLine::join(
+        'transactions as purchase',
+        'purchase_lines.transaction_id',
+        '=',
+        'purchase.id'
+    )
+        ->where('purchase.type', '!=', 'purchase_order')
+        ->where('purchase.business_id', $business_id);
+
+    $price_query_part = '(purchase_lines.purchase_price +
+                    COALESCE(purchase_lines.item_tax, 0))';
+
+    if ($by_sale_price) {
+        $price_query_part = 'v.sell_price_inc_tax';
+    }
+
+    $query->leftjoin('variations as v', 'v.id', '=', 'purchase_lines.variation_id')
+        ->leftjoin('products as p', 'p.id', '=', 'purchase_lines.product_id');
+
+    // Handle multi-select filters
+    if (!empty($filters['category_id'])) {
+        if (is_array($filters['category_id'])) {
+            $query->whereIn('p.category_id', $filters['category_id']);
+        } else {
+            $query->where('p.category_id', $filters['category_id']);
+        }
+    }
+
+    if (!empty($filters['sub_category_id'])) {
+        if (is_array($filters['sub_category_id'])) {
+            $query->whereIn('p.sub_category_id', $filters['sub_category_id']);
+        } else {
+            $query->where('p.sub_category_id', $filters['sub_category_id']);
+        }
+    }
+
+    if (!empty($filters['brand_id'])) {
+        if (is_array($filters['brand_id'])) {
+            $query->whereIn('p.brand_id', $filters['brand_id']);
+        } else {
+            $query->where('p.brand_id', $filters['brand_id']);
+        }
+    }
+
+    if (!empty($filters['unit_id'])) {
+        if (is_array($filters['unit_id'])) {
+            $query->whereIn('p.unit_id', $filters['unit_id']);
+        } else {
+            $query->where('p.unit_id', $filters['unit_id']);
+        }
+    }
+
+    if (!empty($filters['user_id'])) {
+        $query->where('purchase.created_by', $filters['user_id']);
+    }
+
+    //If opening
+    if ($is_opening) {
+        $next_day = \Carbon::createFromFormat('Y-m-d', $date)->addDay()->format('Y-m-d');
+
+        $query->where(function ($query) use ($date, $next_day) {
+            $query->whereRaw("date(transaction_date) <= '$date'")
+                ->orWhereRaw("date(transaction_date) = '$next_day' AND purchase.type='opening_stock' ");
+        });
+    } else {
+        $query->whereRaw("date(transaction_date) <= '$date'");
+    }
+
+    $query->select(
+        DB::raw("SUM((purchase_lines.quantity - purchase_lines.quantity_returned - purchase_lines.quantity_adjusted -
+                    (SELECT COALESCE(SUM(tspl.quantity - tspl.qty_returned), 0) FROM
+                    transaction_sell_lines_purchase_lines AS tspl
+                    JOIN transaction_sell_lines as tsl ON
+                    tspl.sell_line_id=tsl.id
+                    JOIN transactions as sale ON
+                    tsl.transaction_id=sale.id
+                    WHERE tspl.purchase_line_id = purchase_lines.id AND
+                    date(sale.transaction_date) <= '$date') ) * $price_query_part
+                ) as stock")
+    );
+
+    //Check for permitted locations of a user
+    if (!empty($permitted_locations)) {
+        if ($permitted_locations != 'all') {
+            $query->whereIn('purchase.location_id', $permitted_locations);
+        }
+    }
+
+    // Updated location_id handling to support arrays
+    if (!empty($location_id)) {
+        if (is_array($location_id)) {
+            // Handle multiple locations
+            $query->whereIn('purchase.location_id', $location_id);
+        } else {
+            // Original code for a single location
+            $query->where('purchase.location_id', $location_id);
+        }
+    }
+
+    $details = $query->first();
+
+    return $details->stock;
+}

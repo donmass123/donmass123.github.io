@@ -150,24 +150,27 @@
 
       <section>
         <h2>Gambaran Umum</h2>
-        <p>Modal Tambah Produk Cepat menyediakan antarmuka yang ramping untuk menambahkan produk baru dengan bidang-bidang penting seperti nama produk, SKU, unit, kategori, merek, dan informasi harga. Modal ini menggunakan AJAX untuk mengirimkan formulir dan menyediakan opsi untuk menyimpan, menyimpan & menambahkan yang lain, atau menyimpan & mengalihkan ke label.</p>
+        <p>
+          Modal Tambah Produk Cepat menyediakan antarmuka yang ramping untuk
+          menambahkan produk baru dengan bidang-bidang penting seperti nama
+          produk, SKU, unit, kategori, merek, dan informasi harga. Modal ini
+          menggunakan AJAX untuk mengirimkan formulir dan menyediakan opsi untuk
+          menyimpan, menyimpan & menambahkan yang lain, atau menyimpan &
+          mengalihkan ke label.
+        </p>
         <div class="image-box">
           <img
             src="https://ultimate-pos-tutorials.vercel.app/assets/images/button-quick-add-product-a34451c1a6ebe1c8cb405b602c76a953.png"
             alt="#"
           />
-          <p class="caption">
-            Gambar: Gambaran Umum.
-          </p>
+          <p class="caption">Gambar: Gambaran Umum.</p>
         </div>
         <div class="image-box">
           <img
             src="https://ultimate-pos-tutorials.vercel.app/assets/images/preview-quick-add-product-c61a45d92d8262ffc6575e571b9b2d90.png"
             alt="#"
           />
-          <p class="caption">
-            Gambar: Gambaran Umum.
-          </p>
+          <p class="caption">Gambar: Gambaran Umum.</p>
         </div>
       </section>
 
@@ -210,9 +213,7 @@ public function quickAddProductModal()
             });
             /script>
         </code></pre>
-        <div class="tip">
-          Tambahkan `<` di setiap kodingan
-        </div>
+        <div class="tip">Tambahkan `<` di setiap kodingan</div>
         <h3>5️⃣ File Bahasa</h3>
         <pre><code>
             // lang/en/lang_v1.php
@@ -222,68 +223,95 @@ public function quickAddProductModal()
       </section>
 
       <section>
-        <h2>✅ Langkah 1: Aktifkan Sub-Kategori di Pengaturan Bisnis</h2>
+        <h2>✅ Langkah 1: Tambahkan Routes</h2>
         <p>
-          <strong>Langkah pertama yang penting</strong>: Buka
-          <strong>/business/settings</strong> → bagian Produk dan pastikan
-          Sub-Kategori diaktifkan. Tanpa ini, menu tarik-turun akan
-          disembunyikan!
+          Pertama, tambahkan route untuk modal penambahan cepat di file web.php
+          Anda:
+        </p>
+        <pre><code>
+          // Add this route to your web.php
+Route::get('/products/quick_add_mini_form', [ProductController::class, 'quickAddProductModal']);
+        </code></pre>
+        <p>
+          <strong>Penting</strong>: Tempatkan route ini
+          <strong>sebelum</strong> route wildcard seperti
+          <code>Route::resource(‘products’, ProductController::class)</code>
+          untuk menghindari konflik.
         </p>
       </section>
 
       <section>
-        <h2>✅ Langkah 2: Tambahkan Dropdown Sub-Kategori ke Tampilan</h2>
+        <h2>✅ Langkah 2: Buat Metod Controller</h2>
         <p>
-          Pada <strong>resources/views/product/index.blade.php</strong>, temukan
-          bagian filter kategori dan tambahkan kode ini tepat setelah menu
-          tarik-turun kategori:
+          Tambahkan metode <strong>quickAddProductModal</strong> ke
+          <strong>ProductController</strong> Anda:
         </p>
         <pre><code>
-        <div
-    class="col-sm-3 @if(!(session('business.enable_category') && session('business.enable_sub_category'))) hide @endif"
->
-    <div class="form-group">
-        {!! Form::label('sub_category_id', __('product.sub_category') . ':') !!}
-        {!! Form::select('sub_category_id', [], null, ['placeholder' =>
-        __('messages.please_select'), 'class' => 'form-control select2','style'
-        => 'width:100%', 'id' => 'product_list_filter_sub_category_id']); !!}
-    </div>
-</div>
+        public function quickAddProductModal()
+{
+    // Check user permissions
+    if (! auth()->user()->can('product.create')) {
+        abort(403, 'Unauthorized action.');
+    }
+
+    // Get request parameters
+    $product_name = ! empty(request()->input('product_name')) ? request()->input('product_name') : '';
+    $product_for = ! empty(request()->input('product_for')) ? request()->input('product_for') : null;
+    $business_id = request()->session()->get('user.business_id');
+
+    // Load dropdown data
+    $categories = Category::forDropdown($business_id, 'product');
+    $brands = Brands::forDropdown($business_id);
+    $units = Unit::forDropdown($business_id, true);
+
+    // Load tax data
+    $tax_dropdown = TaxRate::forBusinessDropdown($business_id, true, true);
+    $taxes = $tax_dropdown['tax_rates'];
+    $tax_attributes = $tax_dropdown['attributes'];
+
+    // Load other required data
+    $barcode_types = $this->barcode_types;
+    $default_profit_percent = Business::where('id', $business_id)->value('default_profit_percent');
+    $locations = BusinessLocation::forDropdown($business_id);
+    $business_locations = BusinessLocation::forDropdown($business_id);
+    $common_settings = session()->get('business.common_settings');
+    $warranties = Warranty::forDropdown($business_id);
+
+    // Set additional variables
+    $enable_expiry = request()->session()->get('business.enable_product_expiry');
+    $enable_lot = request()->session()->get('business.enable_lot_number');
+    $module_form_parts = $this->moduleUtil->getModuleData('product_form_part');
+
+    return view('product.partials.quick_add_product_modal')->with(compact(
+        'categories',
+        'brands',
+        'units',
+        'taxes',
+        'barcode_types',
+        'default_profit_percent',
+        'tax_attributes',
+        'product_name',
+        'locations',
+        'product_for',
+        'enable_expiry',
+        'enable_lot',
+        'module_form_parts',
+        'business_locations',
+        'common_settings',
+        'warranties'
+    ));
+}
       </code></pre>
       </section>
 
       <section>
-        <h2>✅ Langkah 3 – JavaScript Load Dinamis</h2>
+        <h2>✅ Langkah 3: Buat View Modal</h2>
         <p>
-          Pada berkas yang sama, di dalam bagian
-          <strong>@section('javascript')</strong>, tambahkan:
+          Buat file <code>resources/views/product/partials/quick_add_product_modal.blade.php</code>:
         </p>
-        <pre><code>
-           $(document).ready(function () {
-    $(document).on('change', '#product_list_filter_category_id', function () {
-        get_sub_categories();
-    });
-    function get_sub_categories() {
-        var cat = $('#product_list_filter_category_id').val();
-
-        // Clear subcategory selection first
-        $('#product_list_filter_sub_category_id').val('').trigger('change');
-
-        $.ajax({
-            method: 'POST',
-            url: '/products/get_sub_categories',
-            dataType: 'html',
-            data: { cat_id: cat },
-            success: function (result) {
-                if (result) {
-                    $('#product_list_filter_sub_category_id').html(result);
-                    // Trigger change to refresh DataTable
-                    $('#product_list_filter_sub_category_id').trigger('change');
-                }
-            },
-        });
-    }
-});</code></pre>
+        <a href="downloads/section2.html" download class="section-download"
+          >⬇️ Unduh resources/views/product/partials/quick_add_product_modal.blade.php</a
+        >
       </section>
 
       <section>

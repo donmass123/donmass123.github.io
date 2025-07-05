@@ -1,0 +1,12 @@
+            stock_report_table = $('#stock_report_table').DataTable({
+    // ... existing configuration
+    ajax: {
+        url: '/reports/stock-report',
+        data: function (d) {
+            // ... existing parameters
+            d.stock_level = $('#stock_level').val();
+            // ... other parameters
+        },
+    },
+    // ... rest of configuration
+});

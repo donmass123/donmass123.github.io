@@ -1,0 +1,88 @@
+/**
+ * Process enhanced multi-select filters for stock report
+ *
+ * @param Request $request
+ * @return array
+ */
+private function processEnhancedStockReportFilters(Request $request)
+{
+    // Get all possible filters
+    $filters = $request->only([
+        'location_id',
+        'category_id',
+        'sub_category_id',
+        'brand_id',
+        'unit_id',
+        'tax_id',
+        'type',
+        'only_mfg_products',
+        'active_state',
+        'not_for_selling',
+        'repair_model_id',
+        'product_id',
+        'stock_level'
+    ]);
+
+    // Multi-select filters that need special processing
+    $multiSelectFilters = ['location_id', 'category_id', 'sub_category_id', 'brand_id', 'unit_id'];
+
+    foreach ($multiSelectFilters as $filter) {
+        if (isset($filters[$filter])) {
+            // Handle different input formats
+            if (is_string($filters[$filter])) {
+                // Handle comma-separated strings
+                $filters[$filter] = explode(',', $filters[$filter]);
+            }
+
+            // Ensure it's an array
+            if (!is_array($filters[$filter])) {
+                $filters[$filter] = [$filters[$filter]];
+            }
+
+            // Remove empty values, null values, and "All" selections ('')
+            $filters[$filter] = array_filter($filters[$filter], function ($value) {
+                return $value !== '' && $value !== null && $value !== '0' && trim($value) !== '';
+            });
+
+            // If no valid values remain, remove the filter (means "All")
+            if (empty($filters[$filter])) {
+                unset($filters[$filter]);
+            } else {
+                // Re-index array and convert to proper types
+                $filters[$filter] = array_values(array_map('intval', $filters[$filter]));
+            }
+        }
+    }
+
+    // Handle boolean and special filters
+    $filters['not_for_selling'] = isset($filters['not_for_selling']) &&
+        ($filters['not_for_selling'] == 'true' || $filters['not_for_selling'] == '1') ? 1 : 0;
+
+    $filters['only_mfg_products'] = isset($filters['only_mfg_products']) &&
+        ($filters['only_mfg_products'] == '1' || $filters['only_mfg_products'] === true) ? 1 : 0;
+
+    // Handle stock level filter
+    if (isset($filters['stock_level']) && empty(trim($filters['stock_level']))) {
+        unset($filters['stock_level']);
+    }
+
+    // Handle active state
+    if (isset($filters['active_state']) && empty(trim($filters['active_state']))) {
+        unset($filters['active_state']);
+    }
+
+    // Handle type filter
+    if (isset($filters['type']) && empty(trim($filters['type']))) {
+        unset($filters['type']);
+    }
+
+    // Remove any remaining empty or null values
+    $filters = array_filter($filters, function ($value) {
+        if (is_array($value)) {
+            return !empty($value);
+        }
+        return $value !== '' && $value !== null;
+    });
+
+    return $filters;
+}

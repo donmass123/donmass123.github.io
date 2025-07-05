@@ -1,0 +1,487 @@
+@extends('layouts.app')
+@section('title', __('report.stock_report'))
+
+@section('content')
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1 class="tw-text-xl md:tw-text-3xl tw-font-bold tw-text-black">{{ __('report.stock_report')}}</h1>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            @component('components.filters', ['title' => __('report.filters')])
+            {!! Form::open(['url' => action([\App\Http\Controllers\ReportController::class, 'getStockReport']), 'method'
+            => 'get', 'id' => 'stock_report_filter_form' ]) !!}
+            <div class="col-md-3">
+                <div class="form-group">
+                    {!! Form::label('location_id', __('purchase.business_location') . ':') !!}
+                    {!! Form::select('location_id[]', $business_locations, null, [
+                    'class' => 'form-control select2',
+                    'style' => 'width:100%',
+                    'multiple',
+                    'id' => 'location_id'
+                    ]); !!}
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    {!! Form::label('category_id', __('category.category') . ':') !!}
+                    {!! Form::select('category_id[]', $categories, null, [
+                    'placeholder' => __('messages.all'),
+                    'class' => 'form-control select2',
+                    'style' => 'width:100%',
+                    'id' => 'category_id',
+                    'multiple'
+                    ]); !!}
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    {!! Form::label('sub_category_id', __('product.sub_category') . ':') !!}
+                    {!! Form::select('sub_category_id[]', array(), null, [
+                    'placeholder' => __('messages.all'),
+                    'class' => 'form-control select2',
+                    'style' => 'width:100%',
+                    'id' => 'sub_category_id',
+                    'multiple'
+                    ]); !!}
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    {!! Form::label('brand', __('product.brand') . ':') !!}
+                    {!! Form::select('brand[]', $brands, null, [
+                    'placeholder' => __('messages.all'),
+                    'class' => 'form-control select2',
+                    'style' => 'width:100%',
+                    'id' => 'brand',
+                    'multiple'
+                    ]); !!}
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    {!! Form::label('unit',__('product.unit') . ':') !!}
+                    {!! Form::select('unit[]', $units, null, [
+                    'placeholder' => __('messages.all'),
+                    'class' => 'form-control select2',
+                    'style' => 'width:100%',
+                    'id' => 'unit',
+                    'multiple'
+                    ]); !!}
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    {!! Form::label('stock_level', __('report.stock_level') . ':') !!}
+                    {!! Form::select('stock_level', [
+                    '' => __('messages.all'),
+                    'gt_zero' => __('report.greater_than_zero'),
+                    'lt_one' => __('report.less_than_one')
+                    ], null, ['class' => 'form-control select2', 'style' => 'width:100%', 'id' => 'stock_level']); !!}
+                </div>
+            </div>
+            @if($show_manufacturing_data)
+            <div class="col-md-3">
+                <div class="form-group">
+                    <br>
+                    <div class="checkbox">
+                        <label>
+                            {!! Form::checkbox('only_mfg', 1, false,
+                            [ 'class' => 'input-icheck', 'id' => 'only_mfg_products']); !!} {{
+                            __('manufacturing::lang.only_mfg_products') }}
+                        </label>
+                    </div>
+                </div>
+            </div>
+            @endif
+            {!! Form::close() !!}
+            @endcomponent
+        </div>
+    </div>
+    @can('view_product_stock_value')
+    <div class="row">
+        <div class="col-md-12">
+            @component('components.widget', ['class' => 'box-solid'])
+            <table class="table no-border">
+                <tr>
+                    <td>@lang('report.closing_stock') (@lang('lang_v1.by_purchase_price'))</td>
+                    <td>@lang('report.closing_stock') (@lang('lang_v1.by_sale_price'))</td>
+                    <td>@lang('lang_v1.potential_profit')</td>
+                    <td>@lang('lang_v1.profit_margin')</td>
+                </tr>
+                <tr>
+                    <td>
+                        <h3 id="closing_stock_by_pp" class="mb-0 mt-0"></h3>
+                    </td>
+                    <td>
+                        <h3 id="closing_stock_by_sp" class="mb-0 mt-0"></h3>
+                    </td>
+                    <td>
+                        <h3 id="potential_profit" class="mb-0 mt-0"></h3>
+                    </td>
+                    <td>
+                        <h3 id="profit_margin" class="mb-0 mt-0"></h3>
+                    </td>
+                </tr>
+            </table>
+            @endcomponent
+        </div>
+    </div>
+    @endcan
+    <div class="row">
+        <div class="col-md-12">
+            @component('components.widget', ['class' => 'box-solid'])
+            @include('report.partials.stock_report_table')
+            @endcomponent
+        </div>
+    </div>
+</section>
+<!-- /.content -->
+
+@endsection
+
+@section('javascript')
+<script src="{{ asset('js/report.js?v=' . $asset_v) }}"></script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+    // ROBUST SUBCATEGORY SOLUTION - Prevents clearing issues
+
+    var subcategoryUpdateInProgress = false;
+    var subcategoryUpdateTimeout = null;
+    var lastCategoryState = '';
+
+    function updateSubcategoryOptionsRobust() {
+        var selectedCategories = $('#category_id').val() || [];
+        var currentCategoryState = JSON.stringify(selectedCategories.sort());
+
+        // Prevent duplicate updates for same category state
+        if (currentCategoryState === lastCategoryState && !subcategoryUpdateInProgress) {
+            return;
+        }
+
+        // Prevent multiple simultaneous updates
+        if (subcategoryUpdateInProgress) {
+            // Retry after current update completes
+            setTimeout(function() {
+                if (!subcategoryUpdateInProgress) {
+                    updateSubcategoryOptionsRobust();
+                }
+            }, 500);
+            return;
+        }
+
+        lastCategoryState = currentCategoryState;
+
+        // Handle empty/All selection
+        if (selectedCategories.length === 0 || selectedCategories.includes('')) {
+            setSubcategoryToAll();
+            return;
+        }
+
+        subcategoryUpdateInProgress = true;
+
+        var $subcategorySelect = $('#sub_category_id');
+
+        // Store current selection and options BEFORE making any changes
+        var currentSelection = $subcategorySelect.val() || [];
+        var currentOptions = [];
+        $subcategorySelect.find('option').each(function() {
+            currentOptions.push({
+                value: $(this).val(),
+                text: $(this).text()
+            });
+        });
+
+        // Add loading indicator WITHOUT clearing existing options
+        if (!$subcategorySelect.find('option[value="loading"]').length) {
+            $subcategorySelect.append($('<option>', {
+                value: 'loading',
+                text: 'Loading...',
+                disabled: true
+            }));
+            $subcategorySelect.prop('disabled', true);
+        }
+
+        // Make AJAX request
+        $.ajax({
+            url: '/products/get_sub_categories_multi',
+            method: 'POST',
+            data: {
+                cat_ids: selectedCategories,
+                _token: $('meta[name="csrf-token"]').attr('content') || ''
+            },
+            dataType: 'json',
+            timeout: 10000,
+            success: function(data) {
+                if (data && typeof data === 'object') {
+                    // Build new options list
+                    var newOptions = [{ value: '', text: '-- All --' }];
+
+                    // Add subcategories from response, sorted by name
+                    var sortedKeys = Object.keys(data).sort(function(a, b) {
+                        return data[a].localeCompare(data[b]);
+                    });
+
+                    sortedKeys.forEach(function(key) {
+                        newOptions.push({
+                            value: key,
+                            text: data[key]
+                        });
+                    });
+
+                    // Now safely replace all options at once
+                    $subcategorySelect.empty();
+                    newOptions.forEach(function(option) {
+                        $subcategorySelect.append($('<option>', {
+                            value: option.value,
+                            text: option.text
+                        }));
+                    });
+
+                    // Try to restore previous selection
+                    var validSelections = currentSelection.filter(function(val) {
+                        return newOptions.some(function(opt) { return opt.value === val; });
+                    });
+
+                    if (validSelections.length > 0) {
+                        $subcategorySelect.val(validSelections);
+                    } else {
+                        $subcategorySelect.val('');
+                    }
+                } else {
+                    $subcategorySelect.empty().append($('<option>', {
+                        value: '',
+                        text: '-- All --'
+                    })).val('');
+                }
+
+                // Re-enable and refresh
+                $subcategorySelect.prop('disabled', false);
+                $subcategorySelect.trigger('change.select2');
+
+            },
+            error: function(xhr, status, error) {
+                // Restore previous options on error
+                $subcategorySelect.empty();
+                currentOptions.forEach(function(option) {
+                    if (option.value !== 'loading') {
+                        $subcategorySelect.append($('<option>', {
+                            value: option.value,
+                            text: option.text
+                        }));
+                    }
+                });
+                $subcategorySelect.val(currentSelection);
+                $subcategorySelect.prop('disabled', false);
+                $subcategorySelect.trigger('change.select2');
+
+                // Show user-friendly error
+                if (typeof toastr !== 'undefined') {
+                    toastr.error('Error loading subcategories');
+                }
+            },
+            complete: function() {
+                subcategoryUpdateInProgress = false;
+            }
+        });
+    }
+
+    function setSubcategoryToAll() {
+        var $subcategorySelect = $('#sub_category_id');
+
+        $subcategorySelect.empty().append($('<option>', {
+            value: '',
+            text: '-- All --'
+        })).val('').trigger('change.select2');
+    }
+
+    // Debounced category change handler
+    $('#category_id').on('change', function(e, extraData) {
+        if (extraData && extraData.skipSubcategoryUpdate) {
+            return;
+        }
+
+        // Clear any pending timeout
+        if (subcategoryUpdateTimeout) {
+            clearTimeout(subcategoryUpdateTimeout);
+        }
+
+        // Debounce the update (wait for user to finish selecting)
+        subcategoryUpdateTimeout = setTimeout(function() {
+            updateSubcategoryOptionsRobust();
+        }, 300); // 300ms delay
+    });
+
+    // Enhanced multi-select filter handling
+    function setupRobustMultiSelectFilter(elementId) {
+        var $element = $('#' + elementId);
+        var changeTimeout = null;
+
+        $element.on('select2:select select2:unselect', function(e) {
+            // Clear any pending timeout
+            if (changeTimeout) {
+                clearTimeout(changeTimeout);
+            }
+
+            // Debounce the logic handling
+            changeTimeout = setTimeout(function() {
+                handleMultiSelectLogic(elementId);
+            }, 100);
+        });
+    }
+
+    function handleMultiSelectLogic(elementId) {
+        var $element = $('#' + elementId);
+        var currentValues = $element.val() || [];
+
+        if (currentValues.length === 0) {
+            $element.data('prev-values', []);
+            return;
+        }
+
+        var hasAll = currentValues.includes('');
+        var hasSpecific = currentValues.some(val => val !== '');
+
+        if (hasAll && hasSpecific) {
+            var previousValues = $element.data('prev-values') || [];
+            var wasAllPreviously = previousValues.includes('');
+
+            if (wasAllPreviously) {
+                // User added specific to "All" - remove "All"
+                var specificValues = currentValues.filter(val => val !== '');
+                $element.val(specificValues);
+                $element.trigger('change.select2');
+
+            } else {
+                // User added "All" to specific - remove specific
+                $element.val(['']);
+                $element.trigger('change.select2');
+            }
+        }
+
+        $element.data('prev-values', $element.val() || []);
+    }
+
+    // Initialize robust filters
+    function initializeRobustFilters() {
+        // Initialize previous values
+        ['location_id', 'category_id', 'sub_category_id', 'brand', 'unit'].forEach(function(id) {
+            $('#' + id).data('prev-values', $('#' + id).val() || []);
+        });
+
+        // Setup robust handlers
+        setupRobustMultiSelectFilter('location_id');
+        setupRobustMultiSelectFilter('category_id');
+        setupRobustMultiSelectFilter('sub_category_id');
+        setupRobustMultiSelectFilter('brand');
+        setupRobustMultiSelectFilter('unit');
+    }
+
+    // Function to get stock value with multi-select filters
+    function get_stock_value() {
+        var loader = '<i class="fas fa-spinner fa-spin"></i>';
+        $('.card-value').html(loader);
+
+        // Get filter values and CLEAN them immediately
+        var locationIds = ($('#location_id').val() || []).filter(v => v !== '' && v !== null);
+        var categoryIds = ($('#category_id').val() || []).filter(v => v !== '' && v !== null);
+        var subCategoryIds = ($('#sub_category_id').val() || []).filter(v => v !== '' && v !== null);
+        var brandIds = ($('#brand').val() || []).filter(v => v !== '' && v !== null);
+        var unitIds = ($('#unit').val() || []).filter(v => v !== '' && v !== null);
+
+        // Build data object only with non-empty filters
+        var data = {};
+
+        if (locationIds.length > 0) data.location_id = locationIds;
+        if (categoryIds.length > 0) data.category_id = categoryIds;
+        if (subCategoryIds.length > 0) data.sub_category_id = subCategoryIds;
+        if (brandIds.length > 0) data.brand_id = brandIds;
+        if (unitIds.length > 0) data.unit_id = unitIds;
+
+        $.ajax({
+            url: '/reports/get-stock-value',
+            data: data,
+            success: function(response) {
+                // Use the pre-formatted values from backend
+                $('#closing_stock_by_pp').text(response.closing_stock_by_pp || '0.00');
+                $('#closing_stock_by_sp').text(response.closing_stock_by_sp || '0.00');
+                $('#potential_profit').text(response.potential_profit || '0.00');
+                $('#profit_margin').text(response.profit_margin + '%' || '0.0%');
+
+                // Update price group comparison if functions exist
+                if (typeof allPriceGroupData !== 'undefined') {
+                    allPriceGroupData = response;
+                    if (typeof updatePriceGroupDisplay === 'function') {
+                        updatePriceGroupDisplay('default');
+                    }
+                    if (typeof renderPriceGroupComparison === 'function') {
+                        renderPriceGroupComparison();
+                    }
+                }
+            },
+            error: function(xhr, status, error) {
+                $('.card-value').text('Error');
+            }
+        });
+    }
+
+    function getProcessedFilterValues() {
+        var locationIds = $('#location_id').val() || [];
+        var categoryIds = $('#category_id').val() || [];
+        var subCategoryIds = $('#sub_category_id').val() || [];
+        var brandIds = $('#brand').val() || [];
+        var unitIds = $('#unit').val() || [];
+        var stockLevel = $('#stock_level').val();
+
+        return {
+            location_id: (locationIds.includes('') || locationIds.length === 0) ? null : locationIds,
+            category_id: (categoryIds.includes('') || categoryIds.length === 0) ? null : categoryIds,
+            sub_category_id: (subCategoryIds.includes('') || subCategoryIds.length === 0) ? null : subCategoryIds,
+            brand_id: (brandIds.includes('') || brandIds.length === 0) ? null : brandIds,
+            unit_id: (unitIds.includes('') || unitIds.length === 0) ? null : unitIds,
+            stock_level: stockLevel || null
+        };
+    }
+
+    // Filter change handlers
+    $('#stock_report_filter_form #location_id, #stock_report_filter_form #category_id, #stock_report_filter_form #sub_category_id, #stock_report_filter_form #brand, #stock_report_filter_form #unit, #stock_report_filter_form #stock_level').change(function(e, extraData) {
+        if (extraData && extraData.skipSubcategoryUpdate) {
+            return;
+        }
+
+        // Reload tables
+        if (typeof stock_report_table !== 'undefined') {
+            stock_report_table.ajax.reload();
+        }
+        if (typeof stock_expiry_report_table !== 'undefined') {
+            stock_expiry_report_table.ajax.reload();
+        }
+
+        // Update stock values
+        get_stock_value();
+    });
+
+    // Initialize everything
+    initializeRobustFilters();
+
+    // Initialize stock value if element exists
+    if ($('#closing_stock_by_pp').length > 0) {
+        setTimeout(get_stock_value, 1000);
+    }
+
+    // Expose functions globally
+    window.updateSubcategoryOptionsRobust = updateSubcategoryOptionsRobust;
+    window.get_stock_value = get_stock_value;
+
+});
+</script>
+@endsection

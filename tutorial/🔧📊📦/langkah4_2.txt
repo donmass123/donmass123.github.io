@@ -1,0 +1,7 @@
+    $(
+    '#stock_report_filter_form #location_id, #stock_report_filter_form #category_id, #stock_report_filter_form #sub_category_id, #stock_report_filter_form #brand, #stock_report_filter_form #unit, #stock_report_filter_form #stock_level, #stock_report_filter_form #view_stock_filter'
+).change(function () {
+    stock_report_table.ajax.reload();
+    stock_expiry_report_table.ajax.reload();
+    get_stock_value();
+});

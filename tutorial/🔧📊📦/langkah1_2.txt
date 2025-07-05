@@ -1,0 +1,61 @@
+           /**
+ * Process stock value specific filters
+ *
+ * @param Request $request
+ * @return array
+ */
+private function processStockValueFilters(Request $request)
+{
+    $filters = [];
+
+    // Define filter mappings
+    $filterMappings = [
+        'location_id' => $request->input('location_id'),
+        'category_id' => $request->input('category_id'),
+        'sub_category_id' => $request->input('sub_category_id'),
+        'brand_id' => $request->input('brand_id'),
+        'unit_id' => $request->input('unit_id'),
+        'stock_level' => $request->input('stock_level')
+    ];
+
+    foreach ($filterMappings as $key => $value) {
+        if (!empty($value)) {
+            if (is_array($value)) {
+                // Remove empty values, null values, and "All" selections
+                $value = array_filter($value, function ($v) {
+                    return $v !== '' && $v !== null && trim($v) !== '' && $v !== 'null';
+                });
+
+                if (!empty($value)) {
+                    if ($key === 'stock_level') {
+                        // Stock level is not an array
+                        $filters[$key] = reset($value);
+                    } else {
+                        // Convert to integers for ID fields, removing any zero values
+                        $intValues = array_values(array_map('intval', $value));
+                        $intValues = array_filter($intValues, function ($v) {
+                            return $v > 0; // Only include positive integers
+                        });
+
+                        if (!empty($intValues)) {
+                            $filters[$key] = $intValues;
+                        }
+                    }
+                }
+            } else {
+                if (trim($value) !== '' && $value !== null) {
+                    if (in_array($key, ['category_id', 'sub_category_id', 'brand_id', 'unit_id', 'location_id'])) {
+                        $intValue = intval($value);
+                        if ($intValue > 0) {
+                            $filters[$key] = $intValue;
+                        }
+                    } else {
+                        $filters[$key] = $value;
+                    }
+                }
+            }
+        }
+    }
+
+    return $filters;
+}

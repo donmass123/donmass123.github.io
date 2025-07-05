@@ -1,0 +1,13 @@
+$(document).on(
+    'change',
+    '#product_list_filter_type, #product_list_filter_category_id, #product_list_filter_brand_id, #product_list_filter_unit_id, #product_list_filter_tax_id, #location_id, #active_state, #repair_model_id, #product_list_filter_sub_category_id',
+    function () {
+        if ($('#product_list_tab').hasClass('active')) {
+            product_table.ajax.reload();
+        }
+
+        if ($('#product_stock_report').hasClass('active')) {
+            stock_report_table.ajax.reload();
+        }
+    }
+);
