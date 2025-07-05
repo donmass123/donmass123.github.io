@@ -1,0 +1,83 @@
+public function getTodayDueCollections($user_id, $open_time, $close_time)
+    {
+        $business_id = request()->session()->get('user.business_id');
+
+        // COLLECTED TODAY - Payments made today that reduce existing due amounts
+        // This includes: payments on old invoices + additional payments on today's invoices
+        $today_due = DB::table('transaction_payments as tp')
+            ->join('transactions as t', 'tp.transaction_id', '=', 't.id')
+            ->whereDate('tp.paid_on', now()->toDateString()) // Payments made today
+            ->where('t.type', 'sell')
+            ->where('t.status', 'final')
+            ->where('t.business_id', $business_id)
+            // Exclude initial payments made at the time of sale creation
+            ->where(function($query) {
+                $query->whereRaw('DATE(tp.paid_on) != DATE(t.created_at)')  // Payment made on different day than sale
+                      ->orWhereRaw('tp.created_at > DATE_ADD(t.created_at, INTERVAL 5 MINUTE)'); // Or payment made more than 5 minutes after sale creation
+            })
+            ->select(
+                DB::raw('SUM(tp.amount) as total_due_collected'),
+                DB::raw('COUNT(DISTINCT tp.transaction_id) as total_due_transactions')
+            )
+            ->first();
+
+        // PENDING DUES TODAY - Transactions created today that still have pending amounts
+        $pending_dues = DB::table('transactions as t')
+            ->whereDate('t.transaction_date', now()->toDateString()) // Transactions created today
+            ->where('t.type', 'sell')
+            ->where('t.status', 'final')
+            ->where('t.business_id', $business_id)
+            ->where('t.payment_status', '!=', 'paid') // Not fully paid
+            ->select(
+                DB::raw('SUM(t.final_total - COALESCE(
+                    (SELECT SUM(amount) FROM transaction_payments WHERE transaction_id = t.id), 0
+                )) as total_pending_due'),
+                DB::raw('COUNT(t.id) as total_pending_transactions')
+            )
+            ->first();
+
+        // OVERDUE AMOUNTS - Previous days' unpaid transactions
+        $overdue_amounts = DB::table('transactions as t')
+            ->whereDate('t.transaction_date', '<', now()->toDateString()) // Previous days
+            ->where('t.type', 'sell')
+            ->where('t.status', 'final')
+            ->where('t.business_id', $business_id)
+            ->where('t.payment_status', '!=', 'paid') // Not fully paid
+            ->select(
+                DB::raw('SUM(t.final_total - COALESCE(
+                    (SELECT SUM(amount) FROM transaction_payments WHERE transaction_id = t.id), 0
+                )) as total_overdue'),
+                DB::raw('COUNT(t.id) as total_overdue_transactions')
+            )
+            ->first();
+
+        return [
+            'due_collected_today' => $today_due->total_due_collected ?? 0,
+            'due_transactions_count' => $today_due->total_due_transactions ?? 0,
+            'pending_due_today' => $pending_dues->total_pending_due ?? 0,
+            'pending_transactions_count' => $pending_dues->total_pending_transactions ?? 0,
+            'overdue_amount' => $overdue_amounts->total_overdue ?? 0,
+            'overdue_transactions_count' => $overdue_amounts->total_overdue_transactions ?? 0,
+        ];
+    }
+    public function getTodayDueCashCollections($register_id, $open_time, $close_time)
+    {
+        $business_id = request()->session()->get('user.business_id');
+
+        // Get cash payments made today for due collections
+        $due_cash_collections = DB::table('transaction_payments as tp')
+            ->join('transactions as t', 'tp.transaction_id', '=', 't.id')
+            ->whereDate('tp.paid_on', now()->toDateString()) // Payments made today
+            ->where('t.business_id', $business_id)
+            ->where('t.type', 'sell')
+            ->where('t.status', 'final')
+            ->where('tp.method', 'cash') // Only cash payments
+            // Exclude initial payments made at time of sale creation
+            ->where(function ($query) {
+                $query->whereRaw('DATE(tp.paid_on) != DATE(t.created_at)')  // Different day
+                    ->orWhereRaw('tp.created_at > DATE_ADD(t.created_at, INTERVAL 5 MINUTE)'); // Or 5+ minutes later
+            })
+            ->sum('tp.amount');
+
+        return $due_cash_collections ?? 0;
+    }

@@ -1,0 +1,253 @@
+<div class="modal-dialog modal-lg" role="document">
+  <div class="modal-content">
+    {!! Form::open(['url' => action([\App\Http\Controllers\CashRegisterController::class, 'postCloseRegister']),
+    'method' => 'post' ]) !!}
+
+    {!! Form::hidden('user_id', $register_details->user_id); !!}
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+          aria-hidden="true">&times;</span></button>
+      <h3 class="modal-title">@lang( 'cash_register.current_register' ) ( {{ \Carbon::createFromFormat('Y-m-d H:i:s',
+        $register_details->open_time)->format('jS M, Y h:i A') }} - {{ \Carbon::now()->format('jS M, Y h:i A') }})</h3>
+    </div>
+
+    <div class="modal-body">
+      @include('cash_register.payment_details')
+
+      <!-- Add Due Collections Section -->
+      @if(isset($details['due_collections']))
+      <hr class="no-print">
+      <div class="row no-print">
+        <div class="col-md-12">
+          <h4><i class="fa fa-clock-o"></i> @lang('lang_v1.due_collections_today')</h4>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="info-box bg-green due-collection-box">
+                <span class="info-box-icon due-collection-icon">
+                  <i class="fa fa-check-circle"></i>
+                </span>
+                <div class="info-box-content">
+                  <span class="info-box-text due-collection-title">@lang('lang_v1.collected_today')</span>
+                  <span class="info-box-number due-collection-amount">
+                    @format_currency($details['due_collections']['due_collected_today'])
+                  </span>
+                  <span class="progress-description due-collection-desc">
+                    {{ $details['due_collections']['due_transactions_count'] }} @lang('lang_v1.transactions')
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="info-box bg-yellow due-collection-box">
+                <span class="info-box-icon due-collection-icon">
+                  <i class="fa fa-exclamation-triangle"></i>
+                </span>
+                <div class="info-box-content">
+                  <span class="info-box-text due-collection-title">@lang('lang_v1.pending_due_today')</span>
+                  <span class="info-box-number due-collection-amount">
+                    @format_currency($details['due_collections']['pending_due_today'])
+                  </span>
+                  <span class="progress-description due-collection-desc">
+                    {{ $details['due_collections']['pending_transactions_count'] }} @lang('lang_v1.transactions')
+                  </span>
+                </div>
+              </div>
+            </div>
+            @if($details['due_collections']['overdue_amount'] > 0)
+            <div class="col-md-4">
+              <div class="info-box bg-red due-collection-box">
+                <span class="info-box-icon due-collection-icon">
+                  <i class="fa fa-exclamation-circle"></i>
+                </span>
+                <div class="info-box-content">
+                  <span class="info-box-text due-collection-title">@lang('lang_v1.overdue_amounts')</span>
+                  <span class="info-box-number due-collection-amount">
+                    @format_currency($details['due_collections']['overdue_amount'])
+                  </span>
+                  <span class="progress-description due-collection-desc">
+                    {{ $details['due_collections']['overdue_transactions_count'] }} @lang('lang_v1.transactions')
+                  </span>
+                </div>
+              </div>
+            </div>
+            @endif
+          </div>
+        </div>
+      </div>
+      @endif
+
+      <hr>
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="form-group">
+            {!! Form::label('closing_amount', __( 'cash_register.total_cash' ) . ':*') !!}
+            {!! Form::text('closing_amount', @num_format($register_details->cash_in_hand + $register_details->total_cash
+            - $register_details->total_cash_refund - $register_details->total_cash_expense), ['class' => 'form-control
+            input_number', 'required', 'placeholder' => __( 'cash_register.total_cash' ) ]); !!}
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group">
+            {!! Form::label('total_card_slips', __( 'cash_register.total_card_slips' ) . ':*') !!}
+            @show_tooltip(__('tooltip.total_card_slips'))
+            {!! Form::number('total_card_slips', $register_details->total_card_slips, ['class' => 'form-control',
+            'required', 'placeholder' => __( 'cash_register.total_card_slips' ), 'min' => 0 ]); !!}
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group">
+            {!! Form::label('total_cheques', __( 'cash_register.total_cheques' ) . ':*') !!}
+            @show_tooltip(__('tooltip.total_cheques'))
+            {!! Form::number('total_cheques', $register_details->total_cheques, ['class' => 'form-control', 'required',
+            'placeholder' => __( 'cash_register.total_cheques' ), 'min' => 0 ]); !!}
+          </div>
+        </div>
+        <hr>
+        <div class="col-md-8 col-sm-12">
+          <h3>@lang( 'lang_v1.cash_denominations' )</h3>
+          @if(!empty($pos_settings['cash_denominations']))
+          <table class="table table-slim">
+            <thead>
+              <tr>
+                <th width="20%" class="text-right">@lang('lang_v1.denomination')</th>
+                <th width="20%">&nbsp;</th>
+                <th width="20%" class="text-center">@lang('lang_v1.count')</th>
+                <th width="20%">&nbsp;</th>
+                <th width="20%" class="text-left">@lang('sale.subtotal')</th>
+              </tr>
+            </thead>
+            <tbody>
+              @foreach(explode(',', $pos_settings['cash_denominations']) as $dnm)
+              <tr>
+                <td class="text-right">{{$dnm}}</td>
+                <td class="text-center">X</td>
+                <td>{!! Form::number("denominations[$dnm]", null, ['class' => 'form-control cash_denomination input-sm',
+                  'min' => 0, 'data-denomination' => $dnm, 'style' => 'width: 100px; margin:auto;' ]); !!}</td>
+                <td class="text-center">=</td>
+                <td class="text-left">
+                  <span class="denomination_subtotal">0</span>
+                </td>
+              </tr>
+              @endforeach
+            </tbody>
+            <tfoot>
+              <tr>
+                <th colspan="4" class="text-center">@lang('sale.total')</th>
+                <td><span class="denomination_total">0</span></td>
+              </tr>
+            </tfoot>
+          </table>
+          @else
+          <p class="help-block">@lang('lang_v1.denomination_add_help_text')</p>
+          @endif
+        </div>
+        <hr>
+        <div class="col-sm-12">
+          <div class="form-group">
+            {!! Form::label('closing_note', __( 'cash_register.closing_note' ) . ':') !!}
+            {!! Form::textarea('closing_note', null, ['class' => 'form-control', 'placeholder' => __(
+            'cash_register.closing_note' ), 'rows' => 3 ]); !!}
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-6">
+          <b>@lang('report.user'):</b> {{ $register_details->user_name}}<br>
+          <b>@lang('business.email'):</b> {{ $register_details->email}}<br>
+          <b>@lang('business.business_location'):</b> {{ $register_details->location_name}}<br>
+        </div>
+        @if(!empty($register_details->closing_note))
+        <div class="col-xs-6">
+          <strong>@lang('cash_register.closing_note'):</strong><br>
+          {{$register_details->closing_note}}
+        </div>
+        @endif
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="tw-dw-btn tw-dw-btn-neutral tw-text-white" data-dismiss="modal">@lang(
+        'messages.cancel' )</button>
+      <button type="submit" class="tw-dw-btn tw-dw-btn-primary tw-text-white">@lang( 'cash_register.close_register'
+        )</button>
+    </div>
+    {!! Form::close() !!}
+  </div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
+
+<style type="text/css">
+  @media print {
+    .modal {
+      position: absolute;
+      left: 0;
+      top: 0;
+      margin: 0;
+      padding: 0;
+      overflow: visible !important;
+    }
+
+    .info-box {
+      border: 1px solid #ddd;
+      margin-bottom: 10px;
+      padding: 10px;
+    }
+
+    .info-box-icon {
+      display: none;
+    }
+  }
+
+  /* Due Collection Styling for Close Register Modal */
+  .due-collection-box {
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    position: relative;
+  }
+
+  .due-collection-icon {
+    background: rgba(255, 255, 255, 0.2) !important;
+    color: white !important;
+    display: block !important;
+    width: 70px !important;
+    height: 70px !important;
+    line-height: 70px !important;
+    text-align: center !important;
+    float: left !important;
+    font-size: 30px !important;
+    border-radius: 0 !important;
+  }
+
+  .due-collection-icon i {
+    color: white !important;
+    font-size: 30px !important;
+    display: inline-block !important;
+    vertical-align: middle !important;
+    line-height: normal !important;
+  }
+
+  .due-collection-title {
+    color: white !important;
+    font-weight: bold;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .due-collection-amount {
+    color: white !important;
+    font-weight: bold;
+    font-size: 24px;
+  }
+
+  .due-collection-desc {
+    color: rgba(255, 255, 255, 0.9) !important;
+    font-size: 12px;
+  }
+
+  /* Ensure proper spacing and layout */
+  .due-collection-box .info-box-content {
+    margin-left: 85px;
+    padding: 15px 10px;
+  }
+</style>

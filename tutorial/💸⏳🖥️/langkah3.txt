@@ -1,0 +1,11 @@
+return [
+    // ... existing entries ...
+
+    'due_collections_today' => 'Today\'s Due Collections',
+    'collected_today' => 'Collected Today',
+    'pending_due_today' => 'Pending Due Today',
+    'overdue_amounts' => 'Overdue Amounts',
+    'transactions' => 'Transactions',
+
+    // ... rest of your language entries ...
+];

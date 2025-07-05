@@ -1,0 +1,28 @@
+public function getCloseRegister($id = null)
+{
+    if (! auth()->user()->can('close_cash_register')) {
+        abort(403, 'Unauthorized action.');
+    }
+
+    $business_id = request()->session()->get('user.business_id');
+    $register_details = $this->cashRegisterUtil->getRegisterDetails($id);
+
+    $user_id = $register_details->user_id;
+    $open_time = $register_details['open_time'];
+    $close_time = \Carbon::now()->toDateTimeString();
+
+    $is_types_of_service_enabled = $this->moduleUtil->isModuleEnabled('types_of_service');
+
+    $details = $this->cashRegisterUtil->getRegisterTransactionDetails($user_id, $open_time, $close_time, $is_types_of_service_enabled);
+
+    // Add due collections data for close register modal too
+    $due_collections = $this->cashRegisterUtil->getTodayDueCollections($user_id, $open_time, $close_time);
+    $details['due_collections'] = $due_collections;
+
+    $payment_types = $this->cashRegisterUtil->payment_types($register_details->location_id, true, $business_id);
+
+    $pos_settings = ! empty(request()->session()->get('business.pos_settings')) ? json_decode(request()->session()->get('business.pos_settings'), true) : [];
+
+    return view('cash_register.close_register_modal')
+        ->with(compact('register_details', 'details', 'payment_types', 'pos_settings'));
+}

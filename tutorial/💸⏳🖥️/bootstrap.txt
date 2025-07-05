@@ -1,0 +1,8 @@
+<!-- Green for collected -->
+<div class="info-box bg-green due-collection-box">
+
+<!-- Yellow/Orange for pending -->
+<div class="info-box bg-yellow due-collection-box">
+
+<!-- Red for overdue -->
+<div class="info-box bg-red due-collection-box">

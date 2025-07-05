@@ -1,0 +1,5 @@
+<!-- Available alternatives -->
+<i class="fa fa-money"></i>          <!-- Money icon -->
+<i class="fa fa-clock-o"></i>        <!-- Clock icon -->
+<i class="fa fa-warning"></i>        <!-- Warning icon -->
+<i class="fa fa-calendar"></i>       <!-- Calendar icon -->
