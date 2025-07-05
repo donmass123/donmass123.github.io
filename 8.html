@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tutorial Point Of Sales</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="modal.css" />
+    <link rel="stylesheet" href="style1.css" />
+    <link rel="stylesheet" href="style3.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Panduan Integrasi Header Perintah Laravel</h1>
+        <h1>📚🔧🚀💻</h1>
+        <p>
+          Panduan komprehensif untuk menambahkan perintah pengoptimalan Laravel secara langsung ke header aplikasi Anda untuk akses cepat dan pemeliharaan sistem.
+        </p>
+      </header>
+
+      <div class="download-box">
+        <a
+          href="assets/ultimate-pos-filter.zip"
+          download
+          class="download-button"
+        >
+          ⬇️ Unduh File Contoh
+        </a>
+      </div>
+      <!-- HOME -->
+      <div class="home-button-wrapper">
+        <a href="index.html" class="home-button">🏠 Kembali ke Beranda</a>
+      </div>
+
+      <section>
+        <h2>Gambaran Umum</h2>
+        <p>Panduan ini akan membantu Anda mengimplementasikan menu tarik-turun yang nyaman di header aplikasi Anda yang memungkinkan administrator menjalankan perintah pengoptimalan Laravel yang umum tanpa mengakses baris perintah. Fitur ini meningkatkan produktivitas pengembang dan efisiensi pemeliharaan sistem.</p>
+      </section>
+
+      <section>
+        <h2>Apa yang akan Anda Bangun</h2>
+        <p>Menu tarik-turun header dengan perintah-perintah Laravel berikut ini:</p>
+        <ul>
+            <li><strong>Optimalkan Hapus</strong>: Menghapus semua cache konfigurasi, rute, tampilan, dan layanan yang dikompilasi</li>
+            <li><strong>Route Clear</strong>: Menghapus cache route</li>
+            <li><strong>Config Clear</strong>: Menghapus cache konfigurasi</li>
+            <li><strong>View Clear</strong>: Menghapus file tampilan yang dikompilasi</li>
+            <li><strong>Cache Clear</strong>: Menghapus cache aplikasi</li>
+            <li><strong>System Logs</strong>: Akses cepat ke penampil log</li>
+        </ul>
+        <div class="image-box">
+        <img
+          src="https://ultimate-pos-tutorials.vercel.app/assets/images/laravel-commands-002af81fb6cfac37d92c85e4a5315300.png"
+          alt="#" />
+        <p class="caption">Gambar: Gambaran Umum.</p>
+      </div>
+      <p>Menu tarik-turun yang telah selesai yang menunjukkan semua perintah pengoptimalan Laravel yang diintegrasikan ke dalam tarik-turun profil pengguna</p>
+      </section>
+
+      <section>
+        <h2>📁 Pohon Implementasi Lengkap</h2>
+        <ul class="tree">
+          <li>
+            <details open>
+              <summary>your-laravel-app/</summary>
+              <ul class="tree">
+                <li>
+                  <details>
+                    <summary>routes/</summary>
+                    <ul class="tree">
+                      <li class="file">
+                        web.php
+                        <span class="tag tag-add"
+                          >✅ Add 5 new command routes</span
+                        >
+                      </li>
+                    </ul>
+                  </details>
+                </li>
+                <li>
+                  <details>
+                    <summary>app/</summary>
+                    <ul class="tree">
+                      <li>
+                        <details>
+                          <summary>Http/</summary>
+                          <ul class="tree">
+                            <li>
+                              <details>
+                                <summary>Controllers/</summary>
+                                <ul class="tree">
+                                  <li class="file">
+                                    HomeController.php
+                                    <span class="tag tag-add"
+                                      >✅ Add 5 new methods</span
+                                    >
+                                  </li>
+                                </ul>
+                              </details>
+                            </li>
+                          </ul>
+                        </details>
+                      </li>
+                    </ul>
+                  </details>
+                </li>
+                <li>
+                  <details>
+                    <summary>resources/</summary>
+                    <ul class="tree">
+                      <li>
+                        <details>
+                          <summary>views/</summary>
+                          <ul class="tree">
+                            <li>
+                              <details>
+                                <summary>layouts/</summary>
+                                <ul class="tree">
+                                  <li>
+                                    <details>
+                                      <summary>partials/</summary>
+                                      <ul class="tree">
+                                        <li class="file">
+                                          header.blade.php
+                                          <span class="tag tag-add"
+                                            >✅ Update user dropdown menu</span
+                                          >
+                                        </li>
+                                      </ul>
+                                    </details>
+                                  </li>
+                                </ul>
+                              </details>
+                            </li>
+                          </ul>
+                        </details>
+                      </li>
+                    </ul>
+                  </details>
+                </li>
+              </ul>
+            </details>
+          </li>
+        </ul>
+        <h2>📋 File yang akan dimodifikasi:</h2>
+        <table class="file-changes">
+          <thead>
+            <tr>
+              <th>File</th>
+              <th>Changes</th>
+              <th>Lines Added</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>routes/web.php</code></td>
+              <td>Add 5 command routes</td>
+              <td>~8 lines</td>
+            </tr>
+            <tr>
+              <td><code>app/Http/Controllers/HomeController.php</code></td>
+              <td>Add 5 cache command methods</td>
+              <td>~50 lines</td>
+            </tr>
+            <tr>
+              <td>
+                <code>resources/views/layouts/partials/header.blade.php</code>
+              </td>
+              <td>Update user dropdown with admin commands</td>
+              <td>~100 lines</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>✅ Langkah 1: Aktifkan Sub-Kategori di Pengaturan Bisnis</h2>
+        <p>
+          <strong>Langkah pertama yang penting</strong>: Buka
+          <strong>/business/settings</strong> → bagian Produk dan pastikan
+          Sub-Kategori diaktifkan. Tanpa ini, menu tarik-turun akan
+          disembunyikan!
+        </p>
+      </section>
+
+      <section>
+        <h2>✅ Langkah 2: Tambahkan Dropdown Sub-Kategori ke Tampilan</h2>
+        <p>
+          Pada <strong>resources/views/product/index.blade.php</strong>, temukan
+          bagian filter kategori dan tambahkan kode ini tepat setelah menu
+          tarik-turun kategori:
+        </p>
+        <div class="url-buttons">
+          <button
+            class="view-modal-button"
+            data-url="tutorial/🔍📂🛍️/langkah2.txt"
+          >
+            resources/views/product/index.blade.php
+          </button>
+        </div>
+      </section>
+
+      <section>
+        <h2>✅ Langkah 3 – JavaScript Load Dinamis</h2>
+        <p>
+          Pada berkas yang sama, di dalam bagian
+          <strong>@section('javascript')</strong>, tambahkan:
+        </p>
+        <div class="url-buttons">
+          <button
+            class="view-modal-button"
+            data-url="tutorial/🔍📂🛍️/langkah3.txt"
+          >
+            @section('javascript')
+          </button>
+        </div>
+      </section>
+
+      <section>
+        <h2>✅ Langkah 4: Menambahkan Sub-Kategori ke DataTable Data Ajax</h2>
+        <p>
+          <strong>Penting</strong>: Pada file yang sama, temukan kode
+          inisialisasi DataTable dan tambahkan baris ini di bagian
+          <strong>data: function(d)</strong>:
+        </p>
+        <h3>Untuk Tabel Produk:</h3>
+        <pre><code>d.sub_category_id = $('#product_list_filter_sub_category_id').val();</code></pre>
+        <p>Tambahkan setelah baris category_id:</p>
+        <pre><code>
+            d.category_id = $('#product_list_filter_category_id').val();
+            d.sub_category_id = $('#product_list_filter_sub_category_id').val();
+        </code></pre>
+        <h3>Untuk Tabel Laporan Stok:</h3>
+        <pre><code>
+            d.sub_category_id = $('#product_list_filter_sub_category_id').val();
+        </code></pre>
+        <p>Tambahkan setelah baris category_id di DataTable laporan stok:</p>
+        <pre><code>
+            d.category_id = $('#product_list_filter_category_id').val();
+d.sub_category_id = $('#product_list_filter_sub_category_id').val();
+        </code></pre>
+      </section>
+
+      <section>
+        <h2>
+          ✅ Langkah 5: Tambahkan Filter Sub-Kategori untuk Mengubah Event
+        </h2>
+        <p>
+          <strong>Penting</strong>: Temukan pendengar peristiwa perubahan dan
+          tambahkan <strong>#product_list_filter_sub_category_id</strong> ke
+          pemilih:
+        </p>
+        <div class="url-buttons">
+          <button
+            class="view-modal-button"
+            data-url="tutorial/🔍📂🛍️/langkah5.txt"
+          >
+            #product_list_filter_sub_category_id
+          </button>
+        </div>
+        <div class="tip">
+          Masukkan ID ini ke dalam daftar event listener
+          <code>change</code> yang me-refresh tabel.
+        </div>
+      </section>
+
+      <section>
+        <h2>✅ Langkah 6: Perbarui Logika Controller</h2>
+        <p>
+          Di <strong>app/Http/Controllers/ProductController.php</strong>, pada
+          metode index(), tambahkan kode pemfilteran ini setelah filter
+          kategori:
+        </p>
+        <div class="url-buttons">
+          <button
+            class="view-modal-button"
+            data-url="tutorial/🔍📂🛍️/langkah6.txt"
+          >
+            app/Http/Controllers/ProductController.php
+          </button>
+        </div>
+      </section>
+
+      <section>
+        <h2>Menguji fitur</h2>
+        <ul>
+          <li>Mengaktifkan sub-kategori dalam pengaturan bisnis</li>
+          <li>Membuat kategori pengujian dengan sub-kategori</li>
+          <li>Menambahkan produk dengan penetapan sub-kategori yang berbeda</li>
+          <li>
+            Menguji pemfilteran - pilih kategori dan memverifikasi pemuatan
+            sub-kategori
+          </li>
+          <li>
+            Memverifikasi pemfilteran berfungsi - pilih sub-kategori dan periksa
+            hasilnya
+          </li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Mengatasi masalah</h2>
+        <p>Masalah-masalah Umum:</p>
+        <ul>
+          <li>
+            Menu tarik-turun tidak muncul: Periksa apakah sub-kategori
+            diaktifkan di pengaturan bisnis
+          </li>
+          <li>
+            Sub-kategori tidak dimuat: Verifikasi rute AJAX
+            /products/get_sub_categories yang ada
+          </li>
+          <li>
+            Pemfilteran tidak berfungsi: Pastikan kode pemfilteran pengontrol
+            ditambahkan dengan benar
+          </li>
+          <li>
+            Kesalahan JavaScript: Periksa konsol browser untuk mengetahui adanya
+            kesalahan jQuery atau sintaksis
+          </li>
+        </ul>
+        <div class="tip">
+          Selesai! Menu tarik-turun sub-kategori sekarang akan terisi secara
+          otomatis ketika kategori dipilih, dan daftar produk akan menyaringnya.
+        </div>
+      </section>
+
+      <footer>
+        <!-- HOME -->
+        <div class="home-button-wrapper">
+          <a href="index.html" class="home-button">🏠 Kembali ke Beranda</a>
+        </div>
+      </footer>
+    </div>
+    <div id="myModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <iframe
+          id="modalFrame"
+          src=""
+          frameborder="0"
+          style="width: 100%; height: 400px"
+        ></iframe>
+      </div>
+    </div>
+    <script src="scripts.js"></script>
+    <!-- Link ke file JavaScript -->
+  </body>
+</html>

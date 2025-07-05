@@ -1,0 +1,29 @@
+table.file-changes {
+    width: 80%;
+    margin: 30px auto;
+    border-collapse: collapse;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+table.file-changes th, table.file-changes td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+table.file-changes th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+table.file-changes tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+table.file-changes code {
+    background-color: #f4f4f4;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+}

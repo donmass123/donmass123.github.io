@@ -1,0 +1,79 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
+
+class HomeController extends Controller
+{
+    /**
+     * Clear all optimization caches (config, routes, views, compiled services)
+     * Equivalent to running: php artisan optimize:clear
+     */
+    public function optimizeClear()
+    {
+        try {
+            Artisan::call('optimize:clear');
+            return redirect()->back();
+        } catch (\Exception $e) {
+            return redirect()->back();
+        }
+    }
+
+    /**
+     * Clear route cache
+     * Equivalent to running: php artisan route:clear
+     */
+    public function routeClear()
+    {
+        try {
+            Artisan::call('route:clear');
+            return redirect()->back();
+        } catch (\Exception $e) {
+            return redirect()->back();
+        }
+    }
+
+    /**
+     * Clear configuration cache
+     * Equivalent to running: php artisan config:clear
+     */
+    public function configClear()
+    {
+        try {
+            Artisan::call('config:clear');
+            return redirect()->back();
+        } catch (\Exception $e) {
+            return redirect()->back();
+        }
+    }
+
+    /**
+     * Clear compiled view files
+     * Equivalent to running: php artisan view:clear
+     */
+    public function viewClear()
+    {
+        try {
+            Artisan::call('view:clear');
+            return redirect()->back();
+        } catch (\Exception $e) {
+            return redirect()->back();
+        }
+    }
+
+    /**
+     * Clear application cache
+     * Equivalent to running: php artisan cache:clear
+     */
+    public function cacheClear()
+    {
+        try {
+            Artisan::call('cache:clear');
+            return redirect()->back();
+        } catch (\Exception $e) {
+            return redirect()->back();
+        }
+    }
+}

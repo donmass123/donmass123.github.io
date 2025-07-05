@@ -1,0 +1,8 @@
+// Laravel Optimization Commands Routes
+Route::middleware(['setData', 'auth', 'SetSessionData', 'language', 'timezone', 'AdminSidebarMenu', 'CheckUserLogin'])->group(function () {
+    Route::get('/commands/optimize-clear', [HomeController::class, 'optimizeClear'])->name('commands.optimize.clear');
+    Route::get('/commands/route-clear', [HomeController::class, 'routeClear'])->name('commands.route.clear');
+    Route::get('/commands/config-clear', [HomeController::class, 'configClear'])->name('commands.config.clear');
+    Route::get('/commands/view-clear', [HomeController::class, 'viewClear'])->name('commands.view.clear');
+    Route::get('/commands/cache-clear', [HomeController::class, 'cacheClear'])->name('commands.cache.clear');
+});
