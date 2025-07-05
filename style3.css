@@ -1,7 +1,15 @@
+/* Wrapper agar tabel bisa discroll horizontal di layar kecil */
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    margin: 30px auto;
+    padding: 0 15px;
+}
+
 /* Base Styling */
 table.file-changes {
-    width: 80%;
-    margin: 30px auto;
+    width: 100%;
+    min-width: 600px;
     border-collapse: collapse;
     background-color: #fff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -12,6 +20,7 @@ table.file-changes td {
     padding: 12px;
     text-align: left;
     border-bottom: 1px solid #ddd;
+    white-space: nowrap; /* mencegah teks pecah di mobile */
 }
 
 table.file-changes th {
@@ -30,17 +39,11 @@ table.file-changes code {
     font-size: 0.9rem;
 }
 
-/* Responsiveness */
+/* Optional: Tambahan gaya di layar kecil agar nyaman */
 @media (max-width: 768px) {
-  .table-wrapper {
-    width: 100%;
-    overflow-x: auto;
-    margin: 20px auto;
-  }
-
-  table.file-changes {
-    width: 100%;
-    min-width: 600px;
-    margin: 0;
-  }
+    table.file-changes th,
+    table.file-changes td {
+        padding: 10px 8px;
+        font-size: 0.9rem;
+    }
 }
