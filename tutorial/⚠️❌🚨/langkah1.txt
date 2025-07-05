@@ -1,0 +1,30 @@
+-bash-4.2$ php artisan truncate:iniYearDb
+******************** Begin Process Truncate ********************
+2024-01-08 12:57:37
+Disabling Foreign key ckeck...
+---------------------------------------------------------------
+Step 1: truncate cash_registers & cash_register_transactions
+Step 2: truncate inventory & inventory_products
+Step 3: truncate purchase_lines
+Step 4: truncate stock_adjustment_lines
+Step 5: truncate transaction_sell_lines_purchase_lines
+Step 6: truncate transaction_sell_lines
+Step 7: truncate transaction_payments
+Step 8: truncate transactions
+
+¿Do you have to initialize payroll-essentials? (yes/no) [no]:
+> yes
+
+Begin Process Truncate Essentials *******************
+-----------------------------------------------------
+Step 9: truncate essentials_payroll_groups
+Step 10: truncate essentials_payroll_group_transactions
+--------------------END------------------------------
+End Process Truncate Essentials *********************
+
+---------------------------------------------------------------
+Step 91: variation_location_details.qty_available = 0
+Step 92: update reference_counts purchase, purchase_payment, expense
+sell_payment, stock_transfer, expense_payment, stock_adjustment, draft
+Enabling Foreign key ckeck...
+********************* END Process Truncate *********************
