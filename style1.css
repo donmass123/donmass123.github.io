@@ -1,36 +1,70 @@
 ul.tree {
-      list-style: none;
-      padding-left: 1rem;
-    }
-    ul.tree li {
-      position: relative;
-      margin: 0.4rem 0;
-    }
-    ul.tree li::before {
-      content: '📁';
-      margin-right: 0.5rem;
-    }
-    ul.tree li.file::before {
-      content: '📄';
-    }
-    li span.tag {
-      background-color: #4caf50;
-      color: white;
-      font-size: 0.75rem;
-      border-radius: 4px;
-      padding: 0 6px;
-      margin-left: 0.5rem;
-    }
-    li span.tag-add {
-      background-color: #03a9f4;
-    }
-    li span.tag-new {
-      background-color: #f44336;
-    }
-    details summary {
-      cursor: pointer;
-      font-weight: bold;
-    }
-    summary::marker {
-      color: #fff;
-    }
+  list-style: none;
+  padding-left: 1rem;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+ul.tree li {
+  position: relative;
+  margin: 0.4rem 0;
+  display: block;
+  max-width: 100%;
+  word-wrap: break-word;
+}
+
+ul.tree li::before {
+  content: '📁';
+  margin-right: 0.5rem;
+}
+
+ul.tree li.file::before {
+  content: '📄';
+}
+
+li span.tag {
+  background-color: #4caf50;
+  color: white;
+  font-size: 0.75rem;
+  border-radius: 4px;
+  padding: 0 6px;
+  margin-left: 0.5rem;
+  display: inline-block;
+  white-space: nowrap;
+}
+
+li span.tag-add {
+  background-color: #03a9f4;
+}
+
+li span.tag-new {
+  background-color: #f44336;
+}
+
+details summary {
+  cursor: pointer;
+  font-weight: bold;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+summary::marker {
+  color: #fff;
+}
+
+/* RESPONSIVE STYLING */
+@media (max-width: 768px) {
+  ul.tree {
+    padding-left: 0.5rem;
+    font-size: 0.9rem;
+  }
+
+  li span.tag {
+    font-size: 0.65rem;
+    padding: 0 4px;
+  }
+
+  details summary {
+    font-size: 1rem;
+  }
+}
