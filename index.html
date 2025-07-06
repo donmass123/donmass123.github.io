@@ -1,218 +1,274 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Point Of Sales Tutorial</title>
-        <link rel="stylesheet" href="css/home.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Rocket Launch</title>
+  <style>
+    *, *:before, *:after { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 0;
+      background: #1d1d1d;
+      overflow: hidden;
+      font-family: 'Poppins', sans-serif;
+    }
 
+    /* =======================
+       RESPONSIVE ROOT SCALE
+       ======================= */
+    :root {
+      --rocket-scale: 1;
+      --title-size: 3rem;
+      --btn-fsize: 1.2rem;
+    }
+
+    @media (max-width: 1199.98px) {
+      :root { --rocket-scale: .85; --title-size: 2.6rem; --btn-fsize: 1.1rem; }
+    }
+    @media (max-width: 991.98px) {
+      :root { --rocket-scale: .7; --title-size: 2.2rem; --btn-fsize: 1rem; }
+    }
+    @media (max-width: 767.98px) {
+      :root { --rocket-scale: .55; --title-size: 1.9rem; --btn-fsize: .9rem; }
+    }
+    @media (max-width: 575.98px) {
+      :root { --rocket-scale: .45; --title-size: 1.6rem; --btn-fsize: .85rem; }
+    }
+
+    h1#title {
+      text-align: center;
+      font-size: var(--title-size);
+      color: #fff;
+      margin-top: 50px;
+      position: relative;
+      z-index: 100;
+      transition: 0.3s ease;
+    }
+
+    #startBtn {
+      padding: calc(0.6rem * var(--rocket-scale)) calc(2rem * var(--rocket-scale));
+      font-size: var(--btn-fsize);
+      border: none;
+      border-radius: 50px;
+      background: #f94144;
+      color: #fff;
+      cursor: pointer;
+      margin: 2rem auto;
+      display: block;
+      z-index: 100;
+      position: relative;
+      transition: 0.3s ease;
+    }
+
+    .roket-container {
+      display: none;
+      width: 220px;
+      height: 380px;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%) scale(var(--rocket-scale)) rotate(45deg);
+      transform-origin: center;
+      animation: vibration 0.2s infinite;
+      z-index: 10;
+    }
+
+    @keyframes vibration {
+      0%   { transform: translate(-50%, -50%) rotate(45deg); }
+      50%  { transform: translate(-49%, -51%) rotate(45deg); }
+      100% { transform: translate(-50%, -50%) rotate(45deg); }
+    }
+
+    .capsule { width: 111px; height: 154px; position: absolute; left: 46px; top: 5px; overflow: hidden; }
+    .capsule .top {
+      position: absolute;
+      left: 0; width: 0; height: 0;
+      border-bottom: 62px solid #f3f3f3;
+      border-left: 56px solid transparent;
+      border-right: 56px solid transparent;
+    }
+    .capsule .top:after {
+      content: ''; position: absolute; left: 25px; top: -14px;
+      border-bottom: 84px solid #1d1d1d;
+      border-right: 156px solid transparent;
+      transform: skew(42deg);
+    }
+    .capsule .top .shadow {
+      position: absolute;
+      border-bottom: 90px solid #e0e0e0;
+      border-left: 20px solid transparent;
+      border-right: 80px solid transparent;
+      transform: skew(25deg);
+    }
+    .capsule .base {
+      position: absolute; left: 0; top: 62px;
+      width: 112px; height: 99px;
+      background: linear-gradient(to right, #f3f3f3 63%, #e0e0e0 63%);
+      z-index: 110;
+    }
+
+    .wing-left {
+      position: absolute; left: 16px; top: 82px;
+      border-right: 38px solid #ff0000;
+      border-bottom: 19px solid transparent;
+      border-top: 21px solid transparent;
+      transform: rotate(5deg);
+    }
+    .wing-left:after {
+      content: ''; position: absolute; bottom: -50px;
+      border-top: 20px solid transparent;
+      border-right: 50px solid #1d1d1d;
+      border-bottom: 50px solid transparent;
+    }
+
+    .wing-right {
+      position: absolute; top: 67px; right: 30px;
+      border-right: 40px solid #ff0000;
+      border-bottom: 15px solid transparent;
+    }
+    .wing-right:after {
+      content: ''; position: absolute; top: -25px; left: -50px;
+      border-top: 23px solid transparent;
+      border-right: 68px solid #1d1d1d;
+      border-bottom: 45px solid transparent;
+    }
+
+    .tail {
+      position: absolute;
+      top: 153px; left: 51px;
+      border-top: 23px solid #ff0000;
+      border-right: 8px solid transparent;
+      border-left: 9px solid transparent;
+    }
+
+    .window-big {
+      width: 70px; height: 70px;
+      background-color: #ff0000;
+      border-radius: 50%;
+      position: absolute;
+      top: 57px; left: 66px;
+      z-index: 120;
+    }
+
+    .window-small {
+      width: 44px; height: 44px;
+      background: #272425 url("https://i.imgur.com/IH0d5Ox.png");
+      background-size: cover;
+      position: absolute;
+      left: 79px; top: 70px;
+      z-index: 130;
+      border-radius: 50%;
+    }
+
+    .fire-1, .fire-2, .fire-3, .fire-4 {
+      position: absolute;
+      background: linear-gradient(135deg, #ef8832 50%, #e82134 50%);
+      z-index: 90;
+    }
+
+    .fire-1 {
+      left: 64px; top: 169px;
+      width: 70px; height: 70px;
+      transform: rotate(-40deg) skew(1deg, -11deg);
+      animation: main_fire 0.1s ease-in infinite;
+    }
+
+    .fire-2 {
+      left: 63px; top: 230px;
+      width: 33px; height: 33px;
+      transform: rotate(-33deg) skew(0deg, -30deg);
+      animation: fire2 0.3s ease-in infinite;
+    }
+
+    .fire-3 {
+      left: 53px; top: 196px;
+      width: 22px; height: 22px;
+      transform: rotate(-33deg) skew(0deg, -30deg);
+      animation: fire2 0.3s ease-in infinite;
+    }
+
+    .fire-4 {
+      left: 126px; top: 200px;
+      width: 22px; height: 22px;
+      transform: rotate(-33deg) skew(0deg, -30deg);
+      animation: fire2 0.3s ease-in infinite 0.2s;
+    }
+
+    @keyframes main_fire {
+      0%   {transform: translate(0, 5px) scale(1.1,1) rotate(-33deg) skew(0deg, -30deg);}
+      100% {transform: translate(0, 0) scale(1.1,2) rotate(-33deg) skew(0deg, -30deg);}
+    }
+
+    @keyframes fire2 {
+      0%   {transform: translate(0, -10px) scale(1); opacity:1;}
+      100% {transform: translate(0, 50px) scale(0.7); opacity:0;}
+    }
+  </style>
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <h1>🚀 Tutorial Point Of Sales</h1>
-    </header>
 
-    <!-- Bubble Menu -->
-    <div class="bubble-menu" onclick="toggleMenu()">☰</div>
+<h1 id="title">ARE U READY?</h1>
+<button id="startBtn">Start</button>
 
-    <!-- Navigation -->
-    <nav>
-        <ul>
-            <li><a href="#welcome">🚀 Selamat Datang</a></li>
-            <li><a href="#tutorial">📍 Tutorial Point Of Sales</a></li>
-            <li><a href="#">✨ Daftar File Kostum</a></li>
-            <li><a href="#modul">✨ Modul Terbaru</a></li>
-            <li><a href="#mengaktifkan">🌟 Mengaktifkan Module</a></li>
-            <li><a href="#dokumen">🎨 Dokumen Tutorial</a></li>
-        </ul>
-    </nav>
+<!-- Roket -->
+<div class="roket-container" id="roket">
+  <div class="wing-left"></div>
+  <div class="wing-right"></div>
+  <div class="tail"></div>
+  <div class="capsule">
+    <div class="top"><div class="shadow"></div></div>
+    <div class="base"></div>
+  </div>
+  <div class="window-big"></div>
+  <div class="window-small"></div>
+  <div class="fire-1"></div>
+  <div class="fire-2"></div>
+  <div class="fire-3"></div>
+  <div class="fire-4"></div>
+</div>
 
-    <section id="tutorial">
-        <h2>📍 Tutorial Point Of Sales</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>📑 Halaman</th>
-                    <th>🛠 Fitur</th>
-                    <th>📊 Level</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><a href="1.html">Menambahkan Filter Sub-Kategori ke Indeks Produk di POS</a></td>
-                    <td>🔍 filter produk berdasarkan sub-kategori</td>
-                    <td>Pemula</td>
-                </tr>
-                <tr>
-                    <td><a href="2.html">Peningkatan Filter Laporan Stok</a></td>
-                    <td>📊 Pelacakan dan pelaporan stok yang lebih baik</td>
-                    <td>Menengah</td>
-                </tr>
-                <tr>
-                    <td><a href="3.html">Pencetakan Label yang Disempurnakan untuk POS</a></td>
-                    <td>🏷️ Pencetakan label yang lebih efisien</td>
-                    <td>Menengah</td>
-                </tr>
-                <tr>
-                    <td><a href="4.html">Fitur Penagihan Jatuh Tempo</a></td>
-                    <td>💵 Manajemen penagihan jatuh tempo yang lebih baik</td>
-                    <td>Menengah</td>
-                </tr>
-                <tr>
-                    <td><a href="5.html">Ukuran Db yang besar di POS​</a></td>
-                    <td>📈 Performa yang dioptimalkan dengan penanganan data yang besar</td>
-                    <td>Pemula</td>
-                </tr>
-                <tr>
-                    <td><a href="6.html">Hapus Transaksi, Produk, Inventaris</a></td>
-                    <td>🗑️ Sistem penghapusan data yang efisien</td>
-                    <td>Bahaya</td>
-                </tr>
-                <tr>
-                    <td><a href="7.html">Panduan Implementasi Modal Tambah Produk Cepat</a></td>
-                    <td>🛒 Modal tambah produk cepat untuk efisiensi</td>
-                    <td>Menengah</td>
-                </tr>
-                <tr>
-                    <td><a href="8.html">Perintah Admin untuk POS</a></td>
-                    <td>🛠 Perintah admin untuk manajemen sistem</td>
-                    <td>Menengah</td>
-            </tbody>
-        </table>
-    </section>
+<!-- GSAP -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script>
+  const btn = document.getElementById('startBtn');
+  const title = document.getElementById('title');
+  const rocket = document.getElementById('roket');
 
-    <section id="kostum">
-        <h2>✨ Daftar File Kostum</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>📑 Nama File</th>
-                    <th>🛠 Link Download</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Background Login File</td>
-                    <td><a href="https://drive.google.com/file/d/1LWjHGvmYsvEbsMq-6U64RnvT_qFaFc6w/view?usp=sharing">🔍 Download File</a></td>
-                </tr>
-                <tr>
-                    <td>Kostum Barcode dan Label</td>
-                    <td><a href="https://drive.google.com/file/d/1KYcL6IuSWVZDR-figEbOIxSijf6cnlGn/view?usp=sharing">🔍 Download File</a></td>
-                </tr>
-                <tr>
-                    <td>Kostum Tanggal `pos/public/js/common.js`</td>
-                    <td><a href="https://drive.google.com/drive/folders/1k-fc5hVEOqwfDb-qdO4Y8h006XR7jA4j?usp=drive_link">🔍 Download Folder</a></td>
-                </tr>
-                <tr>
-                    <td>Kostum Tambah dan Edit</td>
-                    <td><a href="https://drive.google.com/file/d/1VADZpKrLUVslkOiXwwQY4GPC45pqIbn4/view?usp=sharing">🔍 Download File</a></td>
-                </tr>
-                <tr>
-                    <td>Huge Db Size in Ultimate POS</td>
-                    <td>🔍 (tidak ada link)</td>
-                </tr>
-                <tr>
-                    <td>Delete Transaction, Product, Inventory</td>
-                    <td>🔍 (tidak ada link)</td>
-                </tr>
-            </tbody>
-        </table>
-    </section>
+  btn.addEventListener('click', () => {
+    btn.disabled = true;
 
-    <section id="modul">
-        <h2>✨ Modul Terbaru</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>📑 Nama File</th>
-                    <th>🛠 Link Download</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Catalog</td>
-                    <td><a href="https://drive.google.com/file/d/1fsafNy1r-j7lvW7iXvyjUavJiSKhFt5E/view?usp=sharing">🔍 Download File</a></td>
-                </tr>
-                <tr>
-                    <td>Inventory</td>
-                    <td><a href="https://drive.google.com/file/d/1BNZWbVEdrOsv2eaIHtB-Jin9ODYKeuHr/view?usp=sharing">🔍 Download File</a></td>
-                </tr>
-                <tr>
-                    <td>Whatapps</td>
-                    <td><a href="https://drive.google.com/file/d/1tBZodbDvRsZE81g7mYd5tLJ0lFxuPiLH/view?usp=sharing">🔍 Download Folder</a></td>
-                </tr>
-                <tr>
-                    <td>Asset</td>
-                    <td><a href="https://drive.google.com/file/d/19JmP4XQKfVamkRoBsp01OQipvS4H7KYl/view?usp=drive_link">🔍 Download File</a></td>
-                </tr>
-                <tr>
-                    <td>Laporan penuaan</td>
-                    <td><a href="https://drive.google.com/file/d/1E2U6GK5-kFT1wm_D9d0LgetQeuNnLMIL/view?usp=drive_link">🔍 Download File</a></td>
-                </tr>
-                <tr>
-                    <td>API</td>
-                    <td><a href="https://drive.google.com/file/d/1q4dpSlthykEtrFVqPPK1rimBabrrKAuS/view?usp=drive_link">🔍 Download File</a></td>
-                </tr>
-            </tbody>
-        </table>
-    </section>
+    gsap.to(title, {
+      duration: 0.6,
+      y: -100,
+      scale: 0.2,
+      opacity: 0,
+      ease: 'back.in'
+    });
 
-    <section id="mengaktifkan">
-        <h2>🌟 Mengaktifkan Module</h2>
-        <pre>
-        {
-            "Essentials": true,
-            "Accounting": true,
-            "AssetManagement": true,
-            "Cms": true,
-            "Connector": true,
-            "Crm": true,
-            "Ecommerce": true,
-            "FieldForce": true,
-            "Manufacturing": true,
-            "ProductCatalogue": true,
-            "Project": true,
-            "Repair": true,
-            "Spreadsheet": true,
-            "Superadmin": true,
-            "Woocommerce": true,
-            "AiAssistance": true,
-            "Hms": true,
-            "InboxReport": true,
-            "CustomDashboard": true,
-            "Gym": true,
-            "Installment": true,
-            "AgeingReport": true,
-            "PosCustom": true,
-            "Inventory": true,
-            "WhatsApp": true,
-            "InventoryManagement": true,
-            "Partners": true,
-            "Restaurant": true,
-            "ZatcaIntegrationKsa": true
-        }
-        </pre>
-    </section>
+    gsap.to(btn, {
+      duration: 0.5,
+      scale: 0,
+      opacity: 0,
+      ease: 'power2.in',
+      onComplete: () => {
+        rocket.style.display = 'block';
+        launchRocket();
+      }
+    });
+  });
 
-    <section id="dokumen">
-        <h2>🎨 Dokumen Tutorial</h2>
-        <a href="tutorial.html">
-            <img src="https://as1.ftcdn.net/jpg/00/30/14/94/1000_F_30149473_uM8rqqkj6aGbnkINikbbbVSOwa4jsTed.jpg" alt="Deskripsi Gambar">
-        </a>
-    </section>
+  function launchRocket() {
+    gsap.to(rocket, {
+      duration: 2.4,
+      y: -window.innerHeight - 400,
+      ease: 'power4.inOut',
+      onComplete: () => {
+        window.location.href = "main.html";
+      }
+    });
+  }
+</script>
 
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2025 Tutorial Point Of Sales</p>
-    </footer>
-
-    <!-- JavaScript untuk toggle menu -->
-    <script>
-        function toggleMenu() {
-            const nav = document.querySelector('nav');
-            nav.classList.toggle('active');
-        }
-    </script>
 </body>
 </html>
