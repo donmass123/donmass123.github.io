@@ -81,10 +81,10 @@ section h2 {
   font-weight: 600;
 }
 
-ul {
+/* ul {
   padding-left: 20px;
   margin-bottom: 20px;
-}
+} */
 
 pre {
   background: var(--code-bg);
@@ -324,5 +324,167 @@ strong {
     font-size: 15px;
     padding: 12px;
     border-radius: 8px;
+  }
+}
+ul {
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+li {
+  position: relative;
+  padding: 12px 18px 12px 36px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  color: var(--text);
+  font-size: 17px;
+  line-height: 1.6;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  transition: background-color 0.3s ease;
+}
+
+/* Bullet normal tapi lebih elegan */
+li::before {
+  content: "•";
+  position: absolute;
+  left: 16px;
+  top: 14px;
+  font-size: 20px;
+  color: var(--accent);
+}
+
+/* Hover effect lembut */
+li:hover {
+  background-color: #f9f9f9;
+}
+
+@media (max-width: 768px) {
+  li {
+    font-size: 16px;
+    padding: 11px 16px 11px 32px;
+  }
+
+  li::before {
+    font-size: 18px;
+    top: 13px;
+    left: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  li {
+    font-size: 15px;
+    padding: 10px 14px 10px 30px;
+  }
+
+  li::before {
+    font-size: 16px;
+    top: 12px;
+    left: 12px;
+  }
+}
+/* h1: Headline utama */
+h1 {
+  font-family: 'Roboto', sans-serif;
+  font-size: 38px;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 20px;
+  line-height: 1.3;
+  letter-spacing: 1px;
+}
+
+/* h2: Subjudul */
+h2 {
+  font-family: 'Roboto', sans-serif;
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--secondary);
+  margin-bottom: 16px;
+  line-height: 1.4;
+  position: relative;
+  padding-left: 10px;
+}
+
+h2::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 8px;
+  width: 4px;
+  height: 75%;
+  background-color: var(--accent);
+  border-radius: 2px;
+}
+
+/* h3: Judul kecil */
+h3 {
+  font-family: 'Roboto', sans-serif;
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: 12px;
+  line-height: 1.5;
+  position: relative;
+  padding-left: 18px;
+}
+
+h3::before {
+  content: '▹';
+  position: absolute;
+  left: 0;
+  top: 1px;
+  color: var(--accent);
+  font-size: 18px;
+}
+
+/* p: paragraf */
+p {
+  font-family: 'Roboto', sans-serif;
+  font-size: 17px;
+  color: var(--text);
+  line-height: 1.7;
+  margin-bottom: 20px;
+  max-width: 800px;
+}
+
+/* Responsif */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 32px;
+  }
+
+  h2 {
+    font-size: 24px;
+  }
+
+  h3 {
+    font-size: 20px;
+  }
+
+  p {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: 28px;
+  }
+
+  h2 {
+    font-size: 22px;
+  }
+
+  h3 {
+    font-size: 18px;
+  }
+
+  p {
+    font-size: 15.5px;
   }
 }
