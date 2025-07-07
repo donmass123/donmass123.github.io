@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tutorial Point Of Sales</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/modal.css" />
+
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Menambahkan Filter Sub-Kategori ke Indeks Produk di POS</h1>
+        <h1>🔍📂🛍️</h1>
+        <p>
+          Dalam tutorial ini, kita akan menambahkan filter sub-kategori dinamis
+          ke indeks produk yang secara otomatis terisi berdasarkan kategori yang
+          dipilih.
+        </p>
+      </header>
+
+      <div class="download-box">
+        <a
+          href="https://drive.google.com/drive/folders/1Z4tG3FMdMa3oZ3Nk9oqAp8ydWOlFcDS8?usp=drive_link"
+          download
+          class="download-button"
+        >
+          ⬇️ Unduh File Contoh
+        </a>
+      </div>
+      <!-- HOME -->
+      <div class="home-button-wrapper">
+  <a href="main.html" class="home-button">🏠 Kembali ke Beranda</a>
+</div>
+
+
+      <section>
+        <h2>🖼️ Prasyarat</h2>
+        <ul>
+          <li>Ultimate POS sudah terinstal dan terkonfigurasi</li>
+          <li>Pemahaman dasar tentang template Laravel dan Blade</li>
+          <li>Akses database untuk pengujian</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>✅ Langkah 1: Aktifkan Sub-Kategori di Pengaturan Bisnis</h2>
+        <p>
+          <strong>Langkah pertama yang penting</strong>: Buka
+          <strong>/business/settings</strong> → bagian Produk dan pastikan
+          Sub-Kategori diaktifkan. Tanpa ini, menu tarik-turun akan
+          disembunyikan!
+        </p>
+      </section>
+
+      <footer>
+        <!-- HOME -->
+        <div class="home-button-wrapper">
+          <a href="main.html" class="home-button">🏠 Kembali ke Beranda</a>
+        </div>
+      </footer>
+    </div>
+    <div id="myModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <iframe
+          id="modalFrame"
+          src=""
+          frameborder="0"
+          style="width: 100%; height: 400px"
+        ></iframe>
+      </div>
+    </div>
+    <script src="scripts.js"></script>
+    <!-- Link ke file JavaScript -->
+  </body>
+</html>

@@ -1,0 +1,394 @@
+<script>
+$(document).ready(function(){
+    // Configuration object for easy customization
+    const printConfig = {
+        title: '{{ __("lang_v1.stock_need") }}',
+        columns: {
+            product: {
+                index: 0,
+                label: '{{ __("sale.product") }}',
+                enabled: true
+            },
+            location: {
+                index: 1,
+                label: '{{ __("business.location") }}',
+                enabled: true
+            },
+            currentStock: {
+                index: 2,
+                label: '{{ __("report.current_stock") }}',
+                enabled: true
+            },
+            alertQuantity: {
+                index: 3,
+                label: '{{ __("product.alert_quantity") }}',
+                enabled: true
+            },
+            expectedStock: {
+                index: 4,
+                label: '{{ __("lang_v1.expected_stock") }}',
+                enabled: true
+            },
+            stockNeed: {
+                index: 5,
+                label: '{{ __("lang_v1.stock_need") }}',
+                enabled: true
+            }
+        },
+        styles: {
+            pageMargin: '10mm',
+            fontSize: '12px',
+            headerFontSize: '16px',
+            tableFontSize: '11px'
+        }
+    };
+
+    $('#print_alerte_de_stock').click(function(){
+        // Validate table data
+        if (!validateTableData()) {
+            return;
+        }
+
+        // Show loading state
+        const originalText = $(this).html();
+        $(this).html('<i class="fa fa-spinner fa-spin mr-1"></i> {{ __("lang_v1.processing") }}...');
+        $(this).prop('disabled', true);
+
+        // Generate print window
+        setTimeout(() => {
+            generatePrintWindow();
+
+            // Reset button state
+            $(this).html(originalText);
+            $(this).prop('disabled', false);
+        }, 500);
+    });
+
+    function validateTableData() {
+        const tableBody = $('#stock_alert_table tbody');
+
+        if (tableBody.length === 0) {
+            alert('{{ __("lang_v1.table_not_found") }}');
+            return false;
+        }
+
+        const rows = tableBody.find('tr');
+        if (rows.length === 0 || rows.find('td:contains("{{ __("lang_v1.no_data_available") }}")').length > 0) {
+            alert('{{ __("lang_v1.no_data_available_print") }}');
+            return false;
+        }
+
+        return true;
+    }
+
+    function generatePrintWindow() {
+        const printWindow = window.open('', '_blank', 'width=800,height=600');
+
+        if (!printWindow) {
+            alert('{{ __("lang_v1.popup_blocked") }}');
+            return;
+        }
+
+        const printContent = generatePrintContent();
+        printWindow.document.write(printContent);
+        printWindow.document.close();
+
+        printWindow.onload = function() {
+            printWindow.focus();
+            printWindow.print();
+        };
+    }
+
+    function generatePrintContent() {
+        const currentDate = moment().format('LLLL');
+        const businessName = '{{ session("business.name") }}';
+        const selectedLocation = getSelectedLocation();
+
+        return `
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <meta charset="utf-8">
+                <title>${printConfig.title}</title>
+                ${generatePrintStyles()}
+            </head>
+            <body>
+                <div class="print-container">
+                    ${generatePrintHeader(businessName, selectedLocation)}
+                    ${generatePrintTable()}
+                    ${generatePrintFooter(currentDate)}
+                </div>
+            </body>
+            </html>
+        `;
+    }
+
+    function generatePrintStyles() {
+        return `
+            <style>
+                @media print {
+                    @page {
+                        margin: ${printConfig.styles.pageMargin};
+                        size: A4;
+                    }
+                    body {
+                        -webkit-print-color-adjust: exact !important;
+                        color-adjust: exact !important;
+                    }
+                }
+
+                body {
+                    margin: 0;
+                    padding: 0;
+                    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                    font-size: ${printConfig.styles.fontSize};
+                    line-height: 1.4;
+                    color: #333;
+                }
+
+                .print-container {
+                    max-width: 100%;
+                    margin: 0 auto;
+                    padding: 20px;
+                }
+
+                .print-header {
+                    text-align: center;
+                    margin-bottom: 30px;
+                    border-bottom: 2px solid #2563eb;
+                    padding-bottom: 15px;
+                }
+
+                .business-name {
+                    font-size: 20px;
+                    font-weight: bold;
+                    color: #1e40af;
+                    margin-bottom: 5px;
+                }
+
+                .report-title {
+                    font-size: ${printConfig.styles.headerFontSize};
+                    font-weight: bold;
+                    color: #374151;
+                    margin: 10px 0 5px 0;
+                }
+
+                .report-subtitle {
+                    font-size: 12px;
+                    color: #6b7280;
+                    margin-bottom: 15px;
+                }
+
+                .report-filters {
+                    font-size: 11px;
+                    color: #4b5563;
+                    margin-top: 10px;
+                }
+
+                table {
+                    width: 100%;
+                    border-collapse: collapse;
+                    margin: 20px 0;
+                    background: white;
+                    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+                }
+
+                th {
+                    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+                    color: white;
+                    font-weight: 600;
+                    padding: 12px 8px;
+                    text-align: left;
+                    font-size: ${printConfig.styles.tableFontSize};
+                    border: 1px solid #1e40af;
+                    text-transform: uppercase;
+                    letter-spacing: 0.5px;
+                }
+
+                td {
+                    padding: 10px 8px;
+                    border: 1px solid #e5e7eb;
+                    font-size: ${printConfig.styles.tableFontSize};
+                    vertical-align: top;
+                }
+
+                tbody tr:nth-child(even) {
+                    background-color: #f8fafc;
+                }
+
+                tbody tr:hover {
+                    background-color: #e0f2fe;
+                }
+
+                .stock-need-highlight {
+                    font-weight: bold;
+                    color: #dc2626;
+                }
+
+                .print-footer {
+                    margin-top: 30px;
+                    padding-top: 15px;
+                    border-top: 1px solid #e5e7eb;
+                    text-align: center;
+                    font-size: 10px;
+                    color: #6b7280;
+                }
+
+                .summary-stats {
+                    margin: 20px 0;
+                    padding: 15px;
+                    background: #f1f5f9;
+                    border-radius: 8px;
+                    border: 1px solid #cbd5e1;
+                }
+
+                .stat-item {
+                    display: inline-block;
+                    margin-right: 30px;
+                    font-size: 11px;
+                }
+
+                .stat-label {
+                    font-weight: bold;
+                    color: #475569;
+                }
+
+                .stat-value {
+                    color: #1e40af;
+                    font-weight: bold;
+                }
+            </style>
+        `;
+    }
+
+    function generatePrintHeader(businessName, selectedLocation) {
+        const currentDate = moment().format('MMMM DD, YYYY');
+        const currentTime = moment().format('h:mm A');
+
+        // Company Logo Code - Add this section
+        const logoUrl = '{{ asset("uploads/business_logos/" . session("business.logo")) }}';
+        const logoHtml = logoUrl && '{{ session("business.logo") }}' ?
+            `<img src="${logoUrl}" alt="Company Logo" style="max-height: 60px; margin-bottom: 10px;">` : '';
+
+        return `
+            <div class="print-header">
+                ${logoHtml}
+                <div class="business-name">${businessName}</div>
+                <div class="report-title">${printConfig.title}</div>
+                <div class="report-subtitle">{{ __('lang_v1.generated_on') }}: ${currentDate} {{ __('lang_v1.at') }} ${currentTime}</div>
+                ${selectedLocation ? `<div class="report-filters">{{ __('business.location') }}: ${selectedLocation}</div>` : ''}
+            </div>
+        `;
+    }
+
+    function generatePrintTable() {
+        let tableHtml = '<table><thead><tr>';
+
+        // Generate table headers for enabled columns
+        Object.keys(printConfig.columns).forEach(key => {
+            const column = printConfig.columns[key];
+            if (column.enabled) {
+                tableHtml += `<th>${column.label}</th>`;
+            }
+        });
+
+        tableHtml += '</tr></thead><tbody>';
+
+        // Generate table rows
+        let totalProducts = 0;
+        let totalStockNeed = 0;
+        let totalCurrentStock = 0;
+        let totalAlertQuantity = 0;
+        let criticalItems = 0;
+
+        $('#stock_alert_table tbody tr').each(function() {
+            const row = $(this);
+            if (row.find('td').length > 0) {
+                tableHtml += '<tr>';
+
+                Object.keys(printConfig.columns).forEach(key => {
+                    const column = printConfig.columns[key];
+                    if (column.enabled) {
+                        let cellContent = row.find('td').eq(column.index).html() || '';
+
+                        // Extract numeric values for calculations
+                        let numericValue = 0;
+                        if (cellContent.includes('<span')) {
+                            const match = cellContent.match(/>([\d.,-]+)</);
+                            if (match) {
+                                numericValue = parseFloat(match[1].replace(/[^\d.-]/g, '')) || 0;
+                            }
+                        } else {
+                            numericValue = parseFloat(cellContent.replace(/[^\d.-]/g, '')) || 0;
+                        }
+
+                        // Special formatting and calculations based on column
+                        if (key === 'stockNeed') {
+                            totalStockNeed += numericValue;
+                            if (numericValue > 0) criticalItems++;
+                            cellContent = `<span class="stock-need-highlight">${cellContent}</span>`;
+                        } else if (key === 'currentStock') {
+                            totalCurrentStock += numericValue;
+                        } else if (key === 'alertQuantity') {
+                            totalAlertQuantity += numericValue;
+                        }
+
+                        tableHtml += `<td>${cellContent}</td>`;
+                    }
+                });
+
+                tableHtml += '</tr>';
+                totalProducts++;
+            }
+        });
+
+        tableHtml += '</tbody></table>';
+
+        // Add enhanced summary statistics
+        const summaryHtml = `
+            <div class="summary-stats">
+                <div class="stat-item">
+                    <span class="stat-label">{{ __('lang_v1.total_products') }}:</span>
+                    <span class="stat-value">${totalProducts}</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">{{ __('lang_v1.critical_items') }}:</span>
+                    <span class="stat-value">${criticalItems}</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">{{ __('lang_v1.total_current_stock') }}:</span>
+                    <span class="stat-value">${totalCurrentStock.toFixed(2)}</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">{{ __('lang_v1.total_stock_needed') }}:</span>
+                    <span class="stat-value">${totalStockNeed.toFixed(2)}</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">{{ __('lang_v1.coverage_ratio') }}:</span>
+                    <span class="stat-value">${totalAlertQuantity > 0 ? ((totalCurrentStock / totalAlertQuantity) * 100).toFixed(1) + '%' : 'N/A'}</span>
+                </div>
+            </div>
+        `;
+
+        return summaryHtml + tableHtml;
+    }
+
+    function generatePrintFooter(currentDate) {
+        return `
+            <div class="print-footer">
+                <p>{{ __('lang_v1.printed_on') }}: ${currentDate}</p>
+                <p>{{ __('lang_v1.generated_by') }}: {{ auth()->user()->first_name }} {{ auth()->user()->last_name }}</p>
+                <p>{{ __('lang_v1.system_generated_report') }}</p>
+            </div>
+        `;
+    }
+
+    function getSelectedLocation() {
+        const locationSelect = $('#stock_alert_location');
+        if (locationSelect.length > 0 && locationSelect.val()) {
+            return locationSelect.find('option:selected').text();
+        }
+        return null;
+    }
+});
+</script>

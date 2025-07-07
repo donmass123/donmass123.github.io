@@ -1,0 +1,8 @@
+columns: {
+    product: { enabled: true },
+    location: { enabled: true },
+    currentStock: { enabled: true },
+    alertQuantity: { enabled: true },
+    expectedStock: { enabled: false },  // Hide this column
+    stockNeed: { enabled: true }
+}

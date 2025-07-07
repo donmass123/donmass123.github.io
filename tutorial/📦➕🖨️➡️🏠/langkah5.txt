@@ -1,0 +1,50 @@
+public function getProductStockAlert()
+{
+    if (request()->ajax()) {
+        $business_id = request()->session()->get('user.business_id');
+        $permitted_locations = auth()->user()->permitted_locations();
+
+        $products = $this->productUtil->getProductAlert($business_id, $permitted_locations);
+
+        return Datatables::of($products)
+            ->editColumn('product', function ($row) {
+                if ($row->type == 'single') {
+                    return $row->product.' ('.$row->sku.')';
+                } else {
+                    return $row->product.' - '.$row->product_variation.' - '.$row->variation.' ('.$row->sub_sku.')';
+                }
+            })
+            ->editColumn('location', function ($row) {
+                return $row->location ?? __('lang_v1.all_locations');
+            })
+            ->editColumn('stock', function ($row) {
+                $stock = $row->stock ? $row->stock : 0;
+                return '<span data-is_quantity="true" class="display_currency" data-currency_symbol=false>'.(float) $stock.'</span> '.$row->unit;
+            })
+            ->editColumn('alert_quantity', function ($row) {
+                $alert_qty = $row->alert_quantity ?? 0;
+                return '<span data-is_quantity="true" class="display_currency" data-currency_symbol=false>'.(float) $alert_qty.'</span> '.$row->unit;
+            })
+            ->addColumn('expected_stock', function ($row) {
+                $current_stock = $row->stock ? $row->stock : 0;
+                return '<span data-is_quantity="true" class="display_currency" data-currency_symbol=false>'.(float) $current_stock.'</span> '.$row->unit;
+            })
+            ->addColumn('stock_need', function ($row) {
+                $current_stock = $row->stock ? $row->stock : 0;
+                $alert_quantity = $row->alert_quantity ?? 0;
+                $stock_need = max(0, $alert_quantity - $current_stock);
+
+                $class = $stock_need > 0 ? 'text-danger font-weight-bold' : 'text-success';
+                return '<span class="'.$class.'" data-is_quantity="true" data-currency_symbol=false>'.(float) $stock_need.'</span> '.$row->unit;
+            })
+            ->removeColumn('product_id')
+            ->removeColumn('type')
+            ->removeColumn('sku')
+            ->removeColumn('product_variation')
+            ->removeColumn('variation')
+            ->removeColumn('sub_sku')
+            ->removeColumn('unit')
+            ->rawColumns([2, 3, 4, 5])
+            ->make(false);
+    }
+}

@@ -1,0 +1,6 @@
+styles: {
+    pageMargin: '15mm',
+    fontSize: '14px',
+    headerFontSize: '18px',
+    tableFontSize: '12px'
+}

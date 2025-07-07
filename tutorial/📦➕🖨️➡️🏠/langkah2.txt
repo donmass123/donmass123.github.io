@@ -1,0 +1,12 @@
+<table class="table table-bordered table-striped" id="stock_alert_table" style="width: 100%;">
+    <thead>
+        <tr>
+            <th style="min-width: 300px">@lang('sale.product')</th>
+            <th>@lang('business.location')</th>
+            <th>@lang('report.current_stock')</th>
+            <th>@lang('product.alert_quantity')</th>
+            <th>@lang('lang_v1.expected_stock')</th>
+            <th>@lang('lang_v1.stock_need')</th>
+        </tr>
+    </thead>
+</table>

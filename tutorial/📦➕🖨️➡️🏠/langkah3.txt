@@ -1,0 +1,14 @@
+<div class="tw-w-full sm:tw-w-1/2 md:tw-w-1/2 tw-flex tw-items-center tw-gap-2">
+    @if (count($all_locations) > 1)
+    {!! Form::select('stock_alert_location', $all_locations, null, [
+        'class' => 'form-control select2 tw-flex-grow',
+        'placeholder' => __('lang_v1.select_location'),
+        'id' => 'stock_alert_location',
+    ]) !!}
+    @endif
+
+    <button id="print_alerte_de_stock" class="btn btn-primary tw-flex-none">
+        <i class="fa fa-print mr-1"></i>
+        @lang('messages.print') @lang('lang_v1.stock_need')
+    </button>
+</div>
