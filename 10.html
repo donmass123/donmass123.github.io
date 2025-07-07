@@ -186,7 +186,7 @@
         </ul>
         <h2>📦 Unduh File Starter</h2>
         <a
-          href="https://drive.google.com/file/d/1M9FjpKNe3TfJJh5TzyCAY3p9uZPeeMg-/view?usp=drive_link"
+          href="https://drive.google.com/file/d/1ei4K4sby-rZa2_G9RLU8ER312Vukoh0w/view?usp=drive_link"
           download
           class="section-download"
           >⬇️ Unduh</a
@@ -194,155 +194,192 @@
       </section>
 
       <section>
-        <h2>✅ Langkah 1: Aktifkan Sub-Kategori di Pengaturan Bisnis</h2>
+        <h2>Screenshots</h2>
         <p>
-          <strong>Langkah pertama yang penting</strong>: Buka
-          <strong>/business/settings</strong> → bagian Produk dan pastikan
-          Sub-Kategori diaktifkan. Tanpa ini, menu tarik-turun akan
-          disembunyikan!
+          Berikut adalah tangkapan layar dari sistem tukar yang telah
+          diterapkan:
         </p>
-      </section>
-
-      <section>
-        <h2>✅ Langkah 2: Tambahkan Dropdown Sub-Kategori ke Tampilan</h2>
-        <p>
-          Pada <strong>resources/views/product/index.blade.php</strong>, temukan
-          bagian filter kategori dan tambahkan kode ini tepat setelah menu
-          tarik-turun kategori:
-        </p>
-        <div class="url-buttons">
-          <button
-            class="view-modal-button"
-            data-url="tutorial/🔍📂🛍️/langkah2.txt"
-          >
-            resources/views/product/index.blade.php
-          </button>
+        <h3>Halaman Daftar Tukar</h3>
+        <div class="image-box">
+          <img
+            src="https://ultimate-pos-tutorials.vercel.app/assets/images/1-8d9518c521e3fe6b5bc263543ce9a9a7.jpg"
+            alt="#"
+          />
+          <p class="caption">Gambar: Halaman Daftar Tukar</p>
         </div>
-      </section>
-
-      <section>
-        <h2>✅ Langkah 3 – JavaScript Load Dinamis</h2>
         <p>
-          Pada berkas yang sama, di dalam bagian
-          <strong>@section('javascript')</strong>, tambahkan:
+          Halaman Utama Manajemen Tukar dengan Filter dan Tabel Data
+          Komprehensif yang Menampilkan Semua Transaksi Tukar
         </p>
-        <div class="url-buttons">
-          <button
-            class="view-modal-button"
-            data-url="tutorial/🔍📂🛍️/langkah3.txt"
-          >
-            @section('javascript')
-          </button>
+        <h3>Modal Detail Tukar</h3>
+        <div class="image-box">
+          <img
+            src="https://ultimate-pos-tutorials.vercel.app/assets/images/3-f4fa1156e4fc069f06aed8240dcda04f.png"
+            alt="#"
+          />
+          <p class="caption">Gambar: Modal Detail Tukar</p>
         </div>
-      </section>
-
-      <section>
-        <h2>✅ Langkah 4: Menambahkan Sub-Kategori ke DataTable Data Ajax</h2>
         <p>
-          <strong>Penting</strong>: Pada file yang sama, temukan kode
-          inisialisasi DataTable dan tambahkan baris ini di bagian
-          <strong>data: function(d)</strong>:
+          Tampilan Detail Transaksi Tukar yang Menampilkan Semua Item, Jumlah,
+          dan Informasi Transaksi
         </p>
-        <h3>Untuk Tabel Produk:</h3>
-        <pre><strong>d.sub_category_id = $('#product_list_filter_sub_category_id').val();</strong></pre>
-        <p>Tambahkan setelah baris category_id:</p>
-        <pre><strong>
-            d.category_id = $('#product_list_filter_category_id').val();
-            d.sub_category_id = $('#product_list_filter_sub_category_id').val();
-        </strong></pre>
-        <h3>Untuk Tabel Laporan Stok:</h3>
-        <pre><strong>
-            d.sub_category_id = $('#product_list_filter_sub_category_id').val();
-        </strong></pre>
-        <p>Tambahkan setelah baris category_id di DataTable laporan stok:</p>
-        <pre><strong>
-            d.category_id = $('#product_list_filter_category_id').val();
-d.sub_category_id = $('#product_list_filter_sub_category_id').val();
-        </strong></pre>
-      </section>
-
-      <section>
-        <h2>
-          ✅ Langkah 5: Tambahkan Filter Sub-Kategori untuk Mengubah Event
-        </h2>
+        <h3>Pembayaran & Penyelesaian</h3>
+        <div class="image-box">
+          <img
+            src="https://ultimate-pos-tutorials.vercel.app/assets/images/3-f4fa1156e4fc069f06aed8240dcda04f.png"
+            alt="#"
+          />
+          <p class="caption">Gambar: Pembayaran & Penyelesaian</p>
+        </div>
         <p>
-          <strong>Penting</strong>: Temukan pendengar peristiwa perubahan dan
-          tambahkan <strong>#product_list_filter_sub_category_id</strong> ke
-          pemilih:
+          Langkah Terakhir Menampilkan Detail Pembayaran dan Ringkasan Sebelum
+          Menyelesaikan Tukar
         </p>
-        <div class="url-buttons">
-          <button
-            class="view-modal-button"
-            data-url="tutorial/🔍📂🛍️/langkah5.txt"
-          >
-            #product_list_filter_sub_category_id
-          </button>
+        <h3>Dialog Sukses</h3>
+        <div class="image-box">
+          <img
+            src="https://ultimate-pos-tutorials.vercel.app/assets/images/9-eaab4da6537d6f50757a379744f49824.png"
+            alt="#"
+          />
+          <p class="caption">Gambar: Dialog Sukses</p>
         </div>
-        <div class="tip">
-          Masukkan ID ini ke dalam daftar event listener
-          <strong>change</strong> yang me-refresh tabel.
-        </div>
-      </section>
-
-      <section>
-        <h2>✅ Langkah 6: Perbarui Logika Controller</h2>
         <p>
-          Di <strong>app/Http/Controllers/ProductController.php</strong>, pada
-          metode index(), tambahkan kode pemfilteran ini setelah filter
-          kategori:
+          Konfirmasi Sukses dengan Opsi untuk Mencetak Faktur Setelah
+          Menyelesaikan Tukar
         </p>
-        <div class="url-buttons">
-          <button
-            class="view-modal-button"
-            data-url="tutorial/🔍📂🛍️/langkah6.txt"
-          >
-            app/Http/Controllers/ProductController.php
-          </button>
-        </div>
-      </section>
-
-      <section>
-        <h2>Menguji fitur</h2>
+        <h3>Ikhtisar Sistem</h3>
+        <p>Sistem Tukar Barang menyediakan fitur-fitur utama berikut:</p>
         <ul>
-          <li>Mengaktifkan sub-kategori dalam pengaturan bisnis</li>
-          <li>Membuat kategori pengujian dengan sub-kategori</li>
-          <li>Menambahkan produk dengan penetapan sub-kategori yang berbeda</li>
           <li>
-            Menguji pemfilteran - pilih kategori dan memverifikasi pemuatan
-            sub-kategori
+            <strong>Proses Tukar Multi-langkah:</strong> Proses bertahap 4
+            langkah untuk membuat tukar barang
           </li>
           <li>
-            Memverifikasi pemfilteran berfungsi - pilih sub-kategori dan periksa
-            hasilnya
+            <strong>Manajemen Inventaris:</strong> Penyesuaian stok otomatis
+            untuk barang yang dikembalikan dan baru
+          </li>
+          <li>
+            <strong>Proses Pembayaran:</strong> Menangani perbedaan pembayaran
+            (pelanggan membayar atau menerima pengembalian dana)
+          </li>
+          <li>
+            <strong>Pelacakan Tukar Barang:</strong> Jejak audit lengkap dari
+            semua transaksi tukar
+          </li>
+          <li>
+            <strong>Pembuatan Bukti Transaksi:</strong> Bukti transaksi tukar
+            barang yang profesional
+          </li>
+          <li>
+            <strong>Dukungan Pembatalan:</strong> Kemampuan untuk membatalkan
+            tukar barang dengan pembalikan stok
           </li>
         </ul>
       </section>
 
       <section>
-        <h2>Mengatasi masalah</h2>
-        <p>Masalah-masalah Umum:</p>
-        <ul>
-          <li>
-            Menu tarik-turun tidak muncul: Periksa apakah sub-kategori
-            diaktifkan di pengaturan bisnis
-          </li>
-          <li>
-            Sub-kategori tidak dimuat: Verifikasi rute AJAX
-            /products/get_sub_categories yang ada
-          </li>
-          <li>
-            Pemfilteran tidak berfungsi: Pastikan kode pemfilteran pengontrol
-            ditambahkan dengan benar
-          </li>
-          <li>
-            Kesalahan JavaScript: Periksa konsol browser untuk mengetahui adanya
-            kesalahan jQuery atau sintaksis
-          </li>
-        </ul>
-        <div class="tip">
-          Selesai! Menu tarik-turun sub-kategori sekarang akan terisi secara
-          otomatis ketika kategori dipilih, dan daftar produk akan menyaringnya.
+        <h2>Langkah 1: Pengaturan Database</h2>
+        <h3>1.1 Membuat File Migrasi</h3>
+        <p>
+          Buat file migrasi berikut di direktori
+          <code>database/migrations</code> Anda:
+        </p>
+
+        <h4>Migrasi 1: Tabel Transaksi Tukar</h4>
+        <p>
+          Buat file
+          <code>2025_05_23_001710_create_transaction_exchanges_table.php</code>:
+        </p>
+        <div class="url-buttons">
+          <button
+            class="view-modal-button"
+            data-url="tutorial/📝🔄🛒/migration1.txt"
+          >
+            2025_05_23_001710_create_transaction_exchanges_table.php
+          </button>
         </div>
+        <h4>Migrasi 2: Tabel Garis Transaksi Tukar</h4>
+        <p>
+          Buat file
+          <code
+            >2025_05_23_001814_create_transaction_exchange_lines_table.php</code
+          >:
+        </p>
+        <div class="url-buttons">
+          <button
+            class="view-modal-button"
+            data-url="tutorial/📝🔄🛒/migration2.txt"
+          >
+            2025_05_23_001814_create_transaction_exchange_lines_table.php
+          </button>
+        </div>
+        <h4>Migrasi 3: Menambahkan Kolom Tukar pada Tabel Transaksi</h4>
+        <p>
+          Buat file
+          <code
+            >2025_05_23_001851_add_exchange_columns_to_transactions_table.php</code
+          >:
+        </p>
+        <div class="url-buttons">
+          <button
+            class="view-modal-button"
+            data-url="tutorial/📝🔄🛒/migration3.txt"
+          >
+            2025_05_23_001851_add_exchange_columns_to_transactions_table.php
+          </button>
+        </div>
+        <h4>
+          Migrasi 4: Menambahkan Kolom Tukar pada Tabel Garis Transaksi
+          Penjualan
+        </h4>
+        <p>
+          Buat file
+          <code
+            >2025_05_23_001926_add_exchange_columns_to_transaction_sell_lines_table.php</code
+          >:
+        </p>
+        <div class="url-buttons">
+          <button
+            class="view-modal-button"
+            data-url="tutorial/📝🔄🛒/migration4.txt"
+          >
+            2025_05_23_001926_add_exchange_columns_to_transaction_sell_lines_table.php
+          </button>
+        </div>
+        <h4>Migrasi 5: Menambahkan Kolom Pelacakan Jumlah Tukar</h4>
+        <p>
+          Buat file
+          <code>2025_05_23_012705_add_exchange_amount_tracking_columns.php</code
+          >:
+        </p>
+        <div class="url-buttons">
+          <button
+            class="view-modal-button"
+            data-url="tutorial/📝🔄🛒/migration5.txt"
+          >
+            2025_05_23_012705_add_exchange_amount_tracking_columns.php
+          </button>
+        </div>
+        <h4>Migrasi 6: Menambahkan Kolom Pembatalan</h4>
+        <p>
+          Buat file
+          <code
+            >2025_05_23_183050_add_column_cancel_to_transaction_exchange_table.php</code
+          >:
+        </p>
+        <div class="url-buttons">
+          <button
+            class="view-modal-button"
+            data-url="tutorial/📝🔄🛒/migration6.txt"
+          >
+            2025_05_23_183050_add_column_cancel_to_transaction_exchange_table.php
+          </button>
+        </div>
+        <h2>1.2 Menjalankan Migrasi</h2>
+        <p>
+          Setelah membuat semua file migrasi, jalankan migrasi dengan perintah:
+        </p>
+        <pre><code>php artisan migrate</code></pre>
       </section>
 
       <footer>
