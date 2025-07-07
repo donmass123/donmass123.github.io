@@ -1,0 +1,6 @@
+<input
+    type="text"
+    class="form-control pos_quantity input_number"
+    name="products[{{$row_count}}][quantity]"
+    ...
+/>
