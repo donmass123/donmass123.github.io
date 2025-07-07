@@ -402,21 +402,255 @@
             class="view-modal-button"
             data-url="tutorial/📦➕🖨️➡️🏠/langkah2.txt"
           >
-            resources/views/layouts/partials/header.blade.php
+            @can('stock_report.view')
+          </button>
+        </div>
+      </section>
+      <section>
+        <h2>Langkah 3: Tambahkan Tombol Cetak</h2>
+        <p>
+          Di dalam bagian <strong>header</strong>, temukan elemen
+          <code>&lt;div&gt;</code> dengan kelas berikut:
+        </p>
+        <pre><code>tw-flex tw-items-center tw-flex-1 tw-min-w-0 tw-gap-1</code></pre>
+
+        <p>Kemudian tambahkan tombol cetak berikut ke dalam div tersebut:</p>
+        <div class="url-buttons">
+          <button
+            class="view-modal-button"
+            data-url="tutorial/📦➕🖨️➡️🏠/langkah3.txt"
+          >
+            tw-flex tw-items-center tw-flex-1 tw-min-w-0 tw-gap-1
+          </button>
+        </div>
+      </section>
+      <section>
+        <h2>Langkah 4: Tambahkan Implementasi JavaScript Lanjutan</h2>
+        <p>
+          Tambahkan potongan kode JavaScript berikut di bagian bawah file Blade
+          Anda, tepat sebelum penutup <code>@endcan</code>:
+        </p>
+        <div class="url-buttons">
+          <button
+            class="view-modal-button"
+            data-url="tutorial/📦➕🖨️➡️🏠/langkah4.txt"
+          >
+            @endcan
+          </button>
+        </div>
+      </section>
+      <section>
+        <h2>Langkah 5: Perbarui Metode Controller</h2>
+        <p>
+          Perbarui metode <code>getProductStockAlert()</code> yang berada di
+          file:
+        </p>
+        <pre><code>app/Http/Controllers/HomeController.php</code></pre>
+        <div class="url-buttons">
+          <button
+            class="view-modal-button"
+            data-url="tutorial/📦➕🖨️➡️🏠/langkah5.txt"
+          >
+            app/Http/Controllers/HomeController.php
           </button>
         </div>
       </section>
 
       <section>
-        <h2>✅ Langkah 1: Aktifkan Sub-Kategori di Pengaturan Bisnis</h2>
+        <h2>Langkah 6: Perbarui Metode <code>getProductAlert()</code></h2>
         <p>
-          <strong>Langkah pertama yang penting</strong>: Buka
-          <strong>/business/settings</strong> → bagian Produk dan pastikan
-          Sub-Kategori diaktifkan. Tanpa ini, menu tarik-turun akan
-          disembunyikan!
+          Temukan dan perbarui metode <code>getProductAlert()</code> yang berada
+          di file:
+        </p>
+        <pre><code>app/Utils/ProductUtil.php</code></pre>
+        <div class="url-buttons">
+          <button
+            class="view-modal-button"
+            data-url="tutorial/📦➕🖨️➡️🏠/langkah5.txt"
+          >
+            app/Utils/ProductUtil.php
+          </button>
+        </div>
+      </section>
+      <section>
+        <h2>Detail Kolom (Column Details)</h2>
+        <p>
+          Tabel peringatan stok menampilkan informasi penting berikut untuk
+          setiap produk:
+        </p>
+        <div class="table-wrapper">
+          <table class="file-changes">
+            <thead>
+              <tr>
+                <th>Column</th>
+                <th>Description</th>
+                <th>Purpose</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td data-label="Column"><strong>Product</strong></td>
+                <td data-label="Description">Product name with variations</td>
+                <td data-label="Purpose">
+                  Identify which items need restocking
+                </td>
+              </tr>
+              <tr>
+                <td data-label="Column"><strong>Location</strong></td>
+                <td data-label="Description">Business location/warehouse</td>
+                <td data-label="Purpose">Track stock needs by location</td>
+              </tr>
+              <tr>
+                <td data-label="Column"><strong>Current Stock</strong></td>
+                <td data-label="Description">Available quantity on hand</td>
+                <td data-label="Purpose">Current inventory level</td>
+              </tr>
+              <tr>
+                <td data-label="Column"><strong>Alert Quantity</strong></td>
+                <td data-label="Description">Minimum stock threshold</td>
+                <td data-label="Purpose">When to reorder (warning level)</td>
+              </tr>
+              <tr>
+                <td data-label="Column"><strong>Expected Stock</strong></td>
+                <td data-label="Description">
+                  Projected stock after pending orders
+                </td>
+                <td data-label="Purpose">Future inventory prediction</td>
+              </tr>
+              <tr>
+                <td data-label="Column"><strong>Stock Need</strong></td>
+                <td data-label="Description">
+                  Required quantity to reach optimal level
+                </td>
+                <td data-label="Purpose">How much to order</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <h3>Logika Perhitungan Stok (Stock Calculation Logic)</h3>
+        <p>Sistem menghitung kebutuhan stok berdasarkan logika berikut:</p>
+
+        <ul>
+          <li>
+            <strong>Stok Saat Ini (Current Stock):</strong> Jumlah aktual
+            inventaris yang tersedia di sistem.
+          </li>
+          <li>
+            <strong>Jumlah Minimum (Alert Quantity):</strong> Ambang batas
+            minimum stok sebelum dianggap perlu melakukan pemesanan ulang
+            (reorder).
+          </li>
+          <li>
+            <strong>Stok yang Diharapkan (Expected Stock):</strong> Dihitung
+            sebagai:
+          </li>
+          <pre><code>Stok Saat Ini + Jumlah Pemesanan Masuk - Penjualan yang Belum Terkirim</code></pre>
+          <li>
+            <strong>Kebutuhan Stok (Stock Need):</strong> Dihitung sebagai:
+          </li>
+          <pre><code>Alert Quantity - Expected Stock</code></pre>
+          <p>
+            Jika hasilnya <strong>negatif</strong>, maka tidak diperlukan
+            restock. Jika <strong>positif</strong>, berarti terjadi
+            <span style="color: red; font-weight: bold">kekurangan stok</span>
+            dan perlu tindakan pengadaan ulang.
+          </p>
+        </ul>
+      </section>
+      <section>
+        <h2>Opsi Kustomisasi Lanjutan</h2>
+        <h3>1. Kustomisasi Kolom (Customizing Columns)</h3>
+        <p>
+          Untuk menyesuaikan kolom mana saja yang akan muncul dalam laporan
+          cetak, Anda dapat mengedit objek JavaScript berikut di file Blade atau
+          script terpisah:
+        </p>
+        <div class="url-buttons">
+          <button
+            class="view-modal-button"
+            data-url="tutorial/📦➕🖨️➡️🏠/cc.txt"
+          >
+            Kustomisasi Kolom
+          </button>
+        </div>
+        <h3>2. Kustomisasi Gaya Cetak (Styling Customization)</h3>
+        <p>
+          Untuk mengubah tampilan laporan cetak, Anda dapat memodifikasi objek
+          <code>printConfig.styles</code>. Objek ini menentukan gaya CSS dasar
+          yang digunakan saat mencetak.
+        </p>
+        <div class="url-buttons">
+          <button
+            class="view-modal-button"
+            data-url="tutorial/📦➕🖨️➡️🏠/sc.txt"
+          >
+            Kustomisasi Gaya Cetak
+          </button>
+        </div>
+        <h3>3. Menambahkan Logo Perusahaan (Adding Company Logo)</h3>
+        <p>
+          Kode untuk menampilkan logo perusahaan sudah disiapkan dalam fungsi
+          JavaScript <code>generatePrintHeader()</code>. Fungsi ini akan secara
+          otomatis memuat logo dari lokasi standar penyimpanan logo di POS:
         </p>
       </section>
+      <section>
+        <h2>Terjemahan Bahasa (Language Translations)</h2>
+        <p>Tambahkan baris-baris berikut ke dalam file:</p>
+        <pre><code>lang/en/lang_v1.php</code></pre>
+        <div class="url-buttons">
+          <button
+            class="view-modal-button"
+            data-url="tutorial/📦➕🖨️➡️🏠/lang.txt"
+          >
+            lang/en/lang_v1.php
+          </button>
+        </div>
+      </section>
+      <section>
+        <h2>Checklist Pengujian (Testing Checklist)</h2>
+        <p>
+          Pastikan hal-hal berikut telah diuji dan berfungsi dengan baik sebelum
+          fitur dicetak diimplementasikan secara penuh:
+        </p>
 
+        <ul>
+          <li>
+            ✅ Tombol <strong>Cetak</strong> muncul hanya untuk pengguna dengan
+            <strong>hak akses yang sesuai</strong>
+          </li>
+          <li>
+            ✅ Fungsi cetak bekerja di semua
+            <strong>browser yang didukung</strong> (Chrome, Firefox, Edge, dll.)
+          </li>
+          <li>
+            ✅ <strong>Styling</strong> tampil dengan benar di
+            <em>print preview</em>
+          </li>
+          <li>
+            ✅ Semua <strong>terjemahan</strong> ditampilkan dengan benar
+            berdasarkan file bahasa
+          </li>
+          <li>
+            ✅ Keenam <strong>kolom</strong> ditampilkan dengan tepat sesuai
+            urutan dan label
+          </li>
+          <li>
+            ✅ Perhitungan <strong>Kebutuhan Stok</strong> akurat dan tidak
+            menghasilkan nilai negatif yang salah
+          </li>
+          <li>
+            ✅ Format <strong>mata uang</strong> (jika digunakan) ditampilkan
+            dengan benar sesuai konfigurasi bisnis
+          </li>
+        </ul>
+
+        <p>
+          ✔️ Implementasi ini memberikan solusi cetak yang kuat, dapat
+          dikustomisasi, dan terintegrasi mulus dengan arsitektur serta konvensi
+          gaya antarmuka <strong>Ultimate POS</strong>.
+        </p>
+      </section>
       <footer>
         <!-- HOME -->
         <div class="home-button-wrapper">
