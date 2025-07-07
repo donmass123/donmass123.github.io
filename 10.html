@@ -11,11 +11,11 @@
   <body>
     <div class="container">
       <header>
-        <h1>Panduan Implementasi Sistem Tukar Barang di POS</h1>
+        <h1>Panduan Implementasi Sistem Tukar/Exchange Barang di POS</h1>
         <h1>📝🔄🛒</h1>
         <p>
           Panduan lengkap ini akan memandu Anda melalui proses implementasi
-          sistem tukar barang di POS menggunakan Laravel. Sistem ini
+          sistem Tukar/Exchange barang di POS menggunakan Laravel. Sistem ini
           memungkinkan pelanggan untuk mengembalikan barang dan menukarnya
           dengan produk baru, dengan pengelolaan inventaris yang tepat serta
           penanganan pembayaran yang baik.
@@ -37,7 +37,7 @@
       </div>
 
       <section>
-        <h2>Pohon Implementasi Sistem Tukar Barang di POS</h2>
+        <h2>Pohon Implementasi Sistem Tukar/Exchange Barang di POS</h2>
         <ul class="tree">
           <li>
             <details open>
@@ -196,31 +196,31 @@
       <section>
         <h2>Screenshots</h2>
         <p>
-          Berikut adalah tangkapan layar dari sistem tukar yang telah
+          Berikut adalah tangkapan layar dari sistem Tukar/Exchange yang telah
           diterapkan:
         </p>
-        <h3>Halaman Daftar Tukar</h3>
+        <h3>Halaman Daftar Tukar/Exchange</h3>
         <div class="image-box">
           <img
             src="https://ultimate-pos-tutorials.vercel.app/assets/images/1-8d9518c521e3fe6b5bc263543ce9a9a7.jpg"
             alt="#"
           />
-          <p class="caption">Gambar: Halaman Daftar Tukar</p>
+          <p class="caption">Gambar: Halaman Daftar Tukar/Exchange</p>
         </div>
         <p>
-          Halaman Utama Manajemen Tukar dengan Filter dan Tabel Data
-          Komprehensif yang Menampilkan Semua Transaksi Tukar
+          Halaman Utama Manajemen Tukar/Exchange dengan Filter dan Tabel Data
+          Komprehensif yang Menampilkan Semua Transaksi Tukar/Exchange
         </p>
-        <h3>Modal Detail Tukar</h3>
+        <h3>Modal Detail Tukar/Exchange</h3>
         <div class="image-box">
           <img
             src="https://ultimate-pos-tutorials.vercel.app/assets/images/3-f4fa1156e4fc069f06aed8240dcda04f.png"
             alt="#"
           />
-          <p class="caption">Gambar: Modal Detail Tukar</p>
+          <p class="caption">Gambar: Modal Detail Tukar/Exchange</p>
         </div>
         <p>
-          View Detail Transaksi Tukar yang Menampilkan Semua Item, Jumlah,
+          View Detail Transaksi Tukar/Exchange yang Menampilkan Semua Item, Jumlah,
           dan Informasi Transaksi
         </p>
         <h3>Pembayaran & Penyelesaian</h3>
@@ -233,7 +233,7 @@
         </div>
         <p>
           Langkah Terakhir Menampilkan Detail Pembayaran dan Ringkasan Sebelum
-          Menyelesaikan Tukar
+          Menyelesaikan Tukar/Exchange
         </p>
         <h3>Dialog Sukses</h3>
         <div class="image-box">
@@ -245,14 +245,14 @@
         </div>
         <p>
           Konfirmasi Sukses dengan Opsi untuk Mencetak Faktur Setelah
-          Menyelesaikan Tukar
+          Menyelesaikan Tukar/Exchange
         </p>
         <h3>Ikhtisar Sistem</h3>
-        <p>Sistem Tukar Barang menyediakan fitur-fitur utama berikut:</p>
+        <p>Sistem Tukar/Exchange Barang menyediakan fitur-fitur utama berikut:</p>
         <ul>
           <li>
-            <strong>Proses Tukar Multi-langkah:</strong> Proses bertahap 4
-            langkah untuk membuat tukar barang
+            <strong>Proses Tukar/Exchange Multi-langkah:</strong> Proses bertahap 4
+            langkah untuk membuat Tukar/Exchange barang
           </li>
           <li>
             <strong>Manajemen Inventaris:</strong> Penyesuaian stok otomatis
@@ -263,16 +263,16 @@
             (pelanggan membayar atau menerima pengembalian dana)
           </li>
           <li>
-            <strong>Pelacakan Tukar Barang:</strong> Jejak audit lengkap dari
-            semua transaksi tukar
+            <strong>Pelacakan Tukar/Exchange Barang:</strong> Jejak audit lengkap dari
+            semua transaksi Tukar/Exchange
           </li>
           <li>
-            <strong>Pembuatan Bukti Transaksi:</strong> Bukti transaksi tukar
+            <strong>Pembuatan Bukti Transaksi:</strong> Bukti transaksi Tukar/Exchange
             barang yang profesional
           </li>
           <li>
             <strong>Dukungan Pembatalan:</strong> Kemampuan untuk membatalkan
-            tukar barang dengan pembalikan stok
+            Tukar/Exchange barang dengan pembalikan stok
           </li>
         </ul>
       </section>
@@ -285,7 +285,7 @@
           <strong>database/migrations</strong> Anda:
         </p>
 
-        <h4>Migrasi 1: Tabel Transaksi Tukar</h4>
+        <h4>Migrasi 1: Tabel Transaksi Tukar/Exchange</h4>
         <p>
           Buat file
           <strong>2025_05_23_001710_create_transaction_exchanges_table.php</strong>:
@@ -298,7 +298,7 @@
             2025_05_23_001710_create_transaction_exchanges_table.php
           </button>
         </div>
-        <h4>Migrasi 2: Tabel Garis Transaksi Tukar</h4>
+        <h4>Migrasi 2: Tabel Garis Transaksi Tukar/Exchange</h4>
         <p>
           Buat file
           <strong
@@ -313,7 +313,7 @@
             2025_05_23_001814_create_transaction_exchange_lines_table.php
           </button>
         </div>
-        <h4>Migrasi 3: Menambahkan Kolom Tukar pada Tabel Transaksi</h4>
+        <h4>Migrasi 3: Menambahkan Kolom Tukar/Exchange pada Tabel Transaksi</h4>
         <p>
           Buat file
           <strong
@@ -329,7 +329,7 @@
           </button>
         </div>
         <h4>
-          Migrasi 4: Menambahkan Kolom Tukar pada Tabel Garis Transaksi
+          Migrasi 4: Menambahkan Kolom Tukar/Exchange pada Tabel Garis Transaksi
           Penjualan
         </h4>
         <p>
@@ -346,7 +346,7 @@
             2025_05_23_001926_add_exchange_columns_to_transaction_sell_lines_table.php
           </button>
         </div>
-        <h4>Migrasi 5: Menambahkan Kolom Pelacakan Jumlah Tukar</h4>
+        <h4>Migrasi 5: Menambahkan Kolom Pelacakan Jumlah Tukar/Exchange</h4>
         <p>
           Buat file
           <strong>2025_05_23_012705_add_exchange_amount_tracking_columns.php</code
@@ -386,7 +386,7 @@
         <h2>Langkah 2: Membuat Kelas Model</h2>
         <h3>2.1 Model TransactionExchange</h3>
         <p>
-          Buat model utama untuk tukar barang di
+          Buat model utama untuk Tukar/Exchange barang di
           <strong>app/TransactionExchange.php</strong>:
         </p>
         <div class="url-buttons">
@@ -399,7 +399,7 @@
         </div>
         <h3>2.2 Model TransactionExchangeLine</h3>
         <p>
-          Buat model untuk garis transaksi tukar di
+          Buat model untuk garis transaksi Tukar/Exchange di
           <strong>app/TransactionExchangeLine.php</strong>:
         </p>
         <div class="url-buttons">
