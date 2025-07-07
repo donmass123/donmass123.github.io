@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tutorial Point Of Sales</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/style1.css" />
+    <link rel="stylesheet" href="css/modal.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Panduan Implementasi Sistem Tukar Barang di POS</h1>
+        <h1>📝🔄🛒</h1>
+        <p>
+          Panduan lengkap ini akan memandu Anda melalui proses implementasi
+          sistem tukar barang di POS menggunakan Laravel. Sistem ini
+          memungkinkan pelanggan untuk mengembalikan barang dan menukarnya
+          dengan produk baru, dengan pengelolaan inventaris yang tepat serta
+          penanganan pembayaran yang baik.
+        </p>
+      </header>
+
+      <div class="download-box">
+        <a
+          href="https://drive.google.com/drive/folders/1Z4tG3FMdMa3oZ3Nk9oqAp8ydWOlFcDS8?usp=drive_link"
+          download
+          class="download-button"
+        >
+          ⬇️ Unduh File Contoh
+        </a>
+      </div>
+      <!-- HOME -->
+      <div class="home-button-wrapper">
+        <a href="main.html" class="home-button">🏠 Kembali ke Beranda</a>
+      </div>
+
+      <section>
+        <h2>Pohon Implementasi Sistem Tukar Barang di Ultimate POS</h2>
+        <ul class="tree">
+          <li>
+            <details open>
+              <summary>Exchange System Implementation</summary>
+              <ul>
+                <li>
+                  <details>
+                    <summary>Database Layer</summary>
+                    <ul>
+                      <li>
+                        <details>
+                          <summary>🗃️ Migrations</summary>
+                          <ul>
+                            <li class="file">
+                              create_transaction_exchanges_table.php
+                            </li>
+                            <li class="file">
+                              create_transaction_exchange_lines_table.php
+                            </li>
+                            <li class="file">
+                              add_exchange_columns_to_transactions_table.php
+                            </li>
+                            <li class="file">
+                              add_exchange_columns_to_transaction_sell_lines_table.php
+                            </li>
+                            <li class="file">
+                              add_exchange_amount_tracking_columns.php
+                            </li>
+                            <li class="file">
+                              add_column_cancel_to_transaction_exchange_table.php
+                            </li>
+                          </ul>
+                        </details>
+                      </li>
+                      <li>
+                        <details>
+                          <summary>🏗️ Models</summary>
+                          <ul>
+                            <li class="file">TransactionExchange.php</li>
+                            <li class="file">TransactionExchangeLine.php</li>
+                          </ul>
+                        </details>
+                      </li>
+                    </ul>
+                  </details>
+                </li>
+                <li>
+                  <details>
+                    <summary>Application Layer</summary>
+                    <ul>
+                      <li>
+                        <details>
+                          <summary>🎮 Controller</summary>
+                          <ul>
+                            <li class="file">ExchangeController.php</li>
+                          </ul>
+                        </details>
+                      </li>
+                      <li>
+                        <details>
+                          <summary>🛡️ Middleware</summary>
+                          <ul>
+                            <li class="file">
+                              AdminSidebarMenu.php (modification)
+                            </li>
+                          </ul>
+                        </details>
+                      </li>
+                    </ul>
+                  </details>
+                </li>
+                <li>
+                  <details>
+                    <summary>Presentation Layer</summary>
+                    <ul>
+                      <li>
+                        <details>
+                          <summary>🖼️ Views</summary>
+                          <ul>
+                            <li class="file">index.blade.php</li>
+                            <li class="file">create.blade.php</li>
+                            <li class="file">show.blade.php</li>
+                            <li class="file">receipt.blade.php</li>
+                          </ul>
+                        </details>
+                      </li>
+                      <li>
+                        <details>
+                          <summary>🎨 Assets</summary>
+                          <ul>
+                            <li class="file">CSS styling (integrated)</li>
+                            <li class="file">
+                              JavaScript functionality (integrated)
+                            </li>
+                          </ul>
+                        </details>
+                      </li>
+                    </ul>
+                  </details>
+                </li>
+                <li>
+                  <details>
+                    <summary>Routing Layer</summary>
+                    <ul>
+                      <li>
+                        <details>
+                          <summary>🚏 Routes</summary>
+                          <ul>
+                            <li class="file">web.php (exchange routes)</li>
+                          </ul>
+                        </details>
+                      </li>
+                    </ul>
+                  </details>
+                </li>
+                <li>
+                  <details>
+                    <summary>Features</summary>
+                    <ul>
+                      <li class="file">
+                        <span class="tag-add"
+                          >✅ Multi-step Exchange Process</span
+                        >
+                      </li>
+                      <li class="file">
+                        <span class="tag-add">📦 Inventory Management</span>
+                      </li>
+                      <li class="file">
+                        <span class="tag-add">💰 Payment Processing</span>
+                      </li>
+                      <li class="file">
+                        <span class="tag-add">🧾 Receipt Generation</span>
+                      </li>
+                      <li class="file">
+                        <span class="tag-add">📊 Exchange Tracking</span>
+                      </li>
+                      <li class="file">
+                        <span class="tag-add">🚫 Exchange Cancellation</span>
+                      </li>
+                    </ul>
+                  </details>
+                </li>
+              </ul>
+            </details>
+          </li>
+        </ul>
+        <h2>📦 Unduh File Starter</h2>
+        <a
+          href="https://drive.google.com/file/d/1M9FjpKNe3TfJJh5TzyCAY3p9uZPeeMg-/view?usp=drive_link"
+          download
+          class="section-download"
+          >⬇️ Unduh</a
+        >
+      </section>
+
+      <section>
+        <h2>✅ Langkah 1: Aktifkan Sub-Kategori di Pengaturan Bisnis</h2>
+        <p>
+          <strong>Langkah pertama yang penting</strong>: Buka
+          <strong>/business/settings</strong> → bagian Produk dan pastikan
+          Sub-Kategori diaktifkan. Tanpa ini, menu tarik-turun akan
+          disembunyikan!
+        </p>
+      </section>
+
+      <section>
+        <h2>✅ Langkah 2: Tambahkan Dropdown Sub-Kategori ke Tampilan</h2>
+        <p>
+          Pada <strong>resources/views/product/index.blade.php</strong>, temukan
+          bagian filter kategori dan tambahkan kode ini tepat setelah menu
+          tarik-turun kategori:
+        </p>
+        <div class="url-buttons">
+          <button
+            class="view-modal-button"
+            data-url="tutorial/🔍📂🛍️/langkah2.txt"
+          >
+            resources/views/product/index.blade.php
+          </button>
+        </div>
+      </section>
+
+      <section>
+        <h2>✅ Langkah 3 – JavaScript Load Dinamis</h2>
+        <p>
+          Pada berkas yang sama, di dalam bagian
+          <strong>@section('javascript')</strong>, tambahkan:
+        </p>
+        <div class="url-buttons">
+          <button
+            class="view-modal-button"
+            data-url="tutorial/🔍📂🛍️/langkah3.txt"
+          >
+            @section('javascript')
+          </button>
+        </div>
+      </section>
+
+      <section>
+        <h2>✅ Langkah 4: Menambahkan Sub-Kategori ke DataTable Data Ajax</h2>
+        <p>
+          <strong>Penting</strong>: Pada file yang sama, temukan kode
+          inisialisasi DataTable dan tambahkan baris ini di bagian
+          <strong>data: function(d)</strong>:
+        </p>
+        <h3>Untuk Tabel Produk:</h3>
+        <pre><strong>d.sub_category_id = $('#product_list_filter_sub_category_id').val();</strong></pre>
+        <p>Tambahkan setelah baris category_id:</p>
+        <pre><strong>
+            d.category_id = $('#product_list_filter_category_id').val();
+            d.sub_category_id = $('#product_list_filter_sub_category_id').val();
+        </strong></pre>
+        <h3>Untuk Tabel Laporan Stok:</h3>
+        <pre><strong>
+            d.sub_category_id = $('#product_list_filter_sub_category_id').val();
+        </strong></pre>
+        <p>Tambahkan setelah baris category_id di DataTable laporan stok:</p>
+        <pre><strong>
+            d.category_id = $('#product_list_filter_category_id').val();
+d.sub_category_id = $('#product_list_filter_sub_category_id').val();
+        </strong></pre>
+      </section>
+
+      <section>
+        <h2>
+          ✅ Langkah 5: Tambahkan Filter Sub-Kategori untuk Mengubah Event
+        </h2>
+        <p>
+          <strong>Penting</strong>: Temukan pendengar peristiwa perubahan dan
+          tambahkan <strong>#product_list_filter_sub_category_id</strong> ke
+          pemilih:
+        </p>
+        <div class="url-buttons">
+          <button
+            class="view-modal-button"
+            data-url="tutorial/🔍📂🛍️/langkah5.txt"
+          >
+            #product_list_filter_sub_category_id
+          </button>
+        </div>
+        <div class="tip">
+          Masukkan ID ini ke dalam daftar event listener
+          <strong>change</strong> yang me-refresh tabel.
+        </div>
+      </section>
+
+      <section>
+        <h2>✅ Langkah 6: Perbarui Logika Controller</h2>
+        <p>
+          Di <strong>app/Http/Controllers/ProductController.php</strong>, pada
+          metode index(), tambahkan kode pemfilteran ini setelah filter
+          kategori:
+        </p>
+        <div class="url-buttons">
+          <button
+            class="view-modal-button"
+            data-url="tutorial/🔍📂🛍️/langkah6.txt"
+          >
+            app/Http/Controllers/ProductController.php
+          </button>
+        </div>
+      </section>
+
+      <section>
+        <h2>Menguji fitur</h2>
+        <ul>
+          <li>Mengaktifkan sub-kategori dalam pengaturan bisnis</li>
+          <li>Membuat kategori pengujian dengan sub-kategori</li>
+          <li>Menambahkan produk dengan penetapan sub-kategori yang berbeda</li>
+          <li>
+            Menguji pemfilteran - pilih kategori dan memverifikasi pemuatan
+            sub-kategori
+          </li>
+          <li>
+            Memverifikasi pemfilteran berfungsi - pilih sub-kategori dan periksa
+            hasilnya
+          </li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Mengatasi masalah</h2>
+        <p>Masalah-masalah Umum:</p>
+        <ul>
+          <li>
+            Menu tarik-turun tidak muncul: Periksa apakah sub-kategori
+            diaktifkan di pengaturan bisnis
+          </li>
+          <li>
+            Sub-kategori tidak dimuat: Verifikasi rute AJAX
+            /products/get_sub_categories yang ada
+          </li>
+          <li>
+            Pemfilteran tidak berfungsi: Pastikan kode pemfilteran pengontrol
+            ditambahkan dengan benar
+          </li>
+          <li>
+            Kesalahan JavaScript: Periksa konsol browser untuk mengetahui adanya
+            kesalahan jQuery atau sintaksis
+          </li>
+        </ul>
+        <div class="tip">
+          Selesai! Menu tarik-turun sub-kategori sekarang akan terisi secara
+          otomatis ketika kategori dipilih, dan daftar produk akan menyaringnya.
+        </div>
+      </section>
+
+      <footer>
+        <!-- HOME -->
+        <div class="home-button-wrapper">
+          <a href="main.html" class="home-button">🏠 Kembali ke Beranda</a>
+        </div>
+      </footer>
+    </div>
+    <div id="myModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <iframe
+          id="modalFrame"
+          src=""
+          frameborder="0"
+          style="width: 100%; height: 400px"
+        ></iframe>
+      </div>
+    </div>
+    <script src="scripts.js"></script>
+    <!-- Link ke file JavaScript -->
+  </body>
+</html>

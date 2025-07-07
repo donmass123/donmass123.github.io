@@ -1,0 +1,673 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Account;
+use App\Product;
+use App\TaxRate;
+use App\Business;
+use Carbon\Carbon;
+use App\Transaction;
+use App\BusinessLocation;
+use App\Utils\ModuleUtil;
+use App\Utils\ProductUtil;
+use App\TransactionPayment;
+use App\Utils\BusinessUtil;
+use App\TransactionExchange;
+use App\TransactionSellLine;
+use Illuminate\Http\Request;
+use App\Utils\TransactionUtil;
+use App\TransactionExchangeLine;
+use App\User;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Yajra\DataTables\Facades\DataTables;
+
+class ExchangeController extends Controller
+{
+    protected $businessUtil;
+    protected $transactionUtil;
+    protected $productUtil;
+
+    public function __construct(BusinessUtil $businessUtil, TransactionUtil $transactionUtil, ProductUtil $productUtil)
+    {
+        $this->businessUtil = $businessUtil;
+        $this->transactionUtil = $transactionUtil;
+        $this->productUtil = $productUtil;
+    }
+
+    /**
+     * Display exchange index page
+     */
+    public function index()
+    {
+        if (!auth()->user()->can('exchange.access')) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        $business_id = request()->session()->get('user.business_id');
+        $business_locations = BusinessLocation::forDropdown($business_id, false, false);
+
+        // Use custom method
+        $users = User::getUsersForDropdown($business_id);
+
+        return view('exchange.index', compact('business_locations', 'users'));
+    }
+
+    /**
+     * Show exchange creation form
+     */
+    public function create()
+    {
+        if (!auth()->user()->can('exchange.create')) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        $business_id = request()->session()->get('user.business_id');
+        $user_id = request()->session()->get('user.id');
+
+        $business_details = $this->businessUtil->getDetails($business_id);
+        $business_locations = BusinessLocation::forDropdown($business_id, false, false);
+        $default_location = null;
+
+        if (count($business_locations) == 1) {
+            foreach ($business_locations as $id => $name) {
+                $default_location = BusinessLocation::findOrFail($id);
+            }
+        }
+
+        // Get payment types
+        $payment_types = $this->transactionUtil->payment_types(null, true, $business_id);
+
+        // Get accounts if Chart of Accounts is enabled
+        $accounts = [];
+        if ($this->businessUtil->isModuleEnabled('account')) {
+            $accounts = Account::where('business_id', $business_id)->get();
+        }
+
+        // Get transaction details if transaction_id is provided
+        $transaction = null;
+        $transaction_id = request()->get('transaction_id');
+        if ($transaction_id) {
+            $transaction = Transaction::with([
+                'sell_lines' => function ($query) {
+                    $query->where('quantity_returned', '<', DB::raw('quantity'));
+                },
+                'sell_lines.product',
+                'sell_lines.variations',
+                'sell_lines.variations.product_variation',
+                'sell_lines.product.unit',
+                'contact'
+            ])
+                ->where('business_id', $business_id)
+                ->where('type', 'sell')
+                ->where('status', 'final')
+                ->where('id', $transaction_id)
+                ->first();
+        }
+
+        return view('exchange.create', compact(
+            'business_details',
+            'business_locations',
+            'default_location',
+            'payment_types',
+            'accounts',
+            'transaction' // Pass transaction to view
+        ));
+    }
+
+    /**
+     * Search for original transaction by invoice number
+     */
+    public function searchTransaction(Request $request)
+    {
+        if (!auth()->user()->can('exchange.access')) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        $business_id = request()->session()->get('user.business_id');
+        $invoice_no = $request->get('invoice_no');
+
+        $transaction = Transaction::with([
+            'sell_lines' => function ($query) {
+                $query->where('quantity_returned', '<', DB::raw('quantity'));
+            },
+            'sell_lines.product',
+            'sell_lines.variations',
+            'sell_lines.variations.product_variation',
+            'sell_lines.product.unit',
+            'contact'
+        ])
+            ->where('business_id', $business_id)
+            ->where('type', 'sell')
+            ->where('status', 'final')
+            ->where('invoice_no', $invoice_no)
+            ->first();
+
+        if (!$transaction) {
+            return response()->json([
+                'success' => false,
+                'message' => __('lang_v1.transaction_not_found')
+            ]);
+        }
+
+        // Filter sell lines that can be returned/exchanged
+        $exchangeable_lines = $transaction->sell_lines->filter(function ($line) {
+            return ($line->quantity - $line->quantity_returned) > 0;
+        });
+
+        if ($exchangeable_lines->isEmpty()) {
+            return response()->json([
+                'success' => false,
+                'message' => __('lang_v1.no_items_available_for_exchange')
+            ]);
+        }
+
+        return response()->json([
+            'success' => true,
+            'transaction' => $transaction,
+            'exchangeable_lines' => $exchangeable_lines->values()
+        ]);
+    }
+
+    /**
+     * Process the exchange
+     */
+    public function store(Request $request)
+    {
+        if (!auth()->user()->can('exchange.create')) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        $request->validate([
+            'original_transaction_id' => 'required|exists:transactions,id',
+            'location_id' => 'required|exists:business_locations,id',
+            'exchange_lines' => 'required|array|min:1',
+            'exchange_lines.*.original_sell_line_id' => 'required|exists:transaction_sell_lines,id',
+            'exchange_lines.*.original_quantity' => 'required|numeric|min:0.01',
+            'payment_method' => 'sometimes|string',
+        ]);
+
+        try {
+            DB::beginTransaction();
+
+            $business_id = request()->session()->get('user.business_id');
+            $user_id = request()->session()->get('user.id');
+
+            $original_transaction = Transaction::findOrFail($request->original_transaction_id);
+
+            // Generate exchange reference number
+            $exchange_ref_no = TransactionExchange::generateExchangeRefNo($business_id);
+
+            // Calculate exchange amounts
+            $original_amount = 0;
+            $new_amount = 0;
+            $exchange_lines_data = [];
+            $new_sell_lines = [];
+
+            foreach ($request->exchange_lines as $line_data) {
+                $original_sell_line = TransactionSellLine::findOrFail($line_data['original_sell_line_id']);
+
+                // Validate quantity
+                $available_qty = $original_sell_line->quantity - $original_sell_line->quantity_returned;
+                if ($line_data['original_quantity'] > $available_qty) {
+                    throw new \Exception("Insufficient quantity available for exchange");
+                }
+
+                $line_original_amount = round($line_data['original_quantity'] * $original_sell_line->unit_price_inc_tax, 4);
+                $line_new_amount = 0;
+                $new_sell_line_id = null;
+
+                // If new item is selected for exchange
+                if (!empty($line_data['new_product_id']) && !empty($line_data['new_variation_id'])) {
+                    $new_quantity = $line_data['new_quantity'] ?? $line_data['original_quantity'];
+                    $new_unit_price = $line_data['new_unit_price'];
+                    $line_new_amount = round($new_quantity * $new_unit_price, 4);
+
+                    // Create new sell line (this will be part of a new exchange transaction)
+                    // For now, we'll store the data and create the transaction later
+                    $new_sell_lines[] = [
+                        'product_id' => $line_data['new_product_id'],
+                        'variation_id' => $line_data['new_variation_id'],
+                        'quantity' => $new_quantity,
+                        'unit_price' => $new_unit_price,
+                        'unit_price_inc_tax' => $new_unit_price,
+                        'exchange_parent_line_id' => $original_sell_line->id,
+                    ];
+                }
+
+                $original_amount += $line_original_amount;
+                $new_amount += $line_new_amount;
+
+                $price_difference = round($line_new_amount - $line_original_amount, 4);
+
+                // Create exchange line record
+                $exchange_lines_data[] = [
+                    'original_sell_line_id' => $original_sell_line->id,
+                    'new_sell_line_id' => null, // Will be updated after creating new transaction
+                    'exchange_type' => !empty($line_data['new_product_id']) ? 'exchange_with_new' : 'return_only',
+                    'original_quantity' => round($line_data['original_quantity'], 4),
+                    'original_unit_price' => round($original_sell_line->unit_price_inc_tax, 4),
+                    'new_quantity' => round($line_data['new_quantity'] ?? 0, 4),
+                    'new_unit_price' => round($line_data['new_unit_price'] ?? 0, 4),
+                    'price_difference' => $price_difference,
+                ];
+
+                // Update original sell line quantity returned
+                $original_sell_line->quantity_returned += $line_data['original_quantity'];
+                $original_sell_line->save();
+
+                // Update stock for returned item
+                $this->productUtil->updateProductQuantity(
+                    $request->location_id,
+                    $original_sell_line->product_id,
+                    $original_sell_line->variation_id,
+                    $line_data['original_quantity'],
+                    0,
+                    null,
+                    false
+                );
+            }
+
+            $exchange_difference = $new_amount - $original_amount;
+
+            // Create new exchange transaction if there are new items
+            $exchange_transaction = null;
+            $created_sell_lines_for_stock = [];
+
+            if (!empty($new_sell_lines)) {
+                $exchange_transaction_data = [
+                    'business_id' => $business_id,
+                    'location_id' => $request->location_id,
+                    'type' => 'sell',
+                    'status' => 'final',
+                    'contact_id' => $original_transaction->contact_id,
+                    'transaction_date' => \Carbon\Carbon::now(),
+                    'invoice_no' => $this->transactionUtil->getInvoiceNumber($business_id, 'final', $request->location_id),
+                    'is_exchange' => 1,
+                    'exchange_parent_id' => $original_transaction->id,
+                    'created_by' => $user_id,
+                    'total_before_tax' => $new_amount,
+                    'tax_amount' => 0,
+                    'final_total' => $new_amount,
+                ];
+
+                $exchange_transaction = Transaction::create($exchange_transaction_data);
+
+                // Create new sell lines
+                foreach ($new_sell_lines as $index => $new_sell_line_data) {
+                    $new_sell_line_data['transaction_id'] = $exchange_transaction->id;
+                    $new_sell_line_data['quantity'] = round($new_sell_line_data['quantity'], 4);
+                    $new_sell_line_data['unit_price'] = round($new_sell_line_data['unit_price'], 4);
+                    $new_sell_line_data['unit_price_inc_tax'] = round($new_sell_line_data['unit_price_inc_tax'], 4);
+
+                    $new_sell_line = TransactionSellLine::create($new_sell_line_data);
+                    $created_sell_lines_for_stock[] = $new_sell_line;
+
+                    // Update the exchange line data with the new sell line ID
+                    if (isset($exchange_lines_data[$index])) {
+                        $exchange_lines_data[$index]['new_sell_line_id'] = $new_sell_line->id;
+                    }
+                }
+
+                // Handle stock for new items - reduce stock
+                if (!empty($created_sell_lines_for_stock)) {
+                    foreach ($created_sell_lines_for_stock as $line) {
+                        // Check if stock management is enabled for this product
+                        $product = \App\Product::find($line->product_id);
+
+                        if ($product && $product->enable_stock == 1) {
+                            // Reduce stock directly
+                            $this->productUtil->updateProductQuantity(
+                                $request->location_id,
+                                $line->product_id,
+                                $line->variation_id,
+                                -$line->quantity, // NEGATIVE value = REDUCE stock
+                                0,
+                                null,
+                                false
+                            );
+                        }
+                    }
+                }
+            }
+
+            // Create exchange record
+            $exchange_data = [
+                'business_id' => $business_id,
+                'location_id' => $request->location_id,
+                'original_transaction_id' => $original_transaction->id,
+                'exchange_transaction_id' => $exchange_transaction ? $exchange_transaction->id : null,
+                'exchange_ref_no' => $exchange_ref_no,
+                'exchange_date' => \Carbon\Carbon::now(),
+                'original_amount' => $original_amount,
+                'new_amount' => $new_amount,
+                'exchange_difference' => $exchange_difference,
+                'payment_received' => $exchange_difference > 0 ? $exchange_difference : 0,
+                'refund_given' => $exchange_difference < 0 ? abs($exchange_difference) : 0,
+                'total_exchange_amount' => $exchange_difference,
+                'status' => 'completed',
+                'created_by' => $user_id,
+                'notes' => $request->notes ?? '',
+            ];
+
+            $exchange = TransactionExchange::create($exchange_data);
+
+            // Create exchange lines with safe timestamps
+            $current_time = date('Y-m-d H:i:s');
+            foreach ($exchange_lines_data as $line_data) {
+                $line_data['exchange_id'] = $exchange->id;
+                $line_data['created_at'] = $current_time;
+                $line_data['updated_at'] = $current_time;
+                TransactionExchangeLine::create($line_data);
+            }
+
+            // Create payment if amount is due
+            if ($exchange_difference != 0 && $exchange_transaction) {
+                $payment_data = [
+                    'amount' => abs($exchange_difference),
+                    'method' => $request->payment_method ?? 'cash',
+                    'paid_on' => '',
+                    'account_id' => $request->payment_account,
+                    'card_number' => $request->card_number,
+                    'card_holder_name' => $request->card_holder_name,
+                    'cheque_number' => $request->cheque_number,
+                    'bank_name' => $request->bank_name,
+                ];
+
+                $this->transactionUtil->createOrUpdatePaymentLines($exchange_transaction, [$payment_data], $business_id, $user_id);
+
+                // Update payment status
+                $this->transactionUtil->updatePaymentStatus($exchange_transaction->id);
+            }
+
+            DB::commit();
+
+            $invoice_url = null;
+            if ($exchange_transaction) {
+                $invoice_url = action([\App\Http\Controllers\SellPosController::class, 'printInvoice'], [$exchange_transaction->id]);
+            }
+
+            return response()->json([
+                'success' => true,
+                'message' => __('lang_v1.exchange_completed_successfully'),
+                'exchange_id' => $exchange->id,
+                'invoice_url' => $invoice_url
+            ]);
+        } catch (\Exception $e) {
+            DB::rollback();
+            \Log::emergency("File:" . $e->getFile() . "Line:" . $e->getLine() . "Message:" . $e->getMessage());
+
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * Get exchange list via DataTables
+     */
+    public function getExchanges()
+    {
+        if (!auth()->user()->can('exchange.access')) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        $business_id = request()->session()->get('user.business_id');
+
+        $exchanges = TransactionExchange::leftJoin('business_locations as bl', 'transaction_exchanges.location_id', '=', 'bl.id')
+            ->leftJoin('transactions as ot', 'transaction_exchanges.original_transaction_id', '=', 'ot.id')
+            ->leftJoin('transactions as et', 'transaction_exchanges.exchange_transaction_id', '=', 'et.id')
+            ->leftJoin('contacts as c', 'ot.contact_id', '=', 'c.id')
+            ->leftJoin('users as u', 'transaction_exchanges.created_by', '=', 'u.id')
+            ->where('transaction_exchanges.business_id', $business_id);
+
+        // Apply filters if provided
+        if (request()->has('location_id') && request()->location_id != '') {
+            $exchanges->where('transaction_exchanges.location_id', request()->location_id);
+        }
+
+        if (request()->has('customer_id') && request()->customer_id != '') {
+            $exchanges->where('ot.contact_id', request()->customer_id);
+        }
+
+        if (request()->has('status') && request()->status != '') {
+            $exchanges->where('transaction_exchanges.status', request()->status);
+        }
+
+        if (request()->has('date_range') && request()->date_range != '') {
+            $date_range = explode(' - ', request()->date_range);
+            if (count($date_range) == 2) {
+                $exchanges->whereBetween('transaction_exchanges.exchange_date', [
+                    \Carbon\Carbon::createFromFormat('m/d/Y', $date_range[0])->format('Y-m-d'),
+                    \Carbon\Carbon::createFromFormat('m/d/Y', $date_range[1])->format('Y-m-d')
+                ]);
+            }
+        }
+
+        if (request()->has('created_by') && request()->created_by != '') {
+            $exchanges->where('transaction_exchanges.created_by', request()->created_by);
+        }
+
+        $exchanges = $exchanges->select([
+            'transaction_exchanges.id',
+            'transaction_exchanges.exchange_ref_no',
+            'transaction_exchanges.exchange_date',
+            'transaction_exchanges.total_exchange_amount',
+            'transaction_exchanges.status',
+            'transaction_exchanges.exchange_transaction_id',
+            'transaction_exchanges.original_transaction_id',
+            'transaction_exchanges.cancelled_at',
+            'bl.name as location_name',
+            'ot.invoice_no as original_invoice',
+            'et.invoice_no as exchange_invoice',
+            'c.name as customer_name',
+            DB::raw("CONCAT(COALESCE(u.surname, ''), ' ', COALESCE(u.first_name, ''), ' ', COALESCE(u.last_name, '')) as created_by_name"),
+        ]);
+
+        return DataTables::of($exchanges)
+            ->addColumn('action', function ($row) {
+                $is_cancelled = (!is_null($row->cancelled_at) || $row->status == 'cancelled');
+
+                $html = '<div class="btn-group">';
+                $html .= '<button type="button" class="btn btn-xs ' . ($is_cancelled ? 'btn-default' : 'btn-info') . ' dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
+                $html .= __('messages.actions') . ' <span class="caret"></span>';
+                $html .= '</button>';
+                $html .= '<ul class="dropdown-menu dropdown-menu-right">';
+
+                // View exchange (always available)
+                $html .= '<li><a href="#" data-href="' . action([\App\Http\Controllers\ExchangeController::class, 'show'], [$row->id]) . '" class="btn-modal">';
+                $html .= '<i class="fas fa-eye"></i> ' . __('lang_v1.view_exchange') . '</a></li>';
+
+                // View original transaction (always available)
+                $html .= '<li><a href="#" data-href="' . action([\App\Http\Controllers\SellController::class, 'show'], [$row->original_transaction_id]) . '" class="btn-modal">';
+                $html .= '<i class="fas fa-eye"></i> ' . __('lang_v1.view_original_sell_details') . '</a></li>';
+
+                // View exchange transaction (if exists)
+                if (auth()->user()->can('print_invoice') && !empty($row->exchange_transaction_id)) {
+                    $html .= '<li><a href="#" data-href="' . action([\App\Http\Controllers\SellController::class, 'show'], [$row->exchange_transaction_id]) . '" class="btn-modal">';
+                    $html .= '<i class="fas fa-eye"></i> ' . __('lang_v1.view_exchange_sell_details') . '</a></li>';
+                }
+
+                if ($is_cancelled) {
+                    // For cancelled exchanges
+                    $html .= '<li class="disabled"><a href="#" style="color: #999; pointer-events: none;">';
+                    $html .= '<i class="fas fa-ban"></i> ' . __('lang_v1.already_cancelled') . '</a></li>';
+                } else {
+                    // For active exchanges
+                    if (auth()->user()->can('exchange.delete')) {
+                        $html .= '<li><a href="#" class="cancel-exchange" data-exchange-id="' . $row->id . '" data-href="' . action([\App\Http\Controllers\ExchangeController::class, 'cancel'], [$row->id]) . '">';
+                        $html .= '<i class="fas fa-ban text-danger"></i> ' . __('lang_v1.cancel_exchange') . '</a></li>';
+                    }
+                }
+
+                $html .= '</ul></div>';
+                return $html;
+            })
+            ->editColumn('status', function ($row) {
+                if (!is_null($row->cancelled_at) || $row->status == 'cancelled') {
+                    return '<span class="label label-danger">' . __('lang_v1.cancelled') . '</span>';
+                } else {
+                    return '<span class="label label-success">' . ucfirst($row->status) . '</span>';
+                }
+            })
+            ->editColumn('total_exchange_amount', function ($row) {
+                return '<span class="display_currency" data-currency_symbol="true">' . $row->total_exchange_amount . '</span>';
+            })
+            ->editColumn('exchange_date', function ($row) {
+                return $this->transactionUtil->format_date($row->exchange_date, true);
+            })
+            ->setRowClass(function ($row) {
+                return (!is_null($row->cancelled_at) || $row->status == 'cancelled') ? 'cancelled-exchange' : '';
+            })
+            ->rawColumns(['action', 'total_exchange_amount', 'status'])
+            ->make(true);
+    }
+
+    /**
+     * Show exchange details
+     */
+    public function show($id)
+    {
+        if (!auth()->user()->can('exchange.access')) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        $business_id = request()->session()->get('user.business_id');
+
+        $exchange = TransactionExchange::with([
+            'location',
+            'originalTransaction',
+            'originalTransaction.contact',
+            'exchangeTransaction',
+            'creator',
+            'exchangeLines.originalSellLine.product',
+            'exchangeLines.originalSellLine.variations',
+            'exchangeLines.newSellLine.product',
+            'exchangeLines.newSellLine.variations'
+        ])->where('business_id', $business_id)->findOrFail($id);
+
+        return view('exchange.show', compact('exchange'));
+    }
+
+    /**
+     * Print exchange receipt
+     */
+    public function printReceipt($id)
+    {
+        if (!auth()->user()->can('exchange.access')) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        $business_id = request()->session()->get('user.business_id');
+
+        $business_details = $this->businessUtil->getDetails($business_id);
+
+        $exchange = TransactionExchange::with([
+            'location',
+            'originalTransaction',
+            'originalTransaction.contact',
+            'exchangeTransaction',
+            'exchangeLines.originalSellLine.product',
+            'exchangeLines.originalSellLine.variations',
+            'exchangeLines.newSellLine.product',
+            'exchangeLines.newSellLine.variations'
+        ])->where('business_id', $business_id)->findOrFail($id);
+
+        return view('exchange.receipt', compact('exchange', 'business_details'));
+    }
+
+    /**
+     * Cancel exchange
+     */
+    public function cancel($id)
+    {
+        if (!auth()->user()->can('exchange.cancel')) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        try {
+            DB::beginTransaction();
+
+            $business_id = request()->session()->get('user.business_id');
+            $exchange = TransactionExchange::where('business_id', $business_id)->findOrFail($id);
+
+            if ($exchange->status == 'cancelled') {
+                return response()->json([
+                    'success' => false,
+                    'message' => __('lang_v1.exchange_already_cancelled')
+                ]);
+            }
+
+            // Reverse stock updates for each exchange line
+            foreach ($exchange->exchangeLines as $line) {
+                $original_sell_line = $line->originalSellLine;
+
+                // Reverse the quantity returned (put it back as sold)
+                $original_sell_line->quantity_returned -= $line->original_quantity;
+                $original_sell_line->save();
+
+                // Reverse stock update for returned item (remove from stock - was added during exchange)
+                $this->productUtil->updateProductQuantity(
+                    $exchange->location_id,
+                    $original_sell_line->product_id,
+                    $original_sell_line->variation_id,
+                    -$line->original_quantity, // NEGATIVE: Remove from stock (reverse the return)
+                    0,
+                    null,
+                    false
+                );
+
+                // If there was a new item, add it back to stock (reverse the sale)
+                if ($line->newSellLine) {
+                    // Check if stock management is enabled for this product
+                    $new_product = \App\Product::find($line->newSellLine->product_id);
+
+                    if ($new_product && $new_product->enable_stock == 1) {
+                        $this->productUtil->updateProductQuantity(
+                            $exchange->location_id,
+                            $line->newSellLine->product_id,
+                            $line->newSellLine->variation_id,
+                            $line->new_quantity, // POSITIVE: Add back to stock (reverse the sale)
+                            0,
+                            null,
+                            false
+                        );
+                    }
+                }
+            }
+
+            // Reverse payments if any
+            if ($exchange->exchangeTransaction) {
+                // Delete payment lines for the exchange transaction
+                \App\TransactionPayment::where('transaction_id', $exchange->exchangeTransaction->id)->delete();
+
+                // Update exchange transaction status
+                $exchange->exchangeTransaction->status = 'cancelled';
+                $exchange->exchangeTransaction->save();
+            }
+
+            // Update exchange status
+            $exchange->status = 'cancelled';
+            $exchange->cancelled_at = \Carbon\Carbon::now();
+            $exchange->cancelled_by = auth()->user()->id;
+            $exchange->save();
+
+            DB::commit();
+
+            return response()->json([
+                'success' => true,
+                'message' => __('lang_v1.exchange_cancelled_successfully')
+            ]);
+        } catch (\Exception $e) {
+            DB::rollback();
+            \Log::emergency("File:" . $e->getFile() . "Line:" . $e->getLine() . "Message:" . $e->getMessage());
+
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
+}

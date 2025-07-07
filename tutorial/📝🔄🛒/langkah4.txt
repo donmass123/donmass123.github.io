@@ -1,0 +1,17 @@
+// Exchange routes
+Route::get('/exchange/', [ExchangeController::class, 'index'])->name('exchange.index');
+Route::get('/exchange/create', [ExchangeController::class, 'create'])->name('exchange.create');
+Route::post('/exchange/search-transaction', [ExchangeController::class, 'searchTransaction'])->name('exchange.search_transaction');
+Route::post('/exchange/', [ExchangeController::class, 'store'])->name('exchange.store');
+Route::get('/exchange/list', [ExchangeController::class, 'getExchanges'])->name('exchange.list');
+Route::get('/exchange/{id}', [ExchangeController::class, 'show'])->name('exchange.show');
+Route::get('/exchange/{id}/print', [ExchangeController::class, 'printReceipt'])->name('exchange.print');
+Route::post('/exchange/{id}/cancel', [ExchangeController::class, 'cancel'])->name('exchange.cancel');
+
+// Additional routes for exchange product selection
+Route::get('/exchange/products/suggestion', [ExchangeController::class, 'getProductSuggestion'])->name('exchange.product_suggestion');
+Route::get('/exchange/tax-rates', [ExchangeController::class, 'getTaxRates'])->name('exchange.tax_rates');
+Route::post('/exchange/debug', [ExchangeController::class, 'debugExchange'])->name('exchange.debug');
+Route::post('/exchange/{id}/cancel', [ExchangeController::class, 'cancel'])
+    ->name('exchange.cancel')
+    ->middleware(['auth', 'SetSessionData']);
