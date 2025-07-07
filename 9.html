@@ -5,18 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tutorial Point Of Sales</title>
     <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/style3.css" />
+    <link rel="stylesheet" href="css/style1.css" />
     <link rel="stylesheet" href="css/modal.css" />
-
   </head>
   <body>
     <div class="container">
       <header>
-        <h1>Menambahkan Filter Sub-Kategori ke Indeks Produk di POS</h1>
-        <h1>🔍📂🛍️</h1>
+        <h1>Menambahkan “Kebutuhan Stok Cetak” ke dasbor beranda</h1>
+        <h1>📦➕🖨️➡️🏠</h1>
         <p>
-          Dalam tutorial ini, kita akan menambahkan filter sub-kategori dinamis
-          ke indeks produk yang secara otomatis terisi berdasarkan kategori yang
-          dipilih.
+          Membuat tampilan ringkasan atau informasi mengenai kebutuhan stok
+          bahan cetakan (misalnya kertas, tinta, atau barang cetakan lainnya)
+          langsung di halaman utama dashboard (beranda) sistem.
         </p>
       </header>
 
@@ -31,17 +32,379 @@
       </div>
       <!-- HOME -->
       <div class="home-button-wrapper">
-  <a href="main.html" class="home-button">🏠 Kembali ke Beranda</a>
-</div>
-
+        <a href="main.html" class="home-button">🏠 Kembali ke Beranda</a>
+      </div>
 
       <section>
-        <h2>🖼️ Prasyarat</h2>
-        <ul>
-          <li>Ultimate POS sudah terinstal dan terkonfigurasi</li>
-          <li>Pemahaman dasar tentang template Laravel dan Blade</li>
-          <li>Akses database untuk pengujian</li>
+        <h2>📁 Pohon Implementasi Lengkap</h2>
+        <ul class="tree">
+          <li>
+            <details open>
+              <summary>ultimate-pos/</summary>
+              <ul>
+                <li>
+                  <details>
+                    <summary>app/</summary>
+                    <ul>
+                      <li>
+                        <details>
+                          <summary>Http/</summary>
+                          <ul>
+                            <li>
+                              <details>
+                                <summary>Controllers/</summary>
+                                <ul>
+                                  <li class="file">
+                                    HomeController.php
+                                    <span class="tag"
+                                      >✅ Update getProductStockAlert
+                                      method</span
+                                    >
+                                  </li>
+                                </ul>
+                              </details>
+                            </li>
+                          </ul>
+                        </details>
+                      </li>
+                      <li>
+                        <details>
+                          <summary>Utils/</summary>
+                          <ul>
+                            <li class="file">
+                              ProductUtil.php
+                              <span class="tag"
+                                >✅ Update getProductAlert method</span
+                              >
+                            </li>
+                          </ul>
+                        </details>
+                      </li>
+                    </ul>
+                  </details>
+                </li>
+                <li>
+                  <details>
+                    <summary>resources/</summary>
+                    <ul>
+                      <li>
+                        <details>
+                          <summary>views/</summary>
+                          <ul>
+                            <li>
+                              <details>
+                                <summary>home/</summary>
+                                <ul>
+                                  <li class="file">
+                                    index.blade.php
+                                    <span class="tag"
+                                      >✅ Add print button + JavaScript</span
+                                    >
+                                  </li>
+                                </ul>
+                              </details>
+                            </li>
+                          </ul>
+                        </details>
+                      </li>
+                    </ul>
+                  </details>
+                </li>
+                <li>
+                  <details>
+                    <summary>lang/</summary>
+                    <ul>
+                      <li>
+                        <details>
+                          <summary>en/</summary>
+                          <ul>
+                            <li class="file">
+                              lang_v1.php
+                              <span class="tag">✅ Add new translations</span>
+                            </li>
+                          </ul>
+                        </details>
+                      </li>
+                    </ul>
+                  </details>
+                </li>
+                <li>
+                  <details>
+                    <summary>public/</summary>
+                    <ul>
+                      <li>
+                        <details>
+                          <summary>js/</summary>
+                          <ul>
+                            <li class="file">
+                              home.js
+                              <span class="tag tag-add"
+                                >⚪ Add location filter event (optional)</span
+                              >
+                            </li>
+                          </ul>
+                        </details>
+                      </li>
+                      <li>
+                        <details>
+                          <summary>uploads/</summary>
+                          <ul>
+                            <li>
+                              <details>
+                                <summary>business_logos/</summary>
+                                <ul>
+                                  <li class="file">
+                                    company-logo.png
+                                    <span class="tag tag-new"
+                                      >🖼️ Company logo file</span
+                                    >
+                                  </li>
+                                </ul>
+                              </details>
+                            </li>
+                          </ul>
+                        </details>
+                      </li>
+                    </ul>
+                  </details>
+                </li>
+              </ul>
+            </details>
+          </li>
         </ul>
+        <h2>📦 Unduh File Starter</h2>
+        <a
+          href="https://drive.google.com/file/d/1M9FjpKNe3TfJJh5TzyCAY3p9uZPeeMg-/view?usp=drive_link"
+          download
+          class="section-download"
+          >⬇️ Unduh</a
+        >
+        <p>
+          File zip ini berisi struktur folder lengkap dengan file placeholder
+          untuk membantu Anda memulai dengan cepat. Ekstrak untuk melihat
+          organisasi yang tepat yang diperlukan untuk implementasi.
+        </p>
+        <h2>🔧 Ringkasan Modifikasi File</h2>
+        <div class="table-wrapper">
+          <table class="file-changes">
+            <thead>
+              <tr>
+                <th>File</th>
+                <th>Changes Required</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td data-label="File">
+                  <strong>resources/views/home/index.blade.php</strong>
+                </td>
+                <td data-label="Changes Required">
+                  Add print button + JavaScript
+                </td>
+                <td data-label="Status">
+                  <span class="status required">✅ Required</span>
+                </td>
+              </tr>
+              <tr>
+                <td data-label="File">
+                  <strong>app/Http/Controllers/HomeController.php</strong>
+                </td>
+                <td data-label="Changes Required">
+                  Update <strong>getProductStockAlert()</strong>
+                </td>
+                <td data-label="Status">
+                  <span class="status required">✅ Required</span>
+                </td>
+              </tr>
+              <tr>
+                <td data-label="File">
+                  <strong>app/Utils/ProductUtil.php</strong>
+                </td>
+                <td data-label="Changes Required">
+                  Update <strong>getProductAlert()</strong>
+                </td>
+                <td data-label="Status">
+                  <span class="status required">✅ Required</span>
+                </td>
+              </tr>
+              <tr>
+                <td data-label="File"><strong>lang/en/lang_v1.php</strong></td>
+                <td data-label="Changes Required">Add new translations</td>
+                <td data-label="Status">
+                  <span class="status required">✅ Required</span>
+                </td>
+              </tr>
+              <tr>
+                <td data-label="File"><strong>public/js/home.js</strong></td>
+                <td data-label="Changes Required">Add location filter event</td>
+                <td data-label="Status">
+                  <span class="status optional">⚪ Optional</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <section>
+        <h2>Screenshots dan Hasilnya</h2>
+        <h3>1. Antarmuka POS dengan Tombol Cetak</h3>
+        <div class="image-box">
+          <img
+            src="https://ultimate-pos-tutorials.vercel.app/assets/images/print-stock-need-button-d606dacee68fc957c286d7d1152b7dfa.png"
+            alt="#"
+          />
+          <p class="caption">Gambar: Antarmuka POS dengan Tombol Cetak</p>
+        </div>
+        <p>
+          Dasbor POS yang menunjukkan bagian Peringatan Stok Produk dengan
+          tombol “Cetak Kebutuhan Stok” yang baru. Tabel menampilkan semua 6
+          kolom dengan benar: Produk, Lokasi, Stok Saat Ini, Jumlah Peringatan,
+          Stok yang Diharapkan, dan Kebutuhan Stok.
+        </p>
+        <h3>2. Pratinjau Cetak Profesional</h3>
+        <div class="image-box">
+          <img
+            src="https://ultimate-pos-tutorials.vercel.app/assets/images/print-stock-need-preview-379d8c6fb9eeeecf94eb14983500de93.png"
+            alt="#"
+          />
+          <p class="caption">Gambar: Pratinjau Cetak Profesional</p>
+        </div>
+        <p>
+          Laporan cetak yang dihasilkan, menunjukkan pemformatan profesional
+          dengan:
+        </p>
+        <ul>
+          <li>Branding Perusahaan (ERP)</li>
+          <li>Judul Laporan dan Waktu Pembuatan</li>
+          <li>
+            Statistik Ringkasan (Total Produk: 1, Item Kritis: 1, Total Stok
+            Saat Ini: 8,00, dll.)
+          </li>
+          <li>
+            Tabel data yang diformat dengan kolom Stock Need berwarna (sesuai
+            kebutuhan)
+          </li>
+          <li>Footer dengan detail cetak</li>
+        </ul>
+        <h3>3. Dialog Cetak di Peramban</h3>
+        <div class="image-box">
+          <img
+            src="https://ultimate-pos-tutorials.vercel.app/assets/images/print-stock-need-dialog-35d186a3073390bcd74d8b223c4029a5.png"
+            alt="#"
+          />
+          <p class="caption">Gambar: Dialog Cetak di Peramban</p>
+        </div>
+        <p>
+          Dialog cetak di peramban menampilkan opsi "Simpan sebagai PDF" dengan
+          pratinjau cetak yang terlihat di latar belakang. Pengguna dapat
+          menyimpan laporan sebagai PDF atau mencetak langsung ke printer fisik.
+        </p>
+      </section>
+      <section>
+        <h2>Keberhasilan Implementasi</h2>
+        <p>
+          Cuplikan layar berikut menunjukkan keberhasilan implementasi fitur
+          <strong>"Cetak Kebutuhan Stok"</strong>:
+        </p>
+        <ul>
+          <li>
+            ✅ Integrasi Tombol: Tombol cetak telah terintegrasi dengan baik di
+            antarmuka Ultimate POS
+          </li>
+          <li>
+            ✅ Tampilan Data: Semua 6 kolom ditampilkan dengan benar dan format
+            yang rapi
+          </li>
+          <li>
+            ✅ Output Profesional: Pratinjau cetak menampilkan tata letak
+            laporan yang bersih dan profesional
+          </li>
+          <li>
+            ✅ Statistik Berfungsi: Statistik ringkasan dihitung dan ditampilkan
+            dengan akurat
+          </li>
+          <li>
+            ✅ Ekspor PDF: Pengguna dapat menyimpan laporan sebagai PDF atau
+            mencetak langsung
+          </li>
+        </ul>
+
+        <h3>Pencapaian Utama</h3>
+        <ul>
+          <li>
+            <strong>Stok Saat Ini:</strong> 8,00 Pc — ditampilkan dengan benar
+          </li>
+          <li>
+            <strong>Jumlah Minimum:</strong> 11,00 Pc — menunjukkan batas
+            reorder
+          </li>
+          <li>
+            <strong>Kebutuhan Stok:</strong>
+            <span class="highlight">3 Pc</span> — dihitung dengan benar (11 - 8
+            = 3)
+          </li>
+          <li>
+            <strong>Cakupan Stok:</strong> 72,7% — dihitung sebagai (8/11 × 100
+            = 72,7%)
+          </li>
+          <li>
+            <strong>Pewarnaan:</strong> Kebutuhan Stok ditampilkan dalam warna
+            <span class="highlight">merah</span> karena > 0 (kritis)
+          </li>
+        </ul>
+      </section>
+      <section>
+        <h2>Gambaran Umum</h2>
+        <p>
+          Panduan ini akan memandu Anda untuk menambahkan tombol
+          <strong>"Cetak Kebutuhan Stok"</strong> pada bagian peringatan stok di
+          dasbor beranda, memungkinkan pengguna untuk menghasilkan laporan cetak
+          produk yang perlu diisi ulang.
+        </p>
+        <h3>Fungsi Fitur</h3>
+        <p>
+          Fitur <strong>"Cetak Kebutuhan Stok"</strong> memungkinkan pengguna
+          untuk menghasilkan laporan cetak yang menampilkan:
+        </p>
+        <ul>
+          <li>Nama produk</li>
+          <li>Lokasi</li>
+          <li>Jumlah kebutuhan stok</li>
+          <li>Diformat dengan gaya profesional</li>
+        </ul>
+        <h2>Prasyarat</h2>
+        <ul>
+          <li>Akses ke kode sumber <strong>POS</strong></li>
+          <li>Pemahaman tentang template <strong>Laravel Blade</strong></li>
+          <li>Pengetahuan dasar <strong>JavaScript</strong></li>
+          <li>Familiar dengan struktur <strong>POS</strong></li>
+        </ul>
+      </section>
+      <section>
+        <h2>Langkah 1: Temukan File yang Dituju</h2>
+        <p>Arahkan ke file tampilan beranda di proyek Laravel Anda:</p>
+        <pre><code>resources/views/home/index.blade.php</code></pre>
+      </section>
+      <section>
+        <h2>Langkah 2: Cari Bagian Peringatan Stok</h2>
+        <p>
+          Cari bagian Blade berikut yang biasanya digunakan untuk otorisasi
+          tampilan laporan stok:
+        </p>
+        <pre><code>@can('stock_report.view')</code></pre>
+        <p>
+          Bagian ini umumnya berisi komponen kartu peringatan stok produk. Di
+          dalamnya terdapat struktur tabel dengan kolom-kolom berikut:
+        </p>
+        <div class="url-buttons">
+          <button
+            class="view-modal-button"
+            data-url="tutorial/📦➕🖨️➡️🏠/langkah2.txt"
+          >
+            resources/views/layouts/partials/header.blade.php
+          </button>
+        </div>
       </section>
 
       <section>

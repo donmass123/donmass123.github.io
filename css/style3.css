@@ -1,92 +1,113 @@
-/* Wrapper agar tabel bisa discroll horizontal di layar kecil */
 .table-wrapper {
-    width: 100%;
-    overflow-x: auto;
-    margin: 30px auto;
-    padding: 0 15px;
+  width: 100%;
+  overflow-x: auto;
+  margin: 30px auto;
+  padding: 0 15px;
 }
 
-/* Base Styling */
+/* Default desktop/tablet */
 table.file-changes {
-    width: 100%;
-    min-width: 600px; /* agar horizontal scroll muncul */
-    border-collapse: collapse;
-    background-color: #fff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  min-width: 650px;
+  word-wrap: break-word;
 }
 
 table.file-changes th,
 table.file-changes td {
-    padding: 12px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-    white-space: nowrap;
+  padding: 12px 16px;
+  border: 1px solid #ddd;
+  text-align: left;
+  vertical-align: top;
+  white-space: normal; /* IZINKAN WRAP */
+  word-break: break-word;
 }
 
 table.file-changes th {
-    background-color: #4CAF50;
-    color: white;
+  background-color: #4CAF50;
+  color: white;
 }
 
 table.file-changes tr:nth-child(even) {
-    background-color: #f9f9f9;
+  background-color: #f9f9f9;
 }
 
-table.file-changes code {
-    background-color: #f4f4f4;
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-size: 0.9rem;
+/* Ganti <code> dengan <strong> */
+table.file-changes strong {
+  background-color: #f4f4f4;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-family: monospace;
+  font-weight: 600;
+  color: #333;
 }
 
-/* Responsif tambahan untuk layar kecil */
-@media (max-width: 768px) {
-    .table-wrapper {
-        padding: 0 10px;
-    }
-
-    table.file-changes {
-        font-size: 0.85rem;
-    }
-
-    table.file-changes th,
-    table.file-changes td {
-        padding: 10px 6px;
-    }
+.status.required {
+  color: green;
+  font-weight: bold;
+}
+.status.optional {
+  color: #999;
+  font-style: italic;
 }
 
-/* Alternatif stack mode untuk ponsel sangat kecil (di bawah 480px) */
-@media (max-width: 480px) {
-    table.file-changes {
-        min-width: unset;
-        display: block;
-        overflow-x: auto;
-    }
+table.file-changes tr:hover {
+  background-color: #eef6ee;
+}
 
-    table.file-changes thead {
-        display: none; /* Sembunyikan header */
-    }
+/* MOBILE RESPONSIVE */
+@media screen and (max-width: 768px) {
+  .table-wrapper {
+    padding: 0 10px;
+  }
 
-    table.file-changes tbody,
-    table.file-changes tr,
-    table.file-changes td {
-        display: block;
-        width: 100%;
-    }
+  table.file-changes {
+    border: 0;
+    min-width: 100%;
+  }
 
-    table.file-changes tr {
-        margin-bottom: 1rem;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        padding: 10px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    }
+  table.file-changes thead {
+    display: none;
+  }
 
-    table.file-changes td::before {
-        content: attr(data-label);
-        font-weight: bold;
-        display: block;
-        margin-bottom: 4px;
-        color: #4CAF50;
-    }
+  table.file-changes tr {
+    display: block;
+    margin-bottom: 1.5rem;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 10px;
+    background-color: #fff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  }
+
+  table.file-changes td {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    border: none;
+    border-bottom: 1px solid #eee;
+    padding: 10px 8px;
+    font-size: 14px;
+  }
+
+  table.file-changes td:last-child {
+    border-bottom: none;
+  }
+
+  table.file-changes td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    color: #4CAF50;
+    flex: 0 0 100%;
+    margin-bottom: 4px;
+  }
+
+  table.file-changes td > *:not(:first-child) {
+    flex: 1 1 100%;
+    text-align: left;
+    word-break: break-word;
+  }
 }
