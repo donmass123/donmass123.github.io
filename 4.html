@@ -5,18 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tutorial Point Of Sales</title>
     <link rel="stylesheet" href="css/style.css" />
-        <link rel="stylesheet" href="css/modal.css" />
-
+    <link rel="stylesheet" href="css/modal.css" />
   </head>
   <body>
     <div class="container">
       <header>
-        <h1>
-          Menambahkan Tagihan Jatuh Tempo ke Mesin Kasir
-        </h1>
+        <h1>Menambahkan Tagihan Jatuh Tempo ke Mesin Kasir</h1>
         <h1>💸⏳🖥️</h1>
         <p>
-          Pelajari cara menambahkan tampilan tagihan jatuh tempo yang komprehensif ke mesin kasir POS Anda yang menampilkan pembayaran yang telah ditagih, iuran yang tertunda, dan jumlah yang tertunggak.
+          Pelajari cara menambahkan View tagihan jatuh tempo yang
+          komprehensif ke mesin kasir POS Anda yang menampilkan pembayaran yang
+          telah ditagih, iuran yang tertunda, dan jumlah yang tertunggak.
         </p>
       </header>
 
@@ -30,9 +29,9 @@
         </a>
       </div>
       <!-- HOME -->
-       <div class="home-button-wrapper">
-          <a href="main.html" class="home-button">🏠 Kembali ke Beranda</a>
-        </div>
+      <div class="home-button-wrapper">
+        <a href="main.html" class="home-button">🏠 Kembali ke Beranda</a>
+      </div>
 
       <section>
         <h2>📋 Apa yang Akan Anda Bangun</h2>
@@ -41,36 +40,46 @@
             src="https://ultimate-pos-tutorials.vercel.app/assets/images/due-collections-preview-97e82cea377112d6b45fdd95619c2a7e.png"
             alt="#"
           />
-          <p class="caption">
-            Gambar: Apa yang Akan Anda Bangun.
-          </p>
+          <p class="caption">Gambar: Apa yang Akan Anda Bangun.</p>
         </div>
         <p>Pada akhir tutorial ini, mesin kasir Anda akan ditampilkan:</p>
         <ul>
-            <li>✅ Dikumpulkan Hari Ini: Semua pembayaran jatuh tempo yang diterima hari ini (di seluruh bisnis)</li>
-            <li>⚠️ Tertunda Jatuh Tempo Hari Ini: Jumlah yang belum dibayar dari penjualan hari ini</li>
-            <li>🔴 Jumlah Tertunggak: Iuran yang belum dibayar di hari sebelumnya (ditampilkan jika ada)</li>
+          <li>
+            ✅ Dikumpulkan Hari Ini: Semua pembayaran jatuh tempo yang diterima
+            hari ini (di seluruh bisnis)
+          </li>
+          <li>
+            ⚠️ Tertunda Jatuh Tempo Hari Ini: Jumlah yang belum dibayar dari
+            penjualan hari ini
+          </li>
+          <li>
+            🔴 Jumlah Tertunggak: Iuran yang belum dibayar di hari sebelumnya
+            (ditampilkan jika ada)
+          </li>
         </ul>
       </section>
       <section>
         <h2>🎯 Fitur</h2>
         <ul>
-            <li>Visibilitas ke seluruh bisnis (tidak hanya kasir saat ini)</li>
-            <li>Data real-time dengan jumlah transaksi</li>
-            <li>Tampilan bersyarat yang cerdas (kotak jatuh tempo hanya muncul jika diperlukan)</li>
-            <li>Desain responsif yang indah dengan ikon-ikon</li>
-            <li>Penataan yang ramah untuk dicetak</li>
-            <li>Dapat digunakan pada detail kasir dan modal kasir tutup</li>
+          <li>Visibilitas ke seluruh bisnis (tidak hanya kasir saat ini)</li>
+          <li>Data real-time dengan jumlah transaksi</li>
+          <li>
+            View bersyarat yang cerdas (kotak jatuh tempo hanya muncul jika
+            diperlukan)
+          </li>
+          <li>Desain responsif yang indah dengan ikon-ikon</li>
+          <li>Penataan yang ramah untuk dicetak</li>
+          <li>Dapat digunakan pada detail kasir dan modal kasir tutup</li>
         </ul>
       </section>
 
       <section>
         <h2>📚 Syarat</h2>
         <ul>
-            <li>Sistem POS berbasis Laravel</li>
-            <li>Pengetahuan dasar tentang template PHP dan Blade</li>
-            <li>Akses ke file controller dan tampilan</li>
-            <li>Pemahaman tentang hubungan basis data</li>
+          <li>Sistem POS berbasis Laravel</li>
+          <li>Pengetahuan dasar tentang template PHP dan Blade</li>
+          <li>Akses ke file controller dan view</li>
+          <li>Pemahaman tentang hubungan Database</li>
         </ul>
       </section>
       <section>
@@ -79,11 +88,20 @@
 
       <section>
         <h2>✅ Langkah 1: Perbarui Class CashRegisterUtil</h2>
-        <p>Pertama, kita akan menambahkan logika penagihan jatuh tempo ke <strong>app/Utils/CashRegisterUtil.php</strong>.</p>
+        <p>
+          Pertama, kita akan menambahkan logika penagihan jatuh tempo ke
+          <strong>app/Utils/CashRegisterUtil.php</strong>.
+        </p>
         <h3>1.1 Menambahkan Metode Penagihan Jatuh Tempo</h3>
-        <p>Tambahkan metode ini ke <strong>app/Utils/CashRegisterUtil.php</strong>:</p>
+        <p>
+          Tambahkan metode ini ke
+          <strong>app/Utils/CashRegisterUtil.php</strong>:
+        </p>
         <div class="url-buttons">
-          <button class="view-modal-button" data-url="tutorial/💸⏳🖥️/langkah1.txt">
+          <button
+            class="view-modal-button"
+            data-url="tutorial/💸⏳🖥️/langkah1.txt"
+          >
             app/Utils/CashRegisterUtil.php
           </button>
         </div>
@@ -91,36 +109,65 @@
 
       <section>
         <h2>✅ Langkah 2: Perbarui Controller</h2>
-        <p>Sekarang perbarui <strong>app/Http/Controllers/CashRegisterController.php</strong> untuk memanggil metode utilitas.</p>
+        <p>
+          Sekarang perbarui
+          <strong>app/Http/Controllers/CashRegisterController.php</strong> untuk
+          memanggil metode utilitas.
+        </p>
         <h3>2.1 Perbarui Metode getRegisterDetails</h3>
-        <p>Perbarui metode getRegisterDetails() yang sudah ada di controller:</p>
+        <p>
+          Perbarui metode getRegisterDetails() yang sudah ada di controller:
+        </p>
         <div class="url-buttons">
-          <button class="view-modal-button" data-url="tutorial/💸⏳🖥️/langkah2_1.txt">
+          <button
+            class="view-modal-button"
+            data-url="tutorial/💸⏳🖥️/langkah2_1.txt"
+          >
             app/Http/Controllers/CashRegisterController.php
           </button>
         </div>
 
-        <h3>2.2 Perbarui metode getRegisterDetails yang sudah ada di <strong>app/Utils/CashRegisterUtil.php</strong></h3>
+        <h3>
+          2.2 Perbarui metode getRegisterDetails yang sudah ada di
+          <strong>app/Utils/CashRegisterUtil.php</strong>
+        </h3>
         <div class="url-buttons">
-          <button class="view-modal-button" data-url="tutorial/💸⏳🖥️/langkah2_2.txt">
+          <button
+            class="view-modal-button"
+            data-url="tutorial/💸⏳🖥️/langkah2_2.txt"
+          >
             app/Http/Controllers/CashRegisterController.php
           </button>
         </div>
         <h3>2.3 Perbarui Metode getCloseRegister (Opsional)</h3>
-        <p>Jika Anda menginginkan fitur yang sama pada modal close register Anda, perbarui metode getCloseRegister() Anda: Sekarang perbarui app/Http/Controllers/CashRegisterController.php untuk memanggil metode utilitas.</p>
+        <p>
+          Jika Anda menginginkan fitur yang sama pada modal close register Anda,
+          perbarui metode getCloseRegister() Anda: Sekarang perbarui
+          app/Http/Controllers/CashRegisterController.php untuk memanggil metode
+          utilitas.
+        </p>
         <div class="url-buttons">
-          <button class="view-modal-button" data-url="tutorial/💸⏳🖥️/langkah2_3.txt">
+          <button
+            class="view-modal-button"
+            data-url="tutorial/💸⏳🖥️/langkah2_3.txt"
+          >
             app/Http/Controllers/CashRegisterController.php
           </button>
         </div>
       </section>
 
       <section>
-        <h2>✅ Langkah 3: Perbarui Tampilan Detail Register</h2>
-        <p>Perbarui file resources/views/cash_register/register_details.blade.php Anda.</p>
+        <h2>✅ Langkah 3: Perbarui View Detail Register</h2>
+        <p>
+          Perbarui file resources/views/cash_register/register_details.blade.php
+          Anda.
+        </p>
         <h3>3.1 Tambahkan Bagian Penagihan Jatuh Tempo</h3>
         <div class="url-buttons">
-          <button class="view-modal-button" data-url="tutorial/💸⏳🖥️/langkah3.txt">
+          <button
+            class="view-modal-button"
+            data-url="tutorial/💸⏳🖥️/langkah3.txt"
+          >
             resources/views/cash_register/register_details.blade.php
           </button>
         </div>
@@ -128,14 +175,23 @@
           >Unduh
           resources/views/cash_register/register_details.blade.php</a
         > -->
-
       </section>
 
       <section>
         <h2>✅ Langkah 4: Perbarui Modal Tutup Register (Opsional)</h2>
-        <p>Jika Anda menginginkan fitur yang sama pada modal close register Anda, perbarui <strong>resources/views/cash_register/close_register.blade.php</strong> dengan bagian due collections dan CSS yang sama.</p>
+        <p>
+          Jika Anda menginginkan fitur yang sama pada modal close register Anda,
+          perbarui
+          <strong
+            >resources/views/cash_register/close_register.blade.php</strong
+          >
+          dengan bagian due collections dan CSS yang sama.
+        </p>
         <div class="url-buttons">
-          <button class="view-modal-button" data-url="tutorial/💸⏳🖥️/langkah4.txt">
+          <button
+            class="view-modal-button"
+            data-url="tutorial/💸⏳🖥️/langkah4.txt"
+          >
             resources/views/cash_register/close_register.blade.php
           </button>
         </div>
@@ -145,29 +201,63 @@
         <h2>🧪 Pengujian</h2>
         <h3>Skenario Pengujian</h3>
         <ul>
-            <li>Membuat penjualan kredit: Lakukan penjualan dengan pembayaran sebagian</li>
-            <li>Kumpulkan pembayaran yang sudah jatuh tempo: Bayar sisa pembayaran hari ini</li>
-            <li>Periksa detail register: Verifikasi "Dikumpulkan Hari Ini" menunjukkan pembayaran</li>
-            <li>Buat transaksi yang telah jatuh tempo: Lakukan penjualan dari hari-hari sebelumnya dengan jumlah yang belum dibayar</li>
-            <li>Verifikasi tampilan tunggakan: Periksa kotak merah yang telah jatuh tempo muncul jika ada</li>
+          <li>
+            Membuat penjualan kredit: Lakukan penjualan dengan pembayaran
+            sebagian
+          </li>
+          <li>
+            Kumpulkan pembayaran yang sudah jatuh tempo: Bayar sisa pembayaran
+            hari ini
+          </li>
+          <li>
+            Periksa detail register: Verifikasi "Dikumpulkan Hari Ini"
+            menunjukkan pembayaran
+          </li>
+          <li>
+            Buat transaksi yang telah jatuh tempo: Lakukan penjualan dari
+            hari-hari sebelumnya dengan jumlah yang belum dibayar
+          </li>
+          <li>
+            Verifikasi View tunggakan: Periksa kotak merah yang telah jatuh
+            tempo muncul jika ada
+          </li>
         </ul>
         <h3>Hasil yang Diharapkan</h3>
         <ul>
-            <li>✅ Ditagih Hari Ini: Menampilkan semua pembayaran jatuh tempo yang diterima hari ini</li>
-            <li>✅ Jatuh Tempo Tertunda Hari Ini: Menampilkan jumlah yang belum dibayar dari penjualan hari ini</li>
-            <li>✅ Jumlah Tertunggak: Hanya ditampilkan jika ada transaksi yang benar-benar jatuh tempo</li>
-            <li>✅ Jumlah Transaksi: Hitungan akurat dari transaksi yang terpengaruh</li>
-            <li>✅ Desain Responsif: Dapat digunakan di perangkat mobile dan desktop</li>
-            <li>✅ Print Friendly: Terlihat bagus saat dicetak</li>
+          <li>
+            ✅ Ditagih Hari Ini: Menampilkan semua pembayaran jatuh tempo yang
+            diterima hari ini
+          </li>
+          <li>
+            ✅ Jatuh Tempo Tertunda Hari Ini: Menampilkan jumlah yang belum
+            dibayar dari penjualan hari ini
+          </li>
+          <li>
+            ✅ Jumlah Tertunggak: Hanya ditampilkan jika ada transaksi yang
+            benar-benar jatuh tempo
+          </li>
+          <li>
+            ✅ Jumlah Transaksi: Hitungan akurat dari transaksi yang terpengaruh
+          </li>
+          <li>
+            ✅ Desain Responsif: Dapat digunakan di perangkat mobile dan desktop
+          </li>
+          <li>✅ Print Friendly: Terlihat bagus saat dicetak</li>
         </ul>
       </section>
 
       <section>
         <h2>🎨 Kustomisasi</h2>
         <h3>Mengubah Warna</h3>
-        <p>Anda dapat menyesuaikan warna kotak dengan memodifikasi kelas Bootstrap:</p>
+        <p>
+          Anda dapat menyesuaikan warna kotak dengan memodifikasi kelas
+          Bootstrap:
+        </p>
         <div class="url-buttons">
-          <button class="view-modal-button" data-url="tutorial/💸⏳🖥️/bootstrap.txt">
+          <button
+            class="view-modal-button"
+            data-url="tutorial/💸⏳🖥️/bootstrap.txt"
+          >
             Bootstrap
           </button>
         </div>
@@ -179,65 +269,104 @@
           </button>
         </div>
         <h3>Memodifikasi Tata Letak</h3>
-        <p>Ubah dari 3 kotak menjadi 2 kotak dengan menghapus bagian yang sudah lewat jatuh tempo atau sesuaikan ukuran kolom:</p>
+        <p>
+          Ubah dari 3 kotak menjadi 2 kotak dengan menghapus bagian yang sudah
+          lewat jatuh tempo atau sesuaikan ukuran kolom:
+        </p>
         <div class="url-buttons">
-          <button class="view-modal-button" data-url="tutorial/💸⏳🖥️/layout.txt">
+          <button
+            class="view-modal-button"
+            data-url="tutorial/💸⏳🖥️/layout.txt"
+          >
             Layout
           </button>
         </div>
       </section>
       <section>
         <h2>🔧 Pemecahan masalah</h2>
-        <H3>Masalah Umum</H3>
+        <h3>Masalah Umum</h3>
         <p>Masalah: Ikon tidak ditampilkan</p>
         <ul>
-            <li>Solusi: Pastikan Font Awesome dimuat di tata letak Anda</li>
-            <li>Alternatif: Gunakan simbol teks atau pustaka ikon yang berbeda</li>
+          <li>Solusi: Pastikan Font Awesome dimuat di tata letak Anda</li>
+          <li>
+            Alternatif: Gunakan simbol teks atau pustaka ikon yang berbeda
+          </li>
         </ul>
         <p>Masalah: Data tidak muncul</p>
         <ul>
-            <li>Solusi: Pastikan bahwa <strong>$details['due_collections']</strong> diteruskan ke tampilan</li>
-            <li>Debug: Tambahkan <strong>{{ dd($details) }}</strong> untuk melihat data yang tersedia</li>
+          <li>
+            Solusi: Pastikan bahwa
+            <strong>$details['due_collections']</strong> diteruskan ke View
+          </li>
+          <li>
+            Debug: Tambahkan <strong>{{ dd($details) }}</strong> untuk melihat
+            data yang tersedia
+          </li>
         </ul>
         <p>Masalah: Jumlah yang salah</p>
         <ul>
-            <li>Solusi: Pastikan hubungan database Anda sesuai dengan struktur kueri</li>
-            <li>Periksa: Pastikan <strong>business_id</strong> diatur dengan benar dalam sesi</li>
+          <li>
+            Solusi: Pastikan hubungan database Anda sesuai dengan struktur kueri
+          </li>
+          <li>
+            Periksa: Pastikan <strong>business_id</strong> diatur dengan benar
+            dalam sesi
+          </li>
         </ul>
 
         <p>Masalah: Menata konflik</p>
         <ul>
-            <li>Solusi: Gunakan penyeleksi CSS yang lebih spesifik atau deklarasi !important</li>
-            <li>Alternatif: Pindahkan CSS ke file terpisah</li>
+          <li>
+            Solusi: Gunakan penyeleksi CSS yang lebih spesifik atau deklarasi
+            !important
+          </li>
+          <li>Alternatif: Pindahkan CSS ke file terpisah</li>
         </ul>
         <h3>Persyaratan Database</h3>
         <p>Pastikan database Anda memiliki tabel dan hubungan berikut ini:</p>
         <ul>
-            <li>tabel transaksi dengan kolom business_id, payment_status, type, status</li>
-            <li>tabel transaction_payments dengan kolom transaction_id, amount, paid_on</li>
-            <li>Hubungan foreign key yang tepat antar tabel</li>
+          <li>
+            tabel transaksi dengan kolom business_id, payment_status, type,
+            status
+          </li>
+          <li>
+            tabel transaction_payments dengan kolom transaction_id, amount,
+            paid_on
+          </li>
+          <li>Hubungan foreign key yang tepat antar tabel</li>
         </ul>
       </section>
       <section>
         <h2>Kesimpulan</h2>
-        <p>Anda telah berhasil mengimplementasikan tampilan penagihan jatuh tempo yang komprehensif yang menyediakan:</p>
+        <p>
+          Anda telah berhasil mengimplementasikan View penagihan jatuh tempo
+          yang komprehensif yang menyediakan:
+        </p>
         <ul>
-            <li>Visibilitas real-time ke dalam penagihan pembayaran</li>
-            <li>Data di seluruh bisnis untuk pengambilan keputusan yang lebih baik</li>
-            <li>UI profesional dengan desain yang responsif</li>
-            <li>Tampilan bersyarat yang cerdas untuk pengalaman pengguna yang optimal</li>
+          <li>Visibilitas real-time ke dalam penagihan pembayaran</li>
+          <li>
+            Data di seluruh bisnis untuk pengambilan keputusan yang lebih baik
+          </li>
+          <li>UI profesional dengan desain yang responsif</li>
+          <li>
+            View bersyarat yang cerdas untuk pengalaman pengguna yang
+            optimal
+          </li>
         </ul>
-        <p>Fitur ini akan membantu bisnis Anda melacak penagihan jatuh tempo secara lebih efektif dan meningkatkan manajemen arus kas.</p>
+        <p>
+          Fitur ini akan membantu bisnis Anda melacak penagihan jatuh tempo
+          secara lebih efektif dan meningkatkan manajemen arus kas.
+        </p>
       </section>
 
       <footer>
         <!-- HOME -->
-       <div class="home-button-wrapper">
+        <div class="home-button-wrapper">
           <a href="main.html" class="home-button">🏠 Kembali ke Beranda</a>
         </div>
       </footer>
     </div>
-          <div id="myModal" class="modal">
+    <div id="myModal" class="modal">
       <div class="modal-content">
         <span class="close">&times;</span>
         <iframe

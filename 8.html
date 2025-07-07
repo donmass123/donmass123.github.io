@@ -55,12 +55,12 @@
         <ul>
           <li>
             <strong>Optimalkan Hapus</strong>: Menghapus semua cache
-            konfigurasi, rute, tampilan, dan layanan yang dikompilasi
+            konfigurasi, Route, View, dan layanan yang dikompilasi
           </li>
           <li><strong>Route Clear</strong>: Menghapus cache route</li>
           <li><strong>Config Clear</strong>: Menghapus cache konfigurasi</li>
           <li>
-            <strong>View Clear</strong>: Menghapus file tampilan yang
+            <strong>View Clear</strong>: Menghapus file View yang
             dikompilasi
           </li>
           <li><strong>Cache Clear</strong>: Menghapus cache aplikasi</li>
@@ -214,7 +214,7 @@
 
       <section>
         <h2>Langkah 1: Perbarui Routes</h2>
-        <p>Tambahkan perintah rute ke file <strong>routes/web.php</strong> Anda:</p>
+        <p>Tambahkan perintah Route ke file <strong>routes/web.php</strong> Anda:</p>
         <div class="url-buttons">
           <button
             class="view-modal-button"
@@ -263,16 +263,16 @@
         <h3>🚀 Optimalkan: Clear All</h3>
         <p>Command: php artisan optimize:clear</p>
         <ul>
-          <li>Tujuan: Menghapus semua konfigurasi, rute, tampilan, dan layanan yang di-cache</li>
+          <li>Tujuan: Menghapus semua konfigurasi, Route, View, dan layanan yang di-cache</li>
           <li>Kasus Penggunaan: Paling baik untuk penerapan atau ketika terjadi beberapa masalah cache</li>
           <li>Dampak: Pembersihan cache secara menyeluruh, dapat memperlambat beberapa permintaan pertama untuk sementara waktu</li>
         </ul>
         <h3>🛣️ Hapus: Routes</h3>
         <p>Perintah: php artisan route:clear</p>
         <ul>
-          <li>Tujuan: Menghapus definisi rute yang di-cache</li>
-          <li>Kasus Penggunaan: Setelah menambahkan/memodifikasi rute atau middleware rute</li>
-          <li>Dampak: Memaksa Laravel untuk mengkompilasi ulang definisi rute</li>
+          <li>Tujuan: Menghapus definisi Route yang di-cache</li>
+          <li>Kasus Penggunaan: Setelah menambahkan/memodifikasi Route atau middleware Route</li>
+          <li>Dampak: Memaksa Laravel untuk mengkompilasi ulang definisi Route</li>
         </ul>
         <h3>⚙️ Bersihkan : Config</h3>
         <p>Perintah: php artisan config:clear</p>
@@ -291,7 +291,7 @@
         <h3>💾 Hapus: Cache</h3>
         <p>Perintah: php artisan cache:clear</p>
         <ul>
-          <li>Tujuan: Menghapus cache aplikasi (bukan cache konfigurasi/rute/view)</li>
+          <li>Tujuan: Menghapus cache aplikasi (bukan cache konfigurasi/Route/view)</li>
           <li>Kasus Penggunaan: Menghapus data cache khusus atau data fasad Cache</li>
           <li>Dampak: Menghapus data cache khusus aplikasi</li>
         </ul>
@@ -319,7 +319,7 @@
         <ul>
           <li>Mulailah dengan Optimize:Clear - Solusi paling komprehensif</li>
           <li>Gunakan perintah khusus saat Anda mengetahui jenis cache yang menyebabkan masalah</li>
-          <li>Route:Clear setelah modifikasi rute</li>
+          <li>Route:Clear setelah modifikasi Route</li>
           <li>Config:Clear setelah perubahan lingkungan</li>
           <li>View:Clear saat templat Blade tidak diperbarui</li>
           <li>Cache:Clear untuk masalah cache data aplikasi</li>
@@ -328,7 +328,7 @@
         <ul>
           <li>Uji perintah di environment staging terlebih dahulu</li>
           <li>Pantau performa aplikasi setelah pembersihan cache</li>
-          <li>Pertimbangkan untuk menerapkan pembatasan kecepatan untuk rute ini</li>
+          <li>Pertimbangkan untuk menerapkan pembatasan kecepatan untuk Route ini</li>
           <li>Pembersihan cache secara teratur dapat memengaruhi performa</li>
         </ul>
       </section>

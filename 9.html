@@ -15,7 +15,7 @@
         <h1>Menambahkan “Kebutuhan Stok Cetak” ke dasbor beranda</h1>
         <h1>📦➕🖨️➡️🏠</h1>
         <p>
-          Membuat tampilan ringkasan atau informasi mengenai kebutuhan stok
+          Membuat View ringkasan atau informasi mengenai kebutuhan stok
           bahan cetakan (misalnya kertas, tinta, atau barang cetakan lainnya)
           langsung di halaman utama dashboard (beranda) sistem.
         </p>
@@ -313,7 +313,7 @@
             antarmuka POS
           </li>
           <li>
-            ✅ Tampilan Data: Semua 6 kolom ditampilkan dengan benar dan format
+            ✅ View Data: Semua 6 kolom ditampilkan dengan benar dan format
             yang rapi
           </li>
           <li>
@@ -383,14 +383,14 @@
       </section>
       <section>
         <h2>Langkah 1: Temukan File yang Dituju</h2>
-        <p>Arahkan ke file tampilan beranda di proyek Laravel Anda:</p>
+        <p>Arahkan ke file View beranda di proyek Laravel Anda:</p>
         <pre><code>resources/views/home/index.blade.php</code></pre>
       </section>
       <section>
         <h2>Langkah 2: Cari Bagian Peringatan Stok</h2>
         <p>
           Cari bagian Blade berikut yang biasanya digunakan untuk otorisasi
-          tampilan laporan stok:
+          View laporan stok:
         </p>
         <pre><code>@can('stock_report.view')</code></pre>
         <p>
@@ -575,7 +575,7 @@
         </div>
         <h3>2. Kustomisasi Gaya Cetak (Styling Customization)</h3>
         <p>
-          Untuk mengubah tampilan laporan cetak, Anda dapat memodifikasi objek
+          Untuk mengubah View laporan cetak, Anda dapat memodifikasi objek
           <code>printConfig.styles</code>. Objek ini menentukan gaya CSS dasar
           yang digunakan saat mencetak.
         </p>

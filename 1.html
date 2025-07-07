@@ -6,7 +6,6 @@
     <title>Tutorial Point Of Sales</title>
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/modal.css" />
-
   </head>
   <body>
     <div class="container">
@@ -31,9 +30,8 @@
       </div>
       <!-- HOME -->
       <div class="home-button-wrapper">
-  <a href="main.html" class="home-button">🏠 Kembali ke Beranda</a>
-</div>
-
+        <a href="main.html" class="home-button">🏠 Kembali ke Beranda</a>
+      </div>
 
       <section>
         <h2>🖼️ Prasyarat</h2>
@@ -55,14 +53,17 @@
       </section>
 
       <section>
-        <h2>✅ Langkah 2: Tambahkan Dropdown Sub-Kategori ke Tampilan</h2>
+        <h2>✅ Langkah 2: Tambahkan Dropdown Sub-Kategori ke View</h2>
         <p>
           Pada <strong>resources/views/product/index.blade.php</strong>, temukan
           bagian filter kategori dan tambahkan kode ini tepat setelah menu
           tarik-turun kategori:
         </p>
         <div class="url-buttons">
-          <button class="view-modal-button" data-url="tutorial/🔍📂🛍️/langkah2.txt">
+          <button
+            class="view-modal-button"
+            data-url="tutorial/🔍📂🛍️/langkah2.txt"
+          >
             resources/views/product/index.blade.php
           </button>
         </div>
@@ -75,7 +76,10 @@
           <strong>@section('javascript')</strong>, tambahkan:
         </p>
         <div class="url-buttons">
-          <button class="view-modal-button" data-url="tutorial/🔍📂🛍️/langkah3.txt">
+          <button
+            class="view-modal-button"
+            data-url="tutorial/🔍📂🛍️/langkah3.txt"
+          >
             @section('javascript')
           </button>
         </div>
@@ -116,7 +120,10 @@ d.sub_category_id = $('#product_list_filter_sub_category_id').val();
           pemilih:
         </p>
         <div class="url-buttons">
-          <button class="view-modal-button" data-url="tutorial/🔍📂🛍️/langkah5.txt">
+          <button
+            class="view-modal-button"
+            data-url="tutorial/🔍📂🛍️/langkah5.txt"
+          >
             #product_list_filter_sub_category_id
           </button>
         </div>
@@ -134,7 +141,10 @@ d.sub_category_id = $('#product_list_filter_sub_category_id').val();
           kategori:
         </p>
         <div class="url-buttons">
-          <button class="view-modal-button" data-url="tutorial/🔍📂🛍️/langkah6.txt">
+          <button
+            class="view-modal-button"
+            data-url="tutorial/🔍📂🛍️/langkah6.txt"
+          >
             app/Http/Controllers/ProductController.php
           </button>
         </div>
@@ -166,11 +176,11 @@ d.sub_category_id = $('#product_list_filter_sub_category_id').val();
             diaktifkan di pengaturan bisnis
           </li>
           <li>
-            Sub-kategori tidak dimuat: Verifikasi rute AJAX
+            Sub-kategori tidak dimuat: Verifikasi Route AJAX
             /products/get_sub_categories yang ada
           </li>
           <li>
-            Pemfilteran tidak berfungsi: Pastikan kode pemfilteran pengontrol
+            Pemfilteran tidak berfungsi: Pastikan kode pemfilteran Controller
             ditambahkan dengan benar
           </li>
           <li>
