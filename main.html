@@ -1,272 +1,255 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Point Of Sales Tutorial</title>
-    <link rel="stylesheet" href="css/home.css" />
-    <link rel="stylesheet" href="css/card.css" />
-  </head>
-  <body>
-    <!-- Header -->
-    <header>
-      <h1>🚀 Tutorial Point Of Sales</h1>
-    </header>
 
-    <!-- Bubble Menu -->
-    <div class="bubble-menu" onclick="toggleMenu()">☰</div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Point Of Sales Tutorial</title>
+  <link rel="stylesheet" href="css/home.css" />
+  <link rel="stylesheet" href="css/card.css" />
+  <link rel="stylesheet" href="css/search.css" />
+</head>
 
-    <!-- Navigation -->
-    <nav>
-      <ul>
-        <li><a href="#welcome">🚀 Selamat Datang</a></li>
-        <li><a href="#tutorial">📍 Tutorial Point Of Sales</a></li>
-        <li><a href="#">✨ Daftar File Kostum</a></li>
-        <li><a href="#modul">✨ Modul Terbaru</a></li>
-        <li><a href="#mengaktifkan">🌟 Mengaktifkan Module</a></li>
-        <li><a href="#dokumen">🎨 Dokumen Tutorial</a></li>
-      </ul>
-    </nav>
+<body>
+  <!-- Header -->
+  <header>
+    <h1>🚀 Tutorial Point Of Sales</h1>
+  </header>
 
-    <section id="tutorial">
-      <h2>📍 Tutorial Point Of Sales</h2>
-      <div class="card-container">
-        <div
-          class="feature-card"
-          data-link="1.html"
-          tabindex="0"
-          style="cursor: pointer; position: relative; overflow: hidden"
-        >
-          <h3>📑 Menambahkan Filter Sub-Kategori ke Indeks Produk di POS</h3>
-          <p>🔍 Menambahkan filter sub-kategori dinamis ke indeks produk</p>
-          <span class="badge pemula">Pemula</span>
-          <span class="ripple-circle"></span>
-          <!-- ripple layer -->
-        </div>
+  <!-- Bubble Menu -->
+  <div class="bubble-menu" onclick="toggleMenu()">☰</div>
 
-        <div class="feature-card" data-link="2.html" tabindex="0"
-          style="cursor: pointer; position: relative; overflow: hidden">
-          <h3>📑 Peningkatan Filter Laporan Stok</h3>
-          <p>📊 Peningkatan filter laporan stok untuk efisiensi</p>
-          <span class="badge menengah">Menengah</span>
-          <span class="ripple-circle"></span>
-          <!-- ripple layer -->
-        </div>
+  <!-- Navigation -->
+  <nav>
+    <ul>
+      <li><a href="#welcome">🚀 Selamat Datang</a></li>
+      <li><a href="#tutorial">📍 Tutorial Point Of Sales</a></li>
+      <li><a href="#">✨ Daftar File Kostum</a></li>
+      <li><a href="#modul">✨ Modul Terbaru</a></li>
+      <li><a href="#mengaktifkan">🌟 Mengaktifkan Module</a></li>
+      <li><a href="#dokumen">🎨 Dokumen Tutorial</a></li>
+    </ul>
+  </nav>
 
-        <div class="feature-card" data-link="3.html" tabindex="0"
-          style="cursor: pointer; position: relative; overflow: hidden">
-          <h3>📑 Pencetakan Label yang Disempurnakan untuk POS</h3>
-          <p>🖨️ Peningkatan fitur pencetakan label untuk POS</p>
-          <span class="badge menengah">Menengah</span>
-          <span class="ripple-circle"></span>
-          <!-- ripple layer -->
-        </div>
-
-        <div class="feature-card" data-link="4.html" tabindex="0"
-          style="cursor: pointer; position: relative; overflow: hidden">
-          <h3>📑 Fitur Penagihan Jatuh Tempo</h3>
-          <p>⏰ Fitur penagihan jatuh tempo untuk manajemen keuangan</p>
-          <span class="badge menengah">Menengah</span>
-          <span class="ripple-circle"></span>
-          <!-- ripple layer -->
-        </div>
-
-        <div class="feature-card" data-link="5.html" tabindex="0"
-          style="cursor: pointer; position: relative; overflow: hidden">
-          <h3>📑 Ukuran Db yang besar di POS</h3>
-          <p>📦 Ukuran database yang besar di POS dan cara mengelolanya</p>
-          <span class="badge pemula">Pemula</span>
-          <span class="ripple-circle"></span>
-          <!-- ripple layer -->
-        </div>
-
-        <div class="feature-card" data-link="6.html" tabindex="0"
-          style="cursor: pointer; position: relative; overflow: hidden">
-          <h3>📑 Hapus Transaksi, Produk, Inventaris</h3>
-          <p>🗑️ Cara menghapus transaksi, produk, dan inventaris di POS</p>
-          <span class="badge bahaya">Bahaya</span>
-          <span class="ripple-circle"></span>
-          <!-- ripple layer -->
-        </div>
-
-        <div class="feature-card" data-link="7.html" tabindex="0"
-          style="cursor: pointer; position: relative; overflow: hidden">
-          <h3>📑 Panduan Implementasi Modal Tambah Produk Cepat</h3>
-          <p>
-            🛠 Panduan untuk mengimplementasikan modal tambah produk cepat di POS
-          </p>
-          <span class="badge menengah">Menengah</span>
-          <span class="ripple-circle"></span>
-          <!-- ripple layer -->
-        </div>
-
-        <div class="feature-card" data-link="8.html" tabindex="0"
-          style="cursor: pointer; position: relative; overflow: hidden">
-          <h3>📑 Perintah Admin untuk POS</h3>
-          <p>⚙️ Perintah admin untuk mengelola POS dengan efisien</p>
-          <span class="badge menengah">Menengah</span>
-          <span class="ripple-circle"></span>
-          <!-- ripple layer -->
-        </div>
-
-        <div class="feature-card" data-link="9.html" tabindex="0"
-          style="cursor: pointer; position: relative; overflow: hidden">
-          <h3>📑 Menambahkan “Kebutuhan Stok Cetak” ke Dasbor Beranda</h3>
-          <p>🖨️ Menambahkan fitur kebutuhan stok cetak ke dasbor beranda POS</p>
-          <span class="badge menengah">Menengah</span>
-          <span class="ripple-circle"></span>
-          <!-- ripple layer -->
-        </div>
-
-        <div class="feature-card" data-link="10.html" tabindex="0"
-          style="cursor: pointer; position: relative; overflow: hidden">
-          <h3>📑 Panduan Implementasi Sistem Tukar Barang di POS</h3>
-          <p>🔄 Panduan untuk mengimplementasikan sistem tukar barang di POS</p>
-          <span class="badge mahir">Mahir</span>
-          <span class="ripple-circle"></span>
-          <!-- ripple layer -->
-        </div>
-
-        <div class="feature-card" data-link="11.html" tabindex="0"
-          style="cursor: pointer; position: relative; overflow: hidden">
-          <h3>📑 Menangani Pengembalian Produk Tanpa Nomor Faktur</h3>
-          <p>🔄 Proses pengembalian produk tanpa nomor faktur di POS</p>
-          <span class="badge pemula">Pemula</span>
-          <span class="ripple-circle"></span>
-          <!-- ripple layer -->
-        </div>
+  <section id="tutorial">
+    <h2 style="text-align: center;">📍 Tutorial Point Of Sales</h2>
+    <div style="text-align: center; margin-bottom: 20px;">
+      <input type="text" id="searchTutorial" placeholder="Cari Tutorial..." onkeyup="searchTutorial()"
+        style="padding: 10px; width: 80%; max-width: 400px; font-size: 16px;">
+    </div>
+    <div class="card-container" id="tutorialCards" >
+      <div class="feature-card" data-link="1.html" tabindex="0"
+        style="cursor: pointer; position: relative; overflow: hidden">
+        <h3>📑 Menambahkan Filter Sub-Kategori ke Indeks Produk di POS</h3>
+        <p>🔍 Menambahkan filter sub-kategori dinamis ke indeks produk</p>
+        <span class="badge pemula">Pemula</span>
+        <span class="ripple-circle"></span>
+        <!-- ripple layer -->
       </div>
-    </section>
 
-    <section id="kostum">
-      <h2>✨ Daftar File Kostum</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>📑 Nama File</th>
-            <th>🛠 Link Download</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Background Login File</td>
-            <td>
-              <a
-                href="https://drive.google.com/file/d/1LWjHGvmYsvEbsMq-6U64RnvT_qFaFc6w/view?usp=sharing"
-                >🔍 Download File</a
-              >
-            </td>
-          </tr>
-          <tr>
-            <td>Kostum Barcode dan Label</td>
-            <td>
-              <a
-                href="https://drive.google.com/file/d/1KYcL6IuSWVZDR-figEbOIxSijf6cnlGn/view?usp=sharing"
-                >🔍 Download File</a
-              >
-            </td>
-          </tr>
-          <tr>
-            <td>Kostum Tanggal `pos/public/js/common.js`</td>
-            <td>
-              <a
-                href="https://drive.google.com/drive/folders/1k-fc5hVEOqwfDb-qdO4Y8h006XR7jA4j?usp=drive_link"
-                >🔍 Download Folder</a
-              >
-            </td>
-          </tr>
-          <tr>
-            <td>Kostum Tambah dan Edit</td>
-            <td>
-              <a
-                href="https://drive.google.com/file/d/1VADZpKrLUVslkOiXwwQY4GPC45pqIbn4/view?usp=sharing"
-                >🔍 Download File</a
-              >
-            </td>
-          </tr>
-          <tr>
-            <td>Huge Db Size in POS</td>
-            <td>🔍 (tidak ada link)</td>
-          </tr>
-          <tr>
-            <td>Delete Transaction, Product, Inventory</td>
-            <td>🔍 (tidak ada link)</td>
-          </tr>
-        </tbody>
-      </table>
-    </section>
+      <div class="feature-card" data-link="2.html" tabindex="0"
+        style="cursor: pointer; position: relative; overflow: hidden">
+        <h3>📑 Peningkatan Filter Laporan Stok</h3>
+        <p>📊 Peningkatan filter laporan stok untuk efisiensi</p>
+        <span class="badge menengah">Menengah</span>
+        <span class="ripple-circle"></span>
+        <!-- ripple layer -->
+      </div>
 
-    <section id="modul">
-      <h2>✨ Modul Terbaru</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>📑 Nama File</th>
-            <th>🛠 Link Download</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Catalog</td>
-            <td>
-              <a
-                href="https://drive.google.com/file/d/1fsafNy1r-j7lvW7iXvyjUavJiSKhFt5E/view?usp=sharing"
-                >🔍 Download File</a
-              >
-            </td>
-          </tr>
-          <tr>
-            <td>Inventory</td>
-            <td>
-              <a
-                href="https://drive.google.com/file/d/1BNZWbVEdrOsv2eaIHtB-Jin9ODYKeuHr/view?usp=sharing"
-                >🔍 Download File</a
-              >
-            </td>
-          </tr>
-          <tr>
-            <td>Whatapps</td>
-            <td>
-              <a
-                href="https://drive.google.com/file/d/1tBZodbDvRsZE81g7mYd5tLJ0lFxuPiLH/view?usp=sharing"
-                >🔍 Download Folder</a
-              >
-            </td>
-          </tr>
-          <tr>
-            <td>Asset</td>
-            <td>
-              <a
-                href="https://drive.google.com/file/d/19JmP4XQKfVamkRoBsp01OQipvS4H7KYl/view?usp=drive_link"
-                >🔍 Download File</a
-              >
-            </td>
-          </tr>
-          <tr>
-            <td>Laporan penuaan</td>
-            <td>
-              <a
-                href="https://drive.google.com/file/d/1E2U6GK5-kFT1wm_D9d0LgetQeuNnLMIL/view?usp=drive_link"
-                >🔍 Download File</a
-              >
-            </td>
-          </tr>
-          <tr>
-            <td>API</td>
-            <td>
-              <a
-                href="https://drive.google.com/file/d/1q4dpSlthykEtrFVqPPK1rimBabrrKAuS/view?usp=drive_link"
-                >🔍 Download File</a
-              >
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </section>
+      <div class="feature-card" data-link="3.html" tabindex="0"
+        style="cursor: pointer; position: relative; overflow: hidden">
+        <h3>📑 Pencetakan Label yang Disempurnakan untuk POS</h3>
+        <p>🖨️ Peningkatan fitur pencetakan label untuk POS</p>
+        <span class="badge menengah">Menengah</span>
+        <span class="ripple-circle"></span>
+        <!-- ripple layer -->
+      </div>
 
-    <section id="mengaktifkan">
-      <h2>🌟 Mengaktifkan Module</h2>
-      <pre>
+      <div class="feature-card" data-link="4.html" tabindex="0"
+        style="cursor: pointer; position: relative; overflow: hidden">
+        <h3>📑 Fitur Penagihan Jatuh Tempo</h3>
+        <p>⏰ Fitur penagihan jatuh tempo untuk manajemen keuangan</p>
+        <span class="badge menengah">Menengah</span>
+        <span class="ripple-circle"></span>
+        <!-- ripple layer -->
+      </div>
+
+      <div class="feature-card" data-link="5.html" tabindex="0"
+        style="cursor: pointer; position: relative; overflow: hidden">
+        <h3>📑 Ukuran Db yang besar di POS</h3>
+        <p>📦 Ukuran database yang besar di POS dan cara mengelolanya</p>
+        <span class="badge pemula">Pemula</span>
+        <span class="ripple-circle"></span>
+        <!-- ripple layer -->
+      </div>
+
+      <div class="feature-card" data-link="6.html" tabindex="0"
+        style="cursor: pointer; position: relative; overflow: hidden">
+        <h3>📑 Hapus Transaksi, Produk, Inventaris</h3>
+        <p>🗑️ Cara menghapus transaksi, produk, dan inventaris di POS</p>
+        <span class="badge bahaya">Bahaya</span>
+        <span class="ripple-circle"></span>
+        <!-- ripple layer -->
+      </div>
+
+      <div class="feature-card" data-link="7.html" tabindex="0"
+        style="cursor: pointer; position: relative; overflow: hidden">
+        <h3>📑 Panduan Implementasi Modal Tambah Produk Cepat</h3>
+        <p>
+          🛠 Panduan untuk mengimplementasikan modal tambah produk cepat di POS
+        </p>
+        <span class="badge menengah">Menengah</span>
+        <span class="ripple-circle"></span>
+        <!-- ripple layer -->
+      </div>
+
+      <div class="feature-card" data-link="8.html" tabindex="0"
+        style="cursor: pointer; position: relative; overflow: hidden">
+        <h3>📑 Perintah Admin untuk POS</h3>
+        <p>⚙️ Perintah admin untuk mengelola POS dengan efisien</p>
+        <span class="badge menengah">Menengah</span>
+        <span class="ripple-circle"></span>
+        <!-- ripple layer -->
+      </div>
+
+      <div class="feature-card" data-link="9.html" tabindex="0"
+        style="cursor: pointer; position: relative; overflow: hidden">
+        <h3>📑 Menambahkan “Kebutuhan Stok Cetak” ke Dasbor Beranda</h3>
+        <p>🖨️ Menambahkan fitur kebutuhan stok cetak ke dasbor beranda POS</p>
+        <span class="badge menengah">Menengah</span>
+        <span class="ripple-circle"></span>
+        <!-- ripple layer -->
+      </div>
+
+      <div class="feature-card" data-link="10.html" tabindex="0"
+        style="cursor: pointer; position: relative; overflow: hidden">
+        <h3>📑 Panduan Implementasi Sistem Tukar Barang di POS</h3>
+        <p>🔄 Panduan untuk mengimplementasikan sistem tukar barang di POS</p>
+        <span class="badge mahir">Mahir</span>
+        <span class="ripple-circle"></span>
+        <!-- ripple layer -->
+      </div>
+
+      <div class="feature-card" data-link="11.html" tabindex="0"
+        style="cursor: pointer; position: relative; overflow: hidden">
+        <h3>📑 Menangani Pengembalian Produk Tanpa Nomor Faktur</h3>
+        <p>🔄 Proses pengembalian produk tanpa nomor faktur di POS</p>
+        <span class="badge pemula">Pemula</span>
+        <span class="ripple-circle"></span>
+        <!-- ripple layer -->
+      </div>
+    </div>
+  </section>
+
+  <section id="kostum">
+    <h2>✨ Daftar File Kostum</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>📑 Nama File</th>
+          <th>🛠 Link Download</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Background Login File</td>
+          <td>
+            <a href="https://drive.google.com/file/d/1LWjHGvmYsvEbsMq-6U64RnvT_qFaFc6w/view?usp=sharing">🔍 Download
+              File</a>
+          </td>
+        </tr>
+        <tr>
+          <td>Kostum Barcode dan Label</td>
+          <td>
+            <a href="https://drive.google.com/file/d/1KYcL6IuSWVZDR-figEbOIxSijf6cnlGn/view?usp=sharing">🔍 Download
+              File</a>
+          </td>
+        </tr>
+        <tr>
+          <td>Kostum Tanggal `pos/public/js/common.js`</td>
+          <td>
+            <a href="https://drive.google.com/drive/folders/1k-fc5hVEOqwfDb-qdO4Y8h006XR7jA4j?usp=drive_link">🔍
+              Download Folder</a>
+          </td>
+        </tr>
+        <tr>
+          <td>Kostum Tambah dan Edit</td>
+          <td>
+            <a href="https://drive.google.com/file/d/1VADZpKrLUVslkOiXwwQY4GPC45pqIbn4/view?usp=sharing">🔍 Download
+              File</a>
+          </td>
+        </tr>
+        <tr>
+          <td>Huge Db Size in POS</td>
+          <td>🔍 (tidak ada link)</td>
+        </tr>
+        <tr>
+          <td>Delete Transaction, Product, Inventory</td>
+          <td>🔍 (tidak ada link)</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section id="modul">
+    <h2>✨ Modul Terbaru</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>📑 Nama File</th>
+          <th>🛠 Link Download</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Catalog</td>
+          <td>
+            <a href="https://drive.google.com/file/d/1fsafNy1r-j7lvW7iXvyjUavJiSKhFt5E/view?usp=sharing">🔍 Download
+              File</a>
+          </td>
+        </tr>
+        <tr>
+          <td>Inventory</td>
+          <td>
+            <a href="https://drive.google.com/file/d/1BNZWbVEdrOsv2eaIHtB-Jin9ODYKeuHr/view?usp=sharing">🔍 Download
+              File</a>
+          </td>
+        </tr>
+        <tr>
+          <td>Whatapps</td>
+          <td>
+            <a href="https://drive.google.com/file/d/1tBZodbDvRsZE81g7mYd5tLJ0lFxuPiLH/view?usp=sharing">🔍 Download
+              Folder</a>
+          </td>
+        </tr>
+        <tr>
+          <td>Asset</td>
+          <td>
+            <a href="https://drive.google.com/file/d/19JmP4XQKfVamkRoBsp01OQipvS4H7KYl/view?usp=drive_link">🔍 Download
+              File</a>
+          </td>
+        </tr>
+        <tr>
+          <td>Laporan penuaan</td>
+          <td>
+            <a href="https://drive.google.com/file/d/1E2U6GK5-kFT1wm_D9d0LgetQeuNnLMIL/view?usp=drive_link">🔍 Download
+              File</a>
+          </td>
+        </tr>
+        <tr>
+          <td>API</td>
+          <td>
+            <a href="https://drive.google.com/file/d/1q4dpSlthykEtrFVqPPK1rimBabrrKAuS/view?usp=drive_link">🔍 Download
+              File</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section id="mengaktifkan">
+    <h2>🌟 Mengaktifkan Module</h2>
+    <pre>
         {
             "Essentials": true,
             "Accounting": true,
@@ -299,32 +282,33 @@
             "ZatcaIntegrationKsa": true,
             "Labels": true
         }
-        </pre
-      >
-    </section>
+        </pre>
+  </section>
 
-    <section id="dokumen">
-      <h2>🎨 Dokumen Tutorial</h2>
-      <a href="tutorial.html">
-        <img
-          src="https://img.freepik.com/premium-vector/video-tutorial-button-flat-blue-play-button-video-tutorial-icon-vector-icon_774778-2311.jpg"
-          alt="Deskripsi Gambar"
-        />
-      </a>
-    </section>
+  <section id="dokumen">
+    <h2>🎨 Dokumen Tutorial</h2>
+    <a href="tutorial.html">
+      <img
+        src="https://img.freepik.com/premium-vector/video-tutorial-button-flat-blue-play-button-video-tutorial-icon-vector-icon_774778-2311.jpg"
+        alt="Deskripsi Gambar" />
+    </a>
+  </section>
 
-    <!-- Footer -->
-    <footer>
-      <p>&copy; 2025 Tutorial Point Of Sales</p>
-    </footer>
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Tutorial Point Of Sales</p>
+  </footer>
 
-    <!-- JavaScript untuk toggle menu -->
-    <script>
-      function toggleMenu() {
-        const nav = document.querySelector("nav");
-        nav.classList.toggle("active");
-      }
-    </script>
-    <script src="js/card.js"></script>
-  </body>
+  <!-- JavaScript untuk toggle menu -->
+  <script>
+    function toggleMenu() {
+      const nav = document.querySelector("nav");
+      nav.classList.toggle("active");
+    }
+  </script>
+  <script src="js/card.js"></script>
+    <script src="js/search.js"></script>
+
+</body>
+
 </html>
