@@ -1,26 +1,57 @@
 /* Search input styling */
-    .search-container {
-        text-align: center;
-        margin-bottom: 20px;
-    }
+.search-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
 
-    .search-input {
-        padding: 12px 20px;
-        width: 80%;
-        max-width: 500px;
-        font-size: 18px;
-        border: 2px solid #ddd;
-        border-radius: 30px;
-        outline: none;
-        transition: all 0.3s ease;
-    }
+.search-input {
+    padding: 12px 20px;
+    width: 80%;
+    max-width: 500px;
+    font-size: 18px;
+    border: 2px solid #ddd;
+    border-radius: 30px;
+    outline: none;
+    transition: all 0.3s ease;
+    background-color: #f9f9f9;  /* Soft background color */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  /* Subtle shadow effect */
+}
 
-    .search-input:focus {
-        border-color: #4CAF50;  /* Green border on focus */
-        box-shadow: 0 0 8px rgba(0, 128, 0, 0.2);
-    }
+/* Focus effect with glowing border */
+.search-input:focus {
+    border-color: #4CAF50;  /* Green border on focus */
+    box-shadow: 0 0 8px rgba(0, 128, 0, 0.2);  /* Soft green glow around input */
+    background-color: #ffffff;  /* Change background to white on focus */
+}
 
-    .search-input::placeholder {
-        color: #888;
-        font-style: italic;
-    }
+/* Placeholder styling */
+.search-input::placeholder {
+    color: #888;
+    font-style: italic;
+    transition: color 0.3s ease;  /* Smooth color transition for placeholder */
+}
+
+/* Optional: Adding a hover effect to the container */
+.search-container:hover {
+    transform: translateY(-3px);  /* Slight lift effect */
+    transition: transform 0.3s ease;
+}
+
+
+#noResultsMessage {
+    text-align: center;
+    display: none;
+    color: #FF5733;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+#noResultsMessage i {
+    color: #FF5733;
+    font-size: 24px;  /* Slightly larger icon */
+    transition: transform 0.3s ease;
+}
+
+#noResultsMessage i:hover {
+    transform: scale(1.1);  /* Slight hover effect on the icon */
+}

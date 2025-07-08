@@ -8,6 +8,9 @@
   <link rel="stylesheet" href="css/home.css" />
   <link rel="stylesheet" href="css/card.css" />
   <link rel="stylesheet" href="css/search.css" />
+  <!-- Link to Font Awesome CDN (Add this to the <head> of your HTML) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
 </head>
 
 <body>
@@ -37,6 +40,9 @@
       <input type="text" id="searchTutorial" placeholder="Cari Tutorial..." onkeyup="searchTutorial()"
         style="padding: 10px; width: 80%; max-width: 400px; font-size: 16px;">
     </div>
+    <p id="noResultsMessage" style="text-align: center; display: none; color: #FF5733; font-size: 18px; font-weight: bold;">
+        <i class="fas fa-exclamation-triangle" style="margin-right: 10px;"></i> Tutorial tidak ditemukan
+    </p>
     <div class="card-container" id="tutorialCards" >
       <div class="feature-card" data-link="1.html" tabindex="0"
         style="cursor: pointer; position: relative; overflow: hidden">
