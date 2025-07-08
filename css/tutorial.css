@@ -70,6 +70,11 @@
             background: linear-gradient(135deg, #0066cc, #004d99);
             /* Gradient untuk teks */
             -webkit-background-clip: text;
+            /* Chrome, Safari */
+            -moz-background-clip: text;
+            /* Firefox */
+            background-clip: text;
+            /* Standard */
             /* Memastikan latar belakang hanya terlihat pada teks */
             color: transparent;
             /* Teks menjadi transparan agar gradient muncul */
