@@ -17,12 +17,14 @@
 
 .filter-button:hover {
     background-color: #45a049;
-    transform: scale(1.1); /* Scales the button up when hovered */
+    transform: scale(1.1);
+    /* Scales the button up when hovered */
 }
 
 /* Adding animation on click */
 .filter-button:active {
-    transform: scale(0.9); /* Shrinks the button when clicked */
+    transform: scale(0.9);
+    /* Shrinks the button when clicked */
 }
 
 /* Adding a subtle pulse effect */
@@ -30,9 +32,11 @@
     0% {
         transform: scale(1);
     }
+
     50% {
         transform: scale(1.1);
     }
+
     100% {
         transform: scale(1);
     }
