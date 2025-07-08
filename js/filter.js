@@ -22,3 +22,18 @@ function filterTutorials(level) {
         noResultsMessage.style.display = 'none';
     }
 }
+
+// JavaScript to add/remove the pulse effect on button click
+const buttons = document.querySelectorAll('.filter-button');
+
+buttons.forEach(button => {
+    button.addEventListener('click', function() {
+        // Add pulsing effect when button is clicked
+        button.classList.add('pulsing');
+        
+        // Remove the pulse effect after animation ends
+        setTimeout(() => {
+            button.classList.remove('pulsing');
+        }, 800); // Match the animation duration (800ms)
+    });
+});
