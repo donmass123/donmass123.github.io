@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="css/home.css" />
     <link rel="stylesheet" href="css/card.css" />
     <link rel="stylesheet" href="css/search.css" />
+    <link rel="stylesheet" href="css/filter.css" />
     <!-- Link to Font Awesome CDN (Add this to the <head> of your HTML) -->
     <link
       rel="stylesheet"
@@ -46,6 +47,26 @@
           class="search-input"
         />
       </div>
+      <div
+        class="filter-container"
+        style="text-align: center; margin-bottom: 20px"
+      >
+        <button onclick="filterTutorials('pemula')" class="filter-button">
+          Pemula
+        </button>
+        <button onclick="filterTutorials('menengah')" class="filter-button">
+          Menengah
+        </button>
+        <button onclick="filterTutorials('mahir')" class="filter-button">
+          Mahir
+        </button>
+        <button onclick="filterTutorials('bahaya')" class="filter-button">
+          Bahaya
+        </button>
+        <button onclick="filterTutorials('all')" class="filter-button">
+          Show All
+        </button>
+      </div>
 
       <p
         id="noResultsMessage"
@@ -65,6 +86,7 @@
           class="feature-card"
           data-link="1.html"
           tabindex="0"
+          data-level="pemula"
           style="cursor: pointer; position: relative; overflow: hidden"
         >
           <h3>📑 Menambahkan Filter Sub-Kategori ke Indeks Produk di POS</h3>
@@ -78,6 +100,7 @@
           class="feature-card"
           data-link="2.html"
           tabindex="0"
+          data-level="mahir"
           style="cursor: pointer; position: relative; overflow: hidden"
         >
           <h3>📑 Peningkatan Filter Laporan Stok</h3>
@@ -91,6 +114,7 @@
           class="feature-card"
           data-link="3.html"
           tabindex="0"
+          data-level="menengah"
           style="cursor: pointer; position: relative; overflow: hidden"
         >
           <h3>📑 Pencetakan Label yang Disempurnakan untuk POS</h3>
@@ -104,6 +128,7 @@
           class="feature-card"
           data-link="4.html"
           tabindex="0"
+          data-level="menengah"
           style="cursor: pointer; position: relative; overflow: hidden"
         >
           <h3>📑 Fitur Penagihan Jatuh Tempo</h3>
@@ -117,6 +142,7 @@
           class="feature-card"
           data-link="5.html"
           tabindex="0"
+          data-level="pemula"
           style="cursor: pointer; position: relative; overflow: hidden"
         >
           <h3>📑 Ukuran Db yang besar di POS</h3>
@@ -130,6 +156,7 @@
           class="feature-card"
           data-link="6.html"
           tabindex="0"
+          data-level="bahaya"
           style="cursor: pointer; position: relative; overflow: hidden"
         >
           <h3>📑 Hapus Transaksi, Produk, Inventaris</h3>
@@ -143,6 +170,7 @@
           class="feature-card"
           data-link="7.html"
           tabindex="0"
+          data-level="menengah"
           style="cursor: pointer; position: relative; overflow: hidden"
         >
           <h3>📑 Panduan Implementasi Modal Tambah Produk Cepat</h3>
@@ -158,6 +186,7 @@
           class="feature-card"
           data-link="8.html"
           tabindex="0"
+          data-level="menengah"
           style="cursor: pointer; position: relative; overflow: hidden"
         >
           <h3>📑 Perintah Admin untuk POS</h3>
@@ -171,6 +200,7 @@
           class="feature-card"
           data-link="9.html"
           tabindex="0"
+          data-level="menengah"
           style="cursor: pointer; position: relative; overflow: hidden"
         >
           <h3>📑 Menambahkan “Kebutuhan Stok Cetak” ke Dasbor Beranda</h3>
@@ -184,6 +214,7 @@
           class="feature-card"
           data-link="10.html"
           tabindex="0"
+          data-level="mahir"
           style="cursor: pointer; position: relative; overflow: hidden"
         >
           <h3>📑 Panduan Implementasi Sistem Tukar Barang di POS</h3>
@@ -197,6 +228,7 @@
           class="feature-card"
           data-link="11.html"
           tabindex="0"
+          data-level="pemula"
           style="cursor: pointer; position: relative; overflow: hidden"
         >
           <h3>📑 Menangani Pengembalian Produk Tanpa Nomor Faktur</h3>
@@ -397,5 +429,6 @@
     </script>
     <script src="js/card.js"></script>
     <script src="js/search.js"></script>
+    <script src="js/filter.js"></script>
   </body>
 </html>
