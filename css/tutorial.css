@@ -1,0 +1,218 @@
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f6f9;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        header {
+            background: linear-gradient(135deg, #0066cc, #004d99);
+            /* Gradient untuk latar belakang */
+            color: white;
+            text-align: center;
+            padding: 50px 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            /* Bayangan agar header terkesan melayang */
+            position: relative;
+            overflow: hidden;
+            animation: slideIn 1s ease-out;
+        }
+
+        .header-content h1 {
+            font-size: 3rem;
+            /* Membuat judul lebih besar */
+            font-weight: bold;
+            margin: 0;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        .header-content p {
+            font-size: 1.2rem;
+            font-weight: 300;
+            margin-top: 10px;
+            animation: fadeIn 2s ease-out;
+        }
+
+        /* Animasi untuk judul dan deskripsi */
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideIn {
+            0% {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, #0066cc, #004d99);
+            /* Gradient untuk teks */
+            -webkit-background-clip: text;
+            /* Memastikan latar belakang hanya terlihat pada teks */
+            color: transparent;
+            /* Teks menjadi transparan agar gradient muncul */
+            margin: 40px 0 20px;
+            font-weight: bold;
+            position: relative;
+            animation: fadeInText 1.5s ease-out;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+            /* Bayangan untuk teks */
+        }
+
+        .section-title:hover {
+            transform: scale(1.1);
+            /* Efek zoom saat di-hover */
+            transition: transform 0.3s ease;
+        }
+
+        @keyframes fadeInText {
+            0% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .video-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .video-container video {
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            max-width: 100%;
+            height: auto;
+        }
+
+        .step {
+            font-size: 1.1rem;
+            color: #444;
+            margin: 15px 0;
+        }
+
+        .step-title {
+            font-weight: bold;
+            color: #0066cc;
+        }
+
+        .steps-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .steps-list li {
+            background: #fff;
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            transition: transform 0.3s ease;
+        }
+
+        .steps-list li:hover {
+            transform: scale(1.05);
+        }
+
+        .steps-list li:before {
+            content: '✔';
+            font-size: 20px;
+            color: #28a745;
+            margin-right: 15px;
+        }
+
+        .dropdown-content {
+            display: none;
+            padding-left: 20px;
+        }
+
+        .dropdown-btn {
+            background-color: #0066cc;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .dropdown-btn:hover {
+            background-color: #0057a1;
+        }
+
+        .dropdown-content p {
+            margin: 5px 0;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 0.9rem;
+            color: #888;
+        }
+
+        /* Animation for Dropdown */
+        .dropdown-content {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        /* Media Query for Responsiveness */
+        @media (max-width: 768px) {
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .steps-list li {
+                flex-direction: column;
+                text-align: left;
+            }
+
+            .steps-list li:before {
+                margin-right: 10px;
+                margin-bottom: 10px;
+            }
+
+            .dropdown-btn {
+                width: 100%;
+            }
+        }
