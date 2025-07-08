@@ -12,7 +12,7 @@
 }
 
 body {
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   background: var(--bg);
   color: var(--text);
   margin: 0;
@@ -40,10 +40,10 @@ header h1 {
 }
 
 header p {
-   font-size: 14px;
+  font-size: 14px;
   margin-bottom: 10px;
   color: var(--primary);
-  font-weight:lighter;
+  font-weight: lighter;
   letter-spacing: 1px;
 }
 
@@ -71,26 +71,36 @@ header p {
 section {
   background: var(--white);
   border-left: 6px solid var(--accent);
-  border-radius: 15px; /* Slightly more rounded for a softer look */
-  padding: 40px; /* More padding for spacious content */
-  margin-bottom: 50px; /* Increased bottom margin for better separation */
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12); /* Deeper shadow for more depth */
-  transition: all 0.3s ease; /* Smooth transition effect for hover */
+  border-radius: 15px;
+  /* Slightly more rounded for a softer look */
+  padding: 40px;
+  /* More padding for spacious content */
+  margin-bottom: 50px;
+  /* Increased bottom margin for better separation */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+  /* Deeper shadow for more depth */
+  transition: all 0.3s ease;
+  /* Smooth transition effect for hover */
 }
 
 section:hover {
-  transform: translateY(-5px); /* Lift effect on hover */
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15); /* Darker shadow when hovered */
+  transform: translateY(-5px);
+  /* Lift effect on hover */
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+  /* Darker shadow when hovered */
 }
 
 section h2 {
-  font-size: 28px; /* Larger font size for better visibility */
-  color: var(--primary); /* Use primary color for more impact */
+  font-size: 28px;
+  /* Larger font size for better visibility */
+  color: var(--primary);
+  /* Use primary color for more impact */
   margin-top: 0;
-  font-weight: 700; /* Bolder font weight */
-  letter-spacing: 1px; /* Add spacing for a more modern feel */
+  font-weight: 700;
+  /* Bolder font weight */
+  letter-spacing: 1px;
+  /* Add spacing for a more modern feel */
 }
-
 
 /* ul {
   padding-left: 20px;
@@ -110,7 +120,7 @@ code {
   background-color: #f5f5f5;
   padding: 4px 8px;
   border-radius: 6px;
-  font-family: 'Courier New', monospace;
+  font-family: "Courier New", monospace;
 }
 
 .tip {
@@ -275,11 +285,15 @@ footer {
 .home-button:hover {
   background-color: #c0392b;
 }
+
 strong {
   color: var(--primary);
-  font-weight: bold;
-  font-size: 1.05em;
+  font-weight: normal;
+  font-size: 1em;
   word-wrap: break-word;
+  font-style: italic;
+  /* Membuat teks miring */
+
 }
 
 @media (max-width: 768px) {
@@ -293,6 +307,7 @@ strong {
     font-size: 0.95em;
   }
 }
+
 @media (max-width: 768px) {
   .home-button-wrapper {
     text-align: center;
@@ -315,6 +330,7 @@ strong {
     border-radius: 8px;
   }
 }
+
 @media (max-width: 768px) {
   .download-box {
     text-align: center;
@@ -337,70 +353,95 @@ strong {
     border-radius: 8px;
   }
 }
+
+/* UL IL */
 ul {
   list-style: none;
   padding-left: 0;
   margin-bottom: 24px;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 0px;
+  /* Slightly increased gap for more space between items */
 }
 
 li {
   position: relative;
-  padding: 12px 18px 12px 36px;
+  padding: 14px 20px 14px 40px;
+  /* Adjusted padding for better spacing */
   background-color: #ffffff;
-  border-radius: 8px;
+  border-radius: 12px;
+  /* Slightly more rounded corners for a modern feel */
   color: var(--text);
-  font-size: 17px;
-  line-height: 1.6;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-  transition: background-color 0.3s ease;
+  font-size: 15px;
+  /* Adjusted font size for better readability */
+  line-height: 1.7;
+  /* Slightly increased line height for better spacing */
+  font-weight: normal;
+  /* Removed bold font */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  /* Slightly stronger shadow for more depth */
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  /* Added transition for a smooth hover effect */
 }
 
-/* Bullet normal tapi lebih elegan */
+/* Elegant bullet with a bit of flair */
 li::before {
   content: "•";
   position: absolute;
   left: 16px;
   top: 14px;
-  font-size: 20px;
+  font-size: 22px;
+  /* Slightly larger bullet for more emphasis */
   color: var(--accent);
+  transition: color 0.3s ease;
+  /* Smooth transition for bullet color */
 }
 
-/* Hover effect lembut */
+/* Hover effect with smooth transformation */
 li:hover {
-  background-color: #f9f9f9;
+  background-color: #f3f3f3;
+  /* Slightly warmer hover background */
+  transform: translateX(6px);
+  /* Added subtle right shift for a modern hover effect */
 }
 
+li:hover::before {
+  color: var(--primary);
+  /* Change bullet color on hover for more emphasis */
+}
+
+/* Media Query for smaller screens */
 @media (max-width: 768px) {
   li {
     font-size: 16px;
-    padding: 11px 16px 11px 32px;
+    padding: 12px 18px 12px 36px;
+  }
+
+  li::before {
+    font-size: 20px;
+    top: 13px;
+    left: 18px;
+  }
+}
+
+/* Media Query for very small screens */
+@media (max-width: 480px) {
+  li {
+    font-size: 15px;
+    padding: 10px 14px 10px 32px;
   }
 
   li::before {
     font-size: 18px;
-    top: 13px;
+    top: 12px;
     left: 14px;
   }
 }
 
-@media (max-width: 480px) {
-  li {
-    font-size: 15px;
-    padding: 10px 14px 10px 30px;
-  }
-
-  li::before {
-    font-size: 16px;
-    top: 12px;
-    left: 12px;
-  }
-}
 /* h1: Headline utama */
 h1 {
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   font-size: 38px;
   font-weight: 700;
   color: var(--primary);
@@ -411,7 +452,7 @@ h1 {
 
 /* h2: Subjudul */
 h2 {
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   font-size: 28px;
   font-weight: 600;
   color: var(--secondary);
@@ -422,7 +463,7 @@ h2 {
 }
 
 h2::before {
-  content: '';
+  content: "";
   position: absolute;
   left: 0;
   top: 8px;
@@ -434,7 +475,7 @@ h2::before {
 
 /* h3: Judul kecil */
 h3 {
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   font-size: 22px;
   font-weight: 500;
   color: var(--text);
@@ -445,7 +486,7 @@ h3 {
 }
 
 h3::before {
-  content: '▹';
+  content: "▹";
   position: absolute;
   left: 0;
   top: 1px;
@@ -455,8 +496,10 @@ h3::before {
 
 /* p: paragraf */
 p {
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   font-size: 17px;
+  font-weight: normal;
+  /* Removed bold font */
   color: var(--text);
   line-height: 1.7;
   margin-bottom: 20px;

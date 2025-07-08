@@ -46,7 +46,8 @@
 }
 
 /* Files */
-.file, .feature {
+.file,
+.feature {
     padding: 8px 15px;
     margin-bottom: 5px;
     font-size: 16px;
@@ -57,7 +58,8 @@
     transition: all 0.3s ease;
 }
 
-.file:hover, .feature:hover {
+.file:hover,
+.feature:hover {
     background-color: #d0e4f5;
     border-left-color: #2980b9;
     cursor: pointer;
@@ -87,7 +89,8 @@
     text-transform: none;
 }
 
-.subfolder .file, .subfolder .feature {
+.subfolder .file,
+.subfolder .feature {
     background-color: #ecf0f1;
     border-left-color: #16a085;
 }
@@ -113,7 +116,8 @@
         padding: 8px 12px;
     }
 
-    .file, .feature {
+    .file,
+    .feature {
         font-size: 14px;
         padding: 6px 12px;
     }

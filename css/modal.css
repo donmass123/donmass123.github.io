@@ -13,7 +13,8 @@
   opacity: 0;
   transition: opacity 0.3s ease-in-out;
   animation: fadeIn 0.3s forwards;
-  overflow-y: auto; /* Allows scroll on mobile */
+  overflow-y: auto;
+  /* Allows scroll on mobile */
 }
 
 /* Modal Content */
@@ -114,6 +115,7 @@
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
@@ -124,13 +126,16 @@
   0% {
     transform: scale(0) rotateY(90deg);
   }
+
   50% {
     transform: scale(1) rotateY(45deg);
   }
+
   100% {
     transform: scale(1) rotateY(0);
   }
 }
+
 /* Container tombol */
 .url-buttons {
   display: flex;
@@ -150,8 +155,10 @@
   color: white;
   border-radius: 8px;
   cursor: pointer;
-  white-space: normal; /* biar bisa wrap */
-  word-break: break-word; /* potong teks panjang */
+  white-space: normal;
+  /* biar bisa wrap */
+  word-break: break-word;
+  /* potong teks panjang */
   max-width: 100%;
   min-width: 220px;
   flex: 1 1 250px;

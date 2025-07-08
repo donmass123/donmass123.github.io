@@ -21,7 +21,8 @@ table.file-changes td {
   border: 1px solid #ddd;
   text-align: left;
   vertical-align: top;
-  white-space: normal; /* IZINKAN WRAP */
+  white-space: normal;
+  /* IZINKAN WRAP */
   word-break: break-word;
 }
 
@@ -48,6 +49,7 @@ table.file-changes strong {
   color: green;
   font-weight: bold;
 }
+
 .status.optional {
   color: #999;
   font-style: italic;
@@ -105,7 +107,7 @@ table.file-changes tr:hover {
     margin-bottom: 4px;
   }
 
-  table.file-changes td > *:not(:first-child) {
+  table.file-changes td>*:not(:first-child) {
     flex: 1 1 100%;
     text-align: left;
     word-break: break-word;

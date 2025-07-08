@@ -1,6 +1,7 @@
 .card-container {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* 2 kolom */
+  grid-template-columns: repeat(2, 1fr);
+  /* 2 kolom */
   gap: 24px;
   padding: 20px;
   animation: fadeInUp 1s ease both;
@@ -11,6 +12,7 @@
     opacity: 0;
     transform: translateY(30px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -19,15 +21,18 @@
 
 @media (max-width: 768px) {
   .card-container {
-    grid-template-columns: 1fr; /* Jadi 1 kolom di mobile/tablet */
+    grid-template-columns: 1fr;
+    /* Jadi 1 kolom di mobile/tablet */
   }
 }
 
 .feature-card {
   background-color: #ffffff;
   border-radius: 16px;
-  border: 1.5px solid #e0e0e0; /* Border abu terang */
-  border-left: 6px solid #4caf50; /* Aksen hijau di kiri */
+  border: 1.5px solid #e0e0e0;
+  /* Border abu terang */
+  border-left: 6px solid #4caf50;
+  /* Aksen hijau di kiri */
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
   padding: 22px;
   transition: all 0.3s ease;
@@ -40,7 +45,8 @@
 
 .feature-card:hover {
   transform: scale(1.03);
-  border-color: #bdbdbd; /* Border lebih gelap saat hover */
+  border-color: #bdbdbd;
+  /* Border lebih gelap saat hover */
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
 }
 
@@ -94,6 +100,7 @@
 a {
   text-decoration: none;
 }
+
 .feature-card.clicked-effect {
   transform: scale(0.98);
   opacity: 0.85;
@@ -156,6 +163,7 @@ a {
     transform: scale(0);
     opacity: 0.5;
   }
+
   100% {
     transform: scale(4);
     opacity: 0;
@@ -186,13 +194,14 @@ a {
     transform: scale(0.5) rotate(0deg) skew(0deg, 0deg);
     opacity: 0.6;
   }
+
   50% {
     transform: scale(2.5) rotate(180deg) skew(10deg, 10deg);
     opacity: 0.4;
   }
+
   100% {
     transform: scale(4.5) rotate(360deg) skew(0deg, 0deg);
     opacity: 0;
   }
 }
-
