@@ -5,12 +5,12 @@
 }
 
 .search-input {
-    padding: 12px 20px;
-    width: 80%;
-    max-width: 500px;
+    padding: 12px 40px;  /* Increase horizontal padding for a wider appearance */
+    width: 100%;  /* Make input take up 100% of its container */
+    max-width: 600px;  /* You can adjust this value to control the length */
     font-size: 18px;
     border: 2px solid #ddd;
-    border-radius: 30px;
+    border-radius: 50px;  /* Increase the radius for a more oval shape */
     outline: none;
     transition: all 0.3s ease;
     background-color: #f9f9f9;  /* Soft background color */
