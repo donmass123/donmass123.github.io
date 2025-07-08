@@ -1,0 +1,17 @@
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
+
+// Get the role (e.g., Admin)
+$role = Role::findByName('Admin');
+
+// Assign exchange permissions
+$exchangePermissions = [
+    'exchange.access',
+    'exchange.create',
+    'exchange.delete',
+    'exchange.cancel'
+];
+
+foreach ($exchangePermissions as $permission) {
+    $role->givePermissionTo($permission);
+}

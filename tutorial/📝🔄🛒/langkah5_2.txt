@@ -2,6 +2,6 @@ if (auth()->user()->can('exchange.access')) {
     $sub->url(
         action([\App\Http\Controllers\ExchangeController::class, 'index']),
         __('lang_v1.exchange'),
-        ['icon' => '', 'active' => request()->segment(1) == 'pos-exchange' && request()->segment(2) == null]
+        ['icon' => '', 'active' => request()->segment(1) == 'exchange' && request()->segment(2) == null]
     );
 }

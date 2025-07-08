@@ -1,0 +1,8 @@
+-- Get role ID (replace 'Admin' with your role name)
+SET @role_id = (SELECT id FROM roles WHERE name = 'Admin' LIMIT 1);
+
+-- Insert role permissions
+INSERT INTO role_has_permissions (permission_id, role_id)
+SELECT p.id, @role_id
+FROM permissions p
+WHERE p.name IN ('exchange.access', 'exchange.create', 'exchange.delete', 'exchange.cancel');

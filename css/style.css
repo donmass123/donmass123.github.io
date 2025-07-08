@@ -40,8 +40,11 @@ header h1 {
 }
 
 header p {
-  color: var(--muted);
-  font-size: 18px;
+   font-size: 14px;
+  margin-bottom: 10px;
+  color: var(--primary);
+  font-weight:lighter;
+  letter-spacing: 1px;
 }
 
 .download-box {
@@ -68,18 +71,26 @@ header p {
 section {
   background: var(--white);
   border-left: 6px solid var(--accent);
-  border-radius: 10px;
-  padding: 30px;
-  margin-bottom: 40px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  border-radius: 15px; /* Slightly more rounded for a softer look */
+  padding: 40px; /* More padding for spacious content */
+  margin-bottom: 50px; /* Increased bottom margin for better separation */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12); /* Deeper shadow for more depth */
+  transition: all 0.3s ease; /* Smooth transition effect for hover */
+}
+
+section:hover {
+  transform: translateY(-5px); /* Lift effect on hover */
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15); /* Darker shadow when hovered */
 }
 
 section h2 {
-  font-size: 24px;
-  color: var(--secondary);
+  font-size: 28px; /* Larger font size for better visibility */
+  color: var(--primary); /* Use primary color for more impact */
   margin-top: 0;
-  font-weight: 600;
+  font-weight: 700; /* Bolder font weight */
+  letter-spacing: 1px; /* Add spacing for a more modern feel */
 }
+
 
 /* ul {
   padding-left: 20px;

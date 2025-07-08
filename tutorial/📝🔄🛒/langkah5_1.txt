@@ -1,0 +1,7 @@
+if ($is_admin || auth()->user()->hasAnyPermission(['access_shipping', 'access_own_shipping', 'access_commission_agent_shipping'])) {
+    $sub->url(
+        action([\App\Http\Controllers\SellController::class, 'shipments']),
+        __('lang_v1.shipments'),
+        ['icon' => '', 'active' => request()->segment(1) == 'shipments']
+    );
+}
