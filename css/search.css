@@ -2,12 +2,13 @@
 .search-container {
     text-align: center;
     margin-bottom: 20px;
+    padding: 0 10px; /* Added padding to prevent content from touching the edges */
 }
 
 /* Styling for the search input */
 .search-input {
     padding: 12px 20px; /* Padding for better input spacing */
-    width: 80%; /* Set width to 80% for better responsiveness */
+    width: 100%; /* Set width to 100% for responsiveness */
     max-width: 500px; /* Ensure max width for larger screens */
     font-size: 18px;
     border: 2px solid #ddd; /* Light border color */
@@ -34,16 +35,114 @@
 @media (max-width: 768px) {
     .search-input {
         width: 90%; /* On smaller screens, make the input wider */
+        font-size: 16px; /* Slightly smaller font size for better readability */
     }
 }
 
 @media (max-width: 480px) {
     .search-input {
         width: 95%; /* On very small screens, make the input almost full width */
-        font-size: 16px; /* Slightly smaller font size for small screens */
+        font-size: 14px; /* Even smaller font size for tiny screens */
     }
 }
 
+/* Styling for no results message */
+#noResultsMessage {
+    text-align: center;
+    display: none;
+    color: #FF5733;
+    font-size: 18px;
+    font-weight: bold;
+    opacity: 0; /* Initially hidden */
+    transform: translateY(-20px); /* Start position for animation */
+    animation: fadeInUp 0.5s forwards; /* Animation for fading in and moving up */
+}
+
+/* Animation for the fade-in and upward movement */
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px); /* Start slightly above */
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0); /* End at normal position */
+    }
+}
+
+/* Styling for the icon inside the no results message */
+#noResultsMessage i {
+    color: #FF5733;
+    font-size: 24px;  /* Slightly larger icon */
+    transition: transform 0.3s ease, color 0.3s ease; /* Smooth transition for hover */
+    animation: bounceIcon 0.6s infinite; /* Add bounce animation */
+}
+
+/* Animation for bouncing the icon */
+@keyframes bounceIcon {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px); /* Move up */
+    }
+    100% {
+        transform: translateY(0); /* Return to original position */
+    }
+}
+
+/* Hover effect for the icon */
+#noResultsMessage i:hover {
+    transform: scale(1.1);  /* Slight hover effect on the icon */
+    color: #FF2A00; /* Change color on hover */
+}
+/* General styling for the search container */
+.search-container {
+    text-align: center;
+    margin-bottom: 20px;
+    padding: 0 10px; /* Added padding to prevent content from touching the edges */
+}
+
+/* Styling for the search input */
+.search-input {
+    padding: 12px 20px; /* Padding for better input spacing */
+    width: 100%; /* Set width to 100% for responsiveness */
+    max-width: 500px; /* Ensure max width for larger screens */
+    font-size: 18px;
+    border: 2px solid #ddd; /* Light border color */
+    border-radius: 30px; /* Rounded corners for a smooth look */
+    outline: none;
+    transition: all 0.3s ease;
+    background-color: #f9f9f9; /* Soft background color */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Light shadow effect */
+}
+
+/* Focus effect with glowing border */
+.search-input:focus {
+    border-color: #4CAF50; /* Green border on focus */
+    box-shadow: 0 0 8px rgba(0, 128, 0, 0.2); /* Green glow effect */
+}
+
+/* Placeholder text styling */
+.search-input::placeholder {
+    color: #888; /* Soft grey for placeholder text */
+    font-style: italic; /* Italicize placeholder text */
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 768px) {
+    .search-input {
+        width: 90%; /* On smaller screens, make the input wider */
+        font-size: 16px; /* Slightly smaller font size for better readability */
+    }
+}
+
+@media (max-width: 480px) {
+    .search-input {
+        width: 95%; /* On very small screens, make the input almost full width */
+        font-size: 14px; /* Even smaller font size for tiny screens */
+    }
+}
 
 /* Styling for no results message */
 #noResultsMessage {
