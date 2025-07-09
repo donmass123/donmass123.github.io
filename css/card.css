@@ -1,8 +1,8 @@
+/* Card Container */
 .card-container {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  /* 2 kolom */
-  gap: 24px;
+  gap: 20px;
   padding: 20px;
   animation: fadeInUp 1s ease both;
 }
@@ -12,73 +12,72 @@
     opacity: 0;
     transform: translateY(30px);
   }
-
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
 
+/* Responsif untuk Mobile */
 @media (max-width: 768px) {
   .card-container {
     grid-template-columns: 1fr;
-    /* Jadi 1 kolom di mobile/tablet */
   }
 }
 
+/* Feature Card */
 .feature-card {
   background-color: #ffffff;
-  border-radius: 16px;
-  border: 1.5px solid #e0e0e0;
-  /* Border abu terang */
-  border-left: 6px solid #4caf50;
-  /* Aksen hijau di kiri */
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
-  padding: 22px;
+  border-radius: 12px;
+  border: 1px solid #e0e0e0;
+  padding: 25px;
   transition: all 0.3s ease;
-  transform: scale(1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  position: relative;
 }
 
+/* Efek Hover pada Card */
 .feature-card:hover {
-  transform: scale(1.03);
+  transform: translateY(-5px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
   border-color: #bdbdbd;
-  /* Border lebih gelap saat hover */
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
 }
 
 .feature-card h3 {
-  margin: 0 0 12px;
-  font-size: 1.25rem;
-  color: #222;
+  margin: 0 0 10px;
+  font-size: 1.2rem;
+  color: #333;
+  font-weight: 600;
   line-height: 1.4;
   transition: color 0.3s;
 }
 
 .feature-card:hover h3 {
-  color: #4caf50;
+  color: #1e88e5;
 }
 
 .feature-card p {
-  margin: 6px 0;
-  color: #555;
+  margin: 8px 0;
+  color: #666;
   font-size: 0.95rem;
-  line-height: 1.5;
+  line-height: 1.6;
 }
 
+/* Badge Styling */
 .badge {
   display: inline-block;
   padding: 6px 12px;
-  border-radius: 999px;
-  font-size: 0.75rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
   font-weight: 600;
-  margin-top: 12px;
+  margin-top: 15px;
   color: #fff;
-  letter-spacing: 0.5px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  text-transform: capitalize;
+  background-color: #00796b;
 }
 
 .badge.pemula {
@@ -97,10 +96,7 @@
   background-color: #11a174;
 }
 
-a {
-  text-decoration: none;
-}
-
+/* Ripple Effect */
 .feature-card.clicked-effect {
   transform: scale(0.98);
   opacity: 0.85;
@@ -118,23 +114,13 @@ a {
   margin-left: -50px;
   border-radius: 50%;
   transform: scale(0);
-  opacity: 0.4;
-  background: #000;
+  opacity: 0.3;
+  background: #00796b;
   transition: transform 0.5s, opacity 1s;
   pointer-events: none;
 }
 
-.feature-card::after {
-  content: '';
-  position: absolute;
-  border-radius: 50%;
-  transform: scale(0);
-  opacity: 0.5;
-  background: #000;
-  transition: transform 0.5s, opacity 1s;
-  pointer-events: none;
-}
-
+/* Efek Ripple untuk Card */
 .feature-card.ripple::after {
   transform: scale(4);
   opacity: 0;
@@ -148,10 +134,10 @@ a {
 .ripple-circle {
   position: absolute;
   border-radius: 50%;
-  background: rgba(0, 0, 0, 0.2);
+  background: rgba(0, 0, 0, 0.15);
+  pointer-events: none;
   transform: scale(0);
   opacity: 0;
-  pointer-events: none;
 }
 
 .feature-card.rippling .ripple-circle {
@@ -161,47 +147,26 @@ a {
 @keyframes ripple-grow {
   0% {
     transform: scale(0);
-    opacity: 0.5;
+    opacity: 0.4;
   }
-
   100% {
     transform: scale(4);
     opacity: 0;
   }
 }
 
+/* Final Tuning for Elegance */
 .feature-card {
   position: relative;
   overflow: hidden;
   transition: transform 0.3s ease;
 }
 
-.ripple-circle {
-  position: absolute;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.3);
-  pointer-events: none;
-  transform: scale(0) rotate(0deg) skew(0deg, 0deg);
-  opacity: 0;
+.feature-card h3,
+.feature-card p {
+  font-family: 'Roboto', sans-serif;
 }
 
-.feature-card.rippling .ripple-circle {
-  animation: crazy-ripple 2s infinite linear;
-}
-
-@keyframes crazy-ripple {
-  0% {
-    transform: scale(0.5) rotate(0deg) skew(0deg, 0deg);
-    opacity: 0.6;
-  }
-
-  50% {
-    transform: scale(2.5) rotate(180deg) skew(10deg, 10deg);
-    opacity: 0.4;
-  }
-
-  100% {
-    transform: scale(4.5) rotate(360deg) skew(0deg, 0deg);
-    opacity: 0;
-  }
+.feature-card p {
+  color: #777;
 }

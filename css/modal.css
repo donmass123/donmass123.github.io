@@ -7,7 +7,7 @@
   top: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(0, 0, 0, 0.5); /* Darker overlay for a more elegant look */
   padding-top: 60px;
   text-align: center;
   opacity: 0;
@@ -22,11 +22,11 @@
   background-color: #fff;
   margin: 5% auto;
   padding: 30px;
-  border: 1px solid #888;
+  border: 1px solid #ddd; /* Lighter border for a cleaner look */
   width: 90%;
-  max-width: 900px;
-  border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 800px; /* Slightly smaller max-width */
+  border-radius: 10px; /* Softer radius for a modern look */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
   transform-origin: center;
   animation: openBook 1s ease-out;
   box-sizing: border-box;
@@ -59,15 +59,16 @@
   color: white;
   font-size: 16px;
   font-weight: 600;
-  border-radius: 8px;
+  border-radius: 50px; /* Rounded edges for a softer, more elegant look */
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.3s ease;
   display: inline-block;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
 }
 
 .view-modal-button:hover {
   background-color: #6366f1;
-  transform: scale(1.05);
+  transform: scale(1.05); /* Slight scale effect on hover */
 }
 
 /* Responsive Styles */
@@ -136,7 +137,7 @@
   }
 }
 
-/* Container tombol */
+/* Container for URL buttons */
 .url-buttons {
   display: flex;
   flex-wrap: wrap;
@@ -146,32 +147,31 @@
   padding: 10px;
 }
 
-/* Gaya tombol */
+/* Styling for the buttons */
 .url-buttons .view-modal-button {
   padding: 10px 16px;
   font-size: 14px;
   border: none;
-  background-color: #007bff;
+  background-color: #3498db; /* Softer blue for elegance */
   color: white;
-  border-radius: 8px;
+  border-radius: 50px; /* Rounded corners for a soft appearance */
   cursor: pointer;
-  white-space: normal;
-  /* biar bisa wrap */
+  white-space: normal; /* Ensures wrapping text */
   word-break: break-word;
-  /* potong teks panjang */
   max-width: 100%;
   min-width: 220px;
   flex: 1 1 250px;
   transition: background-color 0.3s ease;
   text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Hover efek */
 .url-buttons .view-modal-button:hover {
-  background-color: #0056b3;
+  background-color: #2980b9;
+  transform: scale(1.05); /* Slight scale effect on hover */
 }
 
-/* Tambahan untuk layar kecil */
+/* Additional for small screens */
 @media (max-width: 480px) {
   .url-buttons .view-modal-button {
     font-size: 13px;
