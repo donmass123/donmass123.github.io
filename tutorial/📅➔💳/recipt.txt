@@ -1,0 +1,3 @@
+Total Penjualan Saat Ini $ 12,50
+Penjualan Sebelumnya: $ 737,50
+Total Penjualan (Semua Penjualan) $ 750,00

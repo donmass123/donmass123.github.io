@@ -1,0 +1,6 @@
+@php
+// Debug output (remove in production)
+echo "All Due: " . $receipt_details->all_due . "<br>";
+echo "Total Due: " . $receipt_details->total_due . "<br>";
+echo "Previous Due: " . $previous_due_formatted . "<br>";
+@endphp

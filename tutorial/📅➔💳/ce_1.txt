@@ -1,0 +1,5 @@
+function as_decimal(string $currency): float
+{
+    $uf = preg_replace('/[^\d\.\-]/', '', $currency);
+    return (float) $uf;
+}
