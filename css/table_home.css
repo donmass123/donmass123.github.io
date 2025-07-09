@@ -1,0 +1,111 @@
+/* Wrapper for the table */
+.table-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 30px 0;
+  border-radius: 12px; /* Add rounded corners to the wrapper */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15); /* Soft shadow for the table wrapper */
+}
+
+/* General Table Styles */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: linear-gradient(145deg, #ffffff, #f4f7fc); /* Subtle gradient background */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+  min-width: 600px;
+  border-radius: 12px; /* Rounded corners for modern look */
+  overflow: hidden; /* Hide overflow for smooth edges */
+}
+
+/* Table Header */
+th,
+td {
+  padding: 16px 24px;
+  border: 1px solid #e0e0e0; /* Lighter, more refined border */
+  text-align: left;
+  vertical-align: middle;
+  font-size: 1.05rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Elegant font family */
+}
+
+/* Table Header Style */
+th {
+  background-color: #3498db; /* Elegant dark blue for header */
+  color: white;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-bottom: 3px solid #2980b9; /* Slightly darker bottom border */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05); /* Soft shadow under header for depth */
+}
+
+/* Table Row Styling */
+tr:nth-child(even) {
+  background-color: #f9f9f9; /* Light gray background for even rows */
+}
+
+/* Hover Effect for Rows */
+tr:hover {
+  background-color: #ecf0f1; /* Light background on hover */
+  transform: translateY(-4px); /* Slight lift effect on hover */
+  transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition */
+}
+
+/* Subtle Animation for Table Row */
+tr {
+  transition: background-color 0.2s ease, transform 0.2s ease; /* Smooth animation for rows */
+}
+
+/* Links in Table */
+a {
+  color: #3498db; /* Elegant blue for links */
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease; /* Smooth transition for link color */
+}
+
+a:hover {
+  text-decoration: underline;
+  color: #2980b9; /* Darker color on hover */
+}
+
+/* Responsive Design for Tablet */
+@media screen and (max-width: 768px) {
+  table {
+    min-width: 100%;
+  }
+
+  th,
+  td {
+    padding: 14px 18px; /* Slightly reduced padding for tablets */
+    font-size: 1rem; /* Adjusted font size */
+  }
+
+  th {
+    font-size: 1.1rem; /* Adjusted header font size */
+  }
+}
+
+/* Responsive Design for Mobile */
+@media screen and (max-width: 480px) {
+  table {
+    width: 100%;
+  }
+
+  th,
+  td {
+    padding: 12px 16px; /* Adjusted padding for mobile */
+    font-size: 0.9rem; /* Smaller font size for mobile */
+  }
+
+  th {
+    font-size: 1rem; /* Slightly larger header font size for mobile */
+  }
+
+  /* Ensure the table is scrollable on small screens */
+  .table-wrapper {
+    overflow-x: auto;
+    margin: 20px 0;
+  }
+}
