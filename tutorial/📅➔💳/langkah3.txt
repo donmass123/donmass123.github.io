@@ -1,0 +1,11 @@
+@php
+function as_decimal(string $currency): float
+{
+    $uf = preg_replace('/[^\d\.\-]/', '', $currency);
+    return (float) $uf;
+}
+$all_due_uf = as_decimal($receipt_details->all_due);
+$total_due_uf = as_decimal($receipt_details->total_due);
+$previous_due = $all_due_uf - $total_due_uf;
+$previous_due_formatted = number_format($previous_due, 2);
+@endphp

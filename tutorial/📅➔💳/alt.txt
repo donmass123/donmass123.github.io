@@ -1,0 +1,13 @@
+@php
+    $previous_due = floatval(preg_replace('/[^\d\.\-]/', '', $receipt_details->all_due)) - floatval(preg_replace('/[^\d\.\-]/', '', $receipt_details->total_due));
+@endphp
+@if(!empty($receipt_details->total_due) && !empty($receipt_details->all_due))
+    <tr>
+        <th>Previous Due :</th>
+        <td class="text-right">
+            <span class="display_currency" data-currency_symbol="true">
+                {{ $previous_due }}
+            </span>
+        </td>
+    </tr>
+@endif

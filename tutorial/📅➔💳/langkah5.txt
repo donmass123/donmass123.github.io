@@ -1,0 +1,47 @@
+@php
+function as_decimal(string $currency): float
+{
+    $uf = preg_replace('/[^\d\.\-]/', '', $currency);
+    return (float) $uf;
+}
+$all_due_uf = as_decimal($receipt_details->all_due);
+$total_due_uf = as_decimal($receipt_details->total_due);
+$previous_due = $all_due_uf - $total_due_uf;
+$previous_due_formatted = number_format($previous_due, 2);
+@endphp
+
+<!-- Total Due-->
+@if(!empty($receipt_details->total_due) && !empty($receipt_details->total_due_label))
+<tr>
+    <th>
+        {!! $receipt_details->total_due_label !!}
+    </th>
+    <td class="text-right">
+        {{$receipt_details->total_due}}
+    </td>
+</tr>
+@endif
+
+<!-- Previous Due (New Addition) -->
+@if(!empty($receipt_details->total_due) && !empty($receipt_details->all_due))
+<tr>
+    <th>
+        Previous Due :
+    </th>
+    <td class="text-right">
+        <span class="display_currency" data-currency_symbol="true">{{ $previous_due_formatted }}</span>
+    </td>
+</tr>
+@endif
+
+<!-- All Due -->
+@if(!empty($receipt_details->all_due))
+<tr>
+    <th>
+        {!! $receipt_details->all_bal_label !!}
+    </th>
+    <td class="text-right">
+        {{$receipt_details->all_due}}
+    </td>
+</tr>
+@endif

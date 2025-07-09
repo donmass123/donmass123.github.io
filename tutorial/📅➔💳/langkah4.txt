@@ -1,0 +1,12 @@
+@if(!empty($receipt_details->total_due) && !empty($receipt_details->all_due))
+<tr>
+    <th>
+        Previous Due :
+        {{-- Or you can add this lang string if you prefer multi-language --}}
+        {{-- @lang('lang_v1.previous_due') --}}
+    </th>
+    <td class="text-right">
+        <span class="display_currency" data-currency_symbol="true">{{ $previous_due_formatted }}</span>
+    </td>
+</tr>
+@endif

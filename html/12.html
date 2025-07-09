@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tutorial Point Of Sales</title>
+    <link rel="stylesheet" href="../css/tutor.css" />
+    <link rel="stylesheet" href="../css/modal.css" />
+  </head>
+
+  <body>
+    <div class="container">
+      <header>
+        <h1>
+          Menambahkan Perhitungan Jatuh Tempo Sebelumnya ke Kwitansi Klasik
+        </h1>
+        <h1>📅➔💳</h1>
+        <h5>
+          menyertakan informasi mengenai perhitungan atau status pembayaran yang
+          sudah jatuh tempo sebelumnya ke dalam kwitansi atau struk pembayaran
+          yang menggunakan format atau metode klasik (tradisional). Misalnya,
+          jika ada pembayaran yang tertunda atau jatuh tempo dari periode
+          sebelumnya, informasi tersebut akan dihitung atau ditampilkan dalam
+          kwitansi yang baru, sehingga memberi gambaran lengkap tentang status
+          pembayaran sebelumnya dan jumlah yang harus dibayar.
+        </h5>
+      </header>
+
+      <div class="download-box">
+        <a
+          href="https://drive.google.com/drive/folders/1Z4tG3FMdMa3oZ3Nk9oqAp8ydWOlFcDS8?usp=drive_link"
+          download
+          class="download-button"
+        >
+          ⬇️ Unduh File Contoh
+        </a>
+      </div>
+      <!-- HOME -->
+      <div class="home-button-wrapper">
+        <a href="../main.html" class="home-button">🏠 Kembali ke Beranda</a>
+      </div>
+
+      <section>
+        <h2>Ringkasan</h2>
+        <p>
+          Panduan ini memberikan solusi frontend cepat untuk menampilkan jumlah
+          "Jatuh Tempo Sebelumnya" di struk POS tanpa mengubah utilitas
+          transaksi backend. Perbaikan ini menghitung dan menampilkan jumlah
+          jatuh tempo sebelumnya dengan mengurangkan jumlah jatuh tempo saat ini
+          dari jumlah semua jatuh tempo.
+        </p>
+        <h2>Prasyarat</h2>
+        <ul>
+          <li>Pengetahuan dasar tentang templat Laravel Blade</li>
+          <li>Akses ke file Database</li>
+        </ul>
+        <h2>Pernyataan Masalah</h2>
+        <p>
+          Template tanda terima tidak menampilkan rincian jumlah jatuh tempo
+          sebelumnya secara terpisah dari jumlah total jatuh tempo. Perbaikan
+          ini menambahkan item baris "Sebelumnya Jatuh Tempo" yang menunjukkan
+          perbedaan antara total jatuh tempo (semua penjualan) dan jatuh tempo
+          penjualan saat ini.
+        </p>
+        <h2>Ikhtisar Solusi</h2>
+        <p>Perbaikan ini melibatkan:</p>
+        <ul>
+          <li>
+            Menambahkan logika penghitungan PHP untuk menghitung jatuh tempo
+            sebelumnya
+          </li>
+          <li>
+            Menampilkan jumlah jatuh tempo sebelumnya di templat tanda terima
+          </li>
+          <li>Menggunakan sintaksis Laravel Blade untuk rendering bersyarat</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Implementasi Langkah-demi-Langkah</h2>
+      </section>
+
+      <section>
+        <h2>Langkah 1: Temukan Templat Tanda Terima</h2>
+        <p>Navigasikan ke file templat tanda terima Classic:</p>
+        <p>
+          <strong>resources/views/sale_pos/receipts/classic.blade.php</strong>
+        </p>
+      </section>
+
+      <section>
+        <h2>Langkah 2: Temukan Target Section</h2>
+        <p>
+          Cari bagian yang berisi <strong>$receipt_details->total_due</strong>.
+          Bagian ini biasanya ditemukan di tabel ringkasan pembayaran/tunggakan
+          di sekitar baris <strong>430-452</strong>.
+        </p>
+        <p>Anda akan menemukan struktur yang mirip dengan:</p>
+        <div class="url-buttons">
+          <button
+            class="view-modal-button"
+            data-url="../tutorial/📅➔💳/langkah2.txt"
+          >
+            $receipt_details->total_due
+          </button>
+        </div>
+      </section>
+
+      <section>
+        <h2>Langkah 3: Tambahkan Logika Perhitungan PHP</h2>
+        <p>
+          Masukkan blok kode PHP berikut ini <strong>sebelum</strong> bagian
+          jumlah yang harus dibayar:
+        </p>
+        <div class="url-buttons">
+          <button
+            class="view-modal-button"
+            data-url="../tutorial/📅➔💳/langkah3.txt"
+          >
+            PHP Calculation Logic
+          </button>
+        </div>
+      </section>
+
+      <section>
+        <h2>Langkah 4: Tambahkan Tampilan Jatuh Tempo Sebelumnya</h2>
+        <p>
+          Tambahkan kode HTML/Blade ini di <strong>antara</strong> blok "Total
+          Jatuh Tempo" dan "Semua Jatuh Tempo":
+        </p>
+        <div class="url-buttons">
+          <button
+            class="view-modal-button"
+            data-url="../tutorial/📅➔💳/langkah4.txt"
+          >
+            Previous Due Display
+          </button>
+        </div>
+      </section>
+
+      <section>
+        <h2>Langkah 5: Implementasi Lengkap</h2>
+        <p>Struktur kode akhir Anda akan terlihat seperti ini:</p>
+        <div class="url-buttons">
+          <button
+            class="view-modal-button"
+            data-url="../tutorial/📅➔💳/langkah5.txt"
+          >
+            Implementasi Lengkap
+          </button>
+        </div>
+        <div class="image-box">
+          <img
+            src="https://ultimate-pos-tutorials.vercel.app/assets/images/previous-due-56da1daae83f54d2b3bfa1b7efc35817.png"
+            alt="#"
+          />
+          <p class="caption">Gambar: Implementasi Lengkap.</p>
+        </div>
+        <p>
+          Tanda terima yang menunjukkan jumlah Jatuh Tempo Sebelumnya yang
+          ditampilkan di antara bagian Total Jatuh Tempo dan Semua Jatuh Tempo
+        </p>
+      </section>
+
+      <section>
+        <h2>Alternatif: Pendekatan Satu Baris</h2>
+        <p>
+          Untuk implementasi yang lebih ringkas, Anda dapat menggunakan versi
+          yang disederhanakan ini:
+        </p>
+        <div class="url-buttons">
+          <button
+            class="view-modal-button"
+            data-url="../tutorial/📅➔💳/alt.txt"
+          >
+            Alternatif
+          </button>
+        </div>
+        <p>Pendekatan satu baris ini:</p>
+        <ul>
+          <li>
+            Menggabungkan penguraian mata uang dan kalkulasi ke dalam satu baris
+          </li>
+          <li>
+            Menggunakan <strong>floatval()</strong> alih-alih melakukan casting
+            ke <strong>(float)</strong>
+          </li>
+          <li>Menghilangkan kebutuhan akan fungsi terpisah</li>
+          <li>
+            Menghapus pemformatan <strong>number_format()</strong> (bergantung
+            pada kelas <strong>display_currency</strong>)
+          </li>
+        </ul>
+        <p>
+          <strong>tip</strong> Pilih
+          <strong>pendekatan terperinci</strong> (Langkah 5) untuk keterbacaan
+          dan pemeliharaan yang lebih baik, atau <strong>pendekatan satu baris</strong> untuk
+          jejak kode minimal.
+        </p>
+      </section>
+      <section>
+        <h2>Penjelasan Kode</h2>
+      </section>
+
+      <footer>
+        <!-- HOME -->
+        <div class="home-button-wrapper">
+          <a href="../main.html" class="home-button">🏠 Kembali ke Beranda</a>
+        </div>
+      </footer>
+    </div>
+    <div id="myModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <iframe
+          id="modalFrame"
+          src=""
+          frameborder="0"
+          style="width: 100%; height: 400px"
+        ></iframe>
+      </div>
+    </div>
+    <script src="../js/scripts.js"></script>
+    <!-- Link ke file JavaScript -->
+  </body>
+</html>
