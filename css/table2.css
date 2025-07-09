@@ -1,124 +1,105 @@
-/* Global Styles */
-
-.container {
+/* General Table Styles */
+table {
     width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-}
-
-/* Folder Structure */
-.directory {
+    border-collapse: collapse;
+    background-color: #fff; /* Latar belakang putih agar bersih */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow lembut untuk kesan depth */
     margin-top: 20px;
+    border-radius: 8px; /* Sudut tumpul untuk desain lebih lembut */
+    overflow: hidden; /* Menyembunyikan overflow */
 }
 
-/* Folder Icon and Title */
-.folder-header {
-    display: flex;
-    align-items: center;
-    padding: 10px 15px;
-    background-color: #2c3e50;
-    color: #fff;
-    border-radius: 8px;
-    margin-bottom: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.folder-icon {
-    font-size: 22px;
-    margin-right: 12px;
-}
-
-.folder-name {
-    font-size: 18px;
-    font-weight: bold;
+/* Table Header */
+th {
+    background-color: #2980b9; /* Biru gelap untuk header */
+    color: #fff; /* Warna teks putih */
+    padding: 12px 18px; /* Padding untuk ruang lebih pada teks */
+    text-align: left;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-bottom: 2px solid #1f6288; /* Border bawah dengan warna lebih gelap */
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
 }
 
-/* Folder and File Styles */
-.folder {
-    margin-bottom: 20px;
+/* Table Body */
+td {
+    padding: 12px 18px; /* Padding pada sel */
+    text-align: left;
+    font-size: 1rem;
+    color: #34495e; /* Warna teks lebih gelap */
+    border-bottom: 1px solid #ddd; /* Border bawah yang halus */
+    transition: background-color 0.3s ease; /* Efek transisi halus saat hover */
 }
 
-.subfolder {
-    margin-left: 25px;
+/* Table Row Hover Effect */
+tr:hover {
+    background-color: #ecf0f1; /* Efek hover dengan warna latar belakang terang */
 }
 
-/* Files */
-.file,
-.feature {
-    padding: 8px 15px;
-    margin-bottom: 5px;
-    font-size: 16px;
-    color: #34495e;
-    border-left: 4px solid #3498db;
-    background-color: #ecf0f1;
-    border-radius: 4px;
-    transition: all 0.3s ease;
+/* Even Row Styling */
+tr:nth-child(even) {
+    background-color: #f9f9f9; /* Latar belakang lebih terang pada baris genap */
 }
 
-.file:hover,
-.feature:hover {
-    background-color: #d0e4f5;
-    border-left-color: #2980b9;
-    cursor: pointer;
+/* Table Border */
+table, th, td {
+    border: 1px solid #ddd; /* Border halus di seluruh tabel */
+    border-radius: 8px;
 }
 
-.feature {
-    color: #27ae60;
-    border-left-color: #2ecc71;
+/* Table Responsive Design */
+@media screen and (max-width: 1024px) {
+    th, td {
+        padding: 10px 14px; /* Padding lebih kecil pada tablet */
+        font-size: 0.95rem; /* Ukuran font sedikit lebih kecil */
+    }
+
+    th {
+        font-size: 1rem; /* Ukuran font header sedikit lebih besar */
+    }
 }
 
-.file {
-    background-color: #f5f7fa;
-    border-left-color: #8e44ad;
-}
-
-.file:hover {
-    background-color: #e9e9f0;
-    border-left-color: #9b59b6;
-}
-
-/* Subfolder Styles */
-.subfolder .folder-header {
-    background-color: #34495e;
-}
-
-.subfolder .folder-name {
-    text-transform: none;
-}
-
-.subfolder .file,
-.subfolder .feature {
-    background-color: #ecf0f1;
-    border-left-color: #16a085;
-}
-
-/* Folder Header Animation */
-.folder-header {
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.folder-header:hover {
-    background-color: #2980b9;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-}
-
-/* Responsive Design */
 @media screen and (max-width: 768px) {
-    .container {
-        padding: 10px;
+    table {
+        font-size: 0.9rem; /* Ukuran font sedikit lebih kecil di layar lebih kecil */
     }
 
-    .folder-header {
-        font-size: 16px;
-        padding: 8px 12px;
+    th, td {
+        padding: 8px 12px; /* Padding lebih kecil pada layar kecil */
     }
 
-    .file,
-    .feature {
-        font-size: 14px;
-        padding: 6px 12px;
+    th {
+        font-size: 0.95rem; /* Ukuran font header lebih kecil */
+    }
+
+    /* Menambahkan scroll horizontal untuk tabel pada layar kecil */
+    table {
+        display: block;
+        overflow-x: auto; /* Menambahkan scroll horizontal */
+        white-space: nowrap; /* Memastikan teks tidak terputus */
+    }
+
+    th, td {
+        text-align: center; /* Menyelaraskan teks menjadi lebih mudah dibaca */
+    }
+}
+
+@media screen and (max-width: 480px) {
+    table {
+        font-size: 0.85rem; /* Ukuran font lebih kecil di layar sangat kecil */
+    }
+
+    th, td {
+        padding: 6px 10px; /* Padding lebih kecil untuk efisiensi ruang */
+    }
+
+    th {
+        font-size: 0.9rem; /* Ukuran font header lebih kecil */
+    }
+
+    /* Memastikan tabel menggunakan seluruh lebar layar */
+    table {
+        width: 100%;
     }
 }

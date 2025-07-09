@@ -2,7 +2,11 @@ ul.tree {
   list-style: none;
   padding-left: 1rem;
   overflow-x: auto;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   white-space: nowrap;
+  border: none; /* Remove border */
+  box-shadow: none; /* Remove shadow */
+  margin: 0; /* Remove any margin */
 }
 
 ul.tree li {
@@ -11,6 +15,8 @@ ul.tree li {
   display: block;
   max-width: 100%;
   word-wrap: break-word;
+  border: none; /* Remove borders */
+  box-shadow: none; /* Remove shadow */
 }
 
 ul.tree li::before {
@@ -46,6 +52,9 @@ details summary {
   font-weight: bold;
   word-break: break-word;
   overflow-wrap: break-word;
+  border: none; /* Remove border */
+  box-shadow: none; /* Remove shadow */
+  outline: none; /* Remove outline */
 }
 
 summary::marker {
