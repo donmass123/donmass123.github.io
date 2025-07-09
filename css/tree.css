@@ -1,0 +1,108 @@
+ul.tree {
+  list-style: none;
+  padding-left: 1rem;
+  overflow-x: hidden; /* Prevent horizontal scroll */
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  white-space: normal; /* Allow text to wrap inside elements */
+  border: none;
+  box-shadow: none;
+  margin: 0;
+}
+
+ul.tree li {
+  position: relative;
+  margin: 0.4rem 0;
+  display: block;
+  max-width: 100%; /* Ensure elements take full width */
+  word-wrap: break-word;
+  border: none;
+  box-shadow: none;
+}
+
+ul.tree li::before {
+  content: '📁';
+  margin-right: 1rem;
+}
+
+ul.tree li.file::before {
+  content: '📄';
+}
+
+li span.tag {
+  background-color: #4caf50;
+  color: white;
+  font-size: 0.75rem;
+  border-radius: 4px;
+  padding: 0 6px;
+  margin-left: 0.5rem;
+  display: inline-block;
+  white-space: nowrap;
+}
+
+li span.tag-add {
+  background-color: #03a9f4;
+}
+
+li span.tag-new {
+  background-color: #f44336;
+}
+
+details summary {
+  cursor: pointer;
+  font-weight: bold;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  border: none;
+  box-shadow: none;
+  outline: none;
+}
+
+summary::marker {
+  color: #fff;
+}
+
+/* RESPONSIVE STYLING */
+
+/* Small screens (mobile-first approach) */
+@media (max-width: 768px) {
+  ul.tree {
+    padding-left: 1rem;  /* Ensure left padding is consistent */
+    font-size: 0.9rem; /* Adjust font size for mobile */
+    overflow-x: hidden; /* Prevent horizontal scroll on small screens */
+  }
+
+  li span.tag {
+    font-size: 0.7rem; /* Smaller tags for mobile */
+    padding: 0 4px;
+  }
+
+  details summary {
+    font-size: 1rem; /* Slightly larger font for clarity */
+  }
+
+  /* Ensure tree list items fit properly in mobile view */
+  ul.tree li {
+    margin: 0.6rem 0; /* Add some spacing between items */
+    padding-left: 1.5rem; /* Increased padding for better spacing */
+  }
+}
+
+/* Medium and Large screens */
+@media (min-width: 769px) {
+  ul.tree {
+    font-size: 1rem; /* Set a standard font size for larger screens */
+  }
+
+  li span.tag {
+    font-size: 0.75rem; /* Adjust tags for readability */
+    padding: 0 6px;
+  }
+
+  details summary {
+    font-size: 1.2rem; /* Larger font size for larger screens */
+  }
+
+  ul.tree li {
+    padding-left: 1.5rem; /* Add space for nested items */
+  }
+}
