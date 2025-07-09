@@ -9,6 +9,8 @@
   <link rel="stylesheet" href="css/card.css" />
   <link rel="stylesheet" href="css/search.css" />
   <link rel="stylesheet" href="css/filter.css" />
+  <link rel="stylesheet" href="css/pagi.css" />
+
   <!-- Link to Font Awesome CDN (Add this to the <head> of your HTML) -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 </head>
@@ -41,21 +43,11 @@
         class="search-input" />
     </div>
     <div class="filter-container" style="text-align: center; margin-bottom: 20px">
-      <button onclick="filterTutorials('pemula')" class="filter-button">
-        Pemula
-      </button>
-      <button onclick="filterTutorials('menengah')" class="filter-button">
-        Menengah
-      </button>
-      <button onclick="filterTutorials('mahir')" class="filter-button">
-        Mahir
-      </button>
-      <button onclick="filterTutorials('bahaya')" class="filter-button">
-        Bahaya
-      </button>
-      <button onclick="filterTutorials('all')" class="filter-button">
-        Show All
-      </button>
+      <button onclick="filterTutorials('pemula')" class="filter-button">Pemula</button>
+      <button onclick="filterTutorials('menengah')" class="filter-button">Menengah</button>
+      <button onclick="filterTutorials('mahir')" class="filter-button">Mahir</button>
+      <button onclick="filterTutorials('bahaya')" class="filter-button">Bahaya</button>
+      <button onclick="filterTutorials('all')" class="filter-button">Show All</button>
     </div>
 
     <p id="noResultsMessage" style="
@@ -169,6 +161,14 @@
         <span class="ripple-circle"></span>
         <!-- ripple layer -->
       </div>
+    </div>
+    <!-- Pagination controls -->
+    <div id="pagination" style="text-align: center; margin-top: 20px;">
+      <button id="prevBtn" onclick="changePage(-1)"
+        style="padding: 10px 20px; margin-right: 10px; font-size: 16px;">Previous</button>
+      <span id="pageNumber" style="font-size: 18px;">Page 1</span>
+      <button id="nextBtn" onclick="changePage(1)"
+        style="padding: 10px 20px; margin-left: 10px; font-size: 16px;">Next</button>
     </div>
   </section>
 
@@ -338,8 +338,10 @@
     }
   </script>
   <script src="js/card.js"></script>
-  <script src="js/search.js"></script>
-  <script src="js/filter.js"></script>
+  <!-- <script src="js/search.js"></script> -->
+  <!-- <script src="js/filter.js"></script> -->
+  <script src="js/pagi.js"></script>
+
 </body>
 
 </html>

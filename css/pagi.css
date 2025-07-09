@@ -1,0 +1,38 @@
+#pagination {
+  text-align: center;
+  margin-top: 20px;
+}
+
+#pagination button {
+  padding: 12px 25px;
+  font-size: 16px;
+  background-color: #4CAF50; /* Elegant green background */
+  color: white;
+  border: none;
+  border-radius: 30px; /* Rounded corners */
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  margin: 0 10px;
+}
+
+#pagination button:hover {
+  background-color: #45a049; /* Darker green on hover */
+  transform: scale(1.05); /* Slight zoom effect on hover */
+}
+
+#pagination button:disabled {
+  background-color: #ddd; /* Light gray for disabled state */
+  cursor: not-allowed; /* Indicates unclickable */
+}
+
+#pageNumber {
+  font-size: 18px;
+  color: #333;
+  font-weight: bold;
+  margin-top: 12px;
+  display: inline-block;
+  padding: 6px 12px;
+  background-color: #f1f1f1; /* Light background */
+  border-radius: 20px; /* Rounded corners */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
