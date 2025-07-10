@@ -1,0 +1,46 @@
+#bubbleUp {
+    display: none;
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 100;
+    width: 54px;
+    height: 54px;
+    background: rgba(30, 144, 255, 0.85); /* Biru dodger semi-transparan */
+    color: #fff;
+    border: none;
+    outline: none;
+    border-radius: 50%;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.16), 0 1.5px 3px rgba(0, 0, 0, 0.14);
+    font-size: 26px;
+    font-family: inherit;
+    cursor: pointer;
+    transition: background 0.25s, box-shadow 0.2s, transform 0.18s;
+    opacity: 0.95;
+    backdrop-filter: blur(2px);
+}
+
+#bubbleUp:hover,
+#bubbleUp:focus-visible {
+    background: rgba(0, 110, 255, 1);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.26), 0 3px 8px rgba(30, 144, 255, 0.23);
+    transform: scale(1.15);
+    opacity: 1;
+}
+
+#bubbleUp:active {
+    background: rgba(30, 90, 180, 0.92);
+    transform: scale(0.98);
+}
+
+/* Responsif untuk layar lebar di bawah 600px (mobile) */
+@media (max-width: 600px) {
+    #bubbleUp {
+        bottom: 16px;
+        right: 16px;
+        width: 44px;
+        height: 44px;
+        font-size: 20px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.14), 0 1px 2px rgba(0,0,0,0.16);
+    }
+}
