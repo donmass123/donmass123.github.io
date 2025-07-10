@@ -1,111 +1,114 @@
 <!DOCTYPE html>
 <html lang="id">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tutorial Point Of Sales</title>
-    <link rel="stylesheet" href="../css/tutor.css" />
-    <link rel="stylesheet" href="../css/modal.css" />
 
-  </head>
-  <body>
-    <div class="container">
-      <header>
-        <h1>
-          Ukuran Db yang sangat besar di POS
-        </h1>
-        <h1>🗃️📊💾</h1>
-        <h5>
-          Tujuan: Mengurangi ukuran database dengan menghapus entri duplikat yang dibuat secara otomatis dengan aman di `transaction_sell_lines_purchase_lines` - salah satu tabel yang paling besar di POS.
-        </h5>
-      </header>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tutorial Point Of Sales</title>
+  <link rel="stylesheet" href="../css/tutor.css" />
+  <link rel="stylesheet" href="../css/modal.css" />
+  <link rel="stylesheet" href="../css/sidebar.css" />
 
-      <!-- HOME -->
-       <div class="home-button-wrapper">
-          <a href="../main.html" class="home-button">🏠 Kembali ke Beranda</a>
-        </div>
+</head>
 
-      <section>
-        <h2>✅ Apa yang Perbaikan Ini Lakukan untuk Saya</h2>
-        <ul>
-          <li>Database Sebelum: ~ 4 GB</li>
-          <li>Database Setelah Pembersihan: ~80 MB 😲</li>
-          <li>✅ Tidak ada masalah atau kehilangan data dalam penjualan atau inventaris setelah pembersihan</li>
-        </ul>
-      </section>
-      
-      <section>
-        <h1>Langkah 1 : Jalankan SQL ini di `phpMyAdmin` (atau alat SQL lainnya):</h1>
-        <div class="url-buttons">
-          <button class="view-modal-button" data-url="../tutorial/🗃️📊💾/langkah1.txt">
-            Sql
-          </button>
-        </div>
-        <p>🔍 Ini menunjukkan berapa banyak baris duplikat yang ada di mana sell_line_id adalah NULL (masalah duplikasi yang umum).</p>
-      </section>
+<body>
+  <div class="container">
+    <header>
+      <h1>
+        Ukuran Db yang sangat besar di POS
+      </h1>
+      <h1>🗃️📊💾</h1>
+      <h5>
+        Tujuan: Mengurangi ukuran database dengan menghapus entri duplikat yang dibuat secara otomatis dengan aman di
+        `transaction_sell_lines_purchase_lines` - salah satu tabel yang paling besar di POS.
+      </h5>
+    </header>
 
-      <section>
-        <h1>🧾 LANGKAH 2: Pratinjau 100 Rekaman Duplikat</h1>
-        <p>Tinjau 100 duplikat sebelum penghapusan:</p>
-        <div class="url-buttons">
-          <button class="view-modal-button" data-url="../tutorial/🗃️📊💾/langkah2.txt">
-            Sql
-          </button>
-        </div>
-        <p>🧠 TIP: Ini tidak akan menghapus apa pun - hanya mencantumkan duplikat untuk pemeriksaan Anda.</p>
-      </section>
-      <section>
-        <h1>LANGKAH 3: Menghapus Duplikat dengan Aman dalam Batch</h1>
-        <p>Mulailah dari yang kecil! Coba hapus 100 sekaligus:</p>
-        <div class="url-buttons">
-          <button class="view-modal-button" data-url="../tutorial/🗃️📊💾/langkah3.txt">
-            Sql
-          </button>
-        </div>
-        <h2>💡 Anda dapat mengubah LIMIT 100 menjadi 500, 1000, atau lebih berdasarkan:</h2>
-        <p>Daya server (hosting bersama, VPS, cloud)
-Beban saat ini (hanya berjalan selama waktu idle/di luar jam sibuk)</p>
-          <h2>Sekarang lakukan kueri pengoptimalan:</h2>
-          <p>OPTIMALKAN TABEL `transaction_sell_lines_purchase_lines`;</p>
-      </section>
-      <section>
-        <h2>📌 Catatan Penting</h2>
-        <h3>✅ Apa yang harus dilakukan.</h3>
-        <ul>
-          <li>✔️ Backup database anda terlebih dahulu!</li>
-          <li>✔️ Jalankan selama penggunaan rendah atau nol (tengah malam / di luar jam kerja)</li>
-          <li>✔️ Mulailah dengan LIMIT 100 sebelum meningkat</li>
-          <li>✔️ Pantau sistem POS Anda setelah setiap proses penghapusan</li>
-          <li>✔️ Jumlah total dokumen sebelum/sesudah pembersihan</li>
-        </ul>
-        <h3>❌ Apa yang TIDAK BOLEH DILAKUKAN.</h3>
-        <ul>
-          <li>❌ Jangan dijalankan selama jam kerja</li>
-          <li>❌ Jangan menghapus tanpa meninjau sampel terlebih dahulu</li>
-          <li>❌ Jangan menghapus secara membabi buta sekaligus pada server bersama</li>
-          <li>❌ Jangan melewatkan pencadangan - jangan pernah!</li>
-        </ul>
-        <h3>Anda dapat menghubungi saya, saya akan membantu :</h3>
-        <p>Saya sangat menderita dan mencapai solusi bahkan saya dapat melakukan di server langsung Tidak ada kehilangan data yang akan terjadi</p>
-      </section>
-      <footer>
-        <!-- HOME -->
-       <div class="home-button-wrapper">
-          <a href="../main.html" class="home-button">🏠 Kembali ke Beranda</a>
-        </div>
-      </footer>
+    <!-- HOME -->
+    <div class="home-button-wrapper">
+      <a href="../main.html" class="home-button">🏠 Kembali ke Beranda</a>
     </div>
-        <div id="myModal" class="modal">
-      <div class="modal-content">
-        <span class="close">&times;</span>
-        <iframe
-          id="modalFrame"
-          src=""
-          frameborder="0"
-          style="width: 100%; height: 400px"
-        ></iframe>
+
+    <section>
+      <h2>✅ Apa yang Perbaikan Ini Lakukan untuk Saya</h2>
+      <ul>
+        <li>Database Sebelum: ~ 4 GB</li>
+        <li>Database Setelah Pembersihan: ~80 MB 😲</li>
+        <li>✅ Tidak ada masalah atau kehilangan data dalam penjualan atau inventaris setelah pembersihan</li>
+      </ul>
+    </section>
+
+    <section>
+      <h1>Langkah 1 : Jalankan SQL ini di `phpMyAdmin` (atau alat SQL lainnya):</h1>
+      <div class="url-buttons">
+        <button class="view-modal-button" data-url="../tutorial/🗃️📊💾/langkah1.txt">
+          Sql
+        </button>
       </div>
+      <p>🔍 Ini menunjukkan berapa banyak baris duplikat yang ada di mana sell_line_id adalah NULL (masalah duplikasi
+        yang umum).</p>
+    </section>
+
+    <section>
+      <h1>🧾 LANGKAH 2: Pratinjau 100 Rekaman Duplikat</h1>
+      <p>Tinjau 100 duplikat sebelum penghapusan:</p>
+      <div class="url-buttons">
+        <button class="view-modal-button" data-url="../tutorial/🗃️📊💾/langkah2.txt">
+          Sql
+        </button>
+      </div>
+      <p>🧠 TIP: Ini tidak akan menghapus apa pun - hanya mencantumkan duplikat untuk pemeriksaan Anda.</p>
+    </section>
+    <section>
+      <h1>LANGKAH 3: Menghapus Duplikat dengan Aman dalam Batch</h1>
+      <p>Mulailah dari yang kecil! Coba hapus 100 sekaligus:</p>
+      <div class="url-buttons">
+        <button class="view-modal-button" data-url="../tutorial/🗃️📊💾/langkah3.txt">
+          Sql
+        </button>
+      </div>
+      <h2>💡 Anda dapat mengubah LIMIT 100 menjadi 500, 1000, atau lebih berdasarkan:</h2>
+      <p>Daya server (hosting bersama, VPS, cloud)
+        Beban saat ini (hanya berjalan selama waktu idle/di luar jam sibuk)</p>
+      <h2>Sekarang lakukan kueri pengoptimalan:</h2>
+      <p>OPTIMALKAN TABEL `transaction_sell_lines_purchase_lines`;</p>
+    </section>
+    <section>
+      <h2>📌 Catatan Penting</h2>
+      <h3>✅ Apa yang harus dilakukan.</h3>
+      <ul>
+        <li>✔️ Backup database anda terlebih dahulu!</li>
+        <li>✔️ Jalankan selama penggunaan rendah atau nol (tengah malam / di luar jam kerja)</li>
+        <li>✔️ Mulailah dengan LIMIT 100 sebelum meningkat</li>
+        <li>✔️ Pantau sistem POS Anda setelah setiap proses penghapusan</li>
+        <li>✔️ Jumlah total dokumen sebelum/sesudah pembersihan</li>
+      </ul>
+      <h3>❌ Apa yang TIDAK BOLEH DILAKUKAN.</h3>
+      <ul>
+        <li>❌ Jangan dijalankan selama jam kerja</li>
+        <li>❌ Jangan menghapus tanpa meninjau sampel terlebih dahulu</li>
+        <li>❌ Jangan menghapus secara membabi buta sekaligus pada server bersama</li>
+        <li>❌ Jangan melewatkan pencadangan - jangan pernah!</li>
+      </ul>
+      <h3>Anda dapat menghubungi saya, saya akan membantu :</h3>
+      <p>Saya sangat menderita dan mencapai solusi bahkan saya dapat melakukan di server langsung Tidak ada kehilangan
+        data yang akan terjadi</p>
+    </section>
+    <footer>
+      <!-- HOME -->
+      <div class="home-button-wrapper">
+        <a href="../main.html" class="home-button">🏠 Kembali ke Beranda</a>
+      </div>
+    </footer>
+  </div>
+  <div id="myModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <iframe id="modalFrame" src="" frameborder="0" style="width: 100%; height: 400px"></iframe>
     </div>
-    <script src="../js/scripts.js"></script>
-  </body>
+  </div>
+  <script src="../js/scripts.js"></script>
+  <script src="../js/sidebar.js"></script>
+</body>
+
 </html>
