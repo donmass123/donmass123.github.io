@@ -6,7 +6,9 @@
     <title>Tutorial Point Of Sales</title>
     <link rel="stylesheet" href="../css/tutor.css" />
     <link rel="stylesheet" href="../css/modal.css" />
+    <link rel="stylesheet" href="../css/sidebar.css" />
   </head>
+
   <body>
     <div class="container">
       <header>
@@ -33,6 +35,14 @@
         <a href="../main.html" class="home-button">🏠 Kembali ke Beranda</a>
       </div>
 
+      <div class="toc-dropdown-wrapper">
+        <label for="toc-dropdown" class="toc-icon">
+          <strong>Daftar Isi</strong>
+        </label>
+        <select id="toc-dropdown" class="toc-dropdown">
+          <!-- Otomatis diisi JS -->
+        </select>
+      </div>
       <section>
         <h2>🖼️ Prasyarat</h2>
         <ul>
@@ -213,6 +223,7 @@ d.sub_category_id = $('#product_list_filter_sub_category_id').val();
       </div>
     </div>
     <script src="../js/scripts.js"></script>
+    <script src="../js/sidebar.js"></script>
     <!-- Link ke file JavaScript -->
   </body>
 </html>

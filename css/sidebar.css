@@ -1,0 +1,81 @@
+.toc-dropdown-wrapper {
+  margin: 32px auto 24px auto;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: linear-gradient(90deg, #f7fbff 80%, #eef3fc 100%);
+  border-radius: 16px;
+  padding: 14px clamp(10px, 5vw, 24px) 12px clamp(10px, 3vw, 18px);
+  box-shadow: 0 2px 12px rgba(44,94,220,0.09);
+  max-width: 500px;
+  width: 100%;
+  min-width: 0;
+  border: 1.2px solid #e6ebf5;
+  box-sizing: border-box;
+}
+
+.toc-icon {
+  display: flex;
+  align-items: center;
+  font-size: 1.07em;
+  color: #2659bd;
+  letter-spacing: 0.01em;
+  flex-shrink: 0;
+}
+
+.toc-dropdown {
+  width: 100%;
+  min-width: 0;
+  max-width: 320px;
+  padding: 10px 38px 10px 15px;
+  border-radius: 8px;
+  border: 1.6px solid #a3badd;
+  background: #f2f6fc;
+  color: #22416e;
+  font-size: 1.07em;
+  box-shadow: 0 1.5px 7px rgba(48,108,218,0.07);
+  font-family: inherit;
+  outline: none;
+  transition: border 0.21s, box-shadow 0.22s;
+  cursor: pointer;
+  /* Untuk mencegah meledak di layar sempit */
+  box-sizing: border-box;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url('data:image/svg+xml;charset=UTF-8,<svg fill=\"%233577eb\" height=\"16\" viewBox=\"0 0 20 20\" width=\"16\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M7 7l3 3 3-3\" stroke=\"%233577eb\" stroke-width=\"2\" fill=\"none\" fill-rule=\"evenodd\"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 18px;
+  /* Teks auto ellipsis jika panjang */
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  display: block;
+}
+
+/* Mobile responsive */
+@media (max-width: 700px) {
+  .toc-dropdown-wrapper {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 9px;
+    padding: 10px 4vw 9px 4vw;
+    max-width: 98vw;
+    width: 98vw;
+  }
+  .toc-dropdown {
+    width: 100%;
+    max-width: 96vw;
+    font-size: 1em;
+  }
+}
+
+/* Untuk mendukung compatibility */
+.toc-dropdown option {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 100%;
+  display: block;
+}
