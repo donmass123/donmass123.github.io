@@ -1,45 +1,42 @@
-/* TREE STYLES - MOBILE OPTIMIZED */
 ul.tree {
   list-style: none;
-  padding-left: 0.8rem; /* Reduced padding for mobile-first */
-  font-family: "Montserrat", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  padding-left: 1rem;
+  overflow-x: hidden; /* Prevent horizontal scroll */
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  white-space: normal; /* Allow text to wrap inside elements */
+  border: none;
+  box-shadow: none;
   margin: 0;
-  line-height: 1.3; /* Tighter line height for mobile */
 }
 
 ul.tree li {
   position: relative;
-  margin: 0.3rem 0; /* Reduced margin for mobile */
+  margin: 0.4rem 0;
   display: block;
-  padding-left: 1rem; /* Reduced padding */
-  font-size: 0.85rem; /* Smaller font for mobile */
-  color: #333;
+  max-width: 100%; /* Ensure elements take full width */
+  word-wrap: break-word;
+  border: none;
+  box-shadow: none;
 }
 
 ul.tree li::before {
   content: '📁';
-  position: absolute;
-  left: 0;
-  top: 0;
-  font-size: 0.9rem; /* Smaller icons on mobile */
-  color: #5f6368;
-  margin-right: 0.5rem;
+  margin-right: 1rem;
 }
 
 ul.tree li.file::before {
   content: '📄';
 }
 
-/* Tags - more compact on mobile */
 li span.tag {
   background-color: #4caf50;
   color: white;
-  font-size: 0.65rem; /* Smaller tags */
-  border-radius: 3px;
-  padding: 1px 4px; /* Reduced padding */
-  margin-left: 0.3rem;
+  font-size: 0.75rem;
+  border-radius: 4px;
+  padding: 0 6px;
+  margin-left: 0.5rem;
   display: inline-block;
-  line-height: 1.2;
+  white-space: nowrap;
 }
 
 li span.tag-add {
@@ -52,172 +49,60 @@ li span.tag-new {
 
 details summary {
   cursor: pointer;
-  font-weight: 600; /* Slightly lighter weight */
-  color: #333;
+  font-weight: bold;
+  word-break: break-word;
+  overflow-wrap: break-word;
   border: none;
-  padding: 0;
-  background: none;
-  font-size: 0.9rem; /* Smaller summary text */
-  line-height: 1.4;
+  box-shadow: none;
+  outline: none;
 }
 
-details summary::marker {
-  color: transparent;
+summary::marker {
+  color: #fff;
 }
 
-/* RESPONSIVE BREAKPOINTS */
+/* RESPONSIVE STYLING */
 
-/* Extra small screens (phones in portrait) */
-@media (max-width: 480px) {
-  ul.tree {
-    padding-left: 0.5rem;
-    font-size: 0.8rem;
-  }
-  
-  ul.tree li {
-    padding-left: 0.8rem;
-    margin: 0.2rem 0;
-  }
-  
-  ul.tree li::before {
-    font-size: 0.8rem;
-  }
-  
-  li span.tag {
-    font-size: 0.6rem;
-    padding: 1px 3px;
-    margin-left: 0.2rem;
-  }
-  
-  details summary {
-    font-size: 0.85rem;
-  }
-}
-
-/* Small screens (phones in landscape, small tablets) */
-@media (min-width: 481px) and (max-width: 768px) {
-  ul.tree {
-    padding-left: 0.8rem;
-    font-size: 0.85rem;
-  }
-  
-  ul.tree li {
-    padding-left: 1rem;
-    margin: 0.25rem 0;
-  }
-  
-  li span.tag {
-    font-size: 0.65rem;
-    padding: 1px 4px;
-  }
-  
-  details summary {
-    font-size: 0.9rem;
-  }
-}
-
-/* Medium screens (tablets) */
-@media (min-width: 769px) and (max-width: 1024px) {
-  ul.tree {
-    padding-left: 1.2rem;
-    font-size: 0.9rem;
-  }
-  
-  ul.tree li {
-    padding-left: 1.4rem;
-    margin: 0.4rem 0;
-  }
-  
-  ul.tree li::before {
-    font-size: 0.95rem;
-  }
-  
-  li span.tag {
-    font-size: 0.7rem;
-    padding: 2px 5px;
-  }
-  
-  details summary {
-    font-size: 0.95rem;
-  }
-}
-
-/* Large screens (desktops) */
-@media (min-width: 1025px) {
-  ul.tree {
-    padding-left: 1.5rem;
-    font-size: 1rem;
-  }
-  
-  ul.tree li {
-    padding-left: 1.8rem;
-    margin: 0.5rem 0;
-  }
-  
-  ul.tree li::before {
-    font-size: 1rem;
-  }
-  
-  li span.tag {
-    background-color: #4caf50;
-    color: white;
-    font-size: 0.75rem;
-    border-radius: 4px;
-    padding: 0 6px;
-    margin-left: 0.5rem;
-  }
-  
-  details summary {
-    font-size: 1rem;
-    font-weight: bold;
-  }
-}
-
-/* INTERACTION EFFECTS */
-ul.tree li:hover {
-  background-color: #f9f9f9;
-  transition: background-color 0.3s ease;
-}
-
-details[open] summary {
-  color: #4caf50;
-}
-
-/* Mobile-specific optimizations */
+/* Small screens (mobile-first approach) */
 @media (max-width: 768px) {
-  /* Reduce hover effects on mobile for better performance */
-  ul.tree li:hover {
-    background-color: transparent;
+  ul.tree {
+    padding-left: 1rem;  /* Ensure left padding is consistent */
+    font-size: 0.9rem; /* Adjust font size for mobile */
+    overflow-x: hidden; /* Prevent horizontal scroll on small screens */
   }
-  
-  /* Add touch-friendly spacing */
+
+  li span.tag {
+    font-size: 0.7rem; /* Smaller tags for mobile */
+    padding: 0 4px;
+  }
+
   details summary {
-    padding: 0.2rem 0;
-    min-height: 24px; /* Minimum touch target size */
+    font-size: 1rem; /* Slightly larger font for clarity */
   }
-  
-  /* Optimize for smaller screens */
+
+  /* Ensure tree list items fit properly in mobile view */
   ul.tree li {
-    word-wrap: break-word;
-    overflow-wrap: break-word;
+    margin: 0.6rem 0; /* Add some spacing between items */
+    padding-left: 1.5rem; /* Increased padding for better spacing */
   }
 }
 
-/* Dark mode support (optional) */
-@media (prefers-color-scheme: dark) {
-  ul.tree li {
-    color: #e0e0e0;
+/* Medium and Large screens */
+@media (min-width: 769px) {
+  ul.tree {
+    font-size: 1rem; /* Set a standard font size for larger screens */
   }
-  
+
+  li span.tag {
+    font-size: 0.75rem; /* Adjust tags for readability */
+    padding: 0 6px;
+  }
+
   details summary {
-    color: #e0e0e0;
+    font-size: 1.2rem; /* Larger font size for larger screens */
   }
-  
-  ul.tree li:hover {
-    background-color: #2a2a2a;
-  }
-  
-  details[open] summary {
-    color: #66bb6a;
+
+  ul.tree li {
+    padding-left: 1.5rem; /* Add space for nested items */
   }
 }
