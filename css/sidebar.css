@@ -7,7 +7,7 @@
   border-radius: 16px;
   padding: 14px clamp(10px, 5vw, 24px) 12px clamp(10px, 3vw, 18px);
   box-shadow: 0 2px 12px rgba(44,94,220,0.09);
-  max-width: 500px;
+  max-width: 400px;
   width: 100%;
   min-width: 0;
   border: 1.2px solid #e6ebf5;
@@ -61,8 +61,8 @@
     align-items: stretch;
     gap: 9px;
     padding: 10px 4vw 9px 4vw;
-    max-width: 98vw;
-    width: 98vw;
+    max-width: 88vw;
+    width: 88vw;
   }
   .toc-dropdown {
     width: 100%;
