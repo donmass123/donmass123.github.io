@@ -1,0 +1,8 @@
+<span class="input-group-btn">
+    {{-- Camera Barcode Scanner Button --}}
+    <x-camera-barcode-scanner
+        search-input-id="search_product"
+        button-class="pos-camera-btn" />
+
+    <!-- Other buttons... -->
+</span>

@@ -1,0 +1,6 @@
+<x-camera-barcode-scanner
+    search-input-id="search_product"
+    :show-in-group="false"
+    button-style="link"
+    button-text="📷 Scan Barcode"
+    :full-width="true" />

@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tutorial Point Of Sales</title>
+    <link rel="stylesheet" href="../css/tutor.css" />
+    <link rel="stylesheet" href="../css/modal.css" />
+    <link rel="stylesheet" href="../css/tabel_tutor.css" />
+    <link rel="stylesheet" href="../css/tree.css" />
+  </head>
+
+  <body>
+    <div class="container">
+      <header>
+        <h1>Panduan Penerapan Pemindai Barcode Kamera POS</h1>
+        <h1>📷🔲💳</h1>
+        <h5>
+          Tutorial langkah demi langkah yang komprehensif untuk
+          mengimplementasikan pemindai barcode kamera universal di semua modul
+          POS.
+        </h5>
+      </header>
+
+      <div class="download-box">
+        <a
+          href="https://drive.google.com/drive/folders/1Z4tG3FMdMa3oZ3Nk9oqAp8ydWOlFcDS8?usp=drive_link"
+          download
+          class="download-button"
+        >
+          ⬇️ Unduh File Contoh
+        </a>
+      </div>
+      <!-- HOME -->
+      <div class="home-button-wrapper">
+        <a href="../main.html" class="home-button">🏠 Kembali ke Beranda</a>
+      </div>
+
+      <section>
+        <h2>📋 Gambaran Umum</h2>
+        <p>
+          Panduan ini akan membantu Anda mengimplementasikan komponen pemindai
+          barcode kamera yang dapat digunakan kembali yang bekerja di semua
+          halaman POS termasuk Penjualan, Pembelian, Manajemen Stok, dan sistem
+          POS.
+        </p>
+        <div class="image-box">
+          <img
+            src="https://ultimate-pos-tutorials.vercel.app/assets/images/button-barcode-scanner-9c04393f973de15b4d6040fb7ad1ab44.png"
+            alt="#"
+          />
+          <p class="caption">
+            Gambar: Tombol pemindai kamera terintegrasi dengan mulus dalam
+            antarmuka POS.
+          </p>
+        </div>
+        <p>Fitur-fitur</p>
+        <ul>
+          <li>✅ Kompatibilitas universal di seluruh modul</li>
+          <li>✅ Deteksi halaman otomatis dan perilaku yang sesuai</li>
+          <li>✅ Komponen Blade yang dapat digunakan kembali</li>
+          <li>✅ Dukungan fallback untuk berbagai endpoint pencarian</li>
+          <li>✅ Berbagai opsi gaya</li>
+          <li>✅ Akses kamera HTTPS dengan penanganan kesalahan yang tepat</li>
+          <li>
+            ✅ Antarmuka pemindaian yang dioptimalkan untuk perangkat mobile
+          </li>
+          <li>✅ Deteksi barcode secara real-time</li>
+        </ul>
+        <div class="image-box">
+          <img
+            src="https://ultimate-pos-tutorials.vercel.app/assets/images/barcode-scanning-e83a43e490099b1f1ce7a72f39e0f888.png"
+            alt="#"
+          />
+          <p class="caption">
+            Gambar: Antarmuka pemindaian profesional dengan umpan kamera waktu
+            riil.
+          </p>
+        </div>
+        <h2>🚀 Quick Start</h2>
+        <h3>Persyaratan</h3>
+        <ul>
+          <li>Sistem POS</li>
+          <li>Koneksi HTTPS (diperlukan untuk akses kamera)</li>
+          <li>Browser modern dengan dukungan kamera</li>
+        </ul>
+        <h3>Ketergantungan (Dependencies)</h3>
+        <ul>
+          <li>jQuery (sudah termasuk dalam POS)</li>
+          <li>Library Html5Qrcode</li>
+          <li>Bootstrap (sudah termasuk dalam POS)</li>
+        </ul>
+        <h3>📁 Struktur File</h3>
+        <ul class="tree">
+          <li>
+            <details>
+              <summary>resources/views/components/</summary>
+              <ul>
+                <li class="file">
+                  camera-barcode-scanner.blade.php
+                  <span class="tag">Reusable component</span>
+                </li>
+              </ul>
+            </details>
+          </li>
+          <li>
+            <details>
+              <summary>public/js/</summary>
+              <ul>
+                <li class="file">
+                  camera-barcode-scanner.js
+                  <span class="tag">Universal JavaScript</span>
+                </li>
+              </ul>
+            </details>
+          </li>
+          <li>
+            <details>
+              <summary>resources/views/layouts/partials/</summary>
+              <ul>
+                <li class="file">
+                  javascripts.blade.php
+                  <span class="tag">Include scripts</span>
+                </li>
+              </ul>
+            </details>
+          </li>
+        </ul>
+      </section>
+      <section>
+        <h2>Langkah 1: Membuat Komponen yang Dapat Digunakan Kembali</h2>
+        <p>
+          Buat file
+          <strong
+            >resources/views/components/camera-barcode-scanner.blade.php</strong
+          >:
+        </p>
+        <div class="url-buttons">
+          <button
+            class="view-modal-button"
+            data-url="../tutorial/📷🔲💳/langkah1.txt"
+          >
+            resources/views/components/camera-barcode-scanner.blade.php
+          </button>
+        </div>
+      </section>
+      <section>
+        <h2>🔧 Langkah 2: Buat JavaScript Universal</h2>
+        <p>Buat file <strong>public/js/camera-barcode-scanner.js</strong> :</p>
+        <div class="url-buttons">
+          <button
+            class="view-modal-button"
+            data-url="../tutorial/📷🔲💳/langkah2.txt"
+          >
+            public/js/camera-barcode-scanner.js
+          </button>
+        </div>
+      </section>
+      <section>
+        <h2>📜 Langkah 3: Sertakan Skrip yang Diperlukan</h2>
+        <p>
+          Perbarui
+          <strong>resources/views/layouts/partials/javascripts.blade.php</strong
+          >:
+        </p>
+        <div class="url-buttons">
+          <button
+            class="view-modal-button"
+            data-url="../tutorial/📷🔲💳/langkah3.txt"
+          >
+            resources/views/layouts/partials/javascripts.blade.php
+          </button>
+        </div>
+      </section>
+      <section>
+        <h2>📑 Langkah 4: Implementasi berdasarkan Jenis Halaman</h2>
+        <h3>🛒 Sistem POS</h3>
+        <p>
+          File:
+          <strong>resources/views/sale_pos/partials/pos_form.blade.php</strong>
+        </p>
+        <p><strong>Solusi 1: Pengaturan Standar</strong></p>
+        <div class="url-buttons">
+          <button
+            class="view-modal-button"
+            data-url="../tutorial/📷🔲💳/ds.txt"
+          >
+            resources/views/sale_pos/partials/pos_form.blade.php
+          </button>
+        </div>
+        <p><strong>Solusi 2: Penataan yang Lebih Baik</strong></p>
+        <div class="url-buttons">
+          <button
+            class="view-modal-button"
+            data-url="../tutorial/📷🔲💳/bs.txt"
+          >
+            resources/views/sale_pos/partials/pos_form.blade.php
+          </button>
+        </div>
+        <h3>💰 Halaman Penjualan</h3>
+        <p>
+          Files:
+          <strong
+            >resources/views/sell/create.blade.php,
+            resources/views/sell/edit.blade.php</strong
+          >
+        </p>
+        <p><strong>Solusi 1: Pengaturan Standar</strong></p>
+        <div class="url-buttons">
+          <button
+            class="view-modal-button"
+            data-url="../tutorial/📷🔲💳/ds2.txt"
+          >
+            resources/views/sell/create.blade.php,
+            resources/views/sell/edit.blade.php
+          </button>
+        </div>
+        <p><strong>Solusi 2: Penataan yang Lebih Baik</strong></p>
+        <div class="url-buttons">
+          <button
+            class="view-modal-button"
+            data-url="../tutorial/📷🔲💳/bs2.txt"
+          >
+            resources/views/sell/create.blade.php,
+            resources/views/sell/edit.blade.php
+          </button>
+        </div>
+        <h3>📦 Halaman Pembelian</h3>
+        <p>
+          Files:
+          <strong
+            >resources/views/purchase/create.blade.php,
+            resources/views/purchase/edit.blade.php</strong
+          >
+        </p>
+        <p><strong>Solusi 1: Pengaturan Standar</strong></p>
+        <div class="url-buttons">
+          <button
+            class="view-modal-button"
+            data-url="../tutorial/📷🔲💳/ds3.txt"
+          >
+            resources/views/purchase/create.blade.php,
+            resources/views/purchase/edit.blade.php
+          </button>
+        </div>
+        <p><strong>Solusi 2: Penataan yang Lebih Baik</strong></p>
+        <div class="url-buttons">
+          <button
+            class="view-modal-button"
+            data-url="../tutorial/📷🔲💳/bs3.txt"
+          >
+            resources/views/purchase/create.blade.php,
+            resources/views/purchase/edit.blade.php
+          </button>
+        </div>
+
+        <h3>📋 Halaman Pesanan Pembelian</h3>
+        <p>
+          Files:
+          <strong
+            >resources/views/purchase_order/create.blade.php,
+            resources/views/purchase_order/edit.blade.php</strong
+          >
+        </p>
+        <p><strong>Solusi 1: Pengaturan Standar</strong></p>
+        <div class="url-buttons">
+          <button
+            class="view-modal-button"
+            data-url="../tutorial/📷🔲💳/ds4.txt"
+          >
+            resources/views/purchase_order/create.blade.php,
+            resources/views/purchase_order/edit.blade.php
+          </button>
+        </div>
+        <p><strong>Solusi 2: Penataan yang Lebih Baik</strong></p>
+        <div class="url-buttons">
+          <button
+            class="view-modal-button"
+            data-url="../tutorial/📷🔲💳/bs4.txt"
+          >
+            resources/views/purchase_order/create.blade.php,
+            resources/views/purchase_order/edit.blade.php
+          </button>
+        </div>
+        <h3>🔄 Halaman Transfer stok</h3>
+        <p>
+          Files:
+          <strong
+            >resources/views/stock_transfer/create.blade.php,
+            resources/views/stock_transfer/edit.blade.php</strong
+          >
+        </p>
+        <p><strong>Solusi 1: Pengaturan Standar</strong></p>
+        <div class="url-buttons">
+          <button
+            class="view-modal-button"
+            data-url="../tutorial/📷🔲💳/ds5.txt"
+          >
+            resources/views/stock_transfer/create.blade.php,
+            resources/views/stock_transfer/edit.blade.php
+          </button>
+        </div>
+        <p><strong>Solusi 2: Penataan yang Lebih Baik</strong></p>
+        <div class="url-buttons">
+          <button
+            class="view-modal-button"
+            data-url="../tutorial/📷🔲💳/bs5.txt"
+          >
+            resources/views/stock_transfer/create.blade.php,
+            resources/views/stock_transfer/edit.blade.php
+          </button>
+        </div>
+        <h3>📊 Halaman Penyesuaian Stok</h3>
+        <p>
+          Files:
+          <strong>resources/views/stock_adjustment/create.blade.php</strong>
+        </p>
+        <p><strong>Solusi 1: Pengaturan Standar</strong></p>
+        <div class="url-buttons">
+          <button
+            class="view-modal-button"
+            data-url="../tutorial/📷🔲💳/ds6.txt"
+          >
+            resources/views/stock_adjustment/create.blade.php
+          </button>
+        </div>
+        <p><strong>Solusi 2: Penataan yang Lebih Baik</strong></p>
+        <div class="url-buttons">
+          <button
+            class="view-modal-button"
+            data-url="../tutorial/📷🔲💳/bs6.txt"
+          >
+            resources/views/stock_adjustment/create.blade.php
+          </button>
+        </div>
+        <h3>🔙 Halaman Pengembalian Pembelian</h3>
+        <p>
+          Files:
+          <strong
+            >resources/views/purchase_return/create.blade.php,
+            resources/views/purchase_return/edit.blade.php</strong
+          >
+        </p>
+        <p><strong>Solusi 1: Pengaturan Standar</strong></p>
+        <div class="url-buttons">
+          <button
+            class="view-modal-button"
+            data-url="../tutorial/📷🔲💳/ds7.txt"
+          >
+            resources/views/purchase_return/create.blade.php,
+            resources/views/purchase_return/edit.blade.php
+          </button>
+        </div>
+        <p><strong>Solusi 2: Penataan yang Lebih Baik</strong></p>
+        <div class="url-buttons">
+          <button
+            class="view-modal-button"
+            data-url="../tutorial/📷🔲💳/bs7.txt"
+          >
+            resources/views/purchase_return/create.blade.php,
+            resources/views/purchase_return/edit.blade.php
+          </button>
+        </div>
+      </section>
+
+      <section>
+        <h2>🎛️ Opsi Konfigurasi Komponen</h2>
+        <h3>Alat Peraga Tersedia</h3>
+        <div class="table-wrapper">
+          <table class="file-changes">
+            <thead>
+              <tr>
+                <th>Prop</th>
+                <th>Type</th>
+                <th>Default</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>search-input-id</td>
+                <td>String</td>
+                <td>'search_product'</td>
+                <td>ID of the target search input</td>
+              </tr>
+              <tr>
+                <td>button-class</td>
+                <td>String</td>
+                <td>''</td>
+                <td>Additional CSS classes</td>
+              </tr>
+              <tr>
+                <td>:show-in-group</td>
+                <td>Boolean</td>
+                <td>true</td>
+                <td>Input group button vs standalone</td>
+              </tr>
+              <tr>
+                <td>button-style</td>
+                <td>String</td>
+                <td>'default'</td>
+                <td>Bootstrap button style</td>
+              </tr>
+              <tr>
+                <td>:full-width</td>
+                <td>Boolean</td>
+                <td>false</td>
+                <td>Full width button</td>
+              </tr>
+              <tr>
+                <td>button-text</td>
+                <td>String</td>
+                <td>'Scan Barcode'</td>
+                <td>Text for standalone buttons</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <h3>Contoh Penggunaan</h3>
+        <h4>Tombol Grup Input (Default)</h4>
+        <div class="url-buttons">
+          <button
+            class="view-modal-button"
+            data-url="../tutorial/📷🔲💳/ig.txt"
+          >
+            Tombol Grup Input (Default)
+          </button>
+        </div>
+        <h4>Tombol Tautan Tersendiri</h4>
+        <div class="url-buttons">
+          <button
+            class="view-modal-button"
+            data-url="../tutorial/📷🔲💳/sl.txt"
+          >
+            Tombol Tautan Tersendiri
+          </button>
+        </div>
+        <h4>Tombol berhasil dengan kelas khusus</h4>
+        <div class="url-buttons">
+          <button
+            class="view-modal-button"
+            data-url="../tutorial/📷🔲💳/sb.txt"
+          >
+            Tombol berhasil dengan kelas khusus
+          </button>
+        </div>
+      </section>
+
+      <section>
+        <h2>🔧 Pemecahan masalah</h2>
+        <h3>Kamera Tidak Berfungsi</h3>
+        <ul>
+          <li><strong>Masalah:</strong> Kamera tidak mau menyala</li>
+          <li><strong>Solusi:</strong> Pastikan koneksi menggunakan HTTPS</li>
+          <li><strong>Periksa:</strong> Izin browser untuk akses kamera</li>
+        </ul>
+
+        <h3>Tombol Tidak Merespons</h3>
+        <ul>
+          <li><strong>Masalah:</strong> Klik tidak membuka kamera</li>
+          <li>
+            <strong>Solusi:</strong> Periksa apakah skrip dimuat dengan benar
+          </li>
+          <li>
+            <strong>Periksa:</strong> Console browser untuk kesalahan JavaScript
+          </li>
+        </ul>
+
+        <h3>Kolom Input Salah</h3>
+        <ul>
+          <li>
+            <strong>Masalah:</strong> Barcode masuk ke kolom input yang salah
+          </li>
+          <li>
+            <strong>Solusi:</strong> Verifikasi apakah
+            <code>search-input-id</code> sesuai dengan ID input yang sebenarnya
+          </li>
+          <li>
+            <strong>Periksa:</strong> Periksa elemen untuk memastikan ID input
+          </li>
+        </ul>
+
+        <h3>Mode Debug</h3>
+        <p>Tambahkan ini di halaman Anda untuk debug:</p>
+        <div class="url-buttons">
+          <button
+            class="view-modal-button"
+            data-url="../tutorial/📷🔲💳/dm.txt"
+          >
+            Mode Debug
+          </button>
+        </div>
+      </section>
+
+      <section>
+        <h2>🚀 Fitur Lanjutan</h2>
+
+        <h3>Shortcut Keyboard</h3>
+        <ul>
+          <li>
+            <strong>Tekan:</strong> Ctrl + B untuk membuka pemindai kamera
+          </li>
+          <li>Berfungsi di halaman mana pun dengan tombol pemindai</li>
+        </ul>
+
+        <h3>Dukungan Mobile</h3>
+        <ul>
+          <li>Desain responsif untuk perangkat mobile</li>
+          <li>Tombol ramah sentuhan</li>
+          <li>Optimisasi kamera untuk perangkat mobile</li>
+        </ul>
+
+        <h3>Penanganan Kesalahan</h3>
+        <ul>
+          <li>Fallback yang elegan saat kamera tidak tersedia</li>
+          <li>Pesan kesalahan yang jelas untuk pengguna</li>
+          <li>Mekanisme coba ulang otomatis</li>
+        </ul>
+      </section>
+      <section>
+        <h2>📈 Tips Performa</h2>
+
+        <h3>Optimasi</h3>
+        <ul>
+          <li>
+            Single Modal: Modal hanya disertakan sekali per halaman dengan @once
+          </li>
+          <li>
+            Event Delegation: Menggunakan event delegation untuk performa yang
+            lebih baik
+          </li>
+          <li>Lazy Loading: Pemindai hanya diinisialisasi saat dibutuhkan</li>
+          <li>Manajemen Memori: Pembersihan yang tepat saat kamera berhenti</li>
+        </ul>
+
+        <h3>Praktik Terbaik</h3>
+        <ul>
+          <li>
+            Gunakan ID input yang spesifik untuk penargetan yang lebih baik
+          </li>
+          <li>Uji di lingkungan HTTPS</li>
+          <li>Sediakan fallback untuk perangkat tanpa kamera</li>
+          <li>Jaga agar properti komponen tetap sederhana dan fokus</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>🔒 Pertimbangan Keamanan</h2>
+
+        <h3>Persyaratan HTTPS</h3>
+        <ul>
+          <li>Akses kamera memerlukan HTTPS</li>
+          <li>Pengembangan: Gunakan localhost atau HTTPS</li>
+          <li>Produksi: Pastikan sertifikat SSL tersedia</li>
+        </ul>
+
+        <h3>Permissions</h3>
+        <ul>
+          <li>Browser meminta izin akses kamera</li>
+          <li>Pengguna dapat menolak dan menggunakan input manual</li>
+          <li>Degradasi secara elegan saat izin ditolak</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>📱 Kompatibilitas Browser</h2>
+
+        <h3>Browser yang Didukung</h3>
+        <ul>
+          <li>✅ Chrome 60+</li>
+          <li>✅ Firefox 55+</li>
+          <li>✅ Safari 11+</li>
+          <li>✅ Edge 79+</li>
+          <li>✅ Browser mobile (Safari iOS, Chrome Mobile)</li>
+        </ul>
+
+        <h3>Support Fallback</h3>
+        <ul>
+          <li>Fallback otomatis ke input manual</li>
+          <li>Berfungsi tanpa kamera di perangkat apa pun</li>
+          <li>Pendekatan peningkatan progresif</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>🎉 Kesimpulan</h2>
+
+        <p>
+          Anda kini telah memiliki pemindai barcode kamera universal yang
+          diterapkan di semua modul Ultimate POS! Komponen ini:
+        </p>
+        <ul>
+          <li>Dapat digunakan kembali di semua halaman</li>
+          <li>Fleksibel dengan berbagai opsi styling</li>
+          <li>Tangguh dengan penanganan kesalahan dan fallback</li>
+          <li>Ramah pengguna dengan instruksi yang jelas</li>
+          <li>Dioptimalkan untuk perangkat mobile</li>
+        </ul>
+
+        <h3>Langkah Selanjutnya</h3>
+        <ul>
+          <li>Uji di semua halaman target</li>
+          <li>Kustomisasi styling agar sesuai dengan tema Anda</li>
+          <li>Tambahkan fitur tambahan sesuai kebutuhan</li>
+          <li>Pantau umpan balik pengguna dan iterasi</li>
+        </ul>
+
+        <p>Selamat memindai! 🎯📱</p>
+      </section>
+
+      <footer>
+        <!-- HOME -->
+        <div class="home-button-wrapper">
+          <a href="../main.html" class="home-button">🏠 Kembali ke Beranda</a>
+        </div>
+      </footer>
+    </div>
+    <div id="myModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <iframe
+          id="modalFrame"
+          src=""
+          frameborder="0"
+          style="width: 100%; height: 400px"
+        ></iframe>
+      </div>
+    </div>
+    <script src="../js/scripts.js"></script>
+    <!-- Link ke file JavaScript -->
+  </body>
+</html>

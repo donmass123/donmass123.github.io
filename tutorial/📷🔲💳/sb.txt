@@ -1,0 +1,6 @@
+<x-camera-barcode-scanner
+    search-input-id="search_product"
+    :show-in-group="false"
+    button-style="success"
+    button-text="Scan Product"
+    button-class="my-custom-class" />

@@ -141,40 +141,49 @@
 .url-buttons {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 20px; /* Increased gap for better spacing */
   justify-content: center;
   margin: 20px auto;
-  padding: 10px;
+  padding: 15px 10px;
+  background-color: transparent; /* Transparent background for a cleaner look */
 }
 
 /* Styling for the buttons */
 .url-buttons .view-modal-button {
-  padding: 10px 16px;
-  font-size: 14px;
-  border: none;
-  background-color: #3498db; /* Softer blue for elegance */
-  color: white;
-  border-radius: 50px; /* Rounded corners for a soft appearance */
+  padding: 12px 24px;
+  font-size: 14px; /* Balanced font size for readability */
+  font-weight: 400; /* Normal weight for simplicity */
+  border: 2px solid #3498db; /* Light border for elegance */
+  background-color: transparent; /* Transparent background for a minimal look */
+  color: #3498db; /* Soft blue color for text */
+  border-radius: 30px; /* Rounded corners for a smooth, minimalistic look */
   cursor: pointer;
   white-space: normal; /* Ensures wrapping text */
   word-break: break-word;
   max-width: 100%;
-  min-width: 220px;
+  min-width: 220px; /* Consistent button size */
   flex: 1 1 250px;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease; /* Smooth transition for all properties */
   text-align: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: none; /* No shadow for a clean design */
+  text-transform: uppercase; /* Adds a sleek, modern touch */
 }
 
 .url-buttons .view-modal-button:hover {
-  background-color: #2980b9;
-  transform: scale(1.05); /* Slight scale effect on hover */
+  background-color: #3498db; /* Blue background on hover */
+  color: white; /* White text on hover */
+  border-color: #2980b9; /* Slightly darker border */
+  transform: translateY(-2px); /* Subtle lift effect */
+}
+
+.url-buttons .view-modal-button:active {
+  transform: translateY(1px); /* Slight press effect */
 }
 
 /* Additional for small screens */
 @media (max-width: 480px) {
   .url-buttons .view-modal-button {
     font-size: 13px;
-    padding: 8px 12px;
+    padding: 10px 18px; /* Adjust padding for smaller screens */
   }
 }

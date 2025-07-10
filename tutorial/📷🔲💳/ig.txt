@@ -1,0 +1,2 @@
+<x-camera-barcode-scanner search-input-id="search_product" />
+

@@ -1,0 +1,3 @@
+console.log('Scanner available:', CameraBarcodeScanner.isAvailable());
+console.log('Current page type:', CameraBarcodeScanner.currentPageType);
+console.log('Target input:', CameraBarcodeScanner.currentSearchInputId);

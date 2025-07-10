@@ -1,0 +1,14 @@
+<div class="form-group">
+    <div class="input-group">
+        <span class="input-group-addon">
+            <i class="fa fa-search"></i>
+        </span>
+        {!! Form::text('search_product', null, ['class' => 'form-control', 'id' => 'search_product_for_stock_transfer', 'placeholder' => __('lang_v1.search_product_placeholder')]) !!}
+        <span class="input-group-btn">
+            <x-camera-barcode-scanner
+                search-input-id="search_product_for_stock_transfer"
+                button-class="transfer-scanner-btn"
+                title="Scan Product for Transfer" />
+        </span>
+    </div>
+</div>
