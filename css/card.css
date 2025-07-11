@@ -96,6 +96,10 @@
   background-color: #11a174;
 }
 
+.badge.module {
+  background-color: #d610b5;
+}
+
 /* Ripple Effect */
 .feature-card.clicked-effect {
   transform: scale(0.98);
