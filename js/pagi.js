@@ -160,6 +160,22 @@ const tutorialsData = [
     image: "cover/module/7.webp",
     updateDate: "11 Juli 2025",
     description: "🧩 Modul Manajemen Akuntansi untuk POS (Point of Sale) adalah bagian dari sistem POS yang mengelola aspek keuangan dan akuntansi terkait dengan transaksi penjualan."
+  },
+  {
+    title: "📁 Kostum Tambah dan Edit Untuk Kontak pelanggan",
+    link: "https://drive.google.com/file/d/1VADZpKrLUVslkOiXwwQY4GPC45pqIbn4/view?usp=sharing",
+    level: "file",
+    image: "cover/file/1.webp",
+    updateDate: "11 Juli 2025",
+    description: "🧩 Kostum ini di Desuaikan Dengan Kebutuhan dari Retail Store (Baiq Market)."
+  },
+  {
+    title: "📁 Kostum Label Disesuaikan Dengan Warehouse",
+    link: "https://drive.google.com/file/d/1KYcL6IuSWVZDR-figEbOIxSijf6cnlGn/view?usp=sharing",
+    level: "file",
+    image: "cover/file/2.webp",
+    updateDate: "11 Juli 2025",
+    description: "🧩 Kostum ini di Desuaikan Dengan Kebutuhan dari Retail Store (Baiq Market)."
   }
 ];
 

@@ -22,21 +22,6 @@
     <h1>🚀 Tutorial Point Of Sales</h1>
   </header>
 
-  <!-- Bubble Menu -->
-  <div class="bubble-menu" onclick="toggleMenu()">☰</div>
-
-  <!-- Navigation -->
-  <nav>
-    <ul>
-      <li><a href="#welcome">🚀 Selamat Datang</a></li>
-      <li><a href="#tutorial">📍 Tutorial Point Of Sales</a></li>
-      <li><a href="#">✨ Daftar File Kostum</a></li>
-      <li><a href="#modul">✨ Modul Terbaru</a></li>
-      <li><a href="#mengaktifkan">🌟 Mengaktifkan Module</a></li>
-      <li><a href="#dokumen">🎨 Dokumen Tutorial</a></li>
-    </ul>
-  </nav>
-
   <section id="tutorial">
     <h2 style="text-align: center">📍 Tutorial Point Of Sales</h2>
     <div class="search-container">
@@ -49,6 +34,7 @@
       <button onclick="filterTutorials('mahir')" class="filter-button">Mahir</button>
       <button onclick="filterTutorials('bahaya')" class="filter-button">Bahaya</button>
       <button onclick="filterTutorials('module')" class="filter-button">Module</button>
+      <button onclick="filterTutorials('file')" class="filter-button">File</button>
       <button onclick="filterTutorials('all')" class="filter-button">Show All</button>
     </div>
 
@@ -73,56 +59,6 @@
         style="padding: 10px 20px; margin-left: 10px; font-size: 16px;">Next</button>
     </div>
     </div>
-  </section>
-
-  <section id="kostum">
-    <h2>✨ Daftar File Kostum</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>📑 Nama File</th>
-          <th>🛠 Link Download</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Background Login File</td>
-          <td>
-            <a href="https://drive.google.com/file/d/1LWjHGvmYsvEbsMq-6U64RnvT_qFaFc6w/view?usp=sharing">🔍 Download
-              File</a>
-          </td>
-        </tr>
-        <tr>
-          <td>Kostum Barcode dan Label</td>
-          <td>
-            <a href="https://drive.google.com/file/d/1KYcL6IuSWVZDR-figEbOIxSijf6cnlGn/view?usp=sharing">🔍 Download
-              File</a>
-          </td>
-        </tr>
-        <tr>
-          <td>Kostum Tanggal `pos/public/js/common.js`</td>
-          <td>
-            <a href="https://drive.google.com/drive/folders/1k-fc5hVEOqwfDb-qdO4Y8h006XR7jA4j?usp=drive_link">🔍
-              Download Folder</a>
-          </td>
-        </tr>
-        <tr>
-          <td>Kostum Tambah dan Edit</td>
-          <td>
-            <a href="https://drive.google.com/file/d/1VADZpKrLUVslkOiXwwQY4GPC45pqIbn4/view?usp=sharing">🔍 Download
-              File</a>
-          </td>
-        </tr>
-        <tr>
-          <td>Huge Db Size in POS</td>
-          <td>🔍 (tidak ada link)</td>
-        </tr>
-        <tr>
-          <td>Delete Transaction, Product, Inventory</td>
-          <td>🔍 (tidak ada link)</td>
-        </tr>
-      </tbody>
-    </table>
   </section>
 
   <section id="mengaktifkan">
@@ -176,14 +112,6 @@
   <footer>
     <p>&copy; 2025 Tutorial Point Of Sales</p>
   </footer>
-
-  <!-- JavaScript untuk toggle menu -->
-  <script>
-    function toggleMenu() {
-      const nav = document.querySelector("nav");
-      nav.classList.toggle("active");
-    }
-  </script>
   <script src="js/card.js"></script>
   <!-- <script src="js/search.js"></script> -->
   <!-- <script src="js/filter.js"></script> -->
