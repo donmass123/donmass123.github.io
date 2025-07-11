@@ -1,0 +1,89 @@
+/* Bubble Navigation */
+.bubble-nav {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: all 0.3s ease;
+}
+
+/* Default button style */
+.bubble-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: #4CAF50;
+  color: white;
+  font-size: 24px;
+  text-align: center;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.bubble-btn:hover {
+  background-color: #45a049;
+  transform: translateY(-5px);
+}
+
+.bubble-btn:active {
+  transform: translateY(2px);
+}
+
+.bubble-btn i {
+  pointer-events: none; /* Prevent clicks on the icon */
+}
+
+/* Hover effect */
+.bubble-btn:hover {
+  background-color: #4CAF50;
+  transform: scale(1.1);
+}
+
+.bubble-btn:focus {
+  outline: none;
+  box-shadow: 0px 0px 10px 2px rgba(0, 128, 0, 0.7);
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 1200px) {
+  .bubble-btn {
+    width: 50px;
+    height: 50px;
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .bubble-nav {
+    right: 10px;
+    bottom: 10px;
+    gap: 8px;
+  }
+
+  .bubble-btn {
+    width: 45px;
+    height: 45px;
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .bubble-nav {
+    right: 5px;
+    bottom: 5px;
+    gap: 6px;
+  }
+
+  .bubble-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+  }
+}
