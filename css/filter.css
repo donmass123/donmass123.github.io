@@ -1,7 +1,10 @@
 /* Filter Button Container */
 .filter-container {
   margin-bottom: 20px;
-  text-align: center; /* Menjaga button tetap rapi di tengah */
+  text-align: center;
+  overflow-x: auto; /* Mengaktifkan scroll horizontal */
+  white-space: nowrap; /* Mencegah tombol untuk membungkus ke baris baru */
+  padding: 10px 0; /* Memberikan padding agar tidak terlalu dekat dengan tepi */
 }
 
 /* Filter Button */
@@ -17,6 +20,7 @@
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Shadow yang halus */
+  display: inline-block; /* Agar tombol tampil secara horizontal */
 }
 
 /* Hover Effect - Elegant */
