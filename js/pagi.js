@@ -36,7 +36,7 @@ const tutorialsData = [
   {
     title: "📑 Ukuran Db yang besar di POS",
     link: "html/5.html",
-    level: "pemula",
+    level: "bahaya",
     image: "cover/5.webp",
     updateDate: "02 Juli 2025",
     description: "📦 Ukuran database yang besar di POS dan cara mengelolanya"
@@ -191,7 +191,7 @@ function generateTutorialCards() {
       <img src="${tutorial.image}" alt="${tutorial.title}" style="width: 100%; height: 200px; object-fit: cover; border: 2px solid black; border-radius: 5%; position: relative;">
       <h3>${tutorial.title}</h3>
       <span class="update-date" style="display:inline-block; font-size:13px; color:#1565c0; font-weight:bold; margin-bottom:2px;">
-        🗓️ Update terakhir: ${tutorial.updateDate}
+        🗓️ Ditambahkan: ${tutorial.updateDate}
       </span>
       <p>${tutorial.description}</p>
       <span class="badge ${tutorial.level}">${tutorial.level.charAt(0).toUpperCase() + tutorial.level.slice(1)}</span>
