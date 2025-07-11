@@ -12,9 +12,8 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-/* Filter Button */
+/* Default Style for Buttons */
 .filter-button {
-  background-color: #2980b9;
   color: white;
   border: none;
   padding: 12px 24px;
@@ -30,9 +29,37 @@
   text-align: center;
 }
 
+/* Warna Khusus untuk Setiap Tombol */
+.filter-button.all {
+  background-color: #2980b9; /* Biru untuk Show All */
+}
+
+.filter-button.pemula {
+  background-color: #27ae60; /* Hijau untuk Pemula */
+}
+
+.filter-button.menengah {
+  background-color: #f39c12; /* Kuning untuk Menengah */
+}
+
+.filter-button.mahir {
+  background-color: #8e44ad; /* Ungu untuk Mahir */
+}
+
+.filter-button.bahaya {
+  background-color: #e74c3c; /* Merah untuk Bahaya */
+}
+
+.filter-button.module {
+  background-color: #16a085; /* Hijau kebiruan untuk Module */
+}
+
+.filter-button.file {
+  background-color: #34495e; /* Abu-abu gelap untuk File */
+}
+
 /* Hover Effect - Elegant */
 .filter-button:hover {
-  background-color: #3498db;
   transform: translateY(-3px);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
   color: #ecf0f1;

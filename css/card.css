@@ -81,27 +81,27 @@
 }
 
 .badge.pemula {
-  background-color: #2196f3;
+  background-color: #27ae60;
 }
 
 .badge.menengah {
-  background-color: #ff9800;
+  background-color: #f39c12;
 }
 
 .badge.bahaya {
-  background-color: #f44336;
+  background-color: #e74c3c;
 }
 
 .badge.mahir {
-  background-color: #11a174;
+  background-color: #8e44ad;
 }
 
 .badge.module {
-  background-color: #d610b5;
+  background-color: #16a085;
 }
 
 .badge.file {
-  background-color: #2208a7;
+  background-color: #34495e;
 }
 
 /* Ripple Effect */
