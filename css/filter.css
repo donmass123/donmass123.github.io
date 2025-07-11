@@ -5,6 +5,8 @@
   overflow-x: auto; /* Mengaktifkan scroll horizontal */
   white-space: nowrap; /* Mencegah tombol untuk membungkus ke baris baru */
   padding: 10px 0; /* Memberikan padding agar tidak terlalu dekat dengan tepi */
+  display: flex;
+  justify-content: center;
 }
 
 /* Filter Button */
@@ -60,4 +62,34 @@
 .filter-button:focus {
   outline: none; /* Menghilangkan outline default */
   box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.5); /* Tambahkan efek focus yang lebih elegan */
+}
+
+/* Responsif untuk Mobile */
+@media (max-width: 768px) {
+  /* Mengubah tampilan kontainer untuk perangkat dengan layar lebih kecil */
+  .filter-container {
+    overflow-x: scroll; /* Mengaktifkan scroll horizontal di layar kecil */
+    padding: 0 10px; /* Memberikan padding sedikit pada sisi kanan dan kiri */
+  }
+
+  /* Mengatur ukuran font dan padding agar lebih pas di layar kecil */
+  .filter-button {
+    font-size: 14px;
+    padding: 10px 20px; /* Menyesuaikan padding agar tidak terlalu besar */
+  }
+}
+
+/* Responsif untuk Perangkat yang Lebih Kecil */
+@media (max-width: 480px) {
+  .filter-button {
+    font-size: 12px;
+    padding: 8px 16px; /* Mengurangi ukuran tombol pada layar sangat kecil */
+  }
+
+  /* Mengatur kontainer menjadi vertikal pada perangkat dengan layar sangat kecil */
+  .filter-container {
+    flex-direction: column;
+    align-items: center; /* Menjaga tombol tetap terpusat */
+    padding: 5px 0;
+  }
 }
