@@ -2,94 +2,92 @@
 .filter-container {
   margin-bottom: 20px;
   text-align: center;
-  overflow-x: auto; /* Mengaktifkan scroll horizontal */
-  white-space: nowrap; /* Mencegah tombol untuk membungkus ke baris baru */
-  padding: 10px 0; /* Memberikan padding agar tidak terlalu dekat dengan tepi */
+  padding: 20px 0;
   display: flex;
   justify-content: center;
+  background-color: #f4f6f7;
+  border-radius: 12px;
+  flex-wrap: wrap; /* Membolehkan tombol membungkus jika diperlukan */
+  gap: 10px; /* Jarak antar tombol */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 /* Filter Button */
 .filter-button {
-  background-color: #2c3e50; /* Warna biru gelap yang elegan */
+  background-color: #2980b9;
   color: white;
   border: none;
-  padding: 12px 24px; /* Sesuaikan padding agar lebih proporsional */
-  margin: 8px; /* Spasi antar button */
-  font-size: 16px;
-  font-weight: 600; /* Menguatkan font agar lebih jelas */
-  border-radius: 30px; /* Memberikan sudut yang lebih halus dan modern */
+  padding: 12px 24px;
+  margin: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 25px;
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Shadow yang halus */
-  display: inline-block; /* Agar tombol tampil secara horizontal */
+  display: inline-block;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+  min-width: 120px;
+  text-align: center;
 }
 
 /* Hover Effect - Elegant */
 .filter-button:hover {
-  background-color: #34495e; /* Lebih gelap sedikit saat hover */
-  transform: scale(1.05); /* Efek scale yang lebih halus */
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15); /* Efek shadow lebih kuat saat hover */
-  color: #ecf0f1; /* Teks menjadi lebih terang saat hover */
+  background-color: #3498db;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  color: #ecf0f1;
 }
 
-/* Active Effect - Elegan */
+/* Active Effect - Elegant */
 .filter-button:active {
-  transform: scale(0.98); /* Shrink sedikit saat klik */
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Shadow lebih lembut saat aktif */
-  color: #ffffff; /* Menjaga warna tetap kontras saat aktif */
+  transform: translateY(2px);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
+  color: #ffffff;
 }
 
-/* Pulse Animation - Subtle */
-@keyframes pulse {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.05); /* Lebih halus dan tidak terlalu besar */
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-
-/* Pulse Effect on Button - Only for focus */
-.filter-button.pulsing {
-  animation: pulse 1s ease-out infinite; /* Animasi lebih lembut */
-}
-
-/* Extra Focus Styling for Accessibility */
-.filter-button:focus {
-  outline: none; /* Menghilangkan outline default */
-  box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.5); /* Tambahkan efek focus yang lebih elegan */
-}
-
-/* Responsif untuk Mobile */
+/* Responsif untuk Mobile (Max Width: 768px) */
 @media (max-width: 768px) {
-  /* Mengubah tampilan kontainer untuk perangkat dengan layar lebih kecil */
   .filter-container {
-    overflow-x: scroll; /* Mengaktifkan scroll horizontal di layar kecil */
-    padding: 0 10px; /* Memberikan padding sedikit pada sisi kanan dan kiri */
+    padding: 15px 0;
+    background-color: #fff;
+    justify-content: center;
+    flex-direction: row; /* Menjaga tombol tetap horizontal */
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px; /* Jarak antar tombol */
   }
 
-  /* Mengatur ukuran font dan padding agar lebih pas di layar kecil */
   .filter-button {
     font-size: 14px;
-    padding: 10px 20px; /* Menyesuaikan padding agar tidak terlalu besar */
+    padding: 12px 24px;
+    margin: 5px;
+    min-width: 120px; /* Menjaga tombol tidak terlalu kecil */
+  }
+
+  /* Membuat tampilan 1 tombol di baris pertama dan 3 tombol pada baris selanjutnya */
+  .filter-container > .filter-button:nth-child(1) {
+    flex: 1 1 100%; /* Tombol pertama akan mengambil seluruh lebar baris */
+  }
+
+  .filter-container > .filter-button:nth-child(n+2) {
+    flex: 1 1 30%; /* Tombol berikutnya akan memiliki lebar sekitar 30% dari baris */
   }
 }
 
-/* Responsif untuk Perangkat yang Lebih Kecil */
+/* Responsif untuk Perangkat yang Lebih Kecil (Max Width: 480px) */
 @media (max-width: 480px) {
   .filter-button {
     font-size: 12px;
-    padding: 8px 16px; /* Mengurangi ukuran tombol pada layar sangat kecil */
+    padding: 10px 20px;
+    min-width: 100px; /* Menyesuaikan ukuran tombol pada layar kecil */
   }
 
-  /* Mengatur kontainer menjadi vertikal pada perangkat dengan layar sangat kecil */
-  .filter-container {
-    flex-direction: column;
-    align-items: center; /* Menjaga tombol tetap terpusat */
-    padding: 5px 0;
+  /* Membuat tampilan 1 tombol di baris pertama dan 3 tombol pada baris selanjutnya */
+  .filter-container > .filter-button:nth-child(1) {
+    flex: 1 1 100%;
+  }
+
+  .filter-container > .filter-button:nth-child(n+2) {
+    flex: 1 1 30%;
   }
 }
