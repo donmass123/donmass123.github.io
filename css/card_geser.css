@@ -1,117 +1,120 @@
-/* Styling for swipeable card container */
-.swipeable-card-container {
+/* Container untuk kartu */
+.card-poke {
   display: flex;
-  overflow-x: auto;
-  gap: 20px; /* Spacing between cards */
+  gap: 20px;
   padding: 20px;
-  scroll-snap-type: x mandatory; /* Enforces scroll snap on horizontal scrolling */
-  justify-content: center; /* Centers the cards horizontally */
-  align-items: center; /* Centers the cards vertically */
+  overflow-x: auto; /* Membuat container bisa discroll secara horizontal */
+  scroll-snap-type: x mandatory; /* Memaksa scroll untuk 'snap' ke kartu yang diinginkan */
+  justify-content: flex-start; /* Menjaga agar kartu tetap di kiri */
+  align-items: center;
+  scroll-behavior: smooth; /* Efek transisi halus saat scroll */
 }
 
-/* Styling for each swipeable card */
-.swipeable-card {
-  min-width: 280px;
-  max-width: 320px;
-  border: 2px solid #f1f1f1;
+/* Styling untuk setiap kartu Pokémon */
+.pokemon-card {
+  min-width: 250px;
+  max-width: 280px;
+  border: 2px solid #ddd;
   border-radius: 15px;
-  overflow: hidden;
   background-color: #fff;
-  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for interaction */
-  scroll-snap-align: center; /* Makes the card snap to the center on scroll */
-  cursor: pointer; /* Cursor changes to a pointer for clickable cards */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  text-align: center;
+  scroll-snap-align: center; /* Kartu akan 'snap' ke tengah */
+  margin-bottom: 20px;
 }
 
-/* Hover effect for card */
-.swipeable-card:hover {
-  transform: scale(1.1); /* Zooms in the card on hover */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Adds shadow for depth */
+/* Efek hover pada kartu */
+.pokemon-card:hover {
+  transform: scale(1.05); /* Efek zoom saat hover */
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
 }
 
-/* Styling for character image inside the card */
-.swipeable-card-img {
+/* Gambar Pokémon di dalam kartu */
+.pokemon-card-img {
   width: 100%;
-  height: 250px; /* Adjusting the height for character display */
+  height: 180px;
   object-fit: cover;
-  border-bottom: 2px solid #f1f1f1; /* Adds a line separating the image and content */
+  border-bottom: 2px solid #ddd;
 }
 
-/* Styling for card content */
-.swipeable-card-content {
-  padding: 15px;
-  text-align: center; /* Centers the text */
+/* Konten di dalam kartu */
+.pokemon-card-content {
+  padding: 10px;
 }
 
-.swipeable-card-content h3 {
-  margin: 10px 0;
-  font-size: 20px;
-  font-weight: bold;
-  color: #333; /* Darker color for readability */
-}
-
-.swipeable-card-content p {
-  font-size: 16px;
-  color: #555; /* Slightly lighter for the description */
-}
-
-/* Styling for selecting character title */
-.swipeable-card-content h3::after {
-  content: '⚔️'; /* Game-like icon to represent a character */
-  margin-left: 10px;
+.pokemon-card-content h3 {
   font-size: 18px;
-  color: #ff6347; /* Icon color */
+  font-weight: bold;
+  color: #333;
 }
 
-/* Optional: Active state for selected card */
-.swipeable-card.selected {
-  border-color: #ff6347; /* Highlight selected card with a border color */
-  transform: scale(1.05); /* Slight zoom effect to emphasize the selection */
+/* State selected untuk kartu */
+.pokemon-card.selected {
+  border-color: #ff6347; /* Border berwarna merah untuk menandai kartu terpilih */
+  transform: scale(1.1); /* Efek zoom saat dipilih */
 }
 
-/* Styling for swipe indicator buttons (Optional, if you want buttons to manually control the scroll) */
-.swipeable-card-container::before,
-.swipeable-card-container::after {
-  content: '';
+/* Judul untuk pemilihan karakter */
+.character-selection-title {
+  text-align: center;
+  font-size: 28px;
+  font-weight: 600;
+  color: #34495e;
+  margin-bottom: 15px;
+}
+
+/* Styling untuk tombol navigasi elegan */
+.card-navigation {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  margin-top: 15px;
+  margin-bottom: 20px;
+}
+
+.nav-btn {
+  font-size: 18px;
+  padding: 12px 20px;
+  background-color: #34495e;
+  color: white;
+  border: 2px solid transparent;
+  border-radius: 30px;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-weight: bold;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.nav-btn:hover {
+  background-color: #2c3e50;
+  border-color: #ff6347; /* Light accent color on hover */
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px); /* Hover effect for raised button */
+}
+
+.nav-btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(255, 99, 71, 0.5); /* Focus ring for accessibility */
+}
+
+.nav-btn:active {
+  background-color: #2c3e50;
+  transform: translateY(2px); /* Button pressed effect */
+}
+
+/* Optional: Button text in a curved arc for extra style */
+.nav-btn::before {
+  content: "";
   position: absolute;
   top: 50%;
-  transform: translateY(-50%);
-  background-color: rgba(0, 0, 0, 0.5);
-  color: white;
-  font-size: 30px;
-  padding: 10px;
-  cursor: pointer;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(0deg);
+  z-index: -1;
 }
 
-.swipeable-card-container::before {
-  left: 10px;
-}
-
-.swipeable-card-container::after {
-  right: 10px;
-}
-
-/* KALIMAT GAME */
-/* Styling untuk judul yang simpel dan elegan */
-.simple-elegant-title {
-  text-align: center;
-  font-size: 32px; /* Ukuran font yang lebih sederhana */
-  font-family: 'Arial', sans-serif; /* Font sans-serif yang bersih dan modern */
-  color: #34495e; /* Warna abu-abu gelap yang elegan */
-  font-weight: 500; /* Berat font sedang untuk kesan ringan */
-  letter-spacing: 1px; /* Sedikit jarak antar huruf */
-  padding: 15px 25px; /* Padding halus */
-  background-color: #ecf0f1; /* Warna latar belakang yang terang dan bersih */
-  border-radius: 6px; /* Sudut membulat yang lembut */
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Bayangan halus */
-  width: fit-content;
-  margin: 0 auto; /* Memusatkan judul */
-  transition: all 0.3s ease; /* Transisi halus saat hover */
-}
-
-/* Efek saat hover pada judul */
-.simple-elegant-title:hover {
-  transform: scale(1.05); /* Pembesaran halus saat hover */
-  color: #2980b9; /* Mengubah warna teks menjadi biru lembut saat hover */
-  background-color: #ffffff; /* Membalik warna latar belakang menjadi putih */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Efek bayangan lebih halus */
-}

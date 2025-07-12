@@ -1,66 +1,67 @@
-// Array of card data
-const cardData = [
-  { imgSrc: "cover/card/1.webp", title: "Game Over", description: "This is a description for Game Over.", url: "https://example.com/1" },
-  { imgSrc: "cover/card/1.webp", title: "Game Over", description: "This is a description for Game Over.", url: "https://example.com/1" },
-  { imgSrc: "cover/card/1.webp", title: "Game Over", description: "This is a description for Game Over.", url: "https://example.com/1" },
-  { imgSrc: "cover/card/1.webp", title: "Game Over", description: "This is a description for Game Over.", url: "https://example.com/1" },
-  { imgSrc: "cover/card/1.webp", title: "Game Over", description: "This is a description for Game Over.", url: "https://example.com/1" },
-  { imgSrc: "cover/card/1.webp", title: "Game Over", description: "This is a description for Game Over.", url: "https://example.com/1" },
-  { imgSrc: "cover/card/1.webp", title: "Game Over", description: "This is a description for Game Over.", url: "https://example.com/1" },
-  { imgSrc: "cover/card/1.webp", title: "Game Over", description: "This is a description for Game Over.", url: "https://example.com/1" },
-  { imgSrc: "cover/card/1.webp", title: "Game Over", description: "This is a description for Game Over.", url: "https://example.com/1" },
-  { imgSrc: "cover/card/1.webp", title: "Game Over", description: "This is a description for Game Over.", url: "https://example.com/1" },
-  { imgSrc: "cover/card/1.webp", title: "Game Over", description: "This is a description for Game Over.", url: "https://example.com/1" },
-  { imgSrc: "cover/card/1.webp", title: "Game Over", description: "This is a description for Game Over.", url: "https://example.com/1" },
-  { imgSrc: "cover/card/1.webp", title: "Game Over", description: "This is a description for Game Over.", url: "https://example.com/1" }
+// Array of Pokémon card data
+const pokemonData = [
+  { imgSrc: "cover/card/1.webp", title: "Pikachu", description: "Electric Type", url: "https://pokemon.com/pikachu" },
+  { imgSrc: "cover/card/1.webp", title: "Bulbasaur", description: "Grass/Poison Type", url: "https://pokemon.com/bulbasaur" },
+  { imgSrc: "cover/card/1.webp", title: "Charmander", description: "Fire Type", url: "https://pokemon.com/charmander" },
+  { imgSrc: "cover/card/1.webp", title: "Squirtle", description: "Water Type", url: "https://pokemon.com/squirtle" },
+  // Add more Pokémon here
 ];
 
-// Function to render cards dynamically
-function renderCards() {
-  const container = document.getElementById("card-container");
+// Function to scroll to the next/previous Pokémon card
+function scrollToCard(direction) {
+  const container = document.getElementById("card-poke");
 
-  cardData.forEach(card => {
-    const cardElement = document.createElement("a"); // Create anchor tag
-    cardElement.href = card.url; // Use the dynamic URL from the card data
-    cardElement.classList.add("swipeable-card");
+  // Determine the scroll amount based on the direction (left or right)
+  const scrollAmount = direction === 'next' ? 320 : -320;
+
+  // Scroll the container by the specified amount
+  container.scrollBy({
+    left: scrollAmount,
+    behavior: 'smooth'
+  });
+}
+
+// Attach event listeners to the buttons
+document.getElementById("prev-btn").addEventListener("click", function() {
+  scrollToCard('prev');
+});
+
+document.getElementById("next-btn").addEventListener("click", function() {
+  scrollToCard('next');
+});
+
+// Function to render Pokémon cards dynamically (unchanged)
+function renderPokemonCards() {
+  const container = document.getElementById("card-poke");
+
+  pokemonData.forEach((pokemon, index) => {
+    const cardElement = document.createElement("a");
+    cardElement.href = pokemon.url;
+    cardElement.classList.add("pokemon-card");
+    cardElement.dataset.index = index;
 
     cardElement.innerHTML = `
-      <img src="${card.imgSrc}" alt="Image" class="swipeable-card-img">
-      <div class="swipeable-card-content">
-        <h3>${card.title}</h3>
-        <p>${card.description}</p>
+      <img src="${pokemon.imgSrc}" alt="${pokemon.title}" class="pokemon-card-img">
+      <div class="pokemon-card-content">
+        <h3>${pokemon.title}</h3>
+        <p>${pokemon.description}</p>
       </div>
     `;
+
+    cardElement.addEventListener("click", function() {
+      document.querySelectorAll('.pokemon-card').forEach(card => {
+        card.classList.remove('selected');
+      });
+      cardElement.classList.add('selected');
+    });
+
     container.appendChild(cardElement);
   });
 }
 
-// Call the function to render cards
-renderCards();
+// Call the function to render Pokémon cards
+renderPokemonCards();
 
-// Initialize the swipeable functionality
-document.querySelectorAll('.swipeable-card').forEach(card => {
-  card.addEventListener('mousedown', onMouseDown);
-  card.addEventListener('touchstart', onMouseDown);
 
-  function onMouseDown(event) {
-    const initialX = event.clientX || event.touches[0].clientX;
-
-    function onMouseMove(moveEvent) {
-      const currentX = moveEvent.clientX || moveEvent.touches[0].clientX;
-      const diff = initialX - currentX;
-      card.style.transform = `translateX(-${diff}px)`;
-    }
-
-    function onMouseUp() {
-      card.removeEventListener('mousemove', onMouseMove);
-      card.removeEventListener('touchmove', onMouseMove);
-      card.style.transform = 'none';
-    }
-
-    card.addEventListener('mousemove', onMouseMove);
-    card.addEventListener('touchmove', onMouseMove);
-    card.addEventListener('mouseup', onMouseUp);
-    card.addEventListener('touchend', onMouseUp);
-  }
-});
+// Call the function to render Pokémon cards
+renderPokemonCards();
