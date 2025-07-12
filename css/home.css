@@ -9,19 +9,36 @@ body {
 }
 
 /* Header */
-header {
-  background-color: #2c3e50; /* Darker shade for elegance */
-  color: #fff;
-  padding: 30px 20px; /* Slightly larger padding */
-  text-align: center;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-  transition: all 0.3s ease;
-}
+  /* Fade-in animation */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 
-header:hover {
-  background-color: #34495e;
-  transform: translateY(-4px);
-}
+  /* Hover effect on header text */
+  header:hover {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);  /* Subtle increase in shadow on hover */
+    transform: scale(1.03);  /* Slight zoom effect */
+  }
+
+  header:hover h1 {
+    color: #90a4ae;  /* Subtle color change */
+    transform: translateY(-5px);  /* Slight upward movement */
+    transition: transform 0.3s ease, color 0.3s ease;
+  }
+
+  header:hover p {
+    color: #90a4ae;  /* Change subtitle color */
+    opacity: 1;  /* Make subtitle fully visible */
+    font-weight: 400;
+    transition: color 0.3s ease, opacity 0.3s ease;
+  }
 
 h1 {
   margin: 0;
