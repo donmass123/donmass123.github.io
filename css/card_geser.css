@@ -2,43 +2,116 @@
 .swipeable-card-container {
   display: flex;
   overflow-x: auto;
-  gap: 10px;
-  padding: 10px;
+  gap: 20px; /* Spacing between cards */
+  padding: 20px;
   scroll-snap-type: x mandatory; /* Enforces scroll snap on horizontal scrolling */
+  justify-content: center; /* Centers the cards horizontally */
+  align-items: center; /* Centers the cards vertically */
 }
 
 /* Styling for each swipeable card */
 .swipeable-card {
-  min-width: 250px;
-  max-width: 300px;
-  border: 1px solid #ddd;
-  border-radius: 10px;
+  min-width: 280px;
+  max-width: 320px;
+  border: 2px solid #f1f1f1;
+  border-radius: 15px;
   overflow: hidden;
   background-color: #fff;
-  scroll-snap-align: start; /* Makes the card snap to the start on scroll */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for interaction */
+  scroll-snap-align: center; /* Makes the card snap to the center on scroll */
+  cursor: pointer; /* Cursor changes to a pointer for clickable cards */
 }
 
+/* Hover effect for card */
+.swipeable-card:hover {
+  transform: scale(1.1); /* Zooms in the card on hover */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Adds shadow for depth */
+}
+
+/* Styling for character image inside the card */
 .swipeable-card-img {
   width: 100%;
-  height: 200px;
+  height: 250px; /* Adjusting the height for character display */
   object-fit: cover;
+  border-bottom: 2px solid #f1f1f1; /* Adds a line separating the image and content */
 }
 
+/* Styling for card content */
 .swipeable-card-content {
-  padding: 10px;
+  padding: 15px;
+  text-align: center; /* Centers the text */
 }
 
 .swipeable-card-content h3 {
-  margin: 0;
-  font-size: 18px;
+  margin: 10px 0;
+  font-size: 20px;
+  font-weight: bold;
+  color: #333; /* Darker color for readability */
 }
 
 .swipeable-card-content p {
-  font-size: 14px;
-  color: #666;
+  font-size: 16px;
+  color: #555; /* Slightly lighter for the description */
 }
 
-/* Optional: Add hover effect */
-.swipeable-card:hover {
-  transform: scale(1.05);
+/* Styling for selecting character title */
+.swipeable-card-content h3::after {
+  content: '⚔️'; /* Game-like icon to represent a character */
+  margin-left: 10px;
+  font-size: 18px;
+  color: #ff6347; /* Icon color */
+}
+
+/* Optional: Active state for selected card */
+.swipeable-card.selected {
+  border-color: #ff6347; /* Highlight selected card with a border color */
+  transform: scale(1.05); /* Slight zoom effect to emphasize the selection */
+}
+
+/* Styling for swipe indicator buttons (Optional, if you want buttons to manually control the scroll) */
+.swipeable-card-container::before,
+.swipeable-card-container::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  font-size: 30px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.swipeable-card-container::before {
+  left: 10px;
+}
+
+.swipeable-card-container::after {
+  right: 10px;
+}
+
+/* KALIMAT GAME */
+/* Styling untuk judul yang simpel dan elegan */
+.simple-elegant-title {
+  text-align: center;
+  font-size: 32px; /* Ukuran font yang lebih sederhana */
+  font-family: 'Arial', sans-serif; /* Font sans-serif yang bersih dan modern */
+  color: #34495e; /* Warna abu-abu gelap yang elegan */
+  font-weight: 500; /* Berat font sedang untuk kesan ringan */
+  letter-spacing: 1px; /* Sedikit jarak antar huruf */
+  padding: 15px 25px; /* Padding halus */
+  background-color: #ecf0f1; /* Warna latar belakang yang terang dan bersih */
+  border-radius: 6px; /* Sudut membulat yang lembut */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Bayangan halus */
+  width: fit-content;
+  margin: 0 auto; /* Memusatkan judul */
+  transition: all 0.3s ease; /* Transisi halus saat hover */
+}
+
+/* Efek saat hover pada judul */
+.simple-elegant-title:hover {
+  transform: scale(1.05); /* Pembesaran halus saat hover */
+  color: #2980b9; /* Mengubah warna teks menjadi biru lembut saat hover */
+  background-color: #ffffff; /* Membalik warna latar belakang menjadi putih */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Efek bayangan lebih halus */
 }
