@@ -142,3 +142,30 @@
     right: 15px;
   }
 }
+
+/* BLUR PASSWORD */
+.blur-wrapper {
+  transition: filter 0.3s ease;
+}
+
+.blur-active {
+  filter: blur(8px);
+  pointer-events: none;
+  user-select: none;
+}
+
+.completion-input {
+  width: 100%;
+  padding: 0.6rem 1rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin-bottom: 1.2rem;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease;
+}
+
+.completion-input:focus {
+  border-color: #28a745;
+  outline: none;
+}

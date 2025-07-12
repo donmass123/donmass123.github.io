@@ -15,191 +15,206 @@
 </head>
 
 <body>
-  <div class="container">
-    <header>
-      <h1>Menambahkan Filter Sub-Kategori ke Indeks Produk di POS</h1>
-      <h1>🔍📂🛍️</h1>
-      <h5>
-        Dalam tutorial ini, kita akan menambahkan filter sub-kategori dinamis
-        ke indeks produk yang secara otomatis terisi berdasarkan kategori yang
-        dipilih.
-      </h5>
-    </header>
-
-    <div class="download-box">
-      <a href="https://drive.google.com/drive/folders/1Z4tG3FMdMa3oZ3Nk9oqAp8ydWOlFcDS8?usp=drive_link" download
-        class="download-button">
-        ⬇️ Unduh File Contoh
-      </a>
+<!-- Modal Password -->
+<div id="passwordModal" class="completion-modal">
+  <div class="completion-modal-content">
+    <span class="completion-close" id="closePasswordModal">&times;</span>
+    <h3>🔐 Masukkan Password</h3>
+    <input type="password" id="tutorialPassword" placeholder="Password..." class="completion-input" />
+    <div class="completion-button-group">
+      <button id="submitPassword" class="completion-btn completion-yes-btn">Akses</button>
     </div>
-    <!-- HOME -->
-    <div class="home-button-wrapper">
-      <a href="../main.html" class="home-button">🏠 Kembali ke Beranda</a>
-    </div>
+    <p id="passwordError" style="display:none; color:#dc3545; margin-top:1rem;">❌ Password salah!</p>
+  </div>
+</div>
 
-    <div class="toc-dropdown-wrapper">
-      <label for="toc-dropdown" class="toc-icon">
-        <strong>Daftar Isi</strong>
-      </label>
-      <select id="toc-dropdown" class="toc-dropdown">
-        <!-- Otomatis diisi JS -->
-      </select>
-    </div>
-    <section>
-      <h2>🖼️ Prasyarat</h2>
-      <ul>
-        <li>POS sudah terinstal dan terkonfigurasi</li>
-        <li>Pemahaman dasar tentang template Laravel dan Blade</li>
-        <li>Akses database untuk pengujian</li>
-      </ul>
-    </section>
+  <div class="blur-wrapper">
+    <div class="container">
+      <header>
+        <h1>Menambahkan Filter Sub-Kategori ke Indeks Produk di POS</h1>
+        <h1>🔍📂🛍️</h1>
+        <h5>
+          Dalam tutorial ini, kita akan menambahkan filter sub-kategori dinamis
+          ke indeks produk yang secara otomatis terisi berdasarkan kategori yang
+          dipilih.
+        </h5>
+      </header>
 
-    <section>
-      <h2>✅ Langkah 1: Aktifkan Sub-Kategori di Pengaturan Bisnis</h2>
-      <p>
-        <strong>Langkah pertama yang penting</strong>: Buka
-        <strong>/business/settings</strong> → bagian Produk dan pastikan
-        Sub-Kategori diaktifkan. Tanpa ini, menu tarik-turun akan
-        disembunyikan!
-      </p>
-    </section>
-
-    <section>
-      <h2>✅ Langkah 2: Tambahkan Dropdown Sub-Kategori ke View</h2>
-      <p>
-        Pada <strong>resources/views/product/index.blade.php</strong>, temukan
-        bagian filter kategori dan tambahkan kode ini tepat setelah menu
-        tarik-turun kategori:
-      </p>
-      <div class="url-buttons">
-        <button class="view-modal-button" data-url="../tutorial/🔍📂🛍️/langkah2.txt">
-          resources/views/product/index.blade.php
-        </button>
+      <div class="download-box">
+        <a href="https://drive.google.com/drive/folders/1Z4tG3FMdMa3oZ3Nk9oqAp8ydWOlFcDS8?usp=drive_link" download
+          class="download-button">
+          ⬇️ Unduh File Contoh
+        </a>
       </div>
-    </section>
-
-    <section>
-      <h2>✅ Langkah 3 – JavaScript Load Dinamis</h2>
-      <p>
-        Pada berkas yang sama, di dalam bagian
-        <strong>@section('javascript')</strong>, tambahkan:
-      </p>
-      <div class="url-buttons">
-        <button class="view-modal-button" data-url="../tutorial/🔍📂🛍️/langkah3.txt">
-          @section('javascript')
-        </button>
-      </div>
-    </section>
-
-    <section>
-      <h2>✅ Langkah 4: Menambahkan Sub-Kategori ke DataTable Data Ajax</h2>
-      <p>
-        <strong>Penting</strong>: Pada file yang sama, temukan kode
-        inisialisasi DataTable dan tambahkan baris ini di bagian
-        <strong>data: function(d)</strong>:
-      </p>
-      <h3>Untuk Tabel Produk:</h3>
-      <pre><strong>d.sub_category_id = $('#product_list_filter_sub_category_id').val();</strong></pre>
-      <p>Tambahkan setelah baris category_id:</p>
-      <pre><strong>
-            d.category_id = $('#product_list_filter_category_id').val();
-            d.sub_category_id = $('#product_list_filter_sub_category_id').val();
-        </strong></pre>
-      <h3>Untuk Tabel Laporan Stok:</h3>
-      <pre><strong>
-            d.sub_category_id = $('#product_list_filter_sub_category_id').val();
-        </strong></pre>
-      <p>Tambahkan setelah baris category_id di DataTable laporan stok:</p>
-      <pre><strong>
-            d.category_id = $('#product_list_filter_category_id').val();
-d.sub_category_id = $('#product_list_filter_sub_category_id').val();
-        </strong></pre>
-    </section>
-
-    <section>
-      <h2>
-        ✅ Langkah 5: Tambahkan Filter Sub-Kategori untuk Mengubah Event
-      </h2>
-      <p>
-        <strong>Penting</strong>: Temukan pendengar peristiwa perubahan dan
-        tambahkan <strong>#product_list_filter_sub_category_id</strong> ke
-        pemilih:
-      </p>
-      <div class="url-buttons">
-        <button class="view-modal-button" data-url="../tutorial/🔍📂🛍️/langkah5.txt">
-          #product_list_filter_sub_category_id
-        </button>
-      </div>
-      <div class="tip">
-        Masukkan ID ini ke dalam daftar event listener
-        <strong>change</strong> yang me-refresh tabel.
-      </div>
-    </section>
-
-    <section>
-      <h2>✅ Langkah 6: Perbarui Logika Controller</h2>
-      <p>
-        Di <strong>app/Http/Controllers/ProductController.php</strong>, pada
-        metode index(), tambahkan kode pemfilteran ini setelah filter
-        kategori:
-      </p>
-      <div class="url-buttons">
-        <button class="view-modal-button" data-url="../tutorial/🔍📂🛍️/langkah6.txt">
-          app/Http/Controllers/ProductController.php
-        </button>
-      </div>
-    </section>
-
-    <section>
-      <h2>Menguji fitur</h2>
-      <ul>
-        <li>Mengaktifkan sub-kategori dalam pengaturan bisnis</li>
-        <li>Membuat kategori pengujian dengan sub-kategori</li>
-        <li>Menambahkan produk dengan penetapan sub-kategori yang berbeda</li>
-        <li>
-          Menguji pemfilteran - pilih kategori dan memverifikasi pemuatan
-          sub-kategori
-        </li>
-        <li>
-          Memverifikasi pemfilteran berfungsi - pilih sub-kategori dan periksa
-          hasilnya
-        </li>
-      </ul>
-    </section>
-
-    <section>
-      <h2>Mengatasi masalah</h2>
-      <p>Masalah-masalah Umum:</p>
-      <ul>
-        <li>
-          Menu tarik-turun tidak muncul: Periksa apakah sub-kategori
-          diaktifkan di pengaturan bisnis
-        </li>
-        <li>
-          Sub-kategori tidak dimuat: Verifikasi Route AJAX
-          /products/get_sub_categories yang ada
-        </li>
-        <li>
-          Pemfilteran tidak berfungsi: Pastikan kode pemfilteran Controller
-          ditambahkan dengan benar
-        </li>
-        <li>
-          Kesalahan JavaScript: Periksa konsol browser untuk mengetahui adanya
-          kesalahan jQuery atau sintaksis
-        </li>
-      </ul>
-      <div class="tip">
-        Selesai! Menu tarik-turun sub-kategori sekarang akan terisi secara
-        otomatis ketika kategori dipilih, dan daftar produk akan menyaringnya.
-      </div>
-    </section>
-
-    <footer>
       <!-- HOME -->
       <div class="home-button-wrapper">
         <a href="../main.html" class="home-button">🏠 Kembali ke Beranda</a>
       </div>
-    </footer>
+
+      <div class="toc-dropdown-wrapper">
+        <label for="toc-dropdown" class="toc-icon">
+          <strong>Daftar Isi</strong>
+        </label>
+        <select id="toc-dropdown" class="toc-dropdown">
+          <!-- Otomatis diisi JS -->
+        </select>
+      </div>
+      <section>
+        <h2>🖼️ Prasyarat</h2>
+        <ul>
+          <li>POS sudah terinstal dan terkonfigurasi</li>
+          <li>Pemahaman dasar tentang template Laravel dan Blade</li>
+          <li>Akses database untuk pengujian</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>✅ Langkah 1: Aktifkan Sub-Kategori di Pengaturan Bisnis</h2>
+        <p>
+          <strong>Langkah pertama yang penting</strong>: Buka
+          <strong>/business/settings</strong> → bagian Produk dan pastikan
+          Sub-Kategori diaktifkan. Tanpa ini, menu tarik-turun akan
+          disembunyikan!
+        </p>
+      </section>
+
+      <section>
+        <h2>✅ Langkah 2: Tambahkan Dropdown Sub-Kategori ke View</h2>
+        <p>
+          Pada <strong>resources/views/product/index.blade.php</strong>, temukan
+          bagian filter kategori dan tambahkan kode ini tepat setelah menu
+          tarik-turun kategori:
+        </p>
+        <div class="url-buttons">
+          <button class="view-modal-button" data-url="../tutorial/🔍📂🛍️/langkah2.txt">
+            resources/views/product/index.blade.php
+          </button>
+        </div>
+      </section>
+
+      <section>
+        <h2>✅ Langkah 3 – JavaScript Load Dinamis</h2>
+        <p>
+          Pada berkas yang sama, di dalam bagian
+          <strong>@section('javascript')</strong>, tambahkan:
+        </p>
+        <div class="url-buttons">
+          <button class="view-modal-button" data-url="../tutorial/🔍📂🛍️/langkah3.txt">
+            @section('javascript')
+          </button>
+        </div>
+      </section>
+
+      <section>
+        <h2>✅ Langkah 4: Menambahkan Sub-Kategori ke DataTable Data Ajax</h2>
+        <p>
+          <strong>Penting</strong>: Pada file yang sama, temukan kode
+          inisialisasi DataTable dan tambahkan baris ini di bagian
+          <strong>data: function(d)</strong>:
+        </p>
+        <h3>Untuk Tabel Produk:</h3>
+        <pre><strong>d.sub_category_id = $('#product_list_filter_sub_category_id').val();</strong></pre>
+        <p>Tambahkan setelah baris category_id:</p>
+        <pre><strong>
+            d.category_id = $('#product_list_filter_category_id').val();
+            d.sub_category_id = $('#product_list_filter_sub_category_id').val();
+        </strong></pre>
+        <h3>Untuk Tabel Laporan Stok:</h3>
+        <pre><strong>
+            d.sub_category_id = $('#product_list_filter_sub_category_id').val();
+        </strong></pre>
+        <p>Tambahkan setelah baris category_id di DataTable laporan stok:</p>
+        <pre><strong>
+            d.category_id = $('#product_list_filter_category_id').val();
+d.sub_category_id = $('#product_list_filter_sub_category_id').val();
+        </strong></pre>
+      </section>
+
+      <section>
+        <h2>
+          ✅ Langkah 5: Tambahkan Filter Sub-Kategori untuk Mengubah Event
+        </h2>
+        <p>
+          <strong>Penting</strong>: Temukan pendengar peristiwa perubahan dan
+          tambahkan <strong>#product_list_filter_sub_category_id</strong> ke
+          pemilih:
+        </p>
+        <div class="url-buttons">
+          <button class="view-modal-button" data-url="../tutorial/🔍📂🛍️/langkah5.txt">
+            #product_list_filter_sub_category_id
+          </button>
+        </div>
+        <div class="tip">
+          Masukkan ID ini ke dalam daftar event listener
+          <strong>change</strong> yang me-refresh tabel.
+        </div>
+      </section>
+
+      <section>
+        <h2>✅ Langkah 6: Perbarui Logika Controller</h2>
+        <p>
+          Di <strong>app/Http/Controllers/ProductController.php</strong>, pada
+          metode index(), tambahkan kode pemfilteran ini setelah filter
+          kategori:
+        </p>
+        <div class="url-buttons">
+          <button class="view-modal-button" data-url="../tutorial/🔍📂🛍️/langkah6.txt">
+            app/Http/Controllers/ProductController.php
+          </button>
+        </div>
+      </section>
+
+      <section>
+        <h2>Menguji fitur</h2>
+        <ul>
+          <li>Mengaktifkan sub-kategori dalam pengaturan bisnis</li>
+          <li>Membuat kategori pengujian dengan sub-kategori</li>
+          <li>Menambahkan produk dengan penetapan sub-kategori yang berbeda</li>
+          <li>
+            Menguji pemfilteran - pilih kategori dan memverifikasi pemuatan
+            sub-kategori
+          </li>
+          <li>
+            Memverifikasi pemfilteran berfungsi - pilih sub-kategori dan periksa
+            hasilnya
+          </li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Mengatasi masalah</h2>
+        <p>Masalah-masalah Umum:</p>
+        <ul>
+          <li>
+            Menu tarik-turun tidak muncul: Periksa apakah sub-kategori
+            diaktifkan di pengaturan bisnis
+          </li>
+          <li>
+            Sub-kategori tidak dimuat: Verifikasi Route AJAX
+            /products/get_sub_categories yang ada
+          </li>
+          <li>
+            Pemfilteran tidak berfungsi: Pastikan kode pemfilteran Controller
+            ditambahkan dengan benar
+          </li>
+          <li>
+            Kesalahan JavaScript: Periksa konsol browser untuk mengetahui adanya
+            kesalahan jQuery atau sintaksis
+          </li>
+        </ul>
+        <div class="tip">
+          Selesai! Menu tarik-turun sub-kategori sekarang akan terisi secara
+          otomatis ketika kategori dipilih, dan daftar produk akan menyaringnya.
+        </div>
+      </section>
+
+      <footer>
+        <!-- HOME -->
+        <div class="home-button-wrapper">
+          <a href="../main.html" class="home-button">🏠 Kembali ke Beranda</a>
+        </div>
+      </footer>
+    </div>
   </div>
   <div id="myModal" class="modal">
     <div class="modal-content">
