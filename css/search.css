@@ -1,98 +1,91 @@
-/* General styling for the search container */
+/* Centering the search container */
 .search-container {
-    text-align: center;
-    margin-bottom: 20px;
-    padding: 0 20px; /* Padding lebih luas untuk responsivitas yang lebih baik */
+    display: flex;
+    justify-content: center;  /* Center horizontally */
+    align-items: center;      /* Center vertically */
+    height: auto;             /* Remove full height, let it be as tall as needed */
+    margin: 0;                /* Remove any margins */
+    padding: 10px 20px;       /* Padding on the left and right for spacing */
+    position: relative;       /* To allow absolute positioning inside */
+    border: 2px solid #00796b; /* Border added around the search container */
+    border-radius: 50px;      /* Rounded corners for the container */
+    width: 100%;              /* Ensure container takes up full width */
+    max-width: 700px;         /* Max width to keep it from becoming too large */
+    margin: 0 auto;           /* Center horizontally on larger screens */
 }
 
 /* Styling for the search input */
 .search-input {
-    padding: 12px 20px; /* Padding yang lebih baik untuk ruang input */
-    width: 100%; /* Set width to 100% for responsiveness */
-    max-width: 600px; /* Lebih besar untuk tampilan di layar besar */
+    padding: 12px 20px;
+    width: 0;
+    opacity: 0;
+    max-width: 600px;
     font-size: 18px;
-    border: 2px solid #ddd; /* Light border color */
-    border-radius: 50px; /* Rounded corners lebih halus */
+    border: 2px solid #ddd;
+    border-radius: 50px;
     outline: none;
-    transition: all 0.3s ease;
-    background-color: #f5f5f5; /* Background lebih soft */
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Shadow lebih lembut */
+    transition: width 0.5s ease, opacity 0.3s ease;
+    background-color: #f5f5f5;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
-/* Focus effect with glowing border */
-.search-input:focus {
-    border-color: #00796b; /* Warna border hijau yang elegan */
-    box-shadow: 0 0 10px rgba(0, 128, 0, 0.2); /* Efek glow hijau lebih lembut */
+/* Styling for the search icon */
+.search-icon {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #00796b;
+    transition: transform 0.3s ease;
+    margin-right: 10px;  /* Space between icon and input field */
+}
+
+/* Hover effect for the search icon */
+.search-icon:hover {
+    transform: scale(1.1);  /* Slight enlargement on hover */
+}
+
+/* Active state when input is visible */
+.search-input.visible {
+    width: 100%; /* Full width */
+    opacity: 1; /* Fully visible */
 }
 
 /* Placeholder text styling */
 .search-input::placeholder {
-    color: #999; /* Placeholder warna abu-abu yang lebih soft */
-    font-style: italic; /* Placeholder teks miring untuk kesan lebih elegan */
+    color: #999;
+    font-style: italic;
 }
 
 /* Media queries for responsiveness */
 @media (max-width: 768px) {
+    /* For screens smaller than 768px (tablets, small desktops) */
+    .search-container {
+        padding: 10px 15px; /* Slightly less padding */
+        max-width: 90%;  /* Limit the max width */
+    }
+
     .search-input {
-        width: 90%; /* Pada layar lebih kecil, lebar input lebih besar */
-        font-size: 16px; /* Ukuran font sedikit lebih kecil untuk kenyamanan */
+        font-size: 16px;  /* Adjust font size for smaller screens */
+    }
+
+    .search-icon {
+        font-size: 22px;  /* Slightly smaller icon */
     }
 }
 
 @media (max-width: 480px) {
+    /* For screens smaller than 480px (smartphones) */
+    .search-container {
+        padding: 8px 10px; /* Reduce padding on small screens */
+        max-width: 95%;  /* Increase max-width to take almost full screen */
+    }
+
     .search-input {
-        width: 95%; /* Lebar hampir penuh pada layar kecil */
-        font-size: 14px; /* Ukuran font lebih kecil pada layar sangat kecil */
+        font-size: 14px;  /* Further reduce font size */
     }
-}
 
-/* Styling for no results message */
-#noResultsMessage {
-    text-align: center;
-    display: none;
-    color: #f44336; /* Warna merah yang lembut */
-    font-size: 18px;
-    font-weight: 600; /* Memberikan ketegasan pada teks */
-    opacity: 0; /* Initially hidden */
-    transform: translateY(-20px); /* Animasi muncul dari atas */
-    animation: fadeInUp 0.5s forwards; /* Animasi fade in dan bergerak ke atas */
-}
-
-/* Animation for the fade-in and upward movement */
-@keyframes fadeInUp {
-    0% {
-        opacity: 0;
-        transform: translateY(-20px); /* Memulai dengan posisi sedikit lebih tinggi */
+    .search-icon {
+        font-size: 20px;  /* Smaller icon for small screens */
     }
-    100% {
-        opacity: 1;
-        transform: translateY(0); /* Berhenti di posisi normal */
-    }
-}
-
-/* Styling for the icon inside the no results message */
-#noResultsMessage i {
-    color: #f44336; /* Ikon berwarna merah yang lembut */
-    font-size: 26px;  /* Ukuran ikon sedikit lebih besar */
-    transition: transform 0.3s ease, color 0.3s ease; /* Transisi halus saat hover */
-    animation: bounceIcon 0.6s infinite; /* Animasi ikon bergoyang */
-}
-
-/* Animation for bouncing the icon */
-@keyframes bounceIcon {
-    0% {
-        transform: translateY(0);
-    }
-    50% {
-        transform: translateY(-8px); /* Gerakan naik sedikit */
-    }
-    100% {
-        transform: translateY(0); /* Kembali ke posisi semula */
-    }
-}
-
-/* Hover effect for the icon */
-#noResultsMessage i:hover {
-    transform: scale(1.1);  /* Efek sedikit membesar saat hover */
-    color: #d32f2f; /* Mengubah warna ikon saat hover */
 }
