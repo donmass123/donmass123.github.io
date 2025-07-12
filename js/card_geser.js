@@ -1,18 +1,18 @@
 // Array of card data
 const cardData = [
-  { imgSrc: "https://www.iconpacks.net/icons/2/free-rocket-icon-3418-thumb.png", title: "Card Title", description: "This is a description for the card.", url: "https://example.com/1" },
-  { imgSrc: "https://www.iconpacks.net/icons/2/free-rocket-icon-3418-thumb.png", title: "Card Title", description: "This is a description for the card.", url: "https://example.com/1" },
-  { imgSrc: "https://www.iconpacks.net/icons/2/free-rocket-icon-3418-thumb.png", title: "Card Title", description: "This is a description for the card.", url: "https://example.com/1" },
-  { imgSrc: "https://www.iconpacks.net/icons/2/free-rocket-icon-3418-thumb.png", title: "Card Title", description: "This is a description for the card.", url: "https://example.com/1" },
-  { imgSrc: "https://www.iconpacks.net/icons/2/free-rocket-icon-3418-thumb.png", title: "Card Title", description: "This is a description for the card.", url: "https://example.com/1" },
-  { imgSrc: "https://www.iconpacks.net/icons/2/free-rocket-icon-3418-thumb.png", title: "Card Title", description: "This is a description for the card.", url: "https://example.com/1" },
-  { imgSrc: "https://www.iconpacks.net/icons/2/free-rocket-icon-3418-thumb.png", title: "Card Title", description: "This is a description for the card.", url: "https://example.com/1" },
-  { imgSrc: "https://www.iconpacks.net/icons/2/free-rocket-icon-3418-thumb.png", title: "Card Title", description: "This is a description for the card.", url: "https://example.com/1" },
-  { imgSrc: "https://www.iconpacks.net/icons/2/free-rocket-icon-3418-thumb.png", title: "Card Title", description: "This is a description for the card.", url: "https://example.com/1" },
-  { imgSrc: "https://www.iconpacks.net/icons/2/free-rocket-icon-3418-thumb.png", title: "Card Title", description: "This is a description for the card.", url: "https://example.com/1" },
-  { imgSrc: "https://www.iconpacks.net/icons/2/free-rocket-icon-3418-thumb.png", title: "Card Title", description: "This is a description for the card.", url: "https://example.com/1" },
-  { imgSrc: "https://www.iconpacks.net/icons/2/free-rocket-icon-3418-thumb.png", title: "Card Title", description: "This is a description for the card.", url: "https://example.com/1" },
-  { imgSrc: "https://www.iconpacks.net/icons/2/free-rocket-icon-3418-thumb.png", title: "Card Title", description: "This is a description for the card.", url: "https://example.com/1" }
+  { imgSrc: "cover/card/1.webp", title: "Game Over", description: "This is a description for Game Over.", url: "https://example.com/1" },
+  { imgSrc: "cover/card/1.webp", title: "Game Over", description: "This is a description for Game Over.", url: "https://example.com/1" },
+  { imgSrc: "cover/card/1.webp", title: "Game Over", description: "This is a description for Game Over.", url: "https://example.com/1" },
+  { imgSrc: "cover/card/1.webp", title: "Game Over", description: "This is a description for Game Over.", url: "https://example.com/1" },
+  { imgSrc: "cover/card/1.webp", title: "Game Over", description: "This is a description for Game Over.", url: "https://example.com/1" },
+  { imgSrc: "cover/card/1.webp", title: "Game Over", description: "This is a description for Game Over.", url: "https://example.com/1" },
+  { imgSrc: "cover/card/1.webp", title: "Game Over", description: "This is a description for Game Over.", url: "https://example.com/1" },
+  { imgSrc: "cover/card/1.webp", title: "Game Over", description: "This is a description for Game Over.", url: "https://example.com/1" },
+  { imgSrc: "cover/card/1.webp", title: "Game Over", description: "This is a description for Game Over.", url: "https://example.com/1" },
+  { imgSrc: "cover/card/1.webp", title: "Game Over", description: "This is a description for Game Over.", url: "https://example.com/1" },
+  { imgSrc: "cover/card/1.webp", title: "Game Over", description: "This is a description for Game Over.", url: "https://example.com/1" },
+  { imgSrc: "cover/card/1.webp", title: "Game Over", description: "This is a description for Game Over.", url: "https://example.com/1" },
+  { imgSrc: "cover/card/1.webp", title: "Game Over", description: "This is a description for Game Over.", url: "https://example.com/1" }
 ];
 
 // Function to render cards dynamically
