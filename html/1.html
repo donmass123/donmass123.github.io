@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="../css/modal.css" />
   <link rel="stylesheet" href="../css/sidebar.css" />
   <link rel="stylesheet" href="../css/bubble.css" />
+  <link rel="stylesheet" href="../css/complete.css" />
 </head>
 
 <body>
@@ -211,9 +212,23 @@ d.sub_category_id = $('#product_list_filter_sub_category_id').val();
       <path stroke-linecap="round" stroke-width="2" d="M6 15l6-6 6 6" />
     </svg>
   </button>
+  <div id="completionModal" class="completion-modal">
+    <div class="completion-modal-content">
+      <span class="completion-close" title="Tutup">&times;</span>
+      <h3>🎉 Selamat, kamu telah menyelesaikan tutorialnya!</h3>
+      <p>Apakah kamu ingin mengunduh file yang telah jadi?</p>
+      <div class="completion-button-group">
+        <a id="completion-download-btn" data-id="1" class="completion-btn completion-yes-btn">
+          ✅ Ya
+        </a>
+        <button id="completion-no-btn" class="completion-btn completion-no-btn">❌ Tidak</button>
+      </div>
+    </div>
+  </div>
   <script src="../js/scripts.js"></script>
   <script src="../js/sidebar.js"></script>
   <script src="../js/bubble.js"></script>
+  <script src="../js/complete.js"></script>
   <!-- Link ke file JavaScript -->
 </body>
 
