@@ -31,13 +31,11 @@
   </header>
 
   <section id="tutorial">
-    <h2 style="text-align: center">TUTORIAL POINT OF SALES</h2>
+    <h2 style="text-align: center">📍 Tutorial Point Of Sales</h2>
     <div class="search-container">
-    <button class="search-icon" onclick="toggleSearchInput()">
-        <i class="fa fa-search"></i> <!-- You can use Font Awesome or any other icon library -->
-    </button>
-    <input type="text" id="searchInput" class="search-input" placeholder="Search..." />
-</div>
+      <input type="text" id="searchTutorial" placeholder="Cari Tutorial..." onkeyup="searchTutorial()"
+        class="search-input" />
+    </div>
     <div class="filter-container" style="text-align: center; margin-bottom: 20px">
   <button onclick="filterTutorials('all')" class="filter-button all">Show All</button>
   <button onclick="filterTutorials('pemula')" class="filter-button pemula">Pemula</button>
@@ -128,7 +126,6 @@
   <!-- <script src="js/filter.js"></script> -->
   <script src="js/pagi.js"></script>
   <script src="js/nav.js"></script>
-  <script src="js/search.js"></script>
 
 </body>
 
