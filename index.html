@@ -1,174 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Rocket Launch</title>
-    <style>
-      *,
-      *::before,
-      *::after {
-        box-sizing: border-box;
-      }
-      body {
-        margin: 0;
-        background: #1d1d1d;
-        overflow: hidden;
-        font-family: "Poppins", sans-serif;
-      }
 
-      /* ---------- RESPONSIVE ROOT ---------- */
-      :root {
-        --rocket-scale: 1;
-        --title-size: 3rem;
-        --btn-fsize: 1.2rem;
-        --rocket-color: #ff4a00; /* Main color of the rocket */
-        --flame-color: #ff6a00; /* Color of the flame */
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lets Go</title>
+  <link rel="stylesheet" href="css/index.css" />
+</head>
 
-      @media (max-width: 1199.98px) {
-        :root {
-          --rocket-scale: 0.85;
-          --title-size: 2.6rem;
-          --btn-fsize: 1.1rem;
-        }
-      }
-      @media (max-width: 991.98px) {
-        :root {
-          --rocket-scale: 0.7;
-          --title-size: 2.2rem;
-          --btn-fsize: 1rem;
-        }
-      }
-      @media (max-width: 767.98px) {
-        :root {
-          --rocket-scale: 0.55;
-          --title-size: 1.9rem;
-          --btn-fsize: 0.9rem;
-        }
-      }
-      @media (max-width: 575.98px) {
-        :root {
-          --rocket-scale: 0.45;
-          --title-size: 1.6rem;
-          --btn-fsize: 0.85rem;
-        }
-      }
+<body>
+  <a href="main.html">
+    <span>Let's</span>
+    <span>Go</span>
+    <span>To</span>
+    <span>Tutorial</span>
+  </a>
 
-      /* ---------- INTRO (judul + tombol) ---------- */
-      .intro {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        text-align: center;
-        z-index: 200;
-      }
-
-      #title {
-        font-size: var(--title-size);
-        color: #fff;
-        margin: 0 0 2rem 0;
-      }
-
-      #startBtn {
-        padding: calc(0.6rem * var(--rocket-scale))
-          calc(2rem * var(--rocket-scale));
-        font-size: var(--btn-fsize);
-        border: none;
-        border-radius: 50px;
-        background: #f94144;
-        color: #fff;
-        cursor: pointer;
-        transition: 0.3s;
-      }
-
-      /* ---------- ROCKET CONTAINER CENTER ---------- */
-      .rocket-container {
-        display: none;
-        width: 180px;
-        height: 380px;
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%) scale(var(--rocket-scale));
-        z-index: 100;
-      }
-
-      /* ---------- ROCKET FLAME EFFECT ---------- */
-.flame {
-  position: absolute;
-  background: linear-gradient(135deg, #ff6a00, #ff1e00, #ff0000); /* Menambahkan lebih banyak warna untuk efek api */
-  height: 100px; /* Menambah tinggi api */
-  width: 30px; /* Menambah lebar api */
-  bottom: 20px;
-  left: 50%;
-  margin-left: -15px; /* Memposisikan api di tengah */
-  border-radius: 50%;
-  animation: flameAnimation 0.3s ease-out infinite; /* Meningkatkan durasi animasi untuk efek api lebih dramatis */
-}
-
-@keyframes flameAnimation {
-  0% {
-    transform: translateY(0) scale(1.5);
-    opacity: 0.9;
-  }
-  100% {
-    transform: translateY(40px) scale(1.2); /* Memperbesar pergerakan api */
-    opacity: 0.3;
-  }
-}
-
-    </style>
-  </head>
-  <body>
-    <!-- INTRO -->
-    <div class="intro" id="intro">
-      <h1 id="title">ARE U READY?</h1>
-      <button id="startBtn">Start</button>
-    </div>
-
-    <!-- ROCKET -->
-    <div class="rocket-container" id="rocket">
-      <div class="rocket-logo">
-        <!-- Rocket SVG Logo with detailed design -->
-        <svg height="200px" width="200px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 502 502" xml:space="preserve" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <path style="fill:#FBB03B;" d="M251,10l-23.126,34.537C193.71,95.559,175.47,155.579,175.47,216.983V450.26h151.06V216.983 c0-61.404-18.239-121.424-52.404-172.446L251,10z"></path> <polygon style="fill:#CCCCCC;" points="231.124,450.26 198.328,450.26 195.346,492 233.509,492 "></polygon> <polygon style="fill:#CCCCCC;" points="303.672,450.26 270.876,450.26 268.491,492 306.654,492 "></polygon> <polygon style="fill:#FBB03B;" points="349.885,332.99 326.53,332.99 326.53,426.408 389.14,426.408 389.14,372.245 "></polygon> <polygon style="fill:#FBB03B;" points="152.115,332.99 175.47,332.99 175.47,426.408 112.86,426.408 112.86,372.245 "></polygon> <circle style="fill:#29ABE2;" cx="251" cy="229" r="34"></circle> <g> <circle style="fill:#29ABE2;" cx="251" cy="349" r="26"></circle> <g> <path d="M230.381,98.075c1.48,0.775,3.066,1.142,4.629,1.142c3.603,0,7.082-1.952,8.868-5.364 c2.591-4.95,5.366-9.879,8.25-14.653c1.968-3.26,4.027-6.517,6.122-9.68c3.048-4.605,1.786-10.81-2.819-13.858 c-4.603-3.048-10.811-1.787-13.858,2.819c-2.246,3.393-4.455,6.886-6.564,10.38c-3.093,5.12-6.069,10.407-8.849,15.717 C223.598,89.47,225.488,95.513,230.381,98.075z"></path> <path d="M210.009,166.76c4.553,0,8.67-3.131,9.735-7.757c3.035-13.168,7.101-26.236,12.086-38.842 c2.03-5.136-0.486-10.946-5.623-12.977c-5.132-2.032-10.945,0.487-12.977,5.622c-5.351,13.534-9.717,27.565-12.975,41.705 c-1.24,5.382,2.116,10.75,7.498,11.99C208.51,166.676,209.265,166.76,210.009,166.76z"></path> <path d="M396.212,365.174l-39.256-39.255c-1.876-1.875-4.419-2.929-7.071-2.929H336.53V216.983 c0-63.605-18.706-125.16-54.095-178.01L259.31,4.436C257.453,1.664,254.336,0,251,0s-6.453,1.664-8.31,4.436l-23.126,34.537 c-35.389,52.85-54.095,114.405-54.095,178.01V322.99h-13.354c-2.652,0-5.195,1.054-7.071,2.929l-39.256,39.255 c-1.875,1.875-2.929,4.419-2.929,7.071v54.163c0,5.523,4.478,10,10,10h52.61v13.852c0,5.523,4.478,10,10,10h12.119l-2.216,31.028 c-0.197,2.769,0.765,5.495,2.656,7.527S192.57,502,195.347,502h38.162c2.751,0,5.381-1.133,7.27-3.134 c1.89-2,2.871-4.69,2.714-7.437l-1.781-31.17h18.577l-1.781,31.17c-0.157,2.747,0.824,5.437,2.714,7.437 c1.889,2,4.519,3.134,7.27,3.134h38.162c2.776,0,5.427-1.154,7.318-3.186s2.854-4.758,2.656-7.527l-2.216-31.028h12.119 c5.522,0,10-4.477,10-10v-13.852h52.61c5.522,0,10-4.477,10-10v-54.163C399.141,369.593,398.087,367.049,396.212,365.174z M122.859,416.408v-40.021l33.397-33.397h9.213v73.418H122.859z M222.921,482h-16.834l1.553-21.74h14.039L222.921,482z M295.913,482h-16.834l1.242-21.74h14.039L295.913,482z M316.53,440.26h-12.858h-32.796h-39.752h-32.796H185.47v-13.852V332.99 V216.983c0-59.629,17.536-117.336,50.714-166.882L251,27.973l14.816,22.128c33.178,49.546,50.714,107.253,50.714,166.882V332.99 v93.418V440.26z M379.141,416.408h-42.61V342.99h9.213l33.397,33.397L379.141,416.408L379.141,416.408z"></path> <path d="M251,185c-24.262,0-44,19.738-44,44s19.738,44,44,44s44-19.738,44-44S275.262,185,251,185z M251,253 c-13.233,0-24-10.767-24-24s10.767-24,24-24s24,10.767,24,24S264.233,253,251,253z"></path> <path d="M251,313c-19.851,0-36,16.149-36,36s16.149,36,36,36s36-16.149,36-36S270.851,313,251,313z M251,365 c-8.822,0-16-7.178-16-16s7.178-16,16-16c8.822,0,16,7.178,16,16S259.822,365,251,365z"></path> </g> </g> </g> </g></svg>
-      </div>
-      <div class="flame"></div>
-    </div>
-
-    <!-- GSAP -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script>
-      const intro = document.getElementById("intro");
-      const rocket = document.getElementById("rocket");
-      const btn = document.getElementById("startBtn");
-
-      btn.addEventListener("click", () => {
-        btn.disabled = true;
-
-        // hide intro with animation
-        gsap.to(intro, {
-          duration: 0.6,
-          scale: 0.2,
-          opacity: 0,
-          ease: "power2.in",
-          onComplete: () => (intro.style.display = "none"),
-        });
-
-        // show rocket & launch
-        rocket.style.display = "block";
-        gsap.from(rocket, { scale: 0, duration: 0.6, ease: "back.out(1.7)" });
-
-        // Launch rocket upwards
-        gsap.to(rocket, {
-          delay: 0.6,
-          duration: 3,
-          y: -window.innerHeight - 400, // Move rocket upwards
-          ease: "power4.in",
-          onComplete: () => (window.location.href = "main.html"),
-        });
-      });
-    </script>
-  </body>
 </html>
