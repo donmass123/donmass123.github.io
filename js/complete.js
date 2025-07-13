@@ -18,15 +18,18 @@ document.addEventListener("DOMContentLoaded", function () {
   // 🔐 Data password berdasarkan ID halaman
   const passwordData = [
     { id: "1", password: "123456" },
-    { id: "2", password: "passkuat456" },
-    { id: "laporan-stok", password: "stok2025" }
+    { id: "2", password: "123456" },
+    { id: "3", password: "123456" },
+    { id: "4", password: "123456" },
+    { id: "5", password: "123456" },
+    { id: "6", password: "123456" }
   ];
 
   // 📦 Data URL untuk tombol download
   const downloadData = [
     { id: "1", url: "https://drive.google.com/drive/folders/1Z4tG3FMdMa3oZ3Nk9oqAp8ydWOlFcDS8?usp=drive_link" },
     { id: "2", url: "https://www.dropbox.com/s/example123/file.zip?dl=1" },
-    { id: "file-custom", url: "https://example.com/files/output.zip" }
+    { id: "3", url: "https://example.com/files/output.zip" }
   ];
 
   // Cari ID tutorial dari URL
