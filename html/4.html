@@ -1,17 +1,38 @@
 <!DOCTYPE html>
 <html lang="id">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Adding a favicon -->
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Adding a favicon -->
   <link rel="icon" href="https://www.iconpacks.net/icons/2/free-rocket-icon-3418-thumb.png" type="image/x-icon" />
-    <title>Menambahkan Tagihan Jatuh Tempo ke Mesin Kasir</title>
-    <link rel="stylesheet" href="../css/tutor.css" />
-    <link rel="stylesheet" href="../css/modal.css" />
-    <link rel="stylesheet" href="../css/sidebar.css" />
-    <link rel="stylesheet" href="../css/bubble.css" />
-  </head>
-  <body>
+  <title>Menambahkan Tagihan Jatuh Tempo ke Mesin Kasir</title>
+  <link rel="stylesheet" href="../css/tutor.css" />
+  <link rel="stylesheet" href="../css/modal.css" />
+  <link rel="stylesheet" href="../css/sidebar.css" />
+  <link rel="stylesheet" href="../css/bubble.css" />
+  <link rel="stylesheet" href="../css/complete.css" />
+
+</head>
+
+<body>
+  <!-- Modal Password -->
+  <div id="passwordModal" class="completion-modal">
+    <div class="completion-modal-content">
+      <span class="completion-close" id="closePasswordModal">&times;</span>
+      <h3>🔐 Masukkan Password</h3>
+      <input type="password" id="tutorialPassword" placeholder="Password..." class="completion-input" />
+      <div class="completion-button-group">
+        <button id="submitPassword" class="completion-btn completion-yes-btn">
+          Akses
+        </button>
+      </div>
+      <p id="passwordError" style="display: none; color: #dc3545; margin-top: 1rem">
+        ❌ Password salah!
+      </p>
+    </div>
+  </div>
+  <div class="blur-wrapper">
     <div class="container">
       <header>
         <h1>Menambahkan Tagihan Jatuh Tempo ke Mesin Kasir</h1>
@@ -24,11 +45,8 @@
       </header>
 
       <div class="download-box">
-        <a
-          href="https://drive.google.com/drive/folders/1gKaBWbT_LsPoxclH1pWpbYyvhfkVk48U?usp=drive_link"
-          download
-          class="download-button"
-        >
+        <a href="https://drive.google.com/drive/folders/1gKaBWbT_LsPoxclH1pWpbYyvhfkVk48U?usp=drive_link" download
+          class="download-button">
           ⬇️ Unduh File Contoh
         </a>
       </div>
@@ -51,8 +69,7 @@
         <div class="image-box">
           <img
             src="https://ultimate-pos-tutorials.vercel.app/assets/images/due-collections-preview-97e82cea377112d6b45fdd95619c2a7e.png"
-            alt="#"
-          />
+            alt="#" />
           <p class="caption">Gambar: Apa yang Akan Anda Bangun.</p>
         </div>
         <p>Pada akhir tutorial ini, mesin kasir Anda akan ditampilkan:</p>
@@ -111,10 +128,7 @@
           <strong>app/Utils/CashRegisterUtil.php</strong>:
         </p>
         <div class="url-buttons">
-          <button
-            class="view-modal-button"
-            data-url="../tutorial/💸⏳🖥️/langkah1.txt"
-          >
+          <button class="view-modal-button" data-url="../tutorial/💸⏳🖥️/langkah1.txt">
             app/Utils/CashRegisterUtil.php
           </button>
         </div>
@@ -132,10 +146,7 @@
           Perbarui metode getRegisterDetails() yang sudah ada di controller:
         </p>
         <div class="url-buttons">
-          <button
-            class="view-modal-button"
-            data-url="../tutorial/💸⏳🖥️/langkah2_1.txt"
-          >
+          <button class="view-modal-button" data-url="../tutorial/💸⏳🖥️/langkah2_1.txt">
             app/Http/Controllers/CashRegisterController.php
           </button>
         </div>
@@ -145,10 +156,7 @@
           <strong>app/Utils/CashRegisterUtil.php</strong>
         </h3>
         <div class="url-buttons">
-          <button
-            class="view-modal-button"
-            data-url="../tutorial/💸⏳🖥️/langkah2_2.txt"
-          >
+          <button class="view-modal-button" data-url="../tutorial/💸⏳🖥️/langkah2_2.txt">
             app/Http/Controllers/CashRegisterController.php
           </button>
         </div>
@@ -160,10 +168,7 @@
           utilitas.
         </p>
         <div class="url-buttons">
-          <button
-            class="view-modal-button"
-            data-url="../tutorial/💸⏳🖥️/langkah2_3.txt"
-          >
+          <button class="view-modal-button" data-url="../tutorial/💸⏳🖥️/langkah2_3.txt">
             app/Http/Controllers/CashRegisterController.php
           </button>
         </div>
@@ -177,10 +182,7 @@
         </p>
         <h3>3.1 Tambahkan Bagian Penagihan Jatuh Tempo</h3>
         <div class="url-buttons">
-          <button
-            class="view-modal-button"
-            data-url="../tutorial/💸⏳🖥️/langkah3.txt"
-          >
+          <button class="view-modal-button" data-url="../tutorial/💸⏳🖥️/langkah3.txt">
             resources/views/cash_register/register_details.blade.php
           </button>
         </div>
@@ -195,16 +197,11 @@
         <p>
           Jika Anda menginginkan fitur yang sama pada modal close register Anda,
           perbarui
-          <strong
-            >resources/views/cash_register/close_register.blade.php</strong
-          >
+          <strong>resources/views/cash_register/close_register.blade.php</strong>
           dengan bagian due collections dan CSS yang sama.
         </p>
         <div class="url-buttons">
-          <button
-            class="view-modal-button"
-            data-url="../tutorial/💸⏳🖥️/langkah4.txt"
-          >
+          <button class="view-modal-button" data-url="../tutorial/💸⏳🖥️/langkah4.txt">
             resources/views/cash_register/close_register.blade.php
           </button>
         </div>
@@ -267,10 +264,7 @@
           Bootstrap:
         </p>
         <div class="url-buttons">
-          <button
-            class="view-modal-button"
-            data-url="../tutorial/💸⏳🖥️/bootstrap.txt"
-          >
+          <button class="view-modal-button" data-url="../tutorial/💸⏳🖥️/bootstrap.txt">
             Bootstrap
           </button>
         </div>
@@ -287,10 +281,7 @@
           lewat jatuh tempo atau sesuaikan ukuran kolom:
         </p>
         <div class="url-buttons">
-          <button
-            class="view-modal-button"
-            data-url="../tutorial/💸⏳🖥️/layout.txt"
-          >
+          <button class="view-modal-button" data-url="../tutorial/💸⏳🖥️/layout.txt">
             Layout
           </button>
         </div>
@@ -379,32 +370,39 @@
         </div>
       </footer>
     </div>
-    <div id="myModal" class="modal">
-      <div class="modal-content">
-        <span class="close">&times;</span>
-        <iframe
-          id="modalFrame"
-          src=""
-          frameborder="0"
-          style="width: 100%; height: 400px"
-        ></iframe>
+  </div>
+  <div id="myModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <iframe id="modalFrame" src="" frameborder="0" style="width: 100%; height: 400px"></iframe>
+    </div>
+  </div>
+  <button id="bubbleUp" title="Kembali ke Atas" aria-label="Kembali ke Atas">
+    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="none" viewBox="0 0 24 24" stroke="white">
+      <path stroke-linecap="round" stroke-width="2" d="M6 15l6-6 6 6" />
+    </svg>
+  </button>
+  <div id="completionModal" class="completion-modal">
+    <div class="completion-modal-content">
+      <span class="completion-close" title="Tutup">&times;</span>
+      <h3>🎉 Selamat, kamu telah menyelesaikan tutorialnya!</h3>
+      <p>Apakah kamu ingin mengunduh file yang telah jadi?</p>
+      <div class="completion-button-group">
+        <a id="completion-download-btn" data-id="2" class="completion-btn completion-yes-btn">
+          ✅ Ya
+        </a>
+        <button id="completion-no-btn" class="completion-btn completion-no-btn">
+          ❌ Tidak
+        </button>
       </div>
     </div>
-    <button id="bubbleUp" title="Kembali ke Atas" aria-label="Kembali ke Atas">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="26"
-        height="26"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="white"
-      >
-        <path stroke-linecap="round" stroke-width="2" d="M6 15l6-6 6 6" />
-      </svg>
-    </button>
-    <script src="../js/scripts.js"></script>
-    <script src="../js/sidebar.js"></script>
-    <script src="../js/bubble.js"></script>
-    <!-- Link ke file JavaScript -->
-  </body>
+  </div>
+  <script src="../js/scripts.js"></script>
+  <script src="../js/sidebar.js"></script>
+  <script src="../js/bubble.js"></script>
+  <script src="../js/complete.js"></script>
+
+  <!-- Link ke file JavaScript -->
+</body>
+
 </html>
