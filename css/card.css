@@ -1,16 +1,18 @@
 /* Card Container */
 .card-container {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
-  padding: 20px;
-  animation: fadeInUp 1s ease both;
+  grid-template-columns: repeat(3, 1fr); /* Default to 3 columns for desktop */
+  gap: 30px;
+  padding: 30px;
+  animation: fadeInUp 1s ease-out both;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 @keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(30px);
+    transform: translateY(40px);
   }
   to {
     opacity: 1;
@@ -18,42 +20,75 @@
   }
 }
 
-/* Responsif untuk Mobile */
+/* Responsif untuk Tablet dan Mobile */
+/* For larger tablets or smaller screens */
+@media (max-width: 1200px) {
+  .card-container {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns for medium devices */
+    padding: 20px; /* Reduce padding on medium devices */
+  }
+}
+
+/* For mobile devices */
 @media (max-width: 768px) {
   .card-container {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr; /* 1 column for mobile devices */
+    padding: 15px; /* Smaller padding on mobile */
+  }
+
+  /* Adjust feature card padding on mobile for better fit */
+  .feature-card {
+    padding: 20px; /* Adjust padding to prevent overcrowding */
+  }
+
+  /* Adjust font size for headings on mobile */
+  .feature-card h3 {
+    font-size: 1.25rem; /* Slightly smaller heading on mobile */
+  }
+
+  .feature-card p {
+    font-size: 1rem; /* Smaller text for mobile */
+  }
+
+  /* Ensure badges don't overflow and adjust font size */
+  .badge {
+    font-size: 0.9rem; /* Slightly smaller font for badges */
+    padding: 6px 12px; /* Smaller padding for badges */
   }
 }
 
 /* Feature Card */
 .feature-card {
   background-color: #ffffff;
-  border-radius: 12px;
+  border-radius: 15px;
   border: 1px solid #e0e0e0;
-  padding: 25px;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
   cursor: pointer;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  position: relative;
+  position: relative; /* Added for positioning the badge absolutely */
+  background: #ffffff;
+  max-width: 100%;
 }
 
 /* Efek Hover pada Card */
 .feature-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
   border-color: #bdbdbd;
 }
 
 .feature-card h3 {
-  margin: 0 0 10px;
-  font-size: 1.2rem;
+  margin: 0 0 15px;
+  font-size: 1.5rem;
   color: #333;
   font-weight: 600;
   line-height: 1.4;
-  transition: color 0.3s;
+  font-family: 'Montserrat', sans-serif;
+  transition: color 0.3s ease;
 }
 
 .feature-card:hover h3 {
@@ -61,25 +96,29 @@
 }
 
 .feature-card p {
-  margin: 8px 0;
-  color: #666;
-  font-size: 0.95rem;
+  margin: 12px 0;
+  color: #777;
+  font-size: 1.1rem;
   line-height: 1.6;
+  font-family: 'Inter', sans-serif;
 }
 
 /* Badge Styling */
 .badge {
-  display: inline-block;
-  padding: 6px 12px;
+  position: absolute; /* Position it absolutely within the feature-card */
+  top: 15px; /* Default top distance */
+  right: 15px; /* Default right distance */
+  padding: 8px 16px;
   border-radius: 20px;
-  font-size: 0.85rem;
+  font-size: 1rem;
   font-weight: 600;
-  margin-top: 15px;
   color: #fff;
   text-transform: capitalize;
   background-color: #00796b;
+  z-index: 10; /* Ensure it appears on top of other elements */
 }
 
+/* Badge color classes */
 .badge.pemula {
   background-color: #27ae60;
 }
@@ -167,14 +206,46 @@
 .feature-card {
   position: relative;
   overflow: hidden;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease-in-out;
 }
 
 .feature-card h3,
 .feature-card p {
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Inter', sans-serif;
 }
 
 .feature-card p {
   color: #777;
+}
+
+/* Responsif untuk Tablet dan Mobile */
+
+/* For tablets and smaller screens */
+@media (max-width: 1200px) {
+  .badge {
+    top: 10px; /* Slightly adjusted distance for tablets */
+    right: 10px; /* Adjusted position */
+    font-size: 0.9rem; /* Slightly smaller text for medium screens */
+    padding: 6px 12px; /* Adjust padding for smaller screens */
+  }
+}
+
+/* For mobile devices */
+@media (max-width: 768px) {
+  .badge {
+    top: 10px; /* Keep it near the top */
+    right: 10px; /* Keep it near the right */
+    font-size: 0.85rem; /* Smaller text on mobile */
+    padding: 5px 10px; /* Even smaller padding for mobile */
+  }
+}
+
+/* For extra small mobile devices */
+@media (max-width: 480px) {
+  .badge {
+    top: 8px; /* Move the badge slightly closer to the top on small screens */
+    right: 8px; /* Move the badge closer to the right */
+    font-size: 0.8rem; /* Further reduce the font size for small screens */
+    padding: 4px 8px; /* Reduce padding for extra small screens */
+  }
 }
