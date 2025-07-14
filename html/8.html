@@ -13,32 +13,52 @@
   <link rel="stylesheet" href="../css/tabel_tutor.css" />
   <link rel="stylesheet" href="../css/sidebar.css" />
   <link rel="stylesheet" href="../css/bubble.css" />
+  <link rel="stylesheet" href="../css/complete.css" />
+
+
 </head>
 
 <body>
-  <div class="container">
-    <header>
-      <h1>Panduan Integrasi Header Perintah Laravel</h1>
-      <h1>📚🔧🚀💻</h1>
-      <h5>
-        Panduan komprehensif untuk menambahkan perintah pengoptimalan Laravel
-        secara langsung ke header aplikasi Anda untuk akses cepat dan
-        pemeliharaan sistem.
-      </h5>
-    </header>
-
-    <div class="download-box">
-      <a href="https://drive.google.com/drive/folders/1Mn7494Ohg80BX-wJEBe691bp8DPCTfrK?usp=sharing" download
-        class="download-button">
-        ⬇️ Unduh File Contoh
-      </a>
+  <!-- Modal Password -->
+  <div id="passwordModal" class="completion-modal">
+    <div class="completion-modal-content">
+      <span class="completion-close" id="closePasswordModal">&times;</span>
+      <h3>🔐 Masukkan Password</h3>
+      <input type="password" id="tutorialPassword" placeholder="Password..." class="completion-input" />
+      <div class="completion-button-group">
+        <button id="submitPassword" class="completion-btn completion-yes-btn">
+          Akses
+        </button>
+      </div>
+      <p id="passwordError" style="display: none; color: #dc3545; margin-top: 1rem">
+        ❌ Password salah!
+      </p>
     </div>
-    <!-- HOME -->
-    <div class="home-button-wrapper">
-      <a href="../main.html" class="home-button">🏠 Kembali ke Beranda</a>
-    </div>
+  </div>
+  <div class="blur-wrapper">
+    <div class="container">
+      <header>
+        <h1>Panduan Integrasi Header Perintah Laravel</h1>
+        <h1>📚🔧🚀💻</h1>
+        <h5>
+          Panduan komprehensif untuk menambahkan perintah pengoptimalan Laravel
+          secara langsung ke header aplikasi Anda untuk akses cepat dan
+          pemeliharaan sistem.
+        </h5>
+      </header>
 
-    <div class="toc-dropdown-wrapper">
+      <div class="download-box">
+        <a href="https://drive.google.com/drive/folders/1Mn7494Ohg80BX-wJEBe691bp8DPCTfrK?usp=sharing" download
+          class="download-button">
+          ⬇️ Unduh File Contoh
+        </a>
+      </div>
+      <!-- HOME -->
+      <div class="home-button-wrapper">
+        <a href="../main.html" class="home-button">🏠 Kembali ke Beranda</a>
+      </div>
+
+      <div class="toc-dropdown-wrapper">
         <label for="toc-dropdown" class="toc-icon">
           <strong>Daftar Isi</strong>
         </label>
@@ -47,338 +67,342 @@
         </select>
       </div>
 
-    <section>
-      <h2>Gambaran Umum</h2>
-      <p>
-        Panduan ini akan membantu Anda mengimplementasikan menu tarik-turun
-        yang nyaman di header aplikasi Anda yang memungkinkan administrator
-        menjalankan perintah pengoptimalan Laravel yang umum tanpa mengakses
-        baris perintah. Fitur ini meningkatkan produktivitas pengembang dan
-        efisiensi pemeliharaan sistem.
-      </p>
-    </section>
+      <section>
+        <h2>Gambaran Umum</h2>
+        <p>
+          Panduan ini akan membantu Anda mengimplementasikan menu tarik-turun
+          yang nyaman di header aplikasi Anda yang memungkinkan administrator
+          menjalankan perintah pengoptimalan Laravel yang umum tanpa mengakses
+          baris perintah. Fitur ini meningkatkan produktivitas pengembang dan
+          efisiensi pemeliharaan sistem.
+        </p>
+      </section>
 
-    <section>
-      <h2>Apa yang akan Anda Bangun</h2>
-      <p>
-        Menu tarik-turun header dengan perintah-perintah Laravel berikut ini:
-      </p>
-      <ul>
-        <li>
-          <strong>Optimalkan Hapus</strong>: Menghapus semua cache
-          konfigurasi, Route, View, dan layanan yang dikompilasi
-        </li>
-        <li><strong>Route Clear</strong>: Menghapus cache route</li>
-        <li><strong>Config Clear</strong>: Menghapus cache konfigurasi</li>
-        <li>
-          <strong>View Clear</strong>: Menghapus file View yang
-          dikompilasi
-        </li>
-        <li><strong>Cache Clear</strong>: Menghapus cache aplikasi</li>
-        <li><strong>System Logs</strong>: Akses cepat ke penampil log</li>
-      </ul>
-      <div class="image-box">
-        <img
-          src="https://ultimate-pos-tutorials.vercel.app/assets/images/laravel-commands-002af81fb6cfac37d92c85e4a5315300.png"
-          alt="#" />
-        <p class="caption">Gambar: Gambaran Umum.</p>
-      </div>
-      <p>
-        Menu tarik-turun yang telah selesai yang menunjukkan semua perintah
-        pengoptimalan Laravel yang diintegrasikan ke dalam tarik-turun profil
-        pengguna
-      </p>
-    </section>
+      <section>
+        <h2>Apa yang akan Anda Bangun</h2>
+        <p>
+          Menu tarik-turun header dengan perintah-perintah Laravel berikut ini:
+        </p>
+        <ul>
+          <li>
+            <strong>Optimalkan Hapus</strong>: Menghapus semua cache
+            konfigurasi, Route, View, dan layanan yang dikompilasi
+          </li>
+          <li><strong>Route Clear</strong>: Menghapus cache route</li>
+          <li><strong>Config Clear</strong>: Menghapus cache konfigurasi</li>
+          <li>
+            <strong>View Clear</strong>: Menghapus file View yang
+            dikompilasi
+          </li>
+          <li><strong>Cache Clear</strong>: Menghapus cache aplikasi</li>
+          <li><strong>System Logs</strong>: Akses cepat ke penampil log</li>
+        </ul>
+        <div class="image-box">
+          <img
+            src="https://ultimate-pos-tutorials.vercel.app/assets/images/laravel-commands-002af81fb6cfac37d92c85e4a5315300.png"
+            alt="#" />
+          <p class="caption">Gambar: Gambaran Umum.</p>
+        </div>
+        <p>
+          Menu tarik-turun yang telah selesai yang menunjukkan semua perintah
+          pengoptimalan Laravel yang diintegrasikan ke dalam tarik-turun profil
+          pengguna
+        </p>
+      </section>
 
-    <section>
-      <h2>📁 Pohon Implementasi Lengkap</h2>
-      <ul class="tree">
-        <li>
-          <details open>
-            <summary>your-laravel-app/</summary>
-            <ul class="tree">
-              <li>
-                <details>
-                  <summary>routes/</summary>
-                  <ul class="tree">
-                    <li class="file">
-                      web.php
-                      <span class="tag tag-add">✅ Add 5 new command routes</span>
-                    </li>
-                  </ul>
-                </details>
-              </li>
-              <li>
-                <details>
-                  <summary>app/</summary>
-                  <ul class="tree">
-                    <li>
-                      <details>
-                        <summary>Http/</summary>
-                        <ul class="tree">
-                          <li>
-                            <details>
-                              <summary>Controllers/</summary>
-                              <ul class="tree">
-                                <li class="file">
-                                  HomeController.php
-                                  <span class="tag tag-add">✅ Add 5 new methods</span>
-                                </li>
-                              </ul>
-                            </details>
-                          </li>
-                        </ul>
-                      </details>
-                    </li>
-                  </ul>
-                </details>
-              </li>
-              <li>
-                <details>
-                  <summary>resources/</summary>
-                  <ul class="tree">
-                    <li>
-                      <details>
-                        <summary>views/</summary>
-                        <ul class="tree">
-                          <li>
-                            <details>
-                              <summary>layouts/</summary>
-                              <ul class="tree">
-                                <li>
-                                  <details>
-                                    <summary>partials/</summary>
-                                    <ul class="tree">
-                                      <li class="file">
-                                        header.blade.php
-                                        <span class="tag tag-add">✅ Update user dropdown menu</span>
-                                      </li>
-                                    </ul>
-                                  </details>
-                                </li>
-                              </ul>
-                            </details>
-                          </li>
-                        </ul>
-                      </details>
-                    </li>
-                  </ul>
-                </details>
-              </li>
-            </ul>
-          </details>
-        </li>
-      </ul>
-      <h2>📋 File yang akan dimodifikasi:</h2>
-      <div class="table-wrapper">
-        <table class="file-changes">
-          <thead>
-            <tr>
-              <th>File</th>
-              <th>Apa Yang Diubah</th>
-              <th>Baris Yang Ditambahkan</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td data-label="File">routes/web.php</td>
-              <td data-label="Changes">Tambahkan 5 command routes</td>
-              <td data-label="Lines Added">~8 Baris</td>
-            </tr>
-            <tr>
-              <td data-label="File">
-                app/Http/Controllers/HomeController.php
-              </td>
-              <td data-label="Changes">Tambahkan 5 cache command methods</td>
-              <td data-label="Lines Added">~50 Baris</td>
-            </tr>
-            <tr>
-              <td data-label="File">
-                resources/views/layouts/partials/header.blade.php
-              </td>
-              <td data-label="Changes">
-                Perbarui menu dropdown pengguna dengan perintah admin
-              </td>
-              <td data-label="Lines Added">~100 Baris</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      <section>
+        <h2>📁 Pohon Implementasi Lengkap</h2>
+        <ul class="tree">
+          <li>
+            <details open>
+              <summary>your-laravel-app/</summary>
+              <ul class="tree">
+                <li>
+                  <details>
+                    <summary>routes/</summary>
+                    <ul class="tree">
+                      <li class="file">
+                        web.php
+                        <span class="tag tag-add">✅ Add 5 new command routes</span>
+                      </li>
+                    </ul>
+                  </details>
+                </li>
+                <li>
+                  <details>
+                    <summary>app/</summary>
+                    <ul class="tree">
+                      <li>
+                        <details>
+                          <summary>Http/</summary>
+                          <ul class="tree">
+                            <li>
+                              <details>
+                                <summary>Controllers/</summary>
+                                <ul class="tree">
+                                  <li class="file">
+                                    HomeController.php
+                                    <span class="tag tag-add">✅ Add 5 new methods</span>
+                                  </li>
+                                </ul>
+                              </details>
+                            </li>
+                          </ul>
+                        </details>
+                      </li>
+                    </ul>
+                  </details>
+                </li>
+                <li>
+                  <details>
+                    <summary>resources/</summary>
+                    <ul class="tree">
+                      <li>
+                        <details>
+                          <summary>views/</summary>
+                          <ul class="tree">
+                            <li>
+                              <details>
+                                <summary>layouts/</summary>
+                                <ul class="tree">
+                                  <li>
+                                    <details>
+                                      <summary>partials/</summary>
+                                      <ul class="tree">
+                                        <li class="file">
+                                          header.blade.php
+                                          <span class="tag tag-add">✅ Update user dropdown menu</span>
+                                        </li>
+                                      </ul>
+                                    </details>
+                                  </li>
+                                </ul>
+                              </details>
+                            </li>
+                          </ul>
+                        </details>
+                      </li>
+                    </ul>
+                  </details>
+                </li>
+              </ul>
+            </details>
+          </li>
+        </ul>
+        <h2>📋 File yang akan dimodifikasi:</h2>
+        <div class="table-wrapper">
+          <table class="file-changes">
+            <thead>
+              <tr>
+                <th>File</th>
+                <th>Apa Yang Diubah</th>
+                <th>Baris Yang Ditambahkan</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td data-label="File">routes/web.php</td>
+                <td data-label="Changes">Tambahkan 5 command routes</td>
+                <td data-label="Lines Added">~8 Baris</td>
+              </tr>
+              <tr>
+                <td data-label="File">
+                  app/Http/Controllers/HomeController.php
+                </td>
+                <td data-label="Changes">Tambahkan 5 cache command methods</td>
+                <td data-label="Lines Added">~50 Baris</td>
+              </tr>
+              <tr>
+                <td data-label="File">
+                  resources/views/layouts/partials/header.blade.php
+                </td>
+                <td data-label="Changes">
+                  Perbarui menu dropdown pengguna dengan perintah admin
+                </td>
+                <td data-label="Lines Added">~100 Baris</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
-      <h3>Ringkasan Implementasi:</h3>
-      <ul>
-        <li>3 file dimodifikasi - Tidak ada file baru yang dibutuhkan</li>
-        <li>~158 total baris - Implementasi yang dapat dikelola</li>
-        <li>
-          Nol ketergantungan - Menggunakan fitur Laravel & POS yang sudah ada
-        </li>
-        <li>Keamanan berbasis peran - Hanya untuk akses admin</li>
-      </ul>
-    </section>
+        <h3>Ringkasan Implementasi:</h3>
+        <ul>
+          <li>3 file dimodifikasi - Tidak ada file baru yang dibutuhkan</li>
+          <li>~158 total baris - Implementasi yang dapat dikelola</li>
+          <li>
+            Nol ketergantungan - Menggunakan fitur Laravel & POS yang sudah ada
+          </li>
+          <li>Keamanan berbasis peran - Hanya untuk akses admin</li>
+        </ul>
+      </section>
 
-    <section>
-      <h2>Langkah 1: Perbarui Routes</h2>
-      <p>Tambahkan perintah Route ke file <strong>routes/web.php</strong> Anda:</p>
-      <div class="url-buttons">
-        <button class="view-modal-button" data-url="../tutorial/📚🔧🚀💻/langkah1.txt">
-          routes/web.php
-        </button>
-      </div>
-    </section>
+      <section>
+        <h2>Langkah 1: Perbarui Routes</h2>
+        <p>Tambahkan perintah Route ke file <strong>routes/web.php</strong> Anda:</p>
+        <div class="url-buttons">
+          <button class="view-modal-button" data-url="../tutorial/📚🔧🚀💻/langkah1.txt">
+            routes/web.php
+          </button>
+        </div>
+      </section>
 
-    <section>
-      <h2>Langkah 2: Perbarui HomeController</h2>
-      <p>
-        Tambahkan metode berikut ini ke
-        <strong>app/Http/Controllers/HomeController.php</strong>:
-      </p>
-      <div class="url-buttons">
-        <button class="view-modal-button" data-url="../tutorial/📚🔧🚀💻/langkah2.txt">
-          app/Http/Controllers/HomeController.php
-        </button>
-      </div>
-    </section>
+      <section>
+        <h2>Langkah 2: Perbarui HomeController</h2>
+        <p>
+          Tambahkan metode berikut ini ke
+          <strong>app/Http/Controllers/HomeController.php</strong>:
+        </p>
+        <div class="url-buttons">
+          <button class="view-modal-button" data-url="../tutorial/📚🔧🚀💻/langkah2.txt">
+            app/Http/Controllers/HomeController.php
+          </button>
+        </div>
+      </section>
 
-    <section>
-      <h2>Langkah 3: Perbarui Template Header</h2>
-      <p>
-        Perbarui dropdown profil pengguna yang sudah ada di
-        <strong>resources/views/layouts/partials/header.blade.php</strong> dengan
-        menambahkan perintah Laravel ke elemen <strong>"<"ul">"</strong> yang
-        sudah ada:
-      </p>
-      <div class="url-buttons">
-        <button class="view-modal-button" data-url="../tutorial/📚🔧🚀💻/langkah3.txt">
-          resources/views/layouts/partials/header.blade.php
-        </button>
-      </div>
-    </section>
-    <section>
-      <h2>Penjelasan Perintah</h2>
-      <h3>🚀 Optimalkan: Clear All</h3>
-      <p>Command: php artisan optimize:clear</p>
-      <ul>
-        <li>Tujuan: Menghapus semua konfigurasi, Route, View, dan layanan yang di-cache</li>
-        <li>Kasus Penggunaan: Paling baik untuk penerapan atau ketika terjadi beberapa masalah cache</li>
-        <li>Dampak: Pembersihan cache secara menyeluruh, dapat memperlambat beberapa permintaan pertama untuk sementara
-          waktu</li>
-      </ul>
-      <h3>🛣️ Hapus: Routes</h3>
-      <p>Perintah: php artisan route:clear</p>
-      <ul>
-        <li>Tujuan: Menghapus definisi Route yang di-cache</li>
-        <li>Kasus Penggunaan: Setelah menambahkan/memodifikasi Route atau middleware Route</li>
-        <li>Dampak: Memaksa Laravel untuk mengkompilasi ulang definisi Route</li>
-      </ul>
-      <h3>⚙️ Bersihkan : Config</h3>
-      <p>Perintah: php artisan config:clear</p>
-      <ul>
-        <li>Tujuan: Menghapus cache konfigurasi</li>
-        <li>Kasus Penggunaan: Setelah memodifikasi berkas .env atau berkas konfigurasi</li>
-        <li>Dampak: Konfigurasi akan dibaca ulang dari berkas pada permintaan berikutnya</li>
-      </ul>
-      <h3>👁️ Hapus: View</h3>
-      <p>Perintah: php artisan view:clear</p>
-      <ul>
-        <li>Tujuan: Menghapus cache templat Blade yang telah dikompilasi</li>
-        <li>Kasus Penggunaan: Ketika templat Blade tidak mencerminkan perubahan</li>
-        <li>Dampak: Templat akan dikompilasi ulang pada permintaan berikutnya</li>
-      </ul>
-      <h3>💾 Hapus: Cache</h3>
-      <p>Perintah: php artisan cache:clear</p>
-      <ul>
-        <li>Tujuan: Menghapus cache aplikasi (bukan cache konfigurasi/Route/view)</li>
-        <li>Kasus Penggunaan: Menghapus data cache khusus atau data fasad Cache</li>
-        <li>Dampak: Menghapus data cache khusus aplikasi</li>
-      </ul>
-    </section>
+      <section>
+        <h2>Langkah 3: Perbarui Template Header</h2>
+        <p>
+          Perbarui dropdown profil pengguna yang sudah ada di
+          <strong>resources/views/layouts/partials/header.blade.php</strong> dengan
+          menambahkan perintah Laravel ke elemen <strong>"<"ul">"</strong> yang
+          sudah ada:
+        </p>
+        <div class="url-buttons">
+          <button class="view-modal-button" data-url="../tutorial/📚🔧🚀💻/langkah3.txt">
+            resources/views/layouts/partials/header.blade.php
+          </button>
+        </div>
+      </section>
+      <section>
+        <h2>Penjelasan Perintah</h2>
+        <h3>🚀 Optimalkan: Clear All</h3>
+        <p>Command: php artisan optimize:clear</p>
+        <ul>
+          <li>Tujuan: Menghapus semua konfigurasi, Route, View, dan layanan yang di-cache</li>
+          <li>Kasus Penggunaan: Paling baik untuk penerapan atau ketika terjadi beberapa masalah cache</li>
+          <li>Dampak: Pembersihan cache secara menyeluruh, dapat memperlambat beberapa permintaan pertama untuk
+            sementara
+            waktu</li>
+        </ul>
+        <h3>🛣️ Hapus: Routes</h3>
+        <p>Perintah: php artisan route:clear</p>
+        <ul>
+          <li>Tujuan: Menghapus definisi Route yang di-cache</li>
+          <li>Kasus Penggunaan: Setelah menambahkan/memodifikasi Route atau middleware Route</li>
+          <li>Dampak: Memaksa Laravel untuk mengkompilasi ulang definisi Route</li>
+        </ul>
+        <h3>⚙️ Bersihkan : Config</h3>
+        <p>Perintah: php artisan config:clear</p>
+        <ul>
+          <li>Tujuan: Menghapus cache konfigurasi</li>
+          <li>Kasus Penggunaan: Setelah memodifikasi berkas .env atau berkas konfigurasi</li>
+          <li>Dampak: Konfigurasi akan dibaca ulang dari berkas pada permintaan berikutnya</li>
+        </ul>
+        <h3>👁️ Hapus: View</h3>
+        <p>Perintah: php artisan view:clear</p>
+        <ul>
+          <li>Tujuan: Menghapus cache templat Blade yang telah dikompilasi</li>
+          <li>Kasus Penggunaan: Ketika templat Blade tidak mencerminkan perubahan</li>
+          <li>Dampak: Templat akan dikompilasi ulang pada permintaan berikutnya</li>
+        </ul>
+        <h3>💾 Hapus: Cache</h3>
+        <p>Perintah: php artisan cache:clear</p>
+        <ul>
+          <li>Tujuan: Menghapus cache aplikasi (bukan cache konfigurasi/Route/view)</li>
+          <li>Kasus Penggunaan: Menghapus data cache khusus atau data fasad Cache</li>
+          <li>Dampak: Menghapus data cache khusus aplikasi</li>
+        </ul>
+      </section>
 
-    <section>
-      <h2>Pertimbangan Keamanan</h2>
-      <h3>Akses Berbasis Peran</h3>
-      <ul>
-        <li>Hanya pengguna dengan peran Admin untuk bisnis mereka yang dapat mengakses perintah-perintah ini</li>
-        <li>Semua eksekusi perintah dicatat dengan identifikasi pengguna</li>
-        <li>Dialog konfirmasi mencegah eksekusi yang tidak disengaja</li>
-      </ul>
-      <h3>Menangani Kesalahan</h3>
-      <ul>
-        <li>Blok try-catch mencegah aplikasi macet</li>
-        <li>Pencatatan kesalahan mendetail untuk debugging</li>
-        <li>Pesan kesalahan yang ramah pengguna</li>
-        <li>Pengalihan yang mulus ke eksekusi manual</li>
-      </ul>
-    </section>
-    <section>
-      <h2>Praktik Terbaik</h2>
-      <h3>Kapan Menggunakan Setiap Perintah</h3>
-      <ul>
-        <li>Mulailah dengan Optimize:Clear - Solusi paling komprehensif</li>
-        <li>Gunakan perintah khusus saat Anda mengetahui jenis cache yang menyebabkan masalah</li>
-        <li>Route:Clear setelah modifikasi Route</li>
-        <li>Config:Clear setelah perubahan lingkungan</li>
-        <li>View:Clear saat templat Blade tidak diperbarui</li>
-        <li>Cache:Clear untuk masalah cache data aplikasi</li>
-      </ul>
-      <h3>Pertimbangan Produksi</h3>
-      <ul>
-        <li>Uji perintah di environment staging terlebih dahulu</li>
-        <li>Pantau performa aplikasi setelah pembersihan cache</li>
-        <li>Pertimbangkan untuk menerapkan pembatasan kecepatan untuk Route ini</li>
-        <li>Pembersihan cache secara teratur dapat memengaruhi performa</li>
-      </ul>
-    </section>
-    <section>
-      <h2>Mengatasi masalah</h2>
-      <h3>Perintah tidak berfungsi?</h3>
-      <ul>
-        <li>Periksa izin file pada direktori penyimpanan</li>
-        <li>Verifikasi Artisan dapat dijalankan dari konteks web</li>
-        <li>Periksa log kesalahan untuk mengetahui alasan kegagalan tertentu</li>
-      </ul>
-      <h3>Kesalahan izin ditolak?</h3>
-      <ul>
-        <li>Pastikan server web memiliki akses tulis ke penyimpanan/cache</li>
-        <li>Periksa dokumentasi perizinan Laravel</li>
-      </ul>
-      <h3>Perintah dijalankan tetapi tidak ada efeknya?</h3>
-      <ul>
-        <li>Pastikan driver cache yang benar telah dikonfigurasi</li>
-        <li>Periksa apakah beberapa penyimpanan cache sedang digunakan</li>
-      </ul>
-    </section>
+      <section>
+        <h2>Pertimbangan Keamanan</h2>
+        <h3>Akses Berbasis Peran</h3>
+        <ul>
+          <li>Hanya pengguna dengan peran Admin untuk bisnis mereka yang dapat mengakses perintah-perintah ini</li>
+          <li>Semua eksekusi perintah dicatat dengan identifikasi pengguna</li>
+          <li>Dialog konfirmasi mencegah eksekusi yang tidak disengaja</li>
+        </ul>
+        <h3>Menangani Kesalahan</h3>
+        <ul>
+          <li>Blok try-catch mencegah aplikasi macet</li>
+          <li>Pencatatan kesalahan mendetail untuk debugging</li>
+          <li>Pesan kesalahan yang ramah pengguna</li>
+          <li>Pengalihan yang mulus ke eksekusi manual</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Praktik Terbaik</h2>
+        <h3>Kapan Menggunakan Setiap Perintah</h3>
+        <ul>
+          <li>Mulailah dengan Optimize:Clear - Solusi paling komprehensif</li>
+          <li>Gunakan perintah khusus saat Anda mengetahui jenis cache yang menyebabkan masalah</li>
+          <li>Route:Clear setelah modifikasi Route</li>
+          <li>Config:Clear setelah perubahan lingkungan</li>
+          <li>View:Clear saat templat Blade tidak diperbarui</li>
+          <li>Cache:Clear untuk masalah cache data aplikasi</li>
+        </ul>
+        <h3>Pertimbangan Produksi</h3>
+        <ul>
+          <li>Uji perintah di environment staging terlebih dahulu</li>
+          <li>Pantau performa aplikasi setelah pembersihan cache</li>
+          <li>Pertimbangkan untuk menerapkan pembatasan kecepatan untuk Route ini</li>
+          <li>Pembersihan cache secara teratur dapat memengaruhi performa</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Mengatasi masalah</h2>
+        <h3>Perintah tidak berfungsi?</h3>
+        <ul>
+          <li>Periksa izin file pada direktori penyimpanan</li>
+          <li>Verifikasi Artisan dapat dijalankan dari konteks web</li>
+          <li>Periksa log kesalahan untuk mengetahui alasan kegagalan tertentu</li>
+        </ul>
+        <h3>Kesalahan izin ditolak?</h3>
+        <ul>
+          <li>Pastikan server web memiliki akses tulis ke penyimpanan/cache</li>
+          <li>Periksa dokumentasi perizinan Laravel</li>
+        </ul>
+        <h3>Perintah dijalankan tetapi tidak ada efeknya?</h3>
+        <ul>
+          <li>Pastikan driver cache yang benar telah dikonfigurasi</li>
+          <li>Periksa apakah beberapa penyimpanan cache sedang digunakan</li>
+        </ul>
+      </section>
 
-    <section>
-      <h2>Penyempurnaan Tambahan</h2>
-      <h3>Perbaikan di Masa Mendatang</h3>
-      <ul>
-        <li>Tambahkan perintah restart antrian untuk pekerjaan latar belakang</li>
-        <li>Menerapkan pemanasan cache setelah dihapus</li>
-        <li>Menambahkan pemeriksaan kesehatan sistem</li>
-        <li>Membuat jadwal manajemen cache otomatis</li>
-      </ul>
-      <h3>Pemantauan Kinerja</h3>
-      <ul>
-        <li>Lacak frekuensi eksekusi perintah</li>
-        <li>Pantau waktu respons aplikasi setelah penghapusan cache</li>
-        <li>Log rasio hit/miss cache</li>
-      </ul>
-    </section>
-    <section>
-      <h2>Kesimpulan</h2>
-      <p>Implementasi ini menyediakan alat administrasi yang kuat yang dapat diakses langsung dari header aplikasi Anda.
-        Alat ini menggabungkan kenyamanan dengan keamanan melalui penanganan kesalahan yang tepat, pencatatan, dan
-        dialog konfirmasi pengguna.</p>
-      <p>Ingatlah untuk menguji secara menyeluruh di lingkungan pengembangan Anda sebelum menerapkannya ke produksi, dan
-        selalu pantau kinerja aplikasi Anda setelah menerapkan alat manajemen cache.</p>
-    </section>
+      <section>
+        <h2>Penyempurnaan Tambahan</h2>
+        <h3>Perbaikan di Masa Mendatang</h3>
+        <ul>
+          <li>Tambahkan perintah restart antrian untuk pekerjaan latar belakang</li>
+          <li>Menerapkan pemanasan cache setelah dihapus</li>
+          <li>Menambahkan pemeriksaan kesehatan sistem</li>
+          <li>Membuat jadwal manajemen cache otomatis</li>
+        </ul>
+        <h3>Pemantauan Kinerja</h3>
+        <ul>
+          <li>Lacak frekuensi eksekusi perintah</li>
+          <li>Pantau waktu respons aplikasi setelah penghapusan cache</li>
+          <li>Log rasio hit/miss cache</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Kesimpulan</h2>
+        <p>Implementasi ini menyediakan alat administrasi yang kuat yang dapat diakses langsung dari header aplikasi
+          Anda.
+          Alat ini menggabungkan kenyamanan dengan keamanan melalui penanganan kesalahan yang tepat, pencatatan, dan
+          dialog konfirmasi pengguna.</p>
+        <p>Ingatlah untuk menguji secara menyeluruh di lingkungan pengembangan Anda sebelum menerapkannya ke produksi,
+          dan
+          selalu pantau kinerja aplikasi Anda setelah menerapkan alat manajemen cache.</p>
+      </section>
 
-    <footer>
-      <!-- HOME -->
-      <div class="home-button-wrapper">
-        <a href="../main.html" class="home-button">🏠 Kembali ke Beranda</a>
-      </div>
-    </footer>
+      <footer>
+        <!-- HOME -->
+        <div class="home-button-wrapper">
+          <a href="../main.html" class="home-button">🏠 Kembali ke Beranda</a>
+        </div>
+      </footer>
+    </div>
   </div>
   <div id="myModal" class="modal">
     <div class="modal-content">
@@ -391,9 +415,26 @@
       <path stroke-linecap="round" stroke-width="2" d="M6 15l6-6 6 6" />
     </svg>
   </button>
+  <div id="completionModal" class="completion-modal">
+    <div class="completion-modal-content">
+      <span class="completion-close" title="Tutup">&times;</span>
+      <h3>🎉 Selamat, kamu telah menyelesaikan tutorialnya!</h3>
+      <p>Apakah kamu ingin mengunduh file yang telah jadi?</p>
+      <div class="completion-button-group">
+        <a id="completion-download-btn" data-id="file_8" class="completion-btn completion-yes-btn">
+          ✅ Ya
+        </a>
+        <button id="completion-no-btn" class="completion-btn completion-no-btn">
+          ❌ Tidak
+        </button>
+      </div>
+    </div>
+  </div>
   <script src="../js/scripts.js"></script>
   <script src="../js/sidebar.js"></script>
   <script src="../js/bubble.js"></script>
+  <script src="../js/complete.js"></script>
+
   <!-- Link ke file JavaScript -->
 </body>
 

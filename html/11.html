@@ -11,27 +11,47 @@
   <link rel="stylesheet" href="../css/modal.css" />
   <link rel="stylesheet" href="../css/sidebar.css" />
   <link rel="stylesheet" href="../css/bubble.css" />
+  <link rel="stylesheet" href="../css/complete.css" />
+
+
 </head>
 
 <body>
-  <div class="container">
-    <header>
-      <h1>Menangani Pengembalian Produk Tanpa Nomor Faktur</h1>
-      <h1>📦🔄🧾❌</h1>
-      <h5>
-        Proses atau kebijakan yang digunakan oleh sebuah perusahaan untuk
-        menerima dan memproses pengembalian barang dari pelanggan meskipun
-        pelanggan tersebut tidak dapat menunjukkan bukti pembelian berupa
-        nomor faktur atau struk.
-      </h5>
-    </header>
-
-    <!-- HOME -->
-    <div class="home-button-wrapper">
-      <a href="../main.html" class="home-button">🏠 Kembali ke Beranda</a>
+  <!-- Modal Password -->
+  <div id="passwordModal" class="completion-modal">
+    <div class="completion-modal-content">
+      <span class="completion-close" id="closePasswordModal">&times;</span>
+      <h3>🔐 Masukkan Password</h3>
+      <input type="password" id="tutorialPassword" placeholder="Password..." class="completion-input" />
+      <div class="completion-button-group">
+        <button id="submitPassword" class="completion-btn completion-yes-btn">
+          Akses
+        </button>
+      </div>
+      <p id="passwordError" style="display: none; color: #dc3545; margin-top: 1rem">
+        ❌ Password salah!
+      </p>
     </div>
+  </div>
+  <div class="blur-wrapper">
+    <div class="container">
+      <header>
+        <h1>Menangani Pengembalian Produk Tanpa Nomor Faktur</h1>
+        <h1>📦🔄🧾❌</h1>
+        <h5>
+          Proses atau kebijakan yang digunakan oleh sebuah perusahaan untuk
+          menerima dan memproses pengembalian barang dari pelanggan meskipun
+          pelanggan tersebut tidak dapat menunjukkan bukti pembelian berupa
+          nomor faktur atau struk.
+        </h5>
+      </header>
 
-    <div class="toc-dropdown-wrapper">
+      <!-- HOME -->
+      <div class="home-button-wrapper">
+        <a href="../main.html" class="home-button">🏠 Kembali ke Beranda</a>
+      </div>
+
+      <div class="toc-dropdown-wrapper">
         <label for="toc-dropdown" class="toc-icon">
           <strong>Daftar Isi</strong>
         </label>
@@ -40,149 +60,150 @@
         </select>
       </div>
 
-    <section>
-      <h2>🖼️ Ikhtisar</h2>
-      <p>
-        Panduan ini menjelaskan cara mengaktifkan pengembalian produk di POS
-        ketika pelanggan tidak memiliki nomor faktur pembelian mereka. Solusi
-        yang digunakan adalah dengan mengizinkan jumlah negatif dalam
-        transaksi POS.
-      </p>
+      <section>
+        <h2>🖼️ Ikhtisar</h2>
+        <p>
+          Panduan ini menjelaskan cara mengaktifkan pengembalian produk di POS
+          ketika pelanggan tidak memiliki nomor faktur pembelian mereka. Solusi
+          yang digunakan adalah dengan mengizinkan jumlah negatif dalam
+          transaksi POS.
+        </p>
 
-      <h3>Prasyarat:</h3>
-      <p>Untuk mengikuti panduan ini, Anda harus memiliki:</p>
-      <ul>
-        <li>Akses administratif ke file-file sistem POS</li>
-        <li>
-          Pengetahuan dasar tentang cara mengedit file (misalnya file
-          konfigurasi atau skrip)
-        </li>
-        <li>
-          Pemahaman tentang izin peran (role permissions) dalam POS, agar bisa
-          menyesuaikan hak akses pengguna terkait fitur pengembalian produk
-        </li>
-      </ul>
-    </section>
-    <section>
-      <h2>Langkah 1: Ubah Kolom Input Kuantitas</h2>
-      <p>
-        Buka dan edit file template baris produk untuk transaksi POS pada POS:
-      </p>
-      <strong>resources/views/sale_pos/product_row.blade.php</strong>
-      <h3>Temukan Bidang Input</h3>
-      <p>
-        Temukan bidang input kuantitas yang berisi atribut
-        <strong>data-min="1"</strong>:
-      </p>
-      <div class="url-buttons">
-        <button class="view-modal-button" data-url="../tutorial/📦🔄🧾❌/langkah1_1.txt">
-          resources/views/sale_pos/product_row.blade.php
-        </button>
-      </div>
-      <h3>Hapus Batasan Minimum</h3>
-      <p>Hapus atribut <strong>data-min="1"</strong> dari bidang input:</p>
-      <div class="url-buttons">
-        <button class="view-modal-button" data-url="../tutorial/📦🔄🧾❌/langkah1_2.txt">
-          resources/views/sale_pos/product_row.blade.php
-        </button>
-      </div>
-      <p>
-        <strong>TIP!!!</strong>Perubahan ini memungkinkan pengguna untuk
-        memasukkan nilai negatif di bidang kuantitas, yang sangat penting
-        untuk memproses pengembalian.
-      </p>
-    </section>
+        <h3>Prasyarat:</h3>
+        <p>Untuk mengikuti panduan ini, Anda harus memiliki:</p>
+        <ul>
+          <li>Akses administratif ke file-file sistem POS</li>
+          <li>
+            Pengetahuan dasar tentang cara mengedit file (misalnya file
+            konfigurasi atau skrip)
+          </li>
+          <li>
+            Pemahaman tentang izin peran (role permissions) dalam POS, agar bisa
+            menyesuaikan hak akses pengguna terkait fitur pengembalian produk
+          </li>
+        </ul>
+      </section>
+      <section>
+        <h2>Langkah 1: Ubah Kolom Input Kuantitas</h2>
+        <p>
+          Buka dan edit file template baris produk untuk transaksi POS pada POS:
+        </p>
+        <strong>resources/views/sale_pos/product_row.blade.php</strong>
+        <h3>Temukan Bidang Input</h3>
+        <p>
+          Temukan bidang input kuantitas yang berisi atribut
+          <strong>data-min="1"</strong>:
+        </p>
+        <div class="url-buttons">
+          <button class="view-modal-button" data-url="../tutorial/📦🔄🧾❌/langkah1_1.txt">
+            resources/views/sale_pos/product_row.blade.php
+          </button>
+        </div>
+        <h3>Hapus Batasan Minimum</h3>
+        <p>Hapus atribut <strong>data-min="1"</strong> dari bidang input:</p>
+        <div class="url-buttons">
+          <button class="view-modal-button" data-url="../tutorial/📦🔄🧾❌/langkah1_2.txt">
+            resources/views/sale_pos/product_row.blade.php
+          </button>
+        </div>
+        <p>
+          <strong>TIP!!!</strong>Perubahan ini memungkinkan pengguna untuk
+          memasukkan nilai negatif di bidang kuantitas, yang sangat penting
+          untuk memproses pengembalian.
+        </p>
+      </section>
 
-    <section>
-      <h2>Langkah 2: Menyiapkan Izin Peran</h2>
-      <p>
-        Buat izin peran yang sesuai untuk mengontrol siapa yang dapat
-        memproses pengembalian dengan jumlah negatif.
-      </p>
-      <p>
-        <strong>Catatan Keamanan</strong>Tidak semua anggota staf harus
-        memiliki izin untuk membuat transaksi dengan jumlah negatif. Tetapkan
-        batasan peran yang tepat untuk mencegah penyalahgunaan.
-      </p>
-    </section>
-    <section>
-      <h2>Langkah 3: Memproses Pengembalian</h2>
-      <p>
-        Setelah modifikasi kode selesai, ikuti langkah-langkah berikut untuk
-        memproses pengembalian:
-      </p>
-      <p>Membuat transaksi/penjualan baru</p>
-      <ul>
-        <li>Buka antarmuka POS</li>
-        <li>Memulai transaksi baru</li>
-      </ul>
-      <p>Menambahkan produk yang dikembalikan</p>
-      <ul>
-        <li>Cari dan tambahkan produk yang dikembalikan</li>
-        <li>Gunakan pemindaian barcode jika tersedia</li>
-      </ul>
-      <p>Masukkan jumlah negatif</p>
-      <ul>
-        <li>Untuk setiap item yang dikembalikan, masukkan jumlah negatif</li>
-        <li>
-          Contoh: -1 untuk mengembalikan 1 item, -2 untuk mengembalikan 2 item
-        </li>
-      </ul>
-      <p>Selesaikan transaksi</p>
-      <ul>
-        <li>Proses transaksi seperti biasa</li>
-        <li>Sistem akan secara otomatis mengurangi barang dari inventaris</li>
-      </ul>
-    </section>
-    <section>
-      <h2>Manfaat</h2>
-      <ul>
-        <li>
-          <strong>Tidak perlu faktur</strong>: Memproses pengembalian tanpa
-          memerlukan tanda terima asli
-        </li>
-        <li>
-          <strong>Penyesuaian inventaris otomatis</strong>: Jumlah negatif
-          dengan tepat memperbarui tingkat stok
-        </li>
-        <li>
-          <strong>Jejak audit</strong>: Semua transaksi pengembalian dicatat
-          dalam sistem
-        </li>
-        <li>
-          <strong>Pemrosesan yang fleksibel</strong>: Menangani berbagai
-          skenario pengembalian barang
-        </li>
-      </ul>
-      <p>
-        <strong>Penomoran Faktur</strong>Setiap transaksi retur akan menambah
-        urutan penomoran faktur. Ini berarti bahwa pemrosesan pengembalian
-        akan menggunakan nomor faktur seperti halnya transaksi penjualan
-        biasa.
-      </p>
-    </section>
+      <section>
+        <h2>Langkah 2: Menyiapkan Izin Peran</h2>
+        <p>
+          Buat izin peran yang sesuai untuk mengontrol siapa yang dapat
+          memproses pengembalian dengan jumlah negatif.
+        </p>
+        <p>
+          <strong>Catatan Keamanan</strong>Tidak semua anggota staf harus
+          memiliki izin untuk membuat transaksi dengan jumlah negatif. Tetapkan
+          batasan peran yang tepat untuk mencegah penyalahgunaan.
+        </p>
+      </section>
+      <section>
+        <h2>Langkah 3: Memproses Pengembalian</h2>
+        <p>
+          Setelah modifikasi kode selesai, ikuti langkah-langkah berikut untuk
+          memproses pengembalian:
+        </p>
+        <p>Membuat transaksi/penjualan baru</p>
+        <ul>
+          <li>Buka antarmuka POS</li>
+          <li>Memulai transaksi baru</li>
+        </ul>
+        <p>Menambahkan produk yang dikembalikan</p>
+        <ul>
+          <li>Cari dan tambahkan produk yang dikembalikan</li>
+          <li>Gunakan pemindaian barcode jika tersedia</li>
+        </ul>
+        <p>Masukkan jumlah negatif</p>
+        <ul>
+          <li>Untuk setiap item yang dikembalikan, masukkan jumlah negatif</li>
+          <li>
+            Contoh: -1 untuk mengembalikan 1 item, -2 untuk mengembalikan 2 item
+          </li>
+        </ul>
+        <p>Selesaikan transaksi</p>
+        <ul>
+          <li>Proses transaksi seperti biasa</li>
+          <li>Sistem akan secara otomatis mengurangi barang dari inventaris</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Manfaat</h2>
+        <ul>
+          <li>
+            <strong>Tidak perlu faktur</strong>: Memproses pengembalian tanpa
+            memerlukan tanda terima asli
+          </li>
+          <li>
+            <strong>Penyesuaian inventaris otomatis</strong>: Jumlah negatif
+            dengan tepat memperbarui tingkat stok
+          </li>
+          <li>
+            <strong>Jejak audit</strong>: Semua transaksi pengembalian dicatat
+            dalam sistem
+          </li>
+          <li>
+            <strong>Pemrosesan yang fleksibel</strong>: Menangani berbagai
+            skenario pengembalian barang
+          </li>
+        </ul>
+        <p>
+          <strong>Penomoran Faktur</strong>Setiap transaksi retur akan menambah
+          urutan penomoran faktur. Ini berarti bahwa pemrosesan pengembalian
+          akan menggunakan nomor faktur seperti halnya transaksi penjualan
+          biasa.
+        </p>
+      </section>
 
-    <section>
-      <h2>Perhatian Penting</h2>
-      <ul>
-        <li>Cadangkan file Anda sebelum melakukan modifikasi apa pun</li>
-        <li>
-          Uji secara menyeluruh di lingkungan pengembangan terlebih dahulu
-        </li>
-        <li>Latih staf tentang proses pengembalian yang baru</li>
-        <li>
-          Pantau transaksi pengembalian untuk aktivitas yang tidak biasa
-        </li>
-        <li>Tinjau izin peran secara teratur</li>
-      </ul>
-    </section>
+      <section>
+        <h2>Perhatian Penting</h2>
+        <ul>
+          <li>Cadangkan file Anda sebelum melakukan modifikasi apa pun</li>
+          <li>
+            Uji secara menyeluruh di lingkungan pengembangan terlebih dahulu
+          </li>
+          <li>Latih staf tentang proses pengembalian yang baru</li>
+          <li>
+            Pantau transaksi pengembalian untuk aktivitas yang tidak biasa
+          </li>
+          <li>Tinjau izin peran secara teratur</li>
+        </ul>
+      </section>
 
-    <footer>
-      <!-- HOME -->
-      <div class="home-button-wrapper">
-        <a href="../main.html" class="home-button">🏠 Kembali ke Beranda</a>
-      </div>
-    </footer>
+      <footer>
+        <!-- HOME -->
+        <div class="home-button-wrapper">
+          <a href="../main.html" class="home-button">🏠 Kembali ke Beranda</a>
+        </div>
+      </footer>
+    </div>
   </div>
   <div id="myModal" class="modal">
     <div class="modal-content">
@@ -195,9 +216,26 @@
       <path stroke-linecap="round" stroke-width="2" d="M6 15l6-6 6 6" />
     </svg>
   </button>
+  <div id="completionModal" class="completion-modal">
+    <div class="completion-modal-content">
+      <span class="completion-close" title="Tutup">&times;</span>
+      <h3>🎉 Selamat, kamu telah menyelesaikan tutorialnya!</h3>
+      <p>Apakah kamu ingin mengunduh file yang telah jadi?</p>
+      <div class="completion-button-group">
+        <a id="completion-download-btn" data-id="file_11" class="completion-btn completion-yes-btn">
+          ✅ Ya
+        </a>
+        <button id="completion-no-btn" class="completion-btn completion-no-btn">
+          ❌ Tidak
+        </button>
+      </div>
+    </div>
+  </div>
   <script src="../js/scripts.js"></script>
   <script src="../js/sidebar.js"></script>
   <script src="../js/bubble.js"></script>
+  <script src="../js/complete.js"></script>
+
   <!-- Link ke file JavaScript -->
 </body>
 

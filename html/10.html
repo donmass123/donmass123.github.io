@@ -12,35 +12,55 @@
   <link rel="stylesheet" href="../css/modal.css" />
   <link rel="stylesheet" href="../css/sidebar.css" />
   <link rel="stylesheet" href="../css/bubble.css" />
+  <link rel="stylesheet" href="../css/complete.css" />
+
+
 </head>
 
 <body>
-  <div class="container">
-    <header>
-      <h1>Panduan Implementasi Sistem Tukar/Exchange Barang di POS</h1>
-      <h1>📝🔄🛒</h1>
-      <h5>
-        Panduan lengkap ini akan memandu Anda melalui proses implementasi
-        sistem Tukar/Exchange barang di POS menggunakan Laravel. Sistem ini
-        memungkinkan pelanggan untuk mengembalikan barang dan menukarnya
-        dengan produk baru, dengan pengelolaan inventaris yang tepat serta
-        penanganan pembayaran yang baik.
-      </h5>
-
-    </header>
-
-    <div class="download-box">
-      <a href="https://drive.google.com/drive/folders/1Z4tG3FMdMa3oZ3Nk9oqAp8ydWOlFcDS8?usp=drive_link" download
-        class="download-button">
-        ⬇️ Unduh File Contoh
-      </a>
+  <!-- Modal Password -->
+  <div id="passwordModal" class="completion-modal">
+    <div class="completion-modal-content">
+      <span class="completion-close" id="closePasswordModal">&times;</span>
+      <h3>🔐 Masukkan Password</h3>
+      <input type="password" id="tutorialPassword" placeholder="Password..." class="completion-input" />
+      <div class="completion-button-group">
+        <button id="submitPassword" class="completion-btn completion-yes-btn">
+          Akses
+        </button>
+      </div>
+      <p id="passwordError" style="display: none; color: #dc3545; margin-top: 1rem">
+        ❌ Password salah!
+      </p>
     </div>
-    <!-- HOME -->
-    <div class="home-button-wrapper">
-      <a href="../main.html" class="home-button">🏠 Kembali ke Beranda</a>
-    </div>
+  </div>
+  <div class="blur-wrapper">
+    <div class="container">
+      <header>
+        <h1>Panduan Implementasi Sistem Tukar/Exchange Barang di POS</h1>
+        <h1>📝🔄🛒</h1>
+        <h5>
+          Panduan lengkap ini akan memandu Anda melalui proses implementasi
+          sistem Tukar/Exchange barang di POS menggunakan Laravel. Sistem ini
+          memungkinkan pelanggan untuk mengembalikan barang dan menukarnya
+          dengan produk baru, dengan pengelolaan inventaris yang tepat serta
+          penanganan pembayaran yang baik.
+        </h5>
 
-    <div class="toc-dropdown-wrapper">
+      </header>
+
+      <div class="download-box">
+        <a href="https://drive.google.com/drive/folders/1Z4tG3FMdMa3oZ3Nk9oqAp8ydWOlFcDS8?usp=drive_link" download
+          class="download-button">
+          ⬇️ Unduh File Contoh
+        </a>
+      </div>
+      <!-- HOME -->
+      <div class="home-button-wrapper">
+        <a href="../main.html" class="home-button">🏠 Kembali ke Beranda</a>
+      </div>
+
+      <div class="toc-dropdown-wrapper">
         <label for="toc-dropdown" class="toc-icon">
           <strong>Daftar Isi</strong>
         </label>
@@ -49,543 +69,546 @@
         </select>
       </div>
 
-    <section>
-      <h2>Pohon Implementasi Sistem Tukar/Exchange Barang di POS</h2>
-      <ul class="tree">
-        <li>
-          <details open>
-            <summary>Implementasi Sistem Exchange</summary>
+      <section>
+        <h2>Pohon Implementasi Sistem Tukar/Exchange Barang di POS</h2>
+        <ul class="tree">
+          <li>
+            <details open>
+              <summary>Implementasi Sistem Exchange</summary>
+              <ul>
+                <li>
+                  <details>
+                    <summary>Database Layer</summary>
+                    <ul>
+                      <li>
+                        <details>
+                          <summary>🗃️ Migrations</summary>
+                          <ul>
+                            <li class="file">
+                              create_transaction_exchanges_table.php
+                            </li>
+                            <li class="file">
+                              create_transaction_exchange_lines_table.php
+                            </li>
+                            <li class="file">
+                              add_exchange_columns_to_transactions_table.php
+                            </li>
+                            <li class="file">
+                              add_exchange_columns_to_transaction_sell_lines_table.php
+                            </li>
+                            <li class="file">
+                              add_exchange_amount_tracking_columns.php
+                            </li>
+                            <li class="file">
+                              add_column_cancel_to_transaction_exchange_table.php
+                            </li>
+                          </ul>
+                        </details>
+                      </li>
+                      <li>
+                        <details>
+                          <summary>🏗️ Models</summary>
+                          <ul>
+                            <li class="file">TransactionExchange.php</li>
+                            <li class="file">TransactionExchangeLine.php</li>
+                          </ul>
+                        </details>
+                      </li>
+                    </ul>
+                  </details>
+                </li>
+                <li>
+                  <details>
+                    <summary>Application Layer</summary>
+                    <ul>
+                      <li>
+                        <details>
+                          <summary>🎮 Controller</summary>
+                          <ul>
+                            <li class="file">ExchangeController.php</li>
+                          </ul>
+                        </details>
+                      </li>
+                      <li>
+                        <details>
+                          <summary>🛡️ Middleware</summary>
+                          <ul>
+                            <li class="file">
+                              AdminSidebarMenu.php (modification)
+                            </li>
+                          </ul>
+                        </details>
+                      </li>
+                    </ul>
+                  </details>
+                </li>
+                <li>
+                  <details>
+                    <summary>Presentation Layer</summary>
+                    <ul>
+                      <li>
+                        <details>
+                          <summary>🖼️ Views</summary>
+                          <ul>
+                            <li class="file">index.blade.php</li>
+                            <li class="file">create.blade.php</li>
+                            <li class="file">show.blade.php</li>
+                            <li class="file">receipt.blade.php</li>
+                          </ul>
+                        </details>
+                      </li>
+                      <li>
+                        <details>
+                          <summary>🎨 Assets</summary>
+                          <ul>
+                            <li class="file">CSS styling (integrated)</li>
+                            <li class="file">
+                              JavaScript functionality (integrated)
+                            </li>
+                          </ul>
+                        </details>
+                      </li>
+                    </ul>
+                  </details>
+                </li>
+                <li>
+                  <details>
+                    <summary>Routing Layer</summary>
+                    <ul>
+                      <li>
+                        <details>
+                          <summary>🚏 Routes</summary>
+                          <ul>
+                            <li class="file">web.php (exchange routes)</li>
+                          </ul>
+                        </details>
+                      </li>
+                    </ul>
+                  </details>
+                </li>
+                <li>
+                  <details>
+                    <summary>Fitur-fitur</summary>
+                    <ul>
+                      <li class="file">
+                        <span class="tag-add">✅ Proses Exchange multi-langkah</span>
+                      </li>
+                      <li class="file">
+                        <span class="tag-add">📦 Manajemen Inventaris</span>
+                      </li>
+                      <li class="file">
+                        <span class="tag-add">💰 Pengolahan Pembayaran</span>
+                      </li>
+                      <li class="file">
+                        <span class="tag-add">🧾 Pembuatan Struk</span>
+                      </li>
+                      <li class="file">
+                        <span class="tag-add">📊 Pelacakan Exchange</span>
+                      </li>
+                      <li class="file">
+                        <span class="tag-add">🚫 Pembatalan Penukaran</span>
+                      </li>
+                    </ul>
+                  </details>
+                </li>
+              </ul>
+            </details>
+          </li>
+        </ul>
+        <h2>📦 Unduh File Starter</h2>
+        <a href="https://drive.google.com/file/d/1ei4K4sby-rZa2_G9RLU8ER312Vukoh0w/view?usp=drive_link" download
+          class="section-download">⬇️ Unduh</a>
+      </section>
+
+      <section>
+        <h2>Screenshots</h2>
+        <p>
+          Berikut adalah tangkapan layar dari sistem Tukar/Exchange yang telah
+          diterapkan:
+        </p>
+        <h3>Halaman Daftar Tukar/Exchange</h3>
+        <div class="image-box">
+          <img src="https://ultimate-pos-tutorials.vercel.app/assets/images/1-8d9518c521e3fe6b5bc263543ce9a9a7.jpg"
+            alt="#" />
+          <p class="caption">Gambar: Halaman Daftar Tukar/Exchange</p>
+        </div>
+        <p>
+          Halaman Utama Manajemen Tukar/Exchange dengan Filter dan Tabel Data
+          Komprehensif yang Menampilkan Semua Transaksi Tukar/Exchange
+        </p>
+        <h3>Modal Detail Tukar/Exchange</h3>
+        <div class="image-box">
+          <img src="https://ultimate-pos-tutorials.vercel.app/assets/images/3-f4fa1156e4fc069f06aed8240dcda04f.png"
+            alt="#" />
+          <p class="caption">Gambar: Modal Detail Tukar/Exchange</p>
+        </div>
+        <p>
+          View Detail Transaksi Tukar/Exchange yang Menampilkan Semua Item, Jumlah,
+          dan Informasi Transaksi
+        </p>
+        <h3>Pembayaran & Penyelesaian</h3>
+        <div class="image-box">
+          <img src="https://ultimate-pos-tutorials.vercel.app/assets/images/3-f4fa1156e4fc069f06aed8240dcda04f.png"
+            alt="#" />
+          <p class="caption">Gambar: Pembayaran & Penyelesaian</p>
+        </div>
+        <p>
+          Langkah Terakhir Menampilkan Detail Pembayaran dan Ringkasan Sebelum
+          Menyelesaikan Tukar/Exchange
+        </p>
+        <h3>Dialog Sukses</h3>
+        <div class="image-box">
+          <img src="https://ultimate-pos-tutorials.vercel.app/assets/images/9-eaab4da6537d6f50757a379744f49824.png"
+            alt="#" />
+          <p class="caption">Gambar: Dialog Sukses</p>
+        </div>
+        <p>
+          Konfirmasi Sukses dengan Opsi untuk Mencetak Faktur Setelah
+          Menyelesaikan Tukar/Exchange
+        </p>
+        <h3>Ikhtisar Sistem</h3>
+        <p>Sistem Tukar/Exchange Barang menyediakan fitur-fitur utama berikut:</p>
+        <ul>
+          <li>
+            <strong>Proses Tukar/Exchange Multi-langkah:</strong> Proses bertahap 4
+            langkah untuk membuat Tukar/Exchange barang
+          </li>
+          <li>
+            <strong>Manajemen Inventaris:</strong> Penyesuaian stok otomatis
+            untuk barang yang dikembalikan dan baru
+          </li>
+          <li>
+            <strong>Proses Pembayaran:</strong> Menangani perbedaan pembayaran
+            (pelanggan membayar atau menerima pengembalian dana)
+          </li>
+          <li>
+            <strong>Pelacakan Tukar/Exchange Barang:</strong> Jejak audit lengkap dari
+            semua transaksi Tukar/Exchange
+          </li>
+          <li>
+            <strong>Pembuatan Bukti Transaksi:</strong> Bukti transaksi Tukar/Exchange
+            barang yang profesional
+          </li>
+          <li>
+            <strong>Dukungan Pembatalan:</strong> Kemampuan untuk membatalkan
+            Tukar/Exchange barang dengan pembalikan stok
+          </li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Langkah 1: Pengaturan Database</h2>
+        <h3>1.1 Membuat File Migrasi</h3>
+        <p>
+          Buat file migrasi berikut di direktori
+          <strong>database/migrations</strong> Anda:
+        </p>
+
+        <h4>Migrasi 1: Tabel Transaksi Tukar/Exchange</h4>
+        <p>
+          Buat file
+          <strong>2025_05_23_001710_create_transaction_exchanges_table.php</strong>:
+        </p>
+        <div class="url-buttons">
+          <button class="view-modal-button" data-url="../tutorial/📝🔄🛒/migration1.txt">
+            2025_05_23_001710_create_transaction_exchanges_table.php
+          </button>
+        </div>
+        <h4>Migrasi 2: Tabel Garis Transaksi Tukar/Exchange</h4>
+        <p>
+          Buat file
+          <strong>2025_05_23_001814_create_transaction_exchange_lines_table.php</strong>:
+        </p>
+        <div class="url-buttons">
+          <button class="view-modal-button" data-url="../tutorial/📝🔄🛒/migration2.txt">
+            2025_05_23_001814_create_transaction_exchange_lines_table.php
+          </button>
+        </div>
+        <h4>Migrasi 3: Menambahkan Kolom Tukar/Exchange pada Tabel Transaksi</h4>
+        <p>
+          Buat file
+          <strong>2025_05_23_001851_add_exchange_columns_to_transactions_table.php</strong>:
+        </p>
+        <div class="url-buttons">
+          <button class="view-modal-button" data-url="../tutorial/📝🔄🛒/migration3.txt">
+            2025_05_23_001851_add_exchange_columns_to_transactions_table.php
+          </button>
+        </div>
+        <h4>
+          Migrasi 4: Menambahkan Kolom Tukar/Exchange pada Tabel Garis Transaksi
+          Penjualan
+        </h4>
+        <p>
+          Buat file
+          <strong>2025_05_23_001926_add_exchange_columns_to_transaction_sell_lines_table.php</strong>:
+        </p>
+        <div class="url-buttons">
+          <button class="view-modal-button" data-url="../tutorial/📝🔄🛒/migration4.txt">
+            2025_05_23_001926_add_exchange_columns_to_transaction_sell_lines_table.php
+          </button>
+        </div>
+        <h4>Migrasi 5: Menambahkan Kolom Pelacakan Jumlah Tukar/Exchange</h4>
+        <p>
+          Buat file
+          <strong>2025_05_23_012705_add_exchange_amount_tracking_columns.php</code>:
+        </p>
+        <div class="url-buttons">
+          <button class="view-modal-button" data-url="../tutorial/📝🔄🛒/migration5.txt">
+            2025_05_23_012705_add_exchange_amount_tracking_columns.php
+          </button>
+        </div>
+        <h4>Migrasi 6: Menambahkan Kolom Pembatalan</h4>
+        <p>
+          Buat file
+          <strong>2025_05_23_183050_add_column_cancel_to_transaction_exchange_table.php</strong>:
+        </p>
+        <div class="url-buttons">
+          <button class="view-modal-button" data-url="../tutorial/📝🔄🛒/migration6.txt">
+            2025_05_23_183050_add_column_cancel_to_transaction_exchange_table.php
+          </button>
+        </div>
+        <h2>1.2 Menjalankan Migrasi</h2>
+        <p>
+          Setelah membuat semua file migrasi, jalankan migrasi dengan perintah:
+        </p>
+        <strong>php artisan migrate</strong>
+      </section>
+
+      <section>
+        <h2>Langkah 2: Membuat Kelas Model</h2>
+        <h3>2.1 Model TransactionExchange</h3>
+        <p>
+          Buat model utama untuk Tukar/Exchange barang di
+          <strong>app/TransactionExchange.php</strong>:
+        </p>
+        <div class="url-buttons">
+          <button class="view-modal-button" data-url="../tutorial/📝🔄🛒/langkah2_1.txt">
+            app/TransactionExchange.php
+          </button>
+        </div>
+        <h3>2.2 Model TransactionExchangeLine</h3>
+        <p>
+          Buat model untuk garis transaksi Tukar/Exchange di
+          <strong>app/TransactionExchangeLine.php</strong>:
+        </p>
+        <div class="url-buttons">
+          <button class="view-modal-button" data-url="../tutorial/📝🔄🛒/langkah2_2.txt">
+            app/TransactionExchangeLine.php
+          </button>
+        </div>
+      </section>
+
+      <section>
+        <h3>Langkah 3: Buat Controllers Exchange</h3>
+        <p>
+          Buat Controllers di
+          <strong>app/Http/Controllers/ExchangeController.php</strong>:
+        </p>
+        <div class="url-buttons">
+          <button class="view-modal-button" data-url="../tutorial/📝🔄🛒/langkah3.txt">
+            app/Http/Controllers/ExchangeController.php
+          </button>
+        </div>
+      </section>
+
+      <section>
+        <h2>Langkah 4: Tambahkan Route</h2>
+        <p>Tambahkan route berikut ini ke file <strong>routes/web.php</strong> Anda setelah routes bagian penjualan
+          (setelah blok ini):</p>
+        <div class="url-buttons">
+          <button class="view-modal-button" data-url="../tutorial/📝🔄🛒/langkah4_1.txt">
+            routes/web.php
+          </button>
+        </div>
+        <h3>Tambahkan route pertukaran/Exchange di sini:</h3>
+        <div class="url-buttons">
+          <button class="view-modal-button" data-url="../tutorial/📝🔄🛒/langkah4_2.txt">
+            routes/web.php
+          </button>
+        </div>
+      </section>
+
+      <section>
+        <h2>Langkah 5: Perbarui Admin Sidebar Menu</h2>
+        <p>Modifikasi <stong>app/Http/Middleware/AdminSidebarMenu.php</stong> untuk menambahkan item menu
+          pertukaran/Exchange. Temukan bagian yang sesuai di menu sidebar dan tambahkan menu pertukaran/Exchange
+          <strong>sebelum</strong> kode pengiriman ini:
+        </p>
+        <div class="url-buttons">
+          <button class="view-modal-button" data-url="../tutorial/📝🔄🛒/langkah5_1.txt">
+            app/Http/Middleware/AdminSidebarMenu.php
+          </button>
+        </div>
+        <p>Tambahkan kode menu penukaran/Exchange di sini (sebelum kode pengiriman):</p>
+        <div class="url-buttons">
+          <button class="view-modal-button" data-url="../tutorial/📝🔄🛒/langkah5_2.txt">
+            app/Http/Middleware/AdminSidebarMenu.php
+          </button>
+        </div>
+      </section>
+
+      <section>
+        <h2>Langkah 6: Membuat View</h2>
+        <h3>6.1 Membuat Direktori Views</h3>
+        <p>Buat direktori resources/views/exchange/ jika belum ada.</p>
+        <h3>6.2 Exchange Index View</h3>
+        <p>Buat resources/views/exchange/index.blade.php:</p>
+        <div class="url-buttons">
+          <button class="view-modal-button" data-url="../tutorial/📝🔄🛒/langkah6_2.txt">
+            resources/views/exchange/index.blade.php
+          </button>
+        </div>
+        <h3>6.3 Exchange Tambah View</h3>
+        <p>Buat resources/views/exchange/create.blade.php:</p>
+        <div class="url-buttons">
+          <button class="view-modal-button" data-url="../tutorial/📝🔄🛒/langkah6_3.txt">
+            resources/views/exchange/create.blade.php
+          </button>
+        </div>
+        <h3>6.4 Exchange Tampilan View</h3>
+        <p>Buat resources/views/exchange/show.blade.php:</p>
+        <div class="url-buttons">
+          <button class="view-modal-button" data-url="../tutorial/📝🔄🛒/langkah6_4.txt">
+            resources/views/exchange/show.blade.php
+          </button>
+        </div>
+        <h3>6.5 Exchange Struk View</h3>
+        <p>Buat resources/views/exchange/receipt.blade.php:</p>
+        <div class="url-buttons">
+          <button class="view-modal-button" data-url="../tutorial/📝🔄🛒/langkah6_5.txt">
+            resources/views/exchange/receipt.blade.php
+          </button>
+        </div>
+      </section>
+
+      <section>
+        <h2>Langkah 7: Tambahkan Terjemahan Bahasa</h2>
+        <p>Tambahkan terjemahan berikut ini ke file bahasa Anda (misal, resources/lang/en/lang_v1.php):</p>
+        <div class="url-buttons">
+          <button class="view-modal-button" data-url="../tutorial/📝🔄🛒/langkah7.txt">
+            resources/lang/en/lang_v1.php
+          </button>
+        </div>
+      </section>
+
+      <section>
+        <h2>Langkah 8: Mengatur Izin & Menetapkan Izin ke Peran</h2>
+        <p>Anda memiliki dua opsi untuk mengatur izin yang diperlukan untuk sistem pertukaran/Exchange:</p>
+        <h3>Opsi A: Menggunakan Migrasi (Disarankan)</h3>
+        <p>Izin secara otomatis dibuat ketika Anda menjalankan migrasi dari Langkah 1.2:</p>
+        <code>php artisan migrate</code>
+        <h3>Ini akan mengeksekusi migrasi <strong>2025_05_23_184000_create_exchange_permissions.php</strong> dan membuat
+          semua izin yang diperlukan.</h3>
+        <h3>Opsi B: Insert SQL Manual</h3>
+        <p>Jika Anda tidak ingin menjalankan migrasi, Anda dapat menambahkan izin berikut ini secara manual ke tabel
+          izin
+          database Anda:</p>
+        <div class="url-buttons">
+          <button class="view-modal-button" data-url="../tutorial/📝🔄🛒/langkah8_1.txt">
+            2025_05_23_184000_create_exchange_permissions.php
+          </button>
+        </div>
+        <h3>Menetapkan Izin ke Peran</h3>
+        <p>Setelah membuat izin (menggunakan salah satu metode di atas), Anda perlu menetapkannya ke peran yang sesuai:
+        </p>
+        <h4>Opsi 1: Melalui Panel Admin</h4>
+        <ul>
+          <li>Buka Manajemen Pengguna → Peran</li>
+          <li>Mengedit peran yang seharusnya memiliki akses pertukaran/Exchange</li>
+          <li>Tetapkan izin pertukaran/Exchange:
             <ul>
-              <li>
-                <details>
-                  <summary>Database Layer</summary>
-                  <ul>
-                    <li>
-                      <details>
-                        <summary>🗃️ Migrations</summary>
-                        <ul>
-                          <li class="file">
-                            create_transaction_exchanges_table.php
-                          </li>
-                          <li class="file">
-                            create_transaction_exchange_lines_table.php
-                          </li>
-                          <li class="file">
-                            add_exchange_columns_to_transactions_table.php
-                          </li>
-                          <li class="file">
-                            add_exchange_columns_to_transaction_sell_lines_table.php
-                          </li>
-                          <li class="file">
-                            add_exchange_amount_tracking_columns.php
-                          </li>
-                          <li class="file">
-                            add_column_cancel_to_transaction_exchange_table.php
-                          </li>
-                        </ul>
-                      </details>
-                    </li>
-                    <li>
-                      <details>
-                        <summary>🏗️ Models</summary>
-                        <ul>
-                          <li class="file">TransactionExchange.php</li>
-                          <li class="file">TransactionExchangeLine.php</li>
-                        </ul>
-                      </details>
-                    </li>
-                  </ul>
-                </details>
-              </li>
-              <li>
-                <details>
-                  <summary>Application Layer</summary>
-                  <ul>
-                    <li>
-                      <details>
-                        <summary>🎮 Controller</summary>
-                        <ul>
-                          <li class="file">ExchangeController.php</li>
-                        </ul>
-                      </details>
-                    </li>
-                    <li>
-                      <details>
-                        <summary>🛡️ Middleware</summary>
-                        <ul>
-                          <li class="file">
-                            AdminSidebarMenu.php (modification)
-                          </li>
-                        </ul>
-                      </details>
-                    </li>
-                  </ul>
-                </details>
-              </li>
-              <li>
-                <details>
-                  <summary>Presentation Layer</summary>
-                  <ul>
-                    <li>
-                      <details>
-                        <summary>🖼️ Views</summary>
-                        <ul>
-                          <li class="file">index.blade.php</li>
-                          <li class="file">create.blade.php</li>
-                          <li class="file">show.blade.php</li>
-                          <li class="file">receipt.blade.php</li>
-                        </ul>
-                      </details>
-                    </li>
-                    <li>
-                      <details>
-                        <summary>🎨 Assets</summary>
-                        <ul>
-                          <li class="file">CSS styling (integrated)</li>
-                          <li class="file">
-                            JavaScript functionality (integrated)
-                          </li>
-                        </ul>
-                      </details>
-                    </li>
-                  </ul>
-                </details>
-              </li>
-              <li>
-                <details>
-                  <summary>Routing Layer</summary>
-                  <ul>
-                    <li>
-                      <details>
-                        <summary>🚏 Routes</summary>
-                        <ul>
-                          <li class="file">web.php (exchange routes)</li>
-                        </ul>
-                      </details>
-                    </li>
-                  </ul>
-                </details>
-              </li>
-              <li>
-                <details>
-                  <summary>Fitur-fitur</summary>
-                  <ul>
-                    <li class="file">
-                      <span class="tag-add">✅ Proses Exchange multi-langkah</span>
-                    </li>
-                    <li class="file">
-                      <span class="tag-add">📦 Manajemen Inventaris</span>
-                    </li>
-                    <li class="file">
-                      <span class="tag-add">💰 Pengolahan Pembayaran</span>
-                    </li>
-                    <li class="file">
-                      <span class="tag-add">🧾 Pembuatan Struk</span>
-                    </li>
-                    <li class="file">
-                      <span class="tag-add">📊 Pelacakan Exchange</span>
-                    </li>
-                    <li class="file">
-                      <span class="tag-add">🚫 Pembatalan Penukaran</span>
-                    </li>
-                  </ul>
-                </details>
-              </li>
+              <li>exchange.access - Lihat pertukaran/Exchange</li>
+              <li>exchange.create - Tambah Baru pertukaran/Exchange</li>
+              <li>exchange.cancel - Batalkan exchanges</li>
+              <li>exchange.delete - Hapus pertukaran/Exchange</li>
             </ul>
-          </details>
-        </li>
-      </ul>
-      <h2>📦 Unduh File Starter</h2>
-      <a href="https://drive.google.com/file/d/1ei4K4sby-rZa2_G9RLU8ER312Vukoh0w/view?usp=drive_link" download
-        class="section-download">⬇️ Unduh</a>
-    </section>
+          </li>
+        </ul>
+        <h4>Opsi 2: Secara terprogram</h4>
+        <p>Buat seeder atau jalankan di tinker:</p>
+        <div class="url-buttons">
+          <button class="view-modal-button" data-url="../tutorial/📝🔄🛒/langkah8_2.txt">
+            seeder or run in tinker
+          </button>
+        </div>
+        <h4>Opsi 3: Insert Database Secara Manual</h4>
+        <p>Jika Anda lebih suka menetapkan izin secara langsung melalui SQL:</p>
+        <div class="url-buttons">
+          <button class="view-modal-button" data-url="../tutorial/📝🔄🛒/langkah8_3.txt">
+            SQL untuk menetapkan izin
+          </button>
+        </div>
+      </section>
 
-    <section>
-      <h2>Screenshots</h2>
-      <p>
-        Berikut adalah tangkapan layar dari sistem Tukar/Exchange yang telah
-        diterapkan:
-      </p>
-      <h3>Halaman Daftar Tukar/Exchange</h3>
-      <div class="image-box">
-        <img src="https://ultimate-pos-tutorials.vercel.app/assets/images/1-8d9518c521e3fe6b5bc263543ce9a9a7.jpg"
-          alt="#" />
-        <p class="caption">Gambar: Halaman Daftar Tukar/Exchange</p>
-      </div>
-      <p>
-        Halaman Utama Manajemen Tukar/Exchange dengan Filter dan Tabel Data
-        Komprehensif yang Menampilkan Semua Transaksi Tukar/Exchange
-      </p>
-      <h3>Modal Detail Tukar/Exchange</h3>
-      <div class="image-box">
-        <img src="https://ultimate-pos-tutorials.vercel.app/assets/images/3-f4fa1156e4fc069f06aed8240dcda04f.png"
-          alt="#" />
-        <p class="caption">Gambar: Modal Detail Tukar/Exchange</p>
-      </div>
-      <p>
-        View Detail Transaksi Tukar/Exchange yang Menampilkan Semua Item, Jumlah,
-        dan Informasi Transaksi
-      </p>
-      <h3>Pembayaran & Penyelesaian</h3>
-      <div class="image-box">
-        <img src="https://ultimate-pos-tutorials.vercel.app/assets/images/3-f4fa1156e4fc069f06aed8240dcda04f.png"
-          alt="#" />
-        <p class="caption">Gambar: Pembayaran & Penyelesaian</p>
-      </div>
-      <p>
-        Langkah Terakhir Menampilkan Detail Pembayaran dan Ringkasan Sebelum
-        Menyelesaikan Tukar/Exchange
-      </p>
-      <h3>Dialog Sukses</h3>
-      <div class="image-box">
-        <img src="https://ultimate-pos-tutorials.vercel.app/assets/images/9-eaab4da6537d6f50757a379744f49824.png"
-          alt="#" />
-        <p class="caption">Gambar: Dialog Sukses</p>
-      </div>
-      <p>
-        Konfirmasi Sukses dengan Opsi untuk Mencetak Faktur Setelah
-        Menyelesaikan Tukar/Exchange
-      </p>
-      <h3>Ikhtisar Sistem</h3>
-      <p>Sistem Tukar/Exchange Barang menyediakan fitur-fitur utama berikut:</p>
-      <ul>
-        <li>
-          <strong>Proses Tukar/Exchange Multi-langkah:</strong> Proses bertahap 4
-          langkah untuk membuat Tukar/Exchange barang
-        </li>
-        <li>
-          <strong>Manajemen Inventaris:</strong> Penyesuaian stok otomatis
-          untuk barang yang dikembalikan dan baru
-        </li>
-        <li>
-          <strong>Proses Pembayaran:</strong> Menangani perbedaan pembayaran
-          (pelanggan membayar atau menerima pengembalian dana)
-        </li>
-        <li>
-          <strong>Pelacakan Tukar/Exchange Barang:</strong> Jejak audit lengkap dari
-          semua transaksi Tukar/Exchange
-        </li>
-        <li>
-          <strong>Pembuatan Bukti Transaksi:</strong> Bukti transaksi Tukar/Exchange
-          barang yang profesional
-        </li>
-        <li>
-          <strong>Dukungan Pembatalan:</strong> Kemampuan untuk membatalkan
-          Tukar/Exchange barang dengan pembalikan stok
-        </li>
-      </ul>
-    </section>
+      <section>
+        <h2>Langkah 9: Menguji Implementasi</h2>
+        <h3>9.1 Pengaturan Database Uji</h3>
+        <p>Jalankan migrasi:</p>
+        <ul>
+          <li>php artisan migrate</li>
+        </ul>
+        <p>Pastikan semua tabel telah dibuat dengan benar:</p>
+        <ul>
+          <li>transaction_exchanges</li>
+          <li>transaction_exchange_lines</li>
+          <li>Tabel transaction yang diperbarui</li>
+          <li>Tabel transaction_sell_lines yang diperbarui</li>
+        </ul>
+        <h3>9.2 Menguji Fungsionalitas Dasar</h3>
+        <p>Mengakses Sistem Exchange:</p>
+        <ul>
+          <li>Buka halaman exchange index page</li>
+          <li>Verifikasi item menu yang muncul di sidebar</li>
+        </ul>
+        <p>Tambah pertukaran/Exchange:</p>
+        <ul>
+          <li>Cari faktur yang sudah ada</li>
+          <li>Pilih barang yang akan dikembalikan</li>
+          <li>Tambahkan barang baru</li>
+          <li>Selesaikan proses penukaran/Exchange</li>
+        </ul>
+        <p>Lihat Pertukaran/Exchange:</p>
+        <ul>
+          <li>Periksa daftar pertukaran/Exchange</li>
+          <li>Lihat detail pertukaran/Exchange</li>
+          <li>Cetak tanda terima pertukaran/Exchange</li>
+        </ul>
+        <p>Membatalkan Pertukaran/Exchange:</p>
+        <ul>
+          <li>Uji fungsionalitas pembatalan</li>
+          <li>Verifikasi penyesuaian stok telah dibatalkan</li>
+        </ul>
+      </section>
 
-    <section>
-      <h2>Langkah 1: Pengaturan Database</h2>
-      <h3>1.1 Membuat File Migrasi</h3>
-      <p>
-        Buat file migrasi berikut di direktori
-        <strong>database/migrations</strong> Anda:
-      </p>
+      <section>
+        <h2>Rangkuman Fitur Utama</h2>
+        <ul>
+          <li>✅ Proses Penukaran/exchange multi-langkah: Panduan 4 langkah</li>
+          <li>✅ Pencarian Faktur: Cari dan validasi transaksi asli</li>
+          <li>✅ Pemilihan Barang: Pilih barang yang akan dikembalikan dengan validasi kuantitas</li>
+          <li>✅ Penambahan Barang Baru: Tambahkan barang pengganti dengan pencarian produk</li>
+          <li>✅ Pemrosesan Pembayaran: Menangani perbedaan pembayaran (pelanggan membayar/menerima pengembalian dana)
+          </li>
+          <li>✅ Manajemen Stok: Penyesuaian inventaris otomatis</li>
+          <li>✅ Pelacakan Penukaran/Exchange: Lengkapi jejak audit dengan nomor referensi</li>
+          <li>✅ Pembuatan Tanda Terima: Tanda terima pertukaran/exchange profesional</li>
+          <li>✅ Dukungan Pembatalan: Membatalkan pertukaran/exchange dengan pembalikan saham</li>
+          <li>✅ Sistem Izin: Kontrol akses berbasis peran</li>
+          <li>✅ UI modern: Desain responsif dengan indikator kemajuan</li>
+          <li>✅ Perhitungan Waktu Nyata: Perhitungan total dan selisih yang dinamis</li>
+        </ul>
+        <p>Implementasi ini menyediakan sistem pertukaran yang lengkap dan siap produksi untuk POS yang terintegrasi
+          secara mulus dengan basis kode yang ada dengan tetap mempertahankan semua fungsionalitas dan pola desain dari
+          sistem aslinya.</p>
+      </section>
 
-      <h4>Migrasi 1: Tabel Transaksi Tukar/Exchange</h4>
-      <p>
-        Buat file
-        <strong>2025_05_23_001710_create_transaction_exchanges_table.php</strong>:
-      </p>
-      <div class="url-buttons">
-        <button class="view-modal-button" data-url="../tutorial/📝🔄🛒/migration1.txt">
-          2025_05_23_001710_create_transaction_exchanges_table.php
-        </button>
-      </div>
-      <h4>Migrasi 2: Tabel Garis Transaksi Tukar/Exchange</h4>
-      <p>
-        Buat file
-        <strong>2025_05_23_001814_create_transaction_exchange_lines_table.php</strong>:
-      </p>
-      <div class="url-buttons">
-        <button class="view-modal-button" data-url="../tutorial/📝🔄🛒/migration2.txt">
-          2025_05_23_001814_create_transaction_exchange_lines_table.php
-        </button>
-      </div>
-      <h4>Migrasi 3: Menambahkan Kolom Tukar/Exchange pada Tabel Transaksi</h4>
-      <p>
-        Buat file
-        <strong>2025_05_23_001851_add_exchange_columns_to_transactions_table.php</strong>:
-      </p>
-      <div class="url-buttons">
-        <button class="view-modal-button" data-url="../tutorial/📝🔄🛒/migration3.txt">
-          2025_05_23_001851_add_exchange_columns_to_transactions_table.php
-        </button>
-      </div>
-      <h4>
-        Migrasi 4: Menambahkan Kolom Tukar/Exchange pada Tabel Garis Transaksi
-        Penjualan
-      </h4>
-      <p>
-        Buat file
-        <strong>2025_05_23_001926_add_exchange_columns_to_transaction_sell_lines_table.php</strong>:
-      </p>
-      <div class="url-buttons">
-        <button class="view-modal-button" data-url="../tutorial/📝🔄🛒/migration4.txt">
-          2025_05_23_001926_add_exchange_columns_to_transaction_sell_lines_table.php
-        </button>
-      </div>
-      <h4>Migrasi 5: Menambahkan Kolom Pelacakan Jumlah Tukar/Exchange</h4>
-      <p>
-        Buat file
-        <strong>2025_05_23_012705_add_exchange_amount_tracking_columns.php</code>:
-      </p>
-      <div class="url-buttons">
-        <button class="view-modal-button" data-url="../tutorial/📝🔄🛒/migration5.txt">
-          2025_05_23_012705_add_exchange_amount_tracking_columns.php
-        </button>
-      </div>
-      <h4>Migrasi 6: Menambahkan Kolom Pembatalan</h4>
-      <p>
-        Buat file
-        <strong>2025_05_23_183050_add_column_cancel_to_transaction_exchange_table.php</strong>:
-      </p>
-      <div class="url-buttons">
-        <button class="view-modal-button" data-url="../tutorial/📝🔄🛒/migration6.txt">
-          2025_05_23_183050_add_column_cancel_to_transaction_exchange_table.php
-        </button>
-      </div>
-      <h2>1.2 Menjalankan Migrasi</h2>
-      <p>
-        Setelah membuat semua file migrasi, jalankan migrasi dengan perintah:
-      </p>
-      <strong>php artisan migrate</strong>
-    </section>
-
-    <section>
-      <h2>Langkah 2: Membuat Kelas Model</h2>
-      <h3>2.1 Model TransactionExchange</h3>
-      <p>
-        Buat model utama untuk Tukar/Exchange barang di
-        <strong>app/TransactionExchange.php</strong>:
-      </p>
-      <div class="url-buttons">
-        <button class="view-modal-button" data-url="../tutorial/📝🔄🛒/langkah2_1.txt">
-          app/TransactionExchange.php
-        </button>
-      </div>
-      <h3>2.2 Model TransactionExchangeLine</h3>
-      <p>
-        Buat model untuk garis transaksi Tukar/Exchange di
-        <strong>app/TransactionExchangeLine.php</strong>:
-      </p>
-      <div class="url-buttons">
-        <button class="view-modal-button" data-url="../tutorial/📝🔄🛒/langkah2_2.txt">
-          app/TransactionExchangeLine.php
-        </button>
-      </div>
-    </section>
-
-    <section>
-      <h3>Langkah 3: Buat Controllers Exchange</h3>
-      <p>
-        Buat Controllers di
-        <strong>app/Http/Controllers/ExchangeController.php</strong>:
-      </p>
-      <div class="url-buttons">
-        <button class="view-modal-button" data-url="../tutorial/📝🔄🛒/langkah3.txt">
-          app/Http/Controllers/ExchangeController.php
-        </button>
-      </div>
-    </section>
-
-    <section>
-      <h2>Langkah 4: Tambahkan Route</h2>
-      <p>Tambahkan route berikut ini ke file <strong>routes/web.php</strong> Anda setelah routes bagian penjualan
-        (setelah blok ini):</p>
-      <div class="url-buttons">
-        <button class="view-modal-button" data-url="../tutorial/📝🔄🛒/langkah4_1.txt">
-          routes/web.php
-        </button>
-      </div>
-      <h3>Tambahkan route pertukaran/Exchange di sini:</h3>
-      <div class="url-buttons">
-        <button class="view-modal-button" data-url="../tutorial/📝🔄🛒/langkah4_2.txt">
-          routes/web.php
-        </button>
-      </div>
-    </section>
-
-    <section>
-      <h2>Langkah 5: Perbarui Admin Sidebar Menu</h2>
-      <p>Modifikasi <stong>app/Http/Middleware/AdminSidebarMenu.php</stong> untuk menambahkan item menu
-        pertukaran/Exchange. Temukan bagian yang sesuai di menu sidebar dan tambahkan menu pertukaran/Exchange
-        <strong>sebelum</strong> kode pengiriman ini:
-      </p>
-      <div class="url-buttons">
-        <button class="view-modal-button" data-url="../tutorial/📝🔄🛒/langkah5_1.txt">
-          app/Http/Middleware/AdminSidebarMenu.php
-        </button>
-      </div>
-      <p>Tambahkan kode menu penukaran/Exchange di sini (sebelum kode pengiriman):</p>
-      <div class="url-buttons">
-        <button class="view-modal-button" data-url="../tutorial/📝🔄🛒/langkah5_2.txt">
-          app/Http/Middleware/AdminSidebarMenu.php
-        </button>
-      </div>
-    </section>
-
-    <section>
-      <h2>Langkah 6: Membuat View</h2>
-      <h3>6.1 Membuat Direktori Views</h3>
-      <p>Buat direktori resources/views/exchange/ jika belum ada.</p>
-      <h3>6.2 Exchange Index View</h3>
-      <p>Buat resources/views/exchange/index.blade.php:</p>
-      <div class="url-buttons">
-        <button class="view-modal-button" data-url="../tutorial/📝🔄🛒/langkah6_2.txt">
-          resources/views/exchange/index.blade.php
-        </button>
-      </div>
-      <h3>6.3 Exchange Tambah View</h3>
-      <p>Buat resources/views/exchange/create.blade.php:</p>
-      <div class="url-buttons">
-        <button class="view-modal-button" data-url="../tutorial/📝🔄🛒/langkah6_3.txt">
-          resources/views/exchange/create.blade.php
-        </button>
-      </div>
-      <h3>6.4 Exchange Tampilan View</h3>
-      <p>Buat resources/views/exchange/show.blade.php:</p>
-      <div class="url-buttons">
-        <button class="view-modal-button" data-url="../tutorial/📝🔄🛒/langkah6_4.txt">
-          resources/views/exchange/show.blade.php
-        </button>
-      </div>
-      <h3>6.5 Exchange Struk View</h3>
-      <p>Buat resources/views/exchange/receipt.blade.php:</p>
-      <div class="url-buttons">
-        <button class="view-modal-button" data-url="../tutorial/📝🔄🛒/langkah6_5.txt">
-          resources/views/exchange/receipt.blade.php
-        </button>
-      </div>
-    </section>
-
-    <section>
-      <h2>Langkah 7: Tambahkan Terjemahan Bahasa</h2>
-      <p>Tambahkan terjemahan berikut ini ke file bahasa Anda (misal, resources/lang/en/lang_v1.php):</p>
-      <div class="url-buttons">
-        <button class="view-modal-button" data-url="../tutorial/📝🔄🛒/langkah7.txt">
-          resources/lang/en/lang_v1.php
-        </button>
-      </div>
-    </section>
-
-    <section>
-      <h2>Langkah 8: Mengatur Izin & Menetapkan Izin ke Peran</h2>
-      <p>Anda memiliki dua opsi untuk mengatur izin yang diperlukan untuk sistem pertukaran/Exchange:</p>
-      <h3>Opsi A: Menggunakan Migrasi (Disarankan)</h3>
-      <p>Izin secara otomatis dibuat ketika Anda menjalankan migrasi dari Langkah 1.2:</p>
-      <code>php artisan migrate</code>
-      <h3>Ini akan mengeksekusi migrasi <strong>2025_05_23_184000_create_exchange_permissions.php</strong> dan membuat
-        semua izin yang diperlukan.</h3>
-      <h3>Opsi B: Insert SQL Manual</h3>
-      <p>Jika Anda tidak ingin menjalankan migrasi, Anda dapat menambahkan izin berikut ini secara manual ke tabel izin
-        database Anda:</p>
-      <div class="url-buttons">
-        <button class="view-modal-button" data-url="../tutorial/📝🔄🛒/langkah8_1.txt">
-          2025_05_23_184000_create_exchange_permissions.php
-        </button>
-      </div>
-      <h3>Menetapkan Izin ke Peran</h3>
-      <p>Setelah membuat izin (menggunakan salah satu metode di atas), Anda perlu menetapkannya ke peran yang sesuai:
-      </p>
-      <h4>Opsi 1: Melalui Panel Admin</h4>
-      <ul>
-        <li>Buka Manajemen Pengguna → Peran</li>
-        <li>Mengedit peran yang seharusnya memiliki akses pertukaran/Exchange</li>
-        <li>Tetapkan izin pertukaran/Exchange:
-          <ul>
-            <li>exchange.access - Lihat pertukaran/Exchange</li>
-            <li>exchange.create - Tambah Baru pertukaran/Exchange</li>
-            <li>exchange.cancel - Batalkan exchanges</li>
-            <li>exchange.delete - Hapus pertukaran/Exchange</li>
-          </ul>
-        </li>
-      </ul>
-      <h4>Opsi 2: Secara terprogram</h4>
-      <p>Buat seeder atau jalankan di tinker:</p>
-      <div class="url-buttons">
-        <button class="view-modal-button" data-url="../tutorial/📝🔄🛒/langkah8_2.txt">
-          seeder or run in tinker
-        </button>
-      </div>
-      <h4>Opsi 3: Insert Database Secara Manual</h4>
-      <p>Jika Anda lebih suka menetapkan izin secara langsung melalui SQL:</p>
-      <div class="url-buttons">
-        <button class="view-modal-button" data-url="../tutorial/📝🔄🛒/langkah8_3.txt">
-          SQL untuk menetapkan izin
-        </button>
-      </div>
-    </section>
-
-    <section>
-      <h2>Langkah 9: Menguji Implementasi</h2>
-      <h3>9.1 Pengaturan Database Uji</h3>
-      <p>Jalankan migrasi:</p>
-      <ul>
-        <li>php artisan migrate</li>
-      </ul>
-      <p>Pastikan semua tabel telah dibuat dengan benar:</p>
-      <ul>
-        <li>transaction_exchanges</li>
-        <li>transaction_exchange_lines</li>
-        <li>Tabel transaction yang diperbarui</li>
-        <li>Tabel transaction_sell_lines yang diperbarui</li>
-      </ul>
-      <h3>9.2 Menguji Fungsionalitas Dasar</h3>
-      <p>Mengakses Sistem Exchange:</p>
-      <ul>
-        <li>Buka halaman exchange index page</li>
-        <li>Verifikasi item menu yang muncul di sidebar</li>
-      </ul>
-      <p>Tambah pertukaran/Exchange:</p>
-      <ul>
-        <li>Cari faktur yang sudah ada</li>
-        <li>Pilih barang yang akan dikembalikan</li>
-        <li>Tambahkan barang baru</li>
-        <li>Selesaikan proses penukaran/Exchange</li>
-      </ul>
-      <p>Lihat Pertukaran/Exchange:</p>
-      <ul>
-        <li>Periksa daftar pertukaran/Exchange</li>
-        <li>Lihat detail pertukaran/Exchange</li>
-        <li>Cetak tanda terima pertukaran/Exchange</li>
-      </ul>
-      <p>Membatalkan Pertukaran/Exchange:</p>
-      <ul>
-        <li>Uji fungsionalitas pembatalan</li>
-        <li>Verifikasi penyesuaian stok telah dibatalkan</li>
-      </ul>
-    </section>
-
-    <section>
-      <h2>Rangkuman Fitur Utama</h2>
-      <ul>
-        <li>✅ Proses Penukaran/exchange multi-langkah: Panduan 4 langkah</li>
-        <li>✅ Pencarian Faktur: Cari dan validasi transaksi asli</li>
-        <li>✅ Pemilihan Barang: Pilih barang yang akan dikembalikan dengan validasi kuantitas</li>
-        <li>✅ Penambahan Barang Baru: Tambahkan barang pengganti dengan pencarian produk</li>
-        <li>✅ Pemrosesan Pembayaran: Menangani perbedaan pembayaran (pelanggan membayar/menerima pengembalian dana)</li>
-        <li>✅ Manajemen Stok: Penyesuaian inventaris otomatis</li>
-        <li>✅ Pelacakan Penukaran/Exchange: Lengkapi jejak audit dengan nomor referensi</li>
-        <li>✅ Pembuatan Tanda Terima: Tanda terima pertukaran/exchange profesional</li>
-        <li>✅ Dukungan Pembatalan: Membatalkan pertukaran/exchange dengan pembalikan saham</li>
-        <li>✅ Sistem Izin: Kontrol akses berbasis peran</li>
-        <li>✅ UI modern: Desain responsif dengan indikator kemajuan</li>
-        <li>✅ Perhitungan Waktu Nyata: Perhitungan total dan selisih yang dinamis</li>
-      </ul>
-      <p>Implementasi ini menyediakan sistem pertukaran yang lengkap dan siap produksi untuk POS yang terintegrasi
-        secara mulus dengan basis kode yang ada dengan tetap mempertahankan semua fungsionalitas dan pola desain dari
-        sistem aslinya.</p>
-    </section>
-
-    <footer>
-      <!-- HOME -->
-      <div class="home-button-wrapper">
-        <a href="../main.html" class="home-button">🏠 Kembali ke Beranda</a>
-      </div>
-    </footer>
+      <footer>
+        <!-- HOME -->
+        <div class="home-button-wrapper">
+          <a href="../main.html" class="home-button">🏠 Kembali ke Beranda</a>
+        </div>
+      </footer>
+    </div>
   </div>
   <div id="myModal" class="modal">
     <div class="modal-content">
@@ -598,9 +621,26 @@
       <path stroke-linecap="round" stroke-width="2" d="M6 15l6-6 6 6" />
     </svg>
   </button>
+  <div id="completionModal" class="completion-modal">
+    <div class="completion-modal-content">
+      <span class="completion-close" title="Tutup">&times;</span>
+      <h3>🎉 Selamat, kamu telah menyelesaikan tutorialnya!</h3>
+      <p>Apakah kamu ingin mengunduh file yang telah jadi?</p>
+      <div class="completion-button-group">
+        <a id="completion-download-btn" data-id="file_10" class="completion-btn completion-yes-btn">
+          ✅ Ya
+        </a>
+        <button id="completion-no-btn" class="completion-btn completion-no-btn">
+          ❌ Tidak
+        </button>
+      </div>
+    </div>
+  </div>
   <script src="../js/scripts.js"></script>
   <script src="../js/sidebar.js"></script>
   <script src="../js/bubble.js"></script>
+  <script src="../js/complete.js"></script>
+
   <!-- Link ke file JavaScript -->
 </body>
 

@@ -11,27 +11,46 @@
   <link rel="stylesheet" href="../css/modal.css" />
   <link rel="stylesheet" href="../css/sidebar.css" />
   <link rel="stylesheet" href="../css/bubble.css" />
+  <link rel="stylesheet" href="../css/complete.css" />
+
 
 </head>
 
 <body>
-  <div class="container">
-    <header>
-      <h1>
-        Hapus Transaksi, Produk, Inventaris, Stok Database - Sangat Berbahaya dan Hati-hati dalam penggunaannya
-      </h1>
-      <h1>⚠️❌🚨</h1>
-      <h5>
-        Buatlah backup dan uji coba di lingkungan lain sebelum mencoba di produksi DB anda!!!
-      </h5>
-    </header>
-
-    <!-- HOME -->
-    <div class="home-button-wrapper">
-      <a href="../main.html" class="home-button">🏠 Kembali ke Beranda</a>
+  <!-- Modal Password -->
+  <div id="passwordModal" class="completion-modal">
+    <div class="completion-modal-content">
+      <span class="completion-close" id="closePasswordModal">&times;</span>
+      <h3>🔐 Masukkan Password</h3>
+      <input type="password" id="tutorialPassword" placeholder="Password..." class="completion-input" />
+      <div class="completion-button-group">
+        <button id="submitPassword" class="completion-btn completion-yes-btn">
+          Akses
+        </button>
+      </div>
+      <p id="passwordError" style="display: none; color: #dc3545; margin-top: 1rem">
+        ❌ Password salah!
+      </p>
     </div>
+  </div>
+  <div class="blur-wrapper">
+    <div class="container">
+      <header>
+        <h1>
+          Hapus Transaksi, Produk, Inventaris, Stok Database - Sangat Berbahaya dan Hati-hati dalam penggunaannya
+        </h1>
+        <h1>⚠️❌🚨</h1>
+        <h5>
+          Buatlah backup dan uji coba di lingkungan lain sebelum mencoba di produksi DB anda!!!
+        </h5>
+      </header>
 
-    <div class="toc-dropdown-wrapper">
+      <!-- HOME -->
+      <div class="home-button-wrapper">
+        <a href="../main.html" class="home-button">🏠 Kembali ke Beranda</a>
+      </div>
+
+      <div class="toc-dropdown-wrapper">
         <label for="toc-dropdown" class="toc-icon">
           <strong>Daftar Isi</strong>
         </label>
@@ -40,28 +59,29 @@
         </select>
       </div>
 
-    <section>
-      <h2>GUNAKAN DENGAN RESIKO ANDA SENDIRI!!!</h2>
-      <p>Salin file di folder ini `app\Console\Commands\TruncateIniYearDb.php`</p>
-      <h3>dari terminal jalankan perintah ini: `php artisan truncate:iniYearDb`</h3>
-      <p>Pertama!!! Harap baca file untuk memahami tabel mana yang `"truncate"` di DB dan mana yang `"update"` yang
-        harus dimiliki dan mengosongkan DB</p>
-    </section>
+      <section>
+        <h2>GUNAKAN DENGAN RESIKO ANDA SENDIRI!!!</h2>
+        <p>Salin file di folder ini `app\Console\Commands\TruncateIniYearDb.php`</p>
+        <h3>dari terminal jalankan perintah ini: `php artisan truncate:iniYearDb`</h3>
+        <p>Pertama!!! Harap baca file untuk memahami tabel mana yang `"truncate"` di DB dan mana yang `"update"` yang
+          harus dimiliki dan mengosongkan DB</p>
+      </section>
 
-    <section>
-      <h2>Prosesnya...</h2>
-      <div class="url-buttons">
-        <button class="view-modal-button" data-url="../tutorial/⚠️❌🚨/langkah1.txt">
-          Command
-        </button>
-      </div>
-    </section>
-    <footer>
-      <!-- HOME -->
-      <div class="home-button-wrapper">
-        <a href="../main.html" class="home-button">🏠 Kembali ke Beranda</a>
-      </div>
-    </footer>
+      <section>
+        <h2>Prosesnya...</h2>
+        <div class="url-buttons">
+          <button class="view-modal-button" data-url="../tutorial/⚠️❌🚨/langkah1.txt">
+            Command
+          </button>
+        </div>
+      </section>
+      <footer>
+        <!-- HOME -->
+        <div class="home-button-wrapper">
+          <a href="../main.html" class="home-button">🏠 Kembali ke Beranda</a>
+        </div>
+      </footer>
+    </div>
   </div>
   <div id="myModal" class="modal">
     <div class="modal-content">
@@ -74,9 +94,26 @@
       <path stroke-linecap="round" stroke-width="2" d="M6 15l6-6 6 6" />
     </svg>
   </button>
+  <div id="completionModal" class="completion-modal">
+    <div class="completion-modal-content">
+      <span class="completion-close" title="Tutup">&times;</span>
+      <h3>🎉 Selamat, kamu telah menyelesaikan tutorialnya!</h3>
+      <p>Apakah kamu ingin mengunduh file yang telah jadi?</p>
+      <div class="completion-button-group">
+        <a id="completion-download-btn" data-id="file_6" class="completion-btn completion-yes-btn">
+          ✅ Ya
+        </a>
+        <button id="completion-no-btn" class="completion-btn completion-no-btn">
+          ❌ Tidak
+        </button>
+      </div>
+    </div>
+  </div>
   <script src="../js/scripts.js"></script>
   <script src="../js/sidebar.js"></script>
   <script src="../js/bubble.js"></script>
+  <script src="../js/complete.js"></script>
+
 </body>
 
 </html>
