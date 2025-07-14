@@ -15,29 +15,12 @@ document.addEventListener("DOMContentLoaded", function () {
   let failedAttempts = 0;
   const maxAttempts = 3;
 
-
-
-  // 📦 Data URL untuk tombol download
-  const downloadData = [
-    { id: "file_1", url: "https://drive.google.com/drive/folders/1Z4tG3FMdMa3oZ3Nk9oqAp8ydWOlFcDS8?usp=drive_link" },
-    { id: "file_2", url: "https://www.dropbox.com/s/example123/file.zip?dl=1" },
-    { id: "file_3", url: "https://example.com/files/output.zip" },
-    { id: "file_4", url: "https://example.com/files/output.zip" },
-    { id: "file_5", url: "https://example.com/files/output.zip" },
-    { id: "file_6", url: "https://example.com/files/output.zip" },
-    { id: "file_7", url: "https://example.com/files/output.zip" },
-    { id: "file_8", url: "https://example.com/files/output.zip" },
-    { id: "file_9", url: "https://example.com/files/output.zip" },
-    { id: "file_10", url: "https://example.com/files/output.zip" },
-    { id: "file_11", url: "https://example.com/files/output.zip" },
-    { id: "file_12", url: "https://example.com/files/output.zip" },
-    { id: "file_13", url: "https://example.com/files/output.zip" }
-
-  ];
-
   // Cari ID tutorial dari URL
-  const currentFile = window.location.pathname.split('/').pop().replace(".html", "");
-  const matchedTutorial = passwordData.find(item => item.id === currentFile);
+  const currentFile = window.location.pathname
+    .split("/")
+    .pop()
+    .replace(".html", "");
+  const matchedTutorial = passwordData.find((item) => item.id === currentFile);
 
   // 🔍 Observer untuk mendeteksi footer terlihat
   const observer = new IntersectionObserver(
@@ -45,7 +28,7 @@ document.addEventListener("DOMContentLoaded", function () {
       if (entries[0].isIntersecting && !modalShown) {
         timer = setTimeout(() => {
           const id = downloadBtn.getAttribute("data-id");
-          const found = downloadData.find(item => item.id === id);
+          const found = downloadData.find((item) => item.id === id);
 
           if (found) {
             downloadBtn.setAttribute("href", found.url);
@@ -81,27 +64,31 @@ document.addEventListener("DOMContentLoaded", function () {
     passwordModal.style.display = "block";
     blurWrapper.classList.add("blur-active");
 
-    document.getElementById("submitPassword").addEventListener("click", function () {
-      const inputValue = passwordInput.value;
+    document
+      .getElementById("submitPassword")
+      .addEventListener("click", function () {
+        const inputValue = passwordInput.value;
 
-      if (inputValue === matchedTutorial.password) {
-        passwordModal.style.display = "none";
-        container.style.display = "block";
-        blurWrapper.classList.remove("blur-active");
+        if (inputValue === matchedTutorial.password) {
+          passwordModal.style.display = "none";
+          container.style.display = "block";
+          blurWrapper.classList.remove("blur-active");
 
-        // ✅ Aktifkan observer HANYA setelah password benar
-        if (footer) observer.observe(footer);
-      } else {
-        failedAttempts++;
-        passwordError.style.display = "block";
-        passwordError.textContent = `❌ Password salah! Percobaan ke-${failedAttempts} dari ${maxAttempts}`;
+          // ✅ Aktifkan observer HANYA setelah password benar
+          if (footer) observer.observe(footer);
+        } else {
+          failedAttempts++;
+          passwordError.style.display = "block";
+          passwordError.textContent = `❌ Password salah! Percobaan ke-${failedAttempts} dari ${maxAttempts}`;
 
-        if (failedAttempts >= maxAttempts) {
-          alert("Kamu telah melebihi 3 kali percobaan. Akan dialihkan ke beranda.");
-          window.location.href = "../main.html"; // Ganti jika nama file beranda berbeda
+          if (failedAttempts >= maxAttempts) {
+            alert(
+              "Kamu telah melebihi 3 kali percobaan. Akan dialihkan ke beranda."
+            );
+            window.location.href = "../main.html"; // Ganti jika nama file beranda berbeda
+          }
         }
-      }
-    });
+      });
   } else {
     // Jika halaman tidak terproteksi
     container.style.display = "block";
