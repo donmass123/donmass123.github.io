@@ -149,7 +149,7 @@
 }
 
 .blur-active {
-  filter: blur(8px);
+  filter: blur(30px);
   pointer-events: none;
   user-select: none;
 }

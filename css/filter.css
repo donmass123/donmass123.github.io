@@ -5,11 +5,9 @@
   padding: 20px 0;
   display: flex;
   justify-content: center;
-  background-color: #f4f6f7;
   border-radius: 12px;
   flex-wrap: wrap; /* Membolehkan tombol membungkus jika diperlukan */
   gap: 10px; /* Jarak antar tombol */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 /* Default Style for Buttons */
