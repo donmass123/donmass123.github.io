@@ -183,6 +183,6 @@ const tutorialsData = [
     level: "menengah",
     image: "cover/14.webp",
     updateDate: "17 Juli 2025",
-    description: "🧩 Kostum ini di Desuaikan Dengan Kebutuhan dari Retail Store (Baiq Market)."
+    description: "📦 Panduan ini akan memandu Anda dalam mengimplementasikan kolom yang ditingkatkan pada laporan Profit by Products di POS Laravel."
   }
 ];
