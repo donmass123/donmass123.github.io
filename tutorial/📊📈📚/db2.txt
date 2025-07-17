@@ -1,0 +1,5 @@
+// Price Range Display
+MIN(variation_selling_price) - MAX(variation_selling_price)
+
+// Stock Aggregation
+SUM(stock_across_all_variations)

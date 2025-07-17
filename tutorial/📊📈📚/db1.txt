@@ -1,0 +1,11 @@
+// Quantity Sold
+SUM(transaction_sell_lines.quantity - transaction_sell_lines.quantity_returned)
+
+// Total Sold Amount
+SUM((quantity - returns) × selling_price_per_unit)
+
+// Total Purchase Amount
+SUM((quantity - returns) × purchase_price_per_unit)
+
+// Gross Profit
+Total Sold Amount - Total Purchase Amount

@@ -1,0 +1,8 @@
+// Example: Profit percentage
+->addSelect(DB::raw('
+    CASE
+        WHEN SUM(total_purchase_amount) > 0
+        THEN ROUND((SUM(total_sold_amount) - SUM(total_purchase_amount)) / SUM(total_purchase_amount) * 100, 2)
+        ELSE 0
+    END as profit_percentage
+'))

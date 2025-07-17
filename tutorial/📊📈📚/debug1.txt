@@ -1,0 +1,8 @@
+-- Verify product variations
+SELECT * FROM variations WHERE product_id = [ID];
+
+-- Check stock data
+SELECT * FROM variation_location_details WHERE variation_id = [ID];
+
+-- Validate sales data
+SELECT * FROM transaction_sell_lines WHERE variation_id = [ID];

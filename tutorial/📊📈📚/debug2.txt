@@ -1,0 +1,9 @@
+// Check AJAX response
+console.log('DataTable AJAX response:', data);
+
+// Verify footer calculations
+console.log('Total calculations:', {
+    profit: total_profit,
+    sold: total_sold_amount,
+    purchase: total_purchase_amount,
+});

@@ -1,0 +1,4 @@
+// lang/en/lang_v1.php & lang/en/report.php
+'qty_sold' => 'Qty Sold',
+'total_sold' => 'Total Sold',
+// Additional translation keys

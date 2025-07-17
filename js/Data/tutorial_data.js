@@ -176,5 +176,13 @@ const tutorialsData = [
     image: "cover/file/2.webp",
     updateDate: "11 Juli 2025",
     description: "🧩 Kostum ini di Desuaikan Dengan Kebutuhan dari Retail Store (Baiq Market)."
+  },
+  {
+    title: "📑 Panduan Implementasi Laporan Peningkatan Laba Berdasarkan Produk",
+    link: "html/14.html",
+    level: "menengah",
+    image: "cover/14.webp",
+    updateDate: "17 Juli 2025",
+    description: "🧩 Kostum ini di Desuaikan Dengan Kebutuhan dari Retail Store (Baiq Market)."
   }
 ];

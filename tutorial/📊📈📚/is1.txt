@@ -1,0 +1,5 @@
+// app/Http/Controllers/ReportsController.php
+public function getProfit($by = null)
+{
+    // Enhanced method with new columns
+}

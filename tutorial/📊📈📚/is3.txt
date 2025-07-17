@@ -1,0 +1,6 @@
+<!-- resources/views/report/profit_loss.blade.php -->
+<script>
+profit_by_products_table = $('#profit_by_products_table').DataTable({
+    // Enhanced column configuration
+});
+</script>

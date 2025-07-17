@@ -39,9 +39,6 @@ function generateTutorialCards() {
   });
 }
 
-
-
-
 // Initial setup to generate cards
 document.addEventListener("DOMContentLoaded", function () {
   generateTutorialCards(); // Generate cards when the page loads

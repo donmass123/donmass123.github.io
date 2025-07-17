@@ -1,0 +1,5 @@
+// Log query results
+\Log::info('Profit query result:', $query->toSql());
+
+// Debug data formatting
+\Log::info('Product data:', $row->toArray());

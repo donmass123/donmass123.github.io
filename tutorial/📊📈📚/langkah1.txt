@@ -1,0 +1,263 @@
+   public function getProfit($by = null)
+{
+    $business_id = request()->session()->get('user.business_id');
+
+    $query = TransactionSellLine::join('transactions as sale', 'transaction_sell_lines.transaction_id', '=', 'sale.id')
+        ->leftjoin('transaction_sell_lines_purchase_lines as TSPL', 'transaction_sell_lines.id', '=', 'TSPL.sell_line_id')
+        ->leftjoin(
+            'purchase_lines as PL',
+            'TSPL.purchase_line_id',
+            '=',
+            'PL.id'
+        )
+        ->where('sale.type', 'sell')
+        ->where('sale.status', 'final')
+        ->join('products as P', 'transaction_sell_lines.product_id', '=', 'P.id')
+        ->where('sale.business_id', $business_id)
+        ->where('transaction_sell_lines.children_type', '!=', 'combo');
+    //If type combo: find childrens, sale price parent - get PP of childrens
+    $query->select(DB::raw('SUM(IF (TSPL.id IS NULL AND P.type="combo", (
+        SELECT Sum((tspl2.quantity - tspl2.qty_returned) * (tsl.unit_price_inc_tax - pl2.purchase_price_inc_tax)) AS total
+            FROM transaction_sell_lines AS tsl
+                JOIN transaction_sell_lines_purchase_lines AS tspl2
+            ON tsl.id=tspl2.sell_line_id
+            JOIN purchase_lines AS pl2
+            ON tspl2.purchase_line_id = pl2.id
+            WHERE tsl.parent_sell_line_id = transaction_sell_lines.id), IF(P.enable_stock=0,(transaction_sell_lines.quantity - transaction_sell_lines.quantity_returned) * transaction_sell_lines.unit_price_inc_tax,
+            (TSPL.quantity - TSPL.qty_returned) * (transaction_sell_lines.unit_price_inc_tax - PL.purchase_price_inc_tax)) )) AS gross_profit')
+        );
+
+    $permitted_locations = auth()->user()->permitted_locations();
+    if ($permitted_locations != 'all') {
+        $query->whereIn('sale.location_id', $permitted_locations);
+    }
+
+    if (! empty(request()->location_id)) {
+        $query->where('sale.location_id', request()->location_id);
+    }
+
+    if (! empty(request()->start_date) && ! empty(request()->end_date)) {
+        $start = request()->start_date;
+        $end = request()->end_date;
+        $query->whereDate('sale.transaction_date', '>=', $start)
+                    ->whereDate('sale.transaction_date', '<=', $end);
+    }
+
+    if ($by == 'product') {
+        $query->join('variations as V', 'transaction_sell_lines.variation_id', '=', 'V.id')
+            ->leftJoin('product_variations as PV', 'PV.id', '=', 'V.product_variation_id')
+            ->join('units', 'P.unit_id', '=', 'units.id');
+
+        // Add location-based stock query
+        $location_id = request()->location_id;
+        if (!empty($location_id)) {
+            $query->leftJoin('variation_location_details as vld', function($join) use ($location_id) {
+                $join->on('vld.variation_id', '=', 'V.id')
+                     ->where('vld.location_id', '=', $location_id);
+            });
+        } else {
+            // If no specific location, get stock from permitted locations
+            $query->leftJoin('variation_location_details as vld', function($join) use ($permitted_locations) {
+                $join->on('vld.variation_id', '=', 'V.id');
+                if ($permitted_locations != 'all') {
+                    $join->whereIn('vld.location_id', $permitted_locations);
+                }
+            });
+        }
+
+        $query->addSelect(DB::raw("IF(P.type='variable', CONCAT(P.name, ' - ', PV.name, ' - ', V.name, ' (', V.sub_sku, ')'), CONCAT(P.name, ' (', P.sku, ')')) as product"))
+            ->addSelect('P.enable_stock')
+            ->addSelect('units.actual_name as unit')
+            ->addSelect(DB::raw('SUM(COALESCE(vld.qty_available, 0)) as current_stock'))
+            ->addSelect(DB::raw('SUM(transaction_sell_lines.quantity - transaction_sell_lines.quantity_returned) as total_sold'))
+            ->addSelect(DB::raw('SUM((transaction_sell_lines.quantity - transaction_sell_lines.quantity_returned) * transaction_sell_lines.unit_price_inc_tax) as total_sold_amount'))
+            ->addSelect(DB::raw('SUM(IF(TSPL.id IS NULL AND P.enable_stock=0, 0, (TSPL.quantity - TSPL.qty_returned) * PL.purchase_price_inc_tax)) as total_purchase_amount'))
+            ->addSelect(DB::raw('MAX(V.sell_price_inc_tax) as max_price'))
+            ->addSelect(DB::raw('MIN(V.sell_price_inc_tax) as min_price'))
+            ->addSelect(DB::raw('MAX(V.dpp_inc_tax) as max_purchase_price'))
+            ->addSelect(DB::raw('MIN(V.dpp_inc_tax) as min_purchase_price'))
+            ->addSelect('P.type')
+            ->groupBy('V.id');
+    }
+
+    if ($by == 'category') {
+        $query->join('variations as V', 'transaction_sell_lines.variation_id', '=', 'V.id')
+            ->leftJoin('categories as C', 'C.id', '=', 'P.category_id')
+            ->addSelect('C.name as category')
+            ->groupBy('C.id');
+    }
+
+    if ($by == 'brand') {
+        $query->join('variations as V', 'transaction_sell_lines.variation_id', '=', 'V.id')
+            ->leftJoin('brands as B', 'B.id', '=', 'P.brand_id')
+            ->addSelect('B.name as brand')
+            ->groupBy('B.id');
+    }
+
+    if ($by == 'location') {
+        $query->join('business_locations as L', 'sale.location_id', '=', 'L.id')
+            ->addSelect('L.name as location')
+            ->groupBy('L.id');
+    }
+
+    if ($by == 'invoice') {
+        $query->addSelect(
+            'sale.invoice_no',
+            'sale.id as transaction_id',
+            'sale.discount_type',
+            'sale.discount_amount',
+            'sale.total_before_tax'
+        )
+            ->groupBy('sale.invoice_no');
+    }
+
+    if ($by == 'date') {
+        $query->addSelect('sale.transaction_date')
+            ->groupBy(DB::raw('DATE(sale.transaction_date)'));
+    }
+
+    if ($by == 'day') {
+        $results = $query->addSelect(DB::raw('DAYNAME(sale.transaction_date) as day'))
+            ->groupBy(DB::raw('DAYOFWEEK(sale.transaction_date)'))
+            ->get();
+
+        $profits = [];
+        foreach ($results as $result) {
+            $profits[strtolower($result->day)] = $result->gross_profit;
+        }
+        $days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+
+        return view('report.partials.profit_by_day')->with(compact('profits', 'days'));
+    }
+
+    if ($by == 'customer') {
+        $query->join('contacts as CU', 'sale.contact_id', '=', 'CU.id')
+        ->addSelect('CU.name as customer', 'CU.supplier_business_name')
+            ->groupBy('sale.contact_id');
+    }
+
+    if ($by == 'service_staff') {
+        $query->join('users as U', function ($join) {
+            $join->on(DB::raw("COALESCE(transaction_sell_lines.res_service_staff_id, sale.res_waiter_id)"), '=', 'U.id');
+        })
+        ->where('U.is_enable_service_staff_pin', 1)
+        ->addSelect(
+            "U.first_name as f_name",
+            "U.last_name as l_name",
+            "U.surname as surname"
+        )
+        ->groupBy('U.id');
+    }
+
+    $datatable = Datatables::of($query);
+
+    if (in_array($by, ['invoice'])) {
+        $datatable->editColumn('gross_profit', function ($row) {
+            $discount = $row->discount_amount;
+            if ($row->discount_type == 'percentage') {
+                $discount = ($row->discount_amount * $row->total_before_tax) / 100;
+            }
+
+            $profit = $row->gross_profit - $discount;
+            $html = '<span class="gross-profit" data-orig-value="'.$profit.'" >'.$this->transactionUtil->num_f($profit, true).'</span>';
+
+            return $html;
+        });
+    } else {
+        $datatable->editColumn(
+            'gross_profit',
+            function ($row) {
+                return '<span class="gross-profit" data-orig-value="'.$row->gross_profit.'">'.$this->transactionUtil->num_f($row->gross_profit, true).'</span>';
+            });
+    }
+
+    if ($by == 'category') {
+        $datatable->editColumn(
+            'category',
+            '{{$category ?? __("lang_v1.uncategorized")}}'
+        );
+    }
+    if ($by == 'brand') {
+        $datatable->editColumn(
+            'brand',
+            '{{$brand ?? __("report.others")}}'
+        );
+    }
+
+    if ($by == 'date') {
+        $datatable->editColumn('transaction_date', '{{@format_date($transaction_date)}}');
+    }
+
+    if ($by == 'product') {
+        $datatable->filterColumn(
+             'product',
+             function ($query, $keyword) {
+                 $query->whereRaw("IF(P.type='variable', CONCAT(P.name, ' - ', PV.name, ' - ', V.name, ' (', V.sub_sku, ')'), CONCAT(P.name, ' (', P.sku, ')')) LIKE '%{$keyword}%'");
+             });
+
+        // Add new columns for product report
+        $datatable->editColumn('current_stock', function ($row) {
+            if ($row->enable_stock) {
+                $stock = $this->transactionUtil->num_f($row->current_stock, false, null, true);
+                return $stock.' '.$row->unit;
+            } else {
+                return '--';
+            }
+        });
+
+        $datatable->editColumn('total_sold', function ($row) {
+            $sold = $this->transactionUtil->num_f($row->total_sold, false, null, true);
+            return $sold.' '.$row->unit;
+        });
+
+        $datatable->editColumn('total_sold_amount', function ($row) {
+            return '<span class="total-sold-amount" data-orig-value="'.$row->total_sold_amount.'">'.$this->transactionUtil->num_f($row->total_sold_amount, true).'</span>';
+        });
+
+        $datatable->editColumn('total_purchase_amount', function ($row) {
+            return '<span class="total-purchase-amount" data-orig-value="'.$row->total_purchase_amount.'">'.$this->transactionUtil->num_f($row->total_purchase_amount, true).'</span>';
+        });
+
+        $datatable->addColumn(
+            'purchase_price',
+            '<div style="white-space: nowrap;">@format_currency($min_purchase_price) @if($max_purchase_price != $min_purchase_price && $type == "variable") -  @format_currency($max_purchase_price)@endif </div>'
+        );
+
+        $datatable->addColumn(
+            'selling_price',
+            '<div style="white-space: nowrap;">@format_currency($min_price) @if($max_price != $min_price && $type == "variable") -  @format_currency($max_price)@endif </div>'
+        );
+    }
+
+    $raw_columns = ['gross_profit'];
+
+    if ($by == 'customer') {
+        $datatable->editColumn('customer', '@if(!empty($supplier_business_name)) {{$supplier_business_name}}, <br> @endif {{$customer}}');
+        $raw_columns[] = 'customer';
+    }
+
+    if($by == 'service_staff'){
+        $datatable->editColumn('staff_name', '{{$surname}} {{$f_name}} {{$l_name}}');
+        $raw_columns[] = 'staff_name';
+    }
+
+    if ($by == 'invoice') {
+        $datatable->editColumn('invoice_no', function ($row) {
+            return '<a data-href="'.action([\App\Http\Controllers\SellController::class, 'show'], [$row->transaction_id])
+                        .'" href="#" data-container=".view_modal" class="btn-modal">'.$row->invoice_no.'</a>';
+        });
+        $raw_columns[] = 'invoice_no';
+    }
+
+    if ($by == 'product') {
+        $raw_columns[] = 'selling_price';
+        $raw_columns[] = 'purchase_price';
+        $raw_columns[] = 'current_stock';
+        $raw_columns[] = 'total_sold';
+        $raw_columns[] = 'total_sold_amount';
+        $raw_columns[] = 'total_purchase_amount';
+    }
+
+    return $datatable->rawColumns($raw_columns)
+              ->make(true);
+}

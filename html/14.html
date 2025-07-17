@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Adding a favicon -->
+    <link rel="icon" href="https://www.iconpacks.net/icons/2/free-rocket-icon-3418-thumb.png" type="image/x-icon" />
+    <title>Menambahkan “Kebutuhan Stok Cetak” ke dasbor beranda</title>
+    <link rel="stylesheet" href="../css/tutor.css" />
+    <link rel="stylesheet" href="../css/tabel_tutor.css" />
+    <link rel="stylesheet" href="../css/tree.css" />
+    <link rel="stylesheet" href="../css/modal.css" />
+    <link rel="stylesheet" href="../css/sidebar.css" />
+    <link rel="stylesheet" href="../css/bubble.css" />
+    <link rel="stylesheet" href="../css/complete.css" />
+</head>
+
+<body>
+    <!-- Modal Password -->
+    <div id="passwordModal" class="completion-modal">
+        <div class="completion-modal-content">
+            <span class="completion-close" id="closePasswordModal">&times;</span>
+            <h3>🔐 Masukkan Password</h3>
+            <input type="password" id="tutorialPassword" placeholder="Password..." class="completion-input" />
+            <div class="completion-button-group">
+                <button id="submitPassword" class="completion-btn completion-yes-btn">
+                    Akses
+                </button>
+            </div>
+            <p id="passwordError" style="display: none; color: #dc3545; margin-top: 1rem">
+                ❌ Password salah!
+            </p>
+        </div>
+    </div>
+    <div class="blur-wrapper">
+        <div class="container">
+            <header>
+                <h1>
+                    Panduan Implementasi Laporan Peningkatan Laba Berdasarkan Produk
+                </h1>
+                <h1>📊📈📚</h1>
+                <h5>
+                    Panduan ini akan memandu Anda dalam mengimplementasikan kolom yang
+                    ditingkatkan pada laporan Profit by Products di POS Laravel.
+                    Peningkatan ini menambahkan data keuangan yang komprehensif,
+                    termasuk stok saat ini, jumlah yang terjual, informasi harga, dan
+                    total jumlah.
+                </h5>
+            </header>
+
+            <div class="download-box">
+                <a href="https://drive.google.com/drive/folders/1Z4tG3FMdMa3oZ3Nk9oqAp8ydWOlFcDS8?usp=drive_link"
+                    download class="download-button">
+                    ⬇️ Unduh File Contoh
+                </a>
+            </div>
+            <!-- HOME -->
+            <div class="home-button-wrapper">
+                <a href="../main.html" class="home-button">🏠 Kembali ke Beranda</a>
+            </div>
+
+            <div class="toc-dropdown-wrapper">
+                <label for="toc-dropdown" class="toc-icon">
+                    <strong>Daftar Isi</strong>
+                </label>
+                <select id="toc-dropdown" class="toc-dropdown">
+                    <!-- Otomatis diisi JS -->
+                </select>
+            </div>
+
+            <section>
+                <h2>📁 Struktur Implementasi Lengkap</h2>
+                <ul class="tree">
+                    <li>
+                        <details>
+                            <summary> your-laravel-app</summary>
+                            <ul>
+                                <li>
+                                    <details>
+                                        <summary> app</summary>
+                                        <ul>
+                                            <li>
+                                                <details>
+                                                    <summary> Http</summary>
+                                                    <ul>
+                                                        <li>
+                                                            <details>
+                                                                <summary> Controllers</summary>
+                                                                <ul>
+                                                                    <li class="file">
+                                                                        <span class="tag tag-add">UPDATE</span>
+                                                                        <a href="#">ReportsController.php</a>
+                                                                        <span class="tag">METHOD: getProfit()</span>
+                                                                    </li>
+                                                                </ul>
+                                                            </details>
+                                                        </li>
+                                                    </ul>
+                                                </details>
+                                            </li>
+                                        </ul>
+                                    </details>
+                                </li>
+                                <li>
+                                    <details>
+                                        <summary> lang</summary>
+                                        <ul>
+                                            <li>
+                                                <details>
+                                                    <summary> en</summary>
+                                                    <ul>
+                                                        <li class="file">
+                                                            <span class="tag tag-add">UPDATE</span>
+                                                            <a href="#">lang_v1.php</a>
+                                                            <span class="tag">Translation keys</span>
+                                                        </li>
+                                                    </ul>
+                                                </details>
+                                            </li>
+                                        </ul>
+                                    </details>
+                                </li>
+                                <li>
+                                    <details>
+                                        <summary> resources</summary>
+                                        <ul>
+                                            <li>
+                                                <details>
+                                                    <summary> views</summary>
+                                                    <ul>
+                                                        <li>
+                                                            <details>
+                                                                <summary> report</summary>
+                                                                <ul>
+                                                                    <li class="file">
+                                                                        <span class="tag tag-add">UPDATE</span>
+                                                                        <a href="#">profit_loss.blade.php</a>
+                                                                        <span class="tag">JavaScript DataTable
+                                                                            config</span>
+                                                                    </li>
+                                                                    <li>
+                                                                        <details>
+                                                                            <summary> partials</summary>
+                                                                            <ul>
+                                                                                <li class="file">
+                                                                                    <span
+                                                                                        class="tag tag-add">UPDATE</span>
+                                                                                    <a
+                                                                                        href="#">profit_by_products.blade.php</a>
+                                                                                    <span class="tag">Table headers &
+                                                                                        columns</span>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </details>
+                                                                    </li>
+                                                                </ul>
+                                                            </details>
+                                                        </li>
+                                                    </ul>
+                                                </details>
+                                            </li>
+                                        </ul>
+                                    </details>
+                                </li>
+                            </ul>
+                        </details>
+                    </li>
+                </ul>
+
+            </section>
+
+            <section>
+                <h2>Laporan Keuntungan Berdasarkan Produk yang Ditingkatkan</h2>
+                <p>Laporan ini memberikan analisis keuangan yang komprehensif dengan kolom-kolom baru berikut:</p>
+                <ul>
+                    <li><strong>Stok Saat Ini</strong>: Tingkat inventaris waktu nyata yang difilter berdasarkan
+                        lokasi</li>
+                    <li><strong>Jumlah Terjual</strong>: Total unit yang terjual selama periode yang dipilih</li>
+                    <li><strong>Harga Jual</strong>: Harga jual per unit (dengan rentang untuk produk variabel)</li>
+                    <li><strong>Harga Pembelian</strong>: Harga beli per unit (dengan rentang untuk produk variabel)
+                    </li>
+                    <li><strong>Total Pendapatan Terjual</strong>: Total pendapatan yang dihasilkan dari penjualan
+                    </li>
+                    <li><strong>Total Biaya Pembelian</strong>: Total biaya barang yang terjual</li>
+                    <li><strong>Laba Kotor</strong>: Perhitungan laba bersih</li>
+                </ul>
+                <div class="image-box">
+                    <img src="https://ultimate-pos-tutorials.vercel.app/assets/images/enhanced-profit-by-products-preview-c3866a28c049b9550c24fd9f41c0109a.png"
+                        alt="#" />
+                    <p class="caption">
+                        Gambar: Laporan Keuntungan Berdasarkan Produk yang Ditingkatkan.
+                    </p>
+                </div>
+            </section>
+
+            <section>
+                <h2>🎯 Langkah-Langkah Implementasi</h2>
+                <h3><strong>1️⃣ Pembaruan Kontroler Backend</strong></h3>
+                <div class="url-buttons">
+                    <button class="view-modal-button" data-url="../tutorial/📊📈📚/is1.txt">
+                        Pembaruan Kontroler Backend
+                    </button>
+                </div>
+                <h3><strong>2️⃣ Pembaruan Tabel Frontend</strong></h3>
+                <div class="url-buttons">
+                    <button class="view-modal-button" data-url="../tutorial/📊📈📚/is2.txt">
+                        Pembaruan Tabel Frontend
+                    </button>
+                </div>
+                <h3><strong>3️⃣ Konfigurasi DataTable JavaScript</strong></h3>
+                <div class="url-buttons">
+                    <button class="view-modal-button" data-url="../tutorial/📊📈📚/is3.txt">
+                        Konfigurasi DataTable JavaScript
+                    </button>
+                </div>
+                <h3><strong>4️⃣ Pembaruan File Bahasa</strong></h3>
+                <div class="url-buttons">
+                    <button class="view-modal-button" data-url="../tutorial/📊📈📚/is4.txt">
+                        Pembaruan File Bahasa
+                    </button>
+                </div>
+
+            </section>
+            <section>
+                <h2>Langkah 1: Perbarui Metode Kontroler</h2>
+                <p>Gantilah metode <code>getProfit</code> yang ada di <code>ReportsController.php</code>:</p>
+                <div class="url-buttons">
+                    <button class="view-modal-button" data-url="../tutorial/📊📈📚/langkah1.txt">
+                        ReportsController.php
+                    </button>
+                </div>
+                <h3>Peningkatan Utama</h3>
+                <ul>
+                    <li><strong>✅ Stok Berdasarkan Lokasi</strong>: Menggunakan <code>variation_location_details</code>
+                        yang difilter berdasarkan lokasi yang dipilih</li>
+                    <li><strong>✅ Perhitungan Penjualan</strong>: Perhitungan kuantitas dan jumlah yang akurat dengan
+                        penanganan pengembalian</li>
+                    <li><strong>✅ Rentang Harga</strong>: Menampilkan harga min-max untuk produk variabel, harga tunggal
+                        untuk produk lainnya</li>
+                    <li><strong>✅ Format yang Tepat</strong>: Format mata uang, format angka, dan tampilan unit</li>
+                </ul>
+            </section>
+            <section>
+                <h2>Langkah 2: Perbarui Struktur Tabel</h2>
+                <p>Perbarui file tabel <code>profit by products</code> Anda di
+                    <code>resources/views/report/partials/profit_by_products.blade.php</code>:
+                </p>
+                <div class="url-buttons">
+                    <button class="view-modal-button" data-url="../tutorial/📊📈📚/langkah2.txt">
+                        resources/views/report/partials/profit_by_products.blade.php
+                    </button>
+                </div>
+                <h3>Logika Urutan Kolom</h3>
+                <ul>
+                    <li><strong>Informasi Produk</strong>: Nama produk dan stok saat ini</li>
+                    <li><strong>Data Penjualan</strong>: Jumlah yang terjual</li>
+                    <li><strong>Ekonomi Unit</strong>: Harga jual dan harga pembelian per unit</li>
+                    <li><strong>Total Keuangan</strong>: Total pendapatan dan biaya</li>
+                    <li><strong>Profitabilitas</strong>: Laba kotor akhir</li>
+                </ul>
+            </section>
+            <section>
+                <h2>Langkah 3: Perbarui JavaScript DataTable</h2>
+                <p>Perbarui konfigurasi DataTable di tampilan <code>profit loss</code> Anda di
+                    <code>resources/views/report/profit_loss.blade.php</code>:
+                </p>
+                <div class="url-buttons">
+                    <button class="view-modal-button" data-url="../tutorial/📊📈📚/langkah3.txt">
+                        resources/views/report/profit_loss.blade.php
+                    </button>
+                </div>
+                <h3>Fitur yang Ditingkatkan</h3>
+                <ul>
+                    <li><strong>✅ Total Footer Multi-Kolom</strong>: Menampilkan total untuk jumlah terjual, jumlah
+                        pembelian, dan laba</li>
+                    <li><strong>✅ Filter Berdasarkan Lokasi</strong>: Secara otomatis memfilter data ketika lokasi
+                        berubah</li>
+                    <li><strong>✅ Filter Berdasarkan Tanggal</strong>: Terintegrasi dengan pemilih rentang tanggal yang
+                        sudah ada</li>
+                    <li><strong>✅ Tipe Data yang Tepat</strong>: Menangani perhitungan numerik dengan benar</li>
+                </ul>
+            </section>
+            <section>
+                <h2>Langkah 4: Tambahkan Terjemahan Bahasa</h2>
+                <p>Perbarui file bahasa Anda dengan kunci terjemahan baru:</p>
+                <div class="url-buttons">
+                    <button class="view-modal-button" data-url="../tutorial/📊📈📚/langkah3.txt">
+                        Terjemahan Bahasa
+                    </button>
+                </div>
+                <h3>Praktik Terbaik dalam Terjemahan</h3>
+                <ul>
+                    <li>Gunakan terminologi yang konsisten di seluruh aplikasi Anda</li>
+                    <li>Pertimbangkan dukungan multi-bahasa sejak awal</li>
+                    <li>Ikuti konvensi penamaan yang sudah ada dalam file bahasa Anda</li>
+                </ul>
+            </section>
+            <section>
+                <h2>Langkah 5: Hapus Cache dan Uji</h2>
+                <p>Hapus cache Laravel untuk memastikan perubahan tercermin:</p>
+
+                <pre>
+                    <code>
+            # Hapus semua cache
+            php artisan optimize:clear
+
+            # Atau per individunya
+            php artisan route:clear
+            php artisan cache:clear
+            php artisan config:clear
+            php artisan view:clear
+                 </code>
+                </pre>
+            </section>
+            <section>
+                <h2>📋 Ringkasan Fitur</h2>
+                <h3><strong>🔢 Stok Saat Ini</strong></h3>
+                <ul>
+                    <li><strong>Data Real-time</strong>: Menampilkan tingkat inventaris saat ini</li>
+                    <li><strong>Tersaring Berdasarkan Lokasi</strong>: Menghormati filter lokasi yang dipilih</li>
+                    <li><strong>Tampilan Unit</strong>: Menampilkan kuantitas dengan unit yang sesuai (pcs, kg,
+                        dll.)</li>
+                    <li><strong>Status Stok</strong>: Menampilkan '--' untuk item yang tidak tersedia</li>
+                </ul>
+                <h3><strong>📊 Jumlah Terjual</strong></h3>
+                <ul>
+                    <li><strong>Tersaring Berdasarkan Periode</strong>: Menampilkan penjualan untuk rentang tanggal
+                        yang dipilih</li>
+                    <li><strong>Pengembalian Ditangani</strong>: Secara otomatis mengurangi barang yang dikembalikan
+                    </li>
+                    <li><strong>Tampilan Unit</strong>: Konsisten dengan format tampilan stok</li>
+                    <li><strong>Penanganan Nol</strong>: Menampilkan penjualan nol dengan benar</li>
+                </ul>
+                <h3><strong>💰 Harga Per Unit</strong></h3>
+                <ul>
+                    <li><strong>Harga Jual</strong>: Harga jual per unit saat ini</li>
+                    <li><strong>Harga Pembelian</strong>: Harga pembelian terbaru per unit</li>
+                    <li><strong>Produk Variabel</strong>: Menampilkan rentang harga (min - max)</li>
+                    <li><strong>Format Mata Uang</strong>: Menggunakan pengaturan mata uang sistem</li>
+                </ul>
+                <h3><strong>💵 Jumlah Total</strong></h3>
+                <ul>
+                    <li><strong>Total Pendapatan Terjual</strong>: Pendapatan = Qty × Harga Jual</li>
+                    <li><strong>Total Biaya Pembelian</strong>: Biaya = Qty × Harga Pembelian</li>
+                    <li><strong>Verifikasi</strong>: Total Terjual - Total Pembelian = Laba Kotor</li>
+                    <li><strong>Total Footer</strong>: Jumlah dari semua baris yang terlihat</li>
+                </ul>
+                <h3><strong>🎯 Business Intelligence</strong></h3>
+                <ul>
+                    <li><strong>Margin Laba</strong>: Perhitungan mudah persentase laba</li>
+                    <li><strong>Analisis Kinerja</strong>: Mengidentifikasi produk yang paling terjual dan paling
+                        menguntungkan</li>
+                    <li><strong>Wawasan Inventaris</strong>: Membandingkan tingkat stok dengan kecepatan penjualan
+                    </li>
+                    <li><strong>Verifikasi Keuangan</strong>: Memeriksa silang perhitungan laba</li>
+                </ul>
+            </section>
+            <section>
+                <h2>Filter Lanjutan</h2>
+
+                <h3>Analisis Berdasarkan Lokasi</h3>
+                <p>// Laporan secara otomatis memfilter berdasarkan lokasi yang dipilih:</p>
+                <ul>
+                    <li>Tingkat stok hanya dari lokasi yang dipilih</li>
+                    <li>Data penjualan hanya dari lokasi yang dipilih</li>
+                    <li>Data konsisten di semua kolom</li>
+                </ul>
+
+                <h3>Analisis Berdasarkan Rentang Tanggal</h3>
+                <p>// Semua data penjualan mengikuti filter tanggal:</p>
+                <ul>
+                    <li>Jumlah yang terjual dalam periode</li>
+                    <li>Pendapatan yang dihasilkan dalam periode</li>
+                    <li>Biaya yang dikeluarkan dalam periode</li>
+                    <li>Laba yang diperoleh dalam periode</li>
+                </ul>
+            </section>
+            <section>
+                <h2>Rumusan Perhitungan</h2>
+
+                <h3>Perhitungan Inti</h3>
+                <div class="url-buttons">
+                    <button class="view-modal-button" data-url="../tutorial/📊📈📚/db1.txt">
+                        Perhitungan Inti
+                    </button>
+                </div>
+
+                <h3>Produk Variabel</h3>
+                <div class="url-buttons">
+                    <button class="view-modal-button" data-url="../tutorial/📊📈📚/db2.txt">
+                        Produk Variabel
+                    </button>
+                </div>
+            </section>
+            <section>
+                <h2>Pertimbangan Performa</h2>
+
+                <h3>Optimisasi Database</h3>
+                <ul>
+                    <li><strong>Join Terindeks</strong>: Pastikan indeks yang tepat pada kolom yang digabungkan</li>
+                    <li><strong>Optimisasi Query</strong>: Gunakan <code>GROUP BY</code> dan agregasi yang efisien</li>
+                    <li><strong>Pagination</strong>: Proses sisi server untuk dataset besar</li>
+                    <li><strong>Caching</strong>: Pertimbangkan untuk menerapkan caching hasil query</li>
+                </ul>
+
+                <h3>Manajemen Memori</h3>
+                <ul>
+                    <li><strong>Pemrosesan Terbagi</strong>: DataTables menangani dataset besar dengan efisien</li>
+                    <li><strong>Pemuatan Selektif</strong>: Hanya memuat data yang terlihat</li>
+                    <li><strong>Perhitungan Footer</strong>: Algoritma penjumlahan yang efisien</li>
+                </ul>
+            </section>
+            <section>
+                <h2>Pemecahan Masalah</h2>
+
+                <h3>Masalah Umum</h3>
+
+                <h4>Nomor Stok Tidak Cocok</h4>
+                <ul>
+                    <li><strong>Masalah</strong>: Stok saat ini tidak sesuai dengan data penjualan</li>
+                    <li><strong>Solusi</strong>: Verifikasi filter lokasi diterapkan secara konsisten</li>
+                    <li><strong>Periksa</strong>: Tabel <code>variation_location_details</code> memiliki data yang benar
+                    </li>
+                </ul>
+
+                <h4>Rentang Harga Tidak Tepat</h4>
+                <ul>
+                    <li><strong>Masalah</strong>: Harga Min/Maks menunjukkan nilai yang salah</li>
+                    <li><strong>Solusi</strong>: Periksa integritas data pada tabel <code>variation</code></li>
+                    <li><strong>Verifikasi</strong>: Relasi antara <code>product_variations</code> dan
+                        <code>variations</code>
+                    </li>
+                </ul>
+
+                <h4>Perhitungan Total Salah</h4>
+                <ul>
+                    <li><strong>Masalah</strong>: Total footer tidak sesuai</li>
+                    <li><strong>Solusi</strong>: Verifikasi atribut <code>data-orig-value</code> dalam HTML</li>
+                    <li><strong>Periksa</strong>: Penanganan <code>parseFloat()</code> di JavaScript</li>
+                </ul>
+
+                <h4>Masalah Performa</h4>
+                <ul>
+                    <li><strong>Masalah</strong>: Laporan memuat lambat</li>
+                    <li><strong>Solusi</strong>: Tambahkan indeks database pada kolom yang digabungkan</li>
+                    <li><strong>Pertimbangkan</strong>: Menerapkan caching hasil query</li>
+                </ul>
+            </section>
+            <section>
+                <h2>Langkah-Langkah Debugging</h2>
+                <h3>Periksa Query Database</h3>
+                <div class="url-buttons">
+                    <button class="view-modal-button" data-url="../tutorial/📊📈📚/debug1.txt">
+                        Periksa Query Database
+                    </button>
+                </div>
+                <h3>Debugging Console</h3>
+                <div class="url-buttons">
+                    <button class="view-modal-button" data-url="../tutorial/📊📈📚/debug2.txt">
+                        Debugging Console
+                    </button>
+                </div>
+                <h3>Debugging Laravel</h3>
+                <div class="url-buttons">
+                    <button class="view-modal-button" data-url="../tutorial/📊📈📚/debug3.txt">
+                        Debugging Laravel
+                    </button>
+                </div>
+            </section>
+            <section>
+                <h2>Opsi Kustomisasi</h2>
+
+                <h3>Menambahkan Kolom Tambahan</h3>
+                <p>Untuk menambahkan kolom tambahan:</p>
+                <h4>Perbarui Query Kontroler</h4>
+                <div class="url-buttons">
+                    <button class="view-modal-button" data-url="../tutorial/📊📈📚/am1.txt">
+                        Perbarui Query Kontroler
+                    </button>
+                </div>
+                <h4>Tambahkan Kolom DataTable</h4>
+                <div class="url-buttons">
+                    <button class="view-modal-button" data-url="../tutorial/📊📈📚/am2.txt">
+                        Tambahkan Kolom DataTable
+                    </button>
+                </div>
+                <h4>Perbarui Header Tabel</h4>
+                <div class="url-buttons">
+                    <button class="view-modal-button" data-url="../tutorial/📊📈📚/am3.txt">
+                        Perbarui Header Tabel
+                    </button>
+                </div>
+                <h3>Perhitungan Kustom</h3>
+                <p>Tambahkan perhitungan khusus untuk bisnis:</p>
+                <div class="url-buttons">
+                    <button class="view-modal-button" data-url="../tutorial/📊📈📚/cc.txt">
+                        Perhitungan Kustom
+                    </button>
+                </div>
+                <h3>Kustomisasi Styling</h3>
+                <p>Sesuaikan tampilan:</p>
+                <div class="url-buttons">
+                    <button class="view-modal-button" data-url="../tutorial/📊📈📚/sc.txt">
+                        Kustomisasi Styling
+                    </button>
+                </div>
+            </section>
+
+            <section>
+                <h2>🔐 Praktik Terbaik</h2>
+                <h3>Integritas Data</h3>
+                <ul>
+                    <li>Selalu tangani nilai null dalam perhitungan</li>
+                    <li>Gunakan <strong>COALESCE</strong> untuk data stok yang mungkin hilang</li>
+                    <li>Implementasikan penanganan error yang tepat pada kontroler</li>
+                </ul>
+
+                <h3>👥 Pengalaman Pengguna</h3>
+                <ul>
+                    <li>Sediakan indikator loading untuk dataset besar</li>
+                    <li>Gunakan format angka yang konsisten di seluruh aplikasi</li>
+                    <li>Sertakan tooltip yang membantu untuk perhitungan yang kompleks</li>
+                </ul>
+
+                <h3>⚡ Performa</h3>
+                <ul>
+                    <li>Terapkan caching hasil query untuk data yang sering diakses</li>
+                    <li>Gunakan indeks database pada kolom yang sering digabungkan</li>
+                    <li>Pertimbangkan untuk menggunakan pagination untuk dataset yang sangat besar</li>
+                </ul>
+
+                <h3>🔒 Keamanan</h3>
+                <ul>
+                    <li>Validasi izin akses lokasi</li>
+                    <li>Sanitasi semua input pengguna</li>
+                    <li>Gunakan perlindungan CSRF bawaan Laravel</li>
+                </ul>
+            </section>
+            <section>
+                <h2>Kesimpulan</h2>
+                <p>Laporan Keuntungan Berdasarkan Produk yang Ditingkatkan memberikan wawasan keuangan yang komprehensif
+                    dengan integrasi inventaris waktu nyata. Implementasi ini menawarkan:</p>
+                <ul>
+                    <li><strong>Gambaran Keuangan yang Lengkap</strong>: Dari ekonomi unit hingga total kinerja</li>
+                    <li><strong>Intelijen Lokasi</strong>: Data stok dan penjualan yang akurat berdasarkan lokasi</li>
+                    <li><strong>Verifikasi Laba</strong>: Akurasi matematis dengan validasi silang</li>
+                    <li><strong>Intelijen Bisnis</strong>: Wawasan yang dapat ditindaklanjuti untuk pengambilan
+                        keputusan</li>
+                    <li><strong>Arsitektur yang Dapat Diskalakan</strong>: Penanganan dataset besar yang efisien</li>
+                </ul>
+                <p>Peningkatan ini mengubah laporan laba dasar menjadi alat intelijen bisnis yang kuat yang membantu
+                    manajer untuk membuat keputusan yang terinformasi mengenai inventaris, harga, dan kinerja produk.
+                </p>
+            </section>
+            <footer>
+                <!-- HOME -->
+                <div class="home-button-wrapper">
+                    <a href="../main.html" class="home-button">🏠 Kembali ke Beranda</a>
+                </div>
+            </footer>
+        </div>
+    </div>
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <iframe id="modalFrame" src="" frameborder="0" style="width: 100%; height: 400px"></iframe>
+        </div>
+    </div>
+    <button id="bubbleUp" title="Kembali ke Atas" aria-label="Kembali ke Atas">
+        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="none" viewBox="0 0 24 24" stroke="white">
+            <path stroke-linecap="round" stroke-width="2" d="M6 15l6-6 6 6" />
+        </svg>
+    </button>
+    <div id="completionModal" class="completion-modal">
+        <div class="completion-modal-content">
+            <span class="completion-close" title="Tutup">&times;</span>
+            <h3>🎉 Selamat, kamu telah menyelesaikan tutorialnya!</h3>
+            <p>Apakah kamu ingin mengunduh file yang telah jadi?</p>
+            <div class="completion-button-group">
+                <a id="completion-download-btn" data-id="file_9" class="completion-btn completion-yes-btn">
+                    ✅ Ya
+                </a>
+                <button id="completion-no-btn" class="completion-btn completion-no-btn">
+                    ❌ Tidak
+                </button>
+            </div>
+        </div>
+    </div>
+    <script src="../js/scripts.js"></script>
+    <script src="../js/sidebar.js"></script>
+    <script src="../js/bubble.js"></script>
+    <script src="../js/complete.js"></script>
+    <script src="../js//Data/file_download_data.js"></script>
+    <script src="../js//Data/pass_data.js"></script>
+
+    <!-- Link ke file JavaScript -->
+</body>
+
+</html>

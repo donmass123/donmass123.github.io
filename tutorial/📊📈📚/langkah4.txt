@@ -1,0 +1,10 @@
+// lang/en/lang_v1.php
+'qty_sold' => 'Qty Sold',
+'total_sold' => 'Total Sold',
+'selling_price' => 'Selling Price',
+'purchase_price' => 'Purchase Price',
+'gross_profit' => 'Gross Profit',
+
+// lang/en/report.php
+'current_stock' => 'Current Stock',
+'total_purchase' => 'Total Purchase',

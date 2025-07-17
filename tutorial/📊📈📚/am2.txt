@@ -1,0 +1,5 @@
+{
+    data: 'new_column',
+    name: 'new_column',
+    "searchable": false
+}

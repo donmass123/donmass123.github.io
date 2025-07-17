@@ -1,0 +1,4 @@
+<!-- resources/views/report/partials/profit_by_products.blade.php -->
+<table class="table table-bordered table-striped" id="profit_by_products_table">
+    <!-- Enhanced table with new columns -->
+</table>

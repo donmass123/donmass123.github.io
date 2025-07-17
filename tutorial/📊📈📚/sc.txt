@@ -1,0 +1,12 @@
+/* Custom CSS for enhanced report */
+.profit-report-enhanced {
+    .total-sold-amount {
+        color: #28a745;
+    }
+    .total-purchase-amount {
+        color: #dc3545;
+    }
+    .gross-profit {
+        font-weight: bold;
+    }
+}

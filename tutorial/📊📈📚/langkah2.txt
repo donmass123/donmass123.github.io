@@ -1,0 +1,32 @@
+<div class="table-responsive">
+    <table class="table table-bordered table-striped" id="profit_by_products_table">
+        <thead>
+            <tr>
+                <th>@lang('sale.product')</th>
+                <th>@lang('report.current_stock')</th>
+                <th>@lang('lang_v1.qty_sold')</th>
+                <th>@lang('lang_v1.selling_price')</th>
+                <th>@lang('lang_v1.purchase_price')</th>
+                <th>@lang('lang_v1.total_sold')</th>
+                <th>@lang('report.total_purchase')</th>
+                <th>@lang('lang_v1.gross_profit')</th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr class="bg-gray font-17 footer-total">
+                <td><strong>@lang('sale.total'):</strong></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td class="footer_sold_amount"></td>
+                <td class="footer_purchase_amount"></td>
+                <td class="footer_total"></td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <p class="text-muted">
+        @lang('lang_v1.profit_note')
+    </p>
+</div>
