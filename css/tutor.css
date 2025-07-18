@@ -92,7 +92,7 @@ section h2 {
 }
 
 pre {
-  background: var(--code-bg);
+  background:#f5f5f5;
   color: var(--code-text);
   padding: 20px;
   border-radius: 8px;
