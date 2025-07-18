@@ -1,18 +1,18 @@
 :root {
-  --bg: #f4f4f9;
+  --bg: #f9f9f9; /* Soft light background for a modern clean look */
   --white: #ffffff;
-  --primary: #2c3e50;
-  --secondary: #2980b9;
-  --accent: #e74c3c;
-  --text: #34495e;
-  --muted: #7f8c8d;
-  --code-bg: #ecf0f1;
-  --code-text: #34495e;
-  --success: #27ae60;
+  --primary: #333333; /* Dark grey for a modern text-heavy design */
+  --secondary: #009688; /* Teal for freshness and modernity */
+  --accent: #e91e63; /* Vibrant pinkish-red accent */
+  --text: #212121; /* Deep dark grey text for high contrast */
+  --muted: #757575; /* Muted grey for less emphasized text */
+  --code-bg: #2f2f2f; /* Dark background for code */
+  --code-text: #f1f1f1; /* Light text for code */
+  --success: #4caf50; /* Green for success, modern and clean */
 }
 
 body {
-  font-family: "Roboto", sans-serif;
+  font-family: "Helvetica Neue", sans-serif;
   background: var(--bg);
   color: var(--text);
   margin: 0;
@@ -21,29 +21,29 @@ body {
 }
 
 .container {
-  max-width: 960px;
+  max-width: 1200px;
   margin: auto;
-  padding: 50px 30px;
+  padding: 60px 30px;
 }
 
 header {
   text-align: center;
-  margin-bottom: 40px;
+  margin-bottom: 50px;
 }
 
 header h1 {
-  font-size: 36px;
+  font-size: 48px;
   margin-bottom: 15px;
   color: var(--primary);
-  font-weight: bold;
-  letter-spacing: 1px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
 }
 
 header p {
-  font-size: 14px;
+  font-size: 16px;
   margin-bottom: 10px;
-  color: var(--primary);
-  font-weight: lighter;
+  color: var(--secondary);
+  font-weight: 300;
   letter-spacing: 1px;
 }
 
@@ -55,8 +55,8 @@ header p {
 .download-button {
   background-color: var(--primary);
   color: var(--white);
-  padding: 15px 30px;
-  border-radius: 10px;
+  padding: 14px 40px;
+  border-radius: 8px;
   text-decoration: none;
   font-weight: 600;
   font-size: 18px;
@@ -70,42 +70,26 @@ header p {
 
 section {
   background: var(--white);
-  border-left: 6px solid var(--accent);
-  border-radius: 15px;
-  /* Slightly more rounded for a softer look */
+  border-left: 4px solid var(--accent);
+  border-radius: 10px;
   padding: 40px;
-  /* More padding for spacious content */
   margin-bottom: 50px;
-  /* Increased bottom margin for better separation */
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
-  /* Deeper shadow for more depth */
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
-  /* Smooth transition effect for hover */
 }
 
 section:hover {
   transform: translateY(-5px);
-  /* Lift effect on hover */
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
-  /* Darker shadow when hovered */
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
 }
 
 section h2 {
-  font-size: 28px;
-  /* Larger font size for better visibility */
+  font-size: 32px;
   color: var(--primary);
-  /* Use primary color for more impact */
   margin-top: 0;
   font-weight: 700;
-  /* Bolder font weight */
-  letter-spacing: 1px;
-  /* Add spacing for a more modern feel */
+  letter-spacing: 0.5px;
 }
-
-/* ul {
-  padding-left: 20px;
-  margin-bottom: 20px;
-} */
 
 pre {
   background: var(--code-bg);
@@ -124,11 +108,11 @@ code {
 }
 
 .tip {
-  background: #f0fdf4;
-  border-left: 6px solid var(--success);
+  background: #e8f5e9;
+  border-left: 4px solid var(--success);
   padding: 20px 25px;
   border-radius: 8px;
-  color: #1e7d5e;
+  color: var(--success);
   margin-top: 20px;
 }
 
@@ -140,7 +124,7 @@ code {
 .image-box img {
   max-width: 100%;
   height: auto;
-  border-radius: 6px;
+  border-radius: 8px;
 }
 
 .caption {
@@ -157,23 +141,22 @@ footer {
   margin-top: 60px;
 }
 
-/* Media Queries untuk Responsivitas */
 @media (max-width: 992px) {
   .container {
-    padding: 40px 25px;
+    padding: 50px 25px;
   }
 
   header h1 {
-    font-size: 32px;
+    font-size: 40px;
   }
 
   .download-button {
     font-size: 16px;
-    padding: 12px 25px;
+    padding: 12px 30px;
   }
 
   section {
-    padding: 25px;
+    padding: 30px;
   }
 
   .tip {
@@ -183,7 +166,7 @@ footer {
 
 @media (max-width: 768px) {
   header h1 {
-    font-size: 28px;
+    font-size: 32px;
   }
 
   header p {
@@ -224,7 +207,7 @@ footer {
 
 @media (max-width: 480px) {
   header h1 {
-    font-size: 24px;
+    font-size: 28px;
   }
 
   .download-box {
@@ -247,7 +230,7 @@ footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
   flex-wrap: wrap;
 }
 
@@ -262,7 +245,7 @@ footer {
 }
 
 .section-download:hover {
-  background-color: #c0392b;
+  background-color: #d32f2f;
 }
 
 .home-button-wrapper {
@@ -283,7 +266,7 @@ footer {
 }
 
 .home-button:hover {
-  background-color: #c0392b;
+  background-color: #d32f2f;
 }
 
 strong {
@@ -292,8 +275,6 @@ strong {
   font-size: 1em;
   word-wrap: break-word;
   font-style: italic;
-  /* Membuat teks miring */
-
 }
 
 @media (max-width: 768px) {
@@ -354,129 +335,81 @@ strong {
   }
 }
 
-/* UL IL */
 ul {
   list-style: none;
   padding-left: 0;
   margin-bottom: 24px;
   display: flex;
   flex-direction: column;
-  gap: 0px;
-  /* Slightly increased gap for more space between items */
+  gap: 12px;
 }
 
 li {
   position: relative;
-  padding: 14px 20px 14px 40px;
-  /* Adjusted padding for better spacing */
+  padding: 12px 20px 12px 40px;
   background-color: #ffffff;
-  border-radius: 12px;
-  /* Slightly more rounded corners for a modern feel */
+  border-radius: 8px;
   color: var(--text);
-  font-size: 15px;
-  /* Adjusted font size for better readability */
+  font-size: 16px;
   line-height: 1.7;
-  /* Slightly increased line height for better spacing */
   font-weight: normal;
-  /* Removed bold font */
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  /* Slightly stronger shadow for more depth */
   transition: background-color 0.3s ease, transform 0.3s ease;
-  /* Added transition for a smooth hover effect */
 }
 
-/* Elegant bullet with a bit of flair */
 li::before {
   content: "•";
   position: absolute;
   left: 16px;
   top: 14px;
   font-size: 22px;
-  /* Slightly larger bullet for more emphasis */
   color: var(--accent);
   transition: color 0.3s ease;
-  /* Smooth transition for bullet color */
 }
 
-/* Hover effect with smooth transformation */
 li:hover {
   background-color: #f3f3f3;
-  /* Slightly warmer hover background */
   transform: translateX(6px);
-  /* Added subtle right shift for a modern hover effect */
 }
 
 li:hover::before {
   color: var(--primary);
-  /* Change bullet color on hover for more emphasis */
 }
 
-/* Media Query for smaller screens */
-@media (max-width: 768px) {
-  li {
-    font-size: 16px;
-    padding: 12px 18px 12px 36px;
-  }
-
-  li::before {
-    font-size: 20px;
-    top: 13px;
-    left: 18px;
-  }
-}
-
-/* Media Query for very small screens */
-@media (max-width: 480px) {
-  li {
-    font-size: 15px;
-    padding: 10px 14px 10px 32px;
-  }
-
-  li::before {
-    font-size: 18px;
-    top: 12px;
-    left: 14px;
-  }
-}
-
-/* h1: Headline utama */
 h1 {
-  font-family: "Roboto", sans-serif;
-  font-size: 38px;
+  font-family: "Helvetica Neue", sans-serif;
+  font-size: 40px;
   font-weight: 700;
   color: var(--primary);
   margin-bottom: 20px;
   line-height: 1.3;
-  letter-spacing: 1px;
 }
 
-/* h2: Subjudul */
 h2 {
-  font-family: "Roboto", sans-serif;
-  font-size: 28px;
+  font-family: "Helvetica Neue", sans-serif;
+  font-size: 30px;
   font-weight: 600;
   color: var(--secondary);
   margin-bottom: 16px;
   line-height: 1.4;
   position: relative;
-  padding-left: 10px;
+  padding-left: 12px;
 }
 
 h2::before {
   content: "";
   position: absolute;
   left: 0;
-  top: 8px;
+  top: 10px;
   width: 4px;
-  height: 75%;
+  height: 80%;
   background-color: var(--accent);
   border-radius: 2px;
 }
 
-/* h3: Judul kecil */
 h3 {
-  font-family: "Roboto", sans-serif;
-  font-size: 22px;
+  font-family: "Helvetica Neue", sans-serif;
+  font-size: 24px;
   font-weight: 500;
   color: var(--text);
   margin-bottom: 12px;
@@ -486,38 +419,34 @@ h3 {
 }
 
 h3::before {
-  content: "▹";
+  content: "▸";
   position: absolute;
   left: 0;
   top: 1px;
   color: var(--accent);
-  font-size: 18px;
+  font-size: 20px;
 }
 
-/* p: paragraf */
 p {
-  font-family: "Roboto", sans-serif;
-  font-size: 17px;
-  font-weight: normal;
-  /* Removed bold font */
+  font-family: "Helvetica Neue", sans-serif;
+  font-size: 18px;
   color: var(--text);
   line-height: 1.7;
   margin-bottom: 20px;
   max-width: 800px;
 }
 
-/* Responsif */
 @media (max-width: 768px) {
   h1 {
-    font-size: 32px;
+    font-size: 34px;
   }
 
   h2 {
-    font-size: 24px;
+    font-size: 26px;
   }
 
   h3 {
-    font-size: 20px;
+    font-size: 22px;
   }
 
   p {
@@ -535,10 +464,10 @@ p {
   }
 
   h3 {
-    font-size: 18px;
+    font-size: 20px;
   }
 
   p {
-    font-size: 15.5px;
+    font-size: 15px;
   }
 }
