@@ -173,7 +173,7 @@
 /* Tambahan untuk perangkat kecil */
 @media (max-width: 480px) {
   .url-buttons .view-modal-button {
-    font-size: 13px;
+    font-size: 10px;
     padding: 10px 18px;
   }
 }
