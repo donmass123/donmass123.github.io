@@ -70,10 +70,10 @@ header p {
 
 section {
   background: var(--white);
-  border-left: 4px solid var(--accent);
+  border-left: 4px solid #ffffff;
   border-radius: 10px;
   padding: 40px;
-  margin-bottom: 50px;
+  margin-bottom: 20px;
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
 }
