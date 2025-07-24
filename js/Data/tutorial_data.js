@@ -184,5 +184,13 @@ const tutorialsData = [
     image: "cover/14.webp",
     updateDate: "17 Juli 2025",
     description: "📦 Panduan ini akan memandu Anda dalam mengimplementasikan kolom yang ditingkatkan pada laporan Profit by Products di POS Laravel."
+  },
+  {
+    title: "📑 File POS untuk dijalankan Di Android Dan IOS",
+    link: "https://drive.google.com/file/d/1284DtOh9qytRf-90os2FzZs34XaqLoTI/view?usp=sharing",
+    level: "file",
+    image: "cover/file/3.webp",
+    updateDate: "24 Juli 2025",
+    description: "📦 POS Untuk Device Android Da IOS 1.7.2."
   }
 ];
