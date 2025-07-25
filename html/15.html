@@ -1,190 +1,167 @@
 <!DOCTYPE html>
 <html lang="id">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Adding a favicon -->
-    <link
-      rel="icon"
-      href="https://www.iconpacks.net/icons/2/free-rocket-icon-3418-thumb.png"
-      type="image/x-icon"
-    />
-    <title>Menambahkan Filter Sub-Kategori ke Indeks Produk di POS</title>
-    <link rel="stylesheet" href="../css/tutor.css" />
-    <link rel="stylesheet" href="../css/modal.css" />
-    <link rel="stylesheet" href="../css/sidebar.css" />
-    <link rel="stylesheet" href="../css/bubble.css" />
-    <link rel="stylesheet" href="../css/complete.css" />
-    <link rel="stylesheet" href="../css/tree.css" />
-  </head>
 
-  <body>
-    <!-- Modal Password -->
-    <div id="passwordModal" class="completion-modal">
-      <div class="completion-modal-content">
-        <span class="completion-close" id="closePasswordModal">&times;</span>
-        <h3>🔐 Masukkan Password</h3>
-        <input
-          type="password"
-          id="tutorialPassword"
-          placeholder="Password..."
-          class="completion-input"
-        />
-        <div class="completion-button-group">
-          <button id="submitPassword" class="completion-btn completion-yes-btn">
-            Akses
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Adding a favicon -->
+  <link rel="icon" href="https://www.iconpacks.net/icons/2/free-rocket-icon-3418-thumb.png" type="image/x-icon" />
+  <title>Menambahkan Filter Sub-Kategori ke Indeks Produk di POS</title>
+  <link rel="stylesheet" href="../css/tutor.css" />
+  <link rel="stylesheet" href="../css/modal.css" />
+  <link rel="stylesheet" href="../css/sidebar.css" />
+  <link rel="stylesheet" href="../css/bubble.css" />
+  <link rel="stylesheet" href="../css/complete.css" />
+  <link rel="stylesheet" href="../css/tree.css" />
+</head>
+
+<body>
+  <!-- Modal Password -->
+  <div id="passwordModal" class="completion-modal">
+    <div class="completion-modal-content">
+      <span class="completion-close" id="closePasswordModal">&times;</span>
+      <h3>🔐 Masukkan Password</h3>
+      <input type="password" id="tutorialPassword" placeholder="Password..." class="completion-input" />
+      <div class="completion-button-group">
+        <button id="submitPassword" class="completion-btn completion-yes-btn">
+          Akses
+        </button>
+      </div>
+      <p id="passwordError" style="display: none; color: #dc3545; margin-top: 1rem">
+        ❌ Password salah!
+      </p>
+    </div>
+  </div>
+
+  <div class="blur-wrapper">
+    <div class="container">
+      <header>
+        <h1>Menambahkan Kolom Diskon ke Laporan Penjualan Produk</h1>
+        <h1>📦📈🧾➕🏷️%</h1>
+        <h5>
+          Panduan ini menunjukkan cara menambahkan kolom diskon yang
+          komprehensif ke Laporan Penjualan Produk, memberikan visibilitas
+          terperinci ke berbagai jenis diskon yang diterapkan pada transaksi.
+        </h5>
+      </header>
+      <!-- HOME -->
+      <div class="home-button-wrapper">
+        <a href="../main.html" class="home-button">🏠 Kembali ke Beranda</a>
+      </div>
+
+      <div class="toc-dropdown-wrapper">
+        <label for="toc-dropdown" class="toc-icon">
+          <strong>Daftar Isi</strong>
+        </label>
+        <select id="toc-dropdown" class="toc-dropdown">
+          <!-- Otomatis diisi JS -->
+        </select>
+      </div>
+      <section>
+        <h2>Ikhtisar</h2>
+        <p>
+          Kami akan menambahkan tiga kolom diskon baru ke dalam Laporan
+          Penjualan Produk yang sudah ada:
+        </p>
+        <div class="image-box">
+          <img
+            src="https://ultimate-pos-tutorials.vercel.app/assets/images/discounts-colmuns-in-sell-report-5ffd4193c73a255de55e9a0455d293cb.png"
+            alt="#" />
+          <p class="caption">
+            Gambar: tiga kolom diskon baru ke dalam Laporan Penjualan Produk.
+          </p>
+        </div>
+        <ul>
+          <li>
+            <strong>Diskon Baris</strong>: Total diskon di tingkat baris untuk
+            transaksi
+          </li>
+          <li><strong>Diskon Faktur</strong>: Diskon di tingkat transaksi</li>
+          <li>
+            <strong>Total Diskon</strong>: Gabungan dari diskon baris dan
+            faktur
+          </li>
+        </ul>
+
+        <h3>Kolom Diskon</h3>
+        <p>
+          Urutan kolom akhir akan menjadi:
+          <strong>Diskon yang Ada → Diskon Baris → Diskon Faktur → Total Diskon →
+            Jumlah Total</strong>
+        </p>
+      </section>
+
+      <section>
+        <h2>Pohon Implementasi Lengkap</h2>
+        <ul class="tree">
+          <li>
+            Backend (PHP)
+            <details>
+              <summary>getproductSellReport() method</summary>
+              <ul>
+                <li>Query modifications</li>
+                <li>New column calculations</li>
+                <li>DataTables response updates</li>
+              </ul>
+            </details>
+          </li>
+          <li>
+            Frontend (Blade Template)
+            <ul>
+              <li>Table headers update</li>
+              <li>Footer calculations update</li>
+            </ul>
+          </li>
+          <li>
+            JavaScript
+            <ul>
+              <li>DataTables configuration</li>
+              <li>Column mappings update</li>
+            </ul>
+          </li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Langkah-langkah Implementasi</h2>
+      </section>
+
+      <section>
+        <h2>✅ Langkah 1: Perbarui Metode Kontroler PHP</h2>
+        <p>
+          Perbarui metode <code>getproductSellReport</code> di kontroler
+          <strong>app/Http/Controllers/ReportController.php</strong>:
+        </p>
+        <div class="url-buttons">
+          <button class="view-modal-button" data-url="../tutorial/📦📈🧾➕🏷️%/langkah1.txt">
+            app/Http/Controllers/ReportController.php
           </button>
         </div>
-        <p
-          id="passwordError"
-          style="display: none; color: #dc3545; margin-top: 1rem"
-        >
-          ❌ Password salah!
+      </section>
+
+      <section>
+        <h2>✅ Langkah 2: Perbarui Header Template Blade</h2>
+        <p>
+          Perbarui header tabel di
+          <strong>resources/views/report/product_sell_report.blade.php</strong>:
         </p>
-      </div>
-    </div>
-
-    <div class="blur-wrapper">
-      <div class="container">
-        <header>
-          <h1>Menambahkan Kolom Diskon ke Laporan Penjualan Produk</h1>
-          <h1>📦📈🧾➕🏷️%</h1>
-          <h5>
-            Panduan ini menunjukkan cara menambahkan kolom diskon yang
-            komprehensif ke Laporan Penjualan Produk, memberikan visibilitas
-            terperinci ke berbagai jenis diskon yang diterapkan pada transaksi.
-          </h5>
-        </header>
-        <!-- HOME -->
-        <div class="home-button-wrapper">
-          <a href="../main.html" class="home-button">🏠 Kembali ke Beranda</a>
+        <div class="url-buttons">
+          <button class="view-modal-button" data-url="../tutorial/📦📈🧾➕🏷️%/langkah2.txt">
+            resources/views/report/product_sell_report.blade.php
+          </button>
         </div>
-
-        <div class="toc-dropdown-wrapper">
-          <label for="toc-dropdown" class="toc-icon">
-            <strong>Daftar Isi</strong>
-          </label>
-          <select id="toc-dropdown" class="toc-dropdown">
-            <!-- Otomatis diisi JS -->
-          </select>
-        </div>
-        <section>
-          <h2>Ikhtisar</h2>
-          <p>
-            Kami akan menambahkan tiga kolom diskon baru ke dalam Laporan
-            Penjualan Produk yang sudah ada:
-          </p>
-          <div class="image-box">
-            <img
-              src="https://ultimate-pos-tutorials.vercel.app/assets/images/discounts-colmuns-in-sell-report-5ffd4193c73a255de55e9a0455d293cb.png"
-              alt="#"
-            />
-            <p class="caption">
-              Gambar: tiga kolom diskon baru ke dalam Laporan Penjualan Produk.
-            </p>
-          </div>
-          <ul>
-            <li>
-              <strong>Diskon Baris</strong>: Total diskon di tingkat baris untuk
-              transaksi
-            </li>
-            <li><strong>Diskon Faktur</strong>: Diskon di tingkat transaksi</li>
-            <li>
-              <strong>Total Diskon</strong>: Gabungan dari diskon baris dan
-              faktur
-            </li>
-          </ul>
-
-          <h3>Kolom Diskon</h3>
-          <p>
-            Urutan kolom akhir akan menjadi:
-            <strong
-              >Diskon yang Ada → Diskon Baris → Diskon Faktur → Total Diskon →
-              Jumlah Total</strong
-            >
-          </p>
-        </section>
-
-        <section>
-          <h2>Pohon Implementasi Lengkap</h2>
-          <ul class="tree">
-            <li>
-              Backend (PHP)
-              <details>
-                <summary>getproductSellReport() method</summary>
-                <ul>
-                  <li>Query modifications</li>
-                  <li>New column calculations</li>
-                  <li>DataTables response updates</li>
-                </ul>
-              </details>
-            </li>
-            <li>
-              Frontend (Blade Template)
-              <ul>
-                <li>Table headers update</li>
-                <li>Footer calculations update</li>
-              </ul>
-            </li>
-            <li>
-              JavaScript
-              <ul>
-                <li>DataTables configuration</li>
-                <li>Column mappings update</li>
-              </ul>
-            </li>
-          </ul>
-        </section>
-
-        <section>
-          <h2>Langkah-langkah Implementasi</h2>
-        </section>
-
-        <section>
-          <h2>✅ Langkah 1: Perbarui Metode Kontroler PHP</h2>
-          <p>
-            Perbarui metode <code>getproductSellReport</code> di kontroler
-            <strong>app/Http/Controllers/ReportController.php</strong>:
-          </p>
-          <div class="url-buttons">
-            <button
-              class="view-modal-button"
-              data-url="../tutorial/📦📈🧾➕🏷️%/langkah1.txt"
-            >
-              app/Http/Controllers/ReportController.php
-            </button>
-          </div>
-        </section>
-
-        <section>
-          <h2>✅ Langkah 2: Perbarui Header Template Blade</h2>
-          <p>
-            Perbarui header tabel di
-            <strong>resources/views/report/product_sell_report.blade.php</strong>:
-          </p>
-          <div class="url-buttons">
-            <button
-              class="view-modal-button"
-              data-url="../tutorial/📦📈🧾➕🏷️%/langkah2.txt"
-            >
-              resources/views/report/product_sell_report.blade.php
-            </button>
-          </div>
-          <h3>Langkah 2.1: Tambahkan Terjemahan Bahasa</h3>
-          <p>
-            Tambahkan kunci terjemahan berikut ke dalam file bahasa
-            <code>lang_v1</code> Anda:
-          </p>
-          <ul>
-            <li>
+        <h3>Langkah 2.1: Tambahkan Terjemahan Bahasa</h3>
+        <p>
+          Tambahkan kunci terjemahan berikut ke dalam file bahasa
+          <code>lang_v1</code> Anda:
+        </p>
+        <ul>
+          <li>
             Tambahkan kunci terjemahan ini ke dalam file
             <code>en/lang_v1.php</code> Anda.
-            </li>
+          </li>
           <div class="url-buttons">
-            <button
-              class="view-modal-button"
-              data-url="../tutorial/📦📈🧾➕🏷️%/en.txt"
-            >
+            <button class="view-modal-button" data-url="../tutorial/📦📈🧾➕🏷️%/en.txt">
               English (en/lang_v1.php)
             </button>
           </div>
@@ -193,10 +170,7 @@
             <code>id/lang_v1.php</code> Anda.
           </li>
           <div class="url-buttons">
-            <button
-              class="view-modal-button"
-              data-url="../tutorial/📦📈🧾➕🏷️%/id.txt"
-            >
+            <button class="view-modal-button" data-url="../tutorial/📦📈🧾➕🏷️%/id.txt">
               Indonesia (id/lang_v1.php)
             </button>
           </div>
@@ -205,10 +179,7 @@
             <code>es/lang_v1.php</code> Anda.
           </li>
           <div class="url-buttons">
-            <button
-              class="view-modal-button"
-              data-url="../tutorial/📦📈🧾➕🏷️%/es.txt"
-            >
+            <button class="view-modal-button" data-url="../tutorial/📦📈🧾➕🏷️%/es.txt">
               Spanish (es/lang_v1.php)
             </button>
           </div>
@@ -217,10 +188,7 @@
             <code>fr/lang_v1.php</code> Anda.
           </li>
           <div class="url-buttons">
-            <button
-              class="view-modal-button"
-              data-url="../tutorial/📦📈🧾➕🏷️%/fr.txt"
-            >
+            <button class="view-modal-button" data-url="../tutorial/📦📈🧾➕🏷️%/fr.txt">
               French (fr/lang_v1.php)
             </button>
           </div>
@@ -229,10 +197,7 @@
             <code>de/lang_v1.php</code> Anda.
           </li>
           <div class="url-buttons">
-            <button
-              class="view-modal-button"
-              data-url="../tutorial/📦📈🧾➕🏷️%/de.txt"
-            >
+            <button class="view-modal-button" data-url="../tutorial/📦📈🧾➕🏷️%/de.txt">
               German (de/lang_v1.php)
             </button>
           </div>
@@ -241,10 +206,7 @@
             <code>ar/lang_v1.php</code> Anda.
           </li>
           <div class="url-buttons">
-            <button
-              class="view-modal-button"
-              data-url="../tutorial/📦📈🧾➕🏷️%/ar.txt"
-            >
+            <button class="view-modal-button" data-url="../tutorial/📦📈🧾➕🏷️%/ar.txt">
               Arabic (ar/lang_v1.php)
             </button>
           </div>
@@ -253,10 +215,7 @@
             <code>pt/lang_v1.php</code> Anda.
           </li>
           <div class="url-buttons">
-            <button
-              class="view-modal-button"
-              data-url="../tutorial/📦📈🧾➕🏷️%/pt.txt"
-            >
+            <button class="view-modal-button" data-url="../tutorial/📦📈🧾➕🏷️%/pt.txt">
               Portuguese (pt/lang_v1.php)
             </button>
           </div>
@@ -265,232 +224,216 @@
             <code>it/lang_v1.php</code> Anda.
           </li>
           <div class="url-buttons">
-            <button
-              class="view-modal-button"
-              data-url="../tutorial/📦📈🧾➕🏷️%/it.txt"
-            >
+            <button class="view-modal-button" data-url="../tutorial/📦📈🧾➕🏷️%/it.txt">
               Italian (it/lang_v1.php)
             </button>
           </div>
-          </ul>
-          
-          <h3>Dukungan Bahasa</h3>
-          <p>
-            Tambahkan kunci terjemahan ini ke dalam file bahasa yang sesuai di
-            direktori <code>resources/lang/</code> Anda, tergantung pada bahasa
-            yang didukung oleh aplikasi Anda:
-          </p>
-        </section>
+        </ul>
 
-        <section>
-          <h2>Langkah 3: Perbarui Total Footer</h2>
-          <p>Perbarui bagian footer di template Blade yang sama:</p>
+        <h3>Dukungan Bahasa</h3>
+        <p>
+          Tambahkan kunci terjemahan ini ke dalam file bahasa yang sesuai di
+          direktori <code>resources/lang/</code> Anda, tergantung pada bahasa
+          yang didukung oleh aplikasi Anda:
+        </p>
+      </section>
 
-          <div class="url-buttons">
-            <button
-              class="view-modal-button"
-              data-url="../tutorial/📦📈🧾➕🏷️%/langkah3.txt"
-            >
-              resources/views/report/product_sell_report.blade.php
-            </button>
-          </div>
-        </section>
+      <section>
+        <h2>Langkah 3: Perbarui Total Footer</h2>
+        <p>Perbarui bagian footer di template Blade yang sama:</p>
 
-        <section>
-          <h2>Fitur Utama yang Ditambahkan</h2>
-          <ul>
-            <li>
-              <strong>📊 Analisis Rincian Diskon</strong>
-              <ul>
-                <li>
-                  <strong>Diskon Baris:</strong> Menampilkan total diskon per
-                  baris untuk setiap transaksi
-                </li>
-                <li>
-                  <strong>Diskon Faktur:</strong> Menampilkan diskon tingkat
-                  transaksi (persentase atau tetap)
-                </li>
-                <li>
-                  <strong>Diskon Total:</strong> Menggabungkan diskon baris dan
-                  faktur untuk visibilitas lengkap
-                </li>
-              </ul>
-            </li>
-            <li>
-              <strong>💰 Akurasi Keuangan</strong>
-              <ul>
-                <li>
-                  Perhitungan yang benar untuk diskon persentase dan tetap
-                </li>
-                <li>
-                  Format mata uang dengan kelas <code>display_currency</code>
-                </li>
-                <li>Total footer untuk semua kolom diskon</li>
-              </ul>
-            </li>
-            <li>
-              <strong>🎯 Integrasi DataTables</strong>
-              <ul>
-                <li>
-                  Kolom diskon yang tidak dapat dicari untuk kinerja yang lebih
-                  baik
-                </li>
-                <li>Pemetaan kolom yang tepat dan penanganan kesalahan</li>
-                <li>Layout tabel responsif tetap dipertahankan</li>
-              </ul>
-            </li>
-          </ul>
-        </section>
-
-        <section>
-          <h2>Penyelesaian Masalah</h2>
-          <h3>Masalah Umum</h3>
-          <ul>
-            <li>
-              <strong
-                >Kesalahan DataTables: "Cannot set properties of
-                undefined"</strong
-              >
-              <ul>
-                <li>
-                  Verifikasi jumlah kolom antara template Blade dan JavaScript
-                  sudah sesuai
-                </li>
-                <li>
-                  Periksa apakah semua kolom baru sudah dimasukkan dalam array
-                  <code>rawColumns</code>
-                </li>
-                <li>
-                  Pastikan metode PHP mengembalikan semua data kolom yang
-                  diharapkan
-                </li>
-              </ul>
-            </li>
-            <li>
-              <strong>Perhitungan Diskon Hilang</strong>
-              <ul>
-                <li>Verifikasi hubungan database sudah benar</li>
-                <li>
-                  Periksa apakah field diskon transaksi sudah dipilih dengan
-                  benar
-                </li>
-                <li>
-                  Pastikan penanganan nilai <code>null</code> dalam perhitungan
-                  sudah tepat
-                </li>
-              </ul>
-            </li>
-            <li>
-              <strong>Total Footer Tidak Terupdate</strong>
-              <ul>
-                <li>
-                  Konfirmasi ID elemen footer sesuai dengan pemilih JavaScript
-                </li>
-                <li>
-                  Verifikasi bahwa fungsi <code>sum_table_col</code> tersedia
-                </li>
-                <li>
-                  Periksa bahwa
-                  <code>__currency_convert_recursively</code> dipanggil
-                </li>
-              </ul>
-            </li>
-          </ul>
-
-          <h3>Daftar Periksa Pengujian</h3>
-          <ul>
-            <li>
-              ✅ Verifikasi bahwa semua kolom diskon menampilkan nilai yang
-              benar
-            </li>
-            <li>✅ Periksa apakah total footer dihitung dengan benar</li>
-            <li>✅ Uji dengan berbagai jenis diskon (persentase/tetap)</li>
-            <li>
-              ✅ Konfirmasi bahwa desain responsif bekerja di perangkat mobile
-            </li>
-            <li>✅ Validasi kinerja dengan dataset besar</li>
-            <li>✅ Uji fungsionalitas penyaringan dan pengurutan</li>
-          </ul>
-
-          <h3>Pertimbangan Kinerja</h3>
-          <ul>
-            <li>Perhitungan diskon menggunakan query SQL yang dioptimalkan</li>
-            <li>Kolom yang tidak dapat dicari mengurangi beban server</li>
-            <li>
-              Disarankan untuk menggunakan indeks pada
-              <code>transaction_id</code>
-            </li>
-            <li>
-              Pertimbangkan untuk menggunakan caching untuk laporan yang sering
-              diakses
-            </li>
-          </ul>
-
-          <p>
-            Implementasi ini memberikan visibilitas diskon yang komprehensif
-            sambil mempertahankan kinerja optimal dan pengalaman pengguna.
-          </p>
-        </section>
-
-        <footer>
-          <!-- HOME -->
-          <div class="home-button-wrapper">
-            <a href="../main.html" class="home-button">🏠 Kembali ke Beranda</a>
-          </div>
-        </footer>
-      </div>
-    </div>
-    <div id="myModal" class="modal">
-      <div class="modal-content">
-        <span class="close">&times;</span>
-        <iframe
-          id="modalFrame"
-          src=""
-          frameborder="0"
-          style="width: 100%; height: 400px"
-        ></iframe>
-      </div>
-    </div>
-    <button id="bubbleUp" title="Kembali ke Atas" aria-label="Kembali ke Atas">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="26"
-        height="26"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="white"
-      >
-        <path stroke-linecap="round" stroke-width="2" d="M6 15l6-6 6 6" />
-      </svg>
-    </button>
-    <div id="completionModal" class="completion-modal">
-      <div class="completion-modal-content">
-        <span class="completion-close" title="Tutup">&times;</span>
-        <h3>🎉 Selamat, kamu telah menyelesaikan tutorialnya!</h3>
-        <p>Apakah kamu ingin mengunduh file yang telah jadi?</p>
-        <div class="completion-button-group">
-          <a
-            id="completion-download-btn"
-            data-id="file_1"
-            class="completion-btn completion-yes-btn"
-          >
-            ✅ Ya
-          </a>
-          <button
-            id="completion-no-btn"
-            class="completion-btn completion-no-btn"
-          >
-            ❌ Tidak
+        <div class="url-buttons">
+          <button class="view-modal-button" data-url="../tutorial/📦📈🧾➕🏷️%/langkah3.txt">
+            resources/views/report/product_sell_report.blade.php
           </button>
         </div>
+      </section>
+
+      <section>
+        <h2>Langkah 4: Perbarui Konfigurasi JavaScript DataTable</h2>
+        <p>Perbarui konfigurasi DataTable di <code>public/js/report.js</code> Anda:</p>
+        <div class="url-buttons">
+          <button class="view-modal-button" data-url="../tutorial/📦📈🧾➕🏷️%/langkah4.txt">
+            public/js/report.js
+          </button>
+        </div>
+      </section>
+
+      <section>
+        <h2>Fitur Utama yang Ditambahkan</h2>
+        <ul>
+          <li>
+            <strong>📊 Analisis Rincian Diskon</strong>
+            <ul>
+              <li>
+                <strong>Diskon Baris:</strong> Menampilkan total diskon per
+                baris untuk setiap transaksi
+              </li>
+              <li>
+                <strong>Diskon Faktur:</strong> Menampilkan diskon tingkat
+                transaksi (persentase atau tetap)
+              </li>
+              <li>
+                <strong>Diskon Total:</strong> Menggabungkan diskon baris dan
+                faktur untuk visibilitas lengkap
+              </li>
+            </ul>
+          </li>
+          <li>
+            <strong>💰 Akurasi Keuangan</strong>
+            <ul>
+              <li>
+                Perhitungan yang benar untuk diskon persentase dan tetap
+              </li>
+              <li>
+                Format mata uang dengan kelas <code>display_currency</code>
+              </li>
+              <li>Total footer untuk semua kolom diskon</li>
+            </ul>
+          </li>
+          <li>
+            <strong>🎯 Integrasi DataTables</strong>
+            <ul>
+              <li>
+                Kolom diskon yang tidak dapat dicari untuk kinerja yang lebih
+                baik
+              </li>
+              <li>Pemetaan kolom yang tepat dan penanganan kesalahan</li>
+              <li>Layout tabel responsif tetap dipertahankan</li>
+            </ul>
+          </li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Penyelesaian Masalah</h2>
+        <h3>Masalah Umum</h3>
+        <ul>
+          <li>
+            <strong>Kesalahan DataTables: "Cannot set properties of
+              undefined"</strong>
+            <ul>
+              <li>
+                Verifikasi jumlah kolom antara template Blade dan JavaScript
+                sudah sesuai
+              </li>
+              <li>
+                Periksa apakah semua kolom baru sudah dimasukkan dalam array
+                <code>rawColumns</code>
+              </li>
+              <li>
+                Pastikan metode PHP mengembalikan semua data kolom yang
+                diharapkan
+              </li>
+            </ul>
+          </li>
+          <li>
+            <strong>Perhitungan Diskon Hilang</strong>
+            <ul>
+              <li>Verifikasi hubungan database sudah benar</li>
+              <li>
+                Periksa apakah field diskon transaksi sudah dipilih dengan
+                benar
+              </li>
+              <li>
+                Pastikan penanganan nilai <code>null</code> dalam perhitungan
+                sudah tepat
+              </li>
+            </ul>
+          </li>
+          <li>
+            <strong>Total Footer Tidak Terupdate</strong>
+            <ul>
+              <li>
+                Konfirmasi ID elemen footer sesuai dengan pemilih JavaScript
+              </li>
+              <li>
+                Verifikasi bahwa fungsi <code>sum_table_col</code> tersedia
+              </li>
+              <li>
+                Periksa bahwa
+                <code>__currency_convert_recursively</code> dipanggil
+              </li>
+            </ul>
+          </li>
+        </ul>
+
+        <h3>Daftar Periksa Pengujian</h3>
+        <ul>
+          <li>
+            ✅ Verifikasi bahwa semua kolom diskon menampilkan nilai yang
+            benar
+          </li>
+          <li>✅ Periksa apakah total footer dihitung dengan benar</li>
+          <li>✅ Uji dengan berbagai jenis diskon (persentase/tetap)</li>
+          <li>
+            ✅ Konfirmasi bahwa desain responsif bekerja di perangkat mobile
+          </li>
+          <li>✅ Validasi kinerja dengan dataset besar</li>
+          <li>✅ Uji fungsionalitas penyaringan dan pengurutan</li>
+        </ul>
+
+        <h3>Pertimbangan Kinerja</h3>
+        <ul>
+          <li>Perhitungan diskon menggunakan query SQL yang dioptimalkan</li>
+          <li>Kolom yang tidak dapat dicari mengurangi beban server</li>
+          <li>
+            Disarankan untuk menggunakan indeks pada
+            <code>transaction_id</code>
+          </li>
+          <li>
+            Pertimbangkan untuk menggunakan caching untuk laporan yang sering
+            diakses
+          </li>
+        </ul>
+
+        <p>
+          Implementasi ini memberikan visibilitas diskon yang komprehensif
+          sambil mempertahankan kinerja optimal dan pengalaman pengguna.
+        </p>
+      </section>
+
+      <footer>
+        <!-- HOME -->
+        <div class="home-button-wrapper">
+          <a href="../main.html" class="home-button">🏠 Kembali ke Beranda</a>
+        </div>
+      </footer>
+    </div>
+  </div>
+  <div id="myModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <iframe id="modalFrame" src="" frameborder="0" style="width: 100%; height: 400px"></iframe>
+    </div>
+  </div>
+  <button id="bubbleUp" title="Kembali ke Atas" aria-label="Kembali ke Atas">
+    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="none" viewBox="0 0 24 24" stroke="white">
+      <path stroke-linecap="round" stroke-width="2" d="M6 15l6-6 6 6" />
+    </svg>
+  </button>
+  <div id="completionModal" class="completion-modal">
+    <div class="completion-modal-content">
+      <span class="completion-close" title="Tutup">&times;</span>
+      <h3>🎉 Selamat, kamu telah menyelesaikan tutorialnya!</h3>
+      <p>Apakah kamu ingin mengunduh file yang telah jadi?</p>
+      <div class="completion-button-group">
+        <a id="completion-download-btn" data-id="file_1" class="completion-btn completion-yes-btn">
+          ✅ Ya
+        </a>
+        <button id="completion-no-btn" class="completion-btn completion-no-btn">
+          ❌ Tidak
+        </button>
       </div>
     </div>
-    <script src="../js/scripts.js"></script>
-    <script src="../js/sidebar.js"></script>
-    <script src="../js/bubble.js"></script>
-    <script src="../js/complete.js"></script>
-    <script src="../js//Data/file_download_data.js"></script>
-    <script src="../js//Data/pass_data.js"></script>
-    <!-- Link ke file JavaScript -->
-  </body>
+  </div>
+  <script src="../js/scripts.js"></script>
+  <script src="../js/sidebar.js"></script>
+  <script src="../js/bubble.js"></script>
+  <script src="../js/complete.js"></script>
+  <script src="../js//Data/file_download_data.js"></script>
+  <script src="../js//Data/pass_data.js"></script>
+  <!-- Link ke file JavaScript -->
+</body>
+
 </html>
