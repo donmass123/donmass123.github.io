@@ -1,0 +1,3 @@
+'line_discount' => 'خصم السطر',
+'invoice_discount' => 'خصم الفاتورة',
+'total_discount' => 'إجمالي الخصم',

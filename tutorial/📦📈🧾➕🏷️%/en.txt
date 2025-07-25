@@ -1,0 +1,3 @@
+'line_discount' => 'Line Discount',
+'invoice_discount' => 'Invoice Discount',
+'total_discount' => 'Total Discount',

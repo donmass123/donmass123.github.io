@@ -1,0 +1,179 @@
+//Product Sell Report
+if ($('table#product_sell_report_table').length == 1) {
+    $('#product_sr_date_filter').daterangepicker(
+        dateRangeSettings,
+        function (start, end) {
+            $('#product_sr_date_filter').val(
+                start.format(moment_date_format) +
+                    ' ~ ' +
+                    end.format(moment_date_format)
+            );
+            product_sell_report.ajax.reload();
+            product_sell_grouped_report.ajax.reload();
+            product_sell_report_with_purchase_table.ajax.reload();
+            $('.nav-tabs li.active')
+                .find('a[data-toggle="tab"]')
+                .trigger('shown.bs.tab');
+        }
+    );
+
+    $('#product_sr_date_filter').on(
+        'cancel.daterangepicker',
+        function (ev, picker) {
+            $('#product_sr_date_filter').val('');
+            product_sell_report.ajax.reload();
+            product_sell_grouped_report.ajax.reload();
+            product_sell_report_with_purchase_table.ajax.reload();
+            $('.nav-tabs li.active')
+                .find('a[data-toggle="tab"]')
+                .trigger('shown.bs.tab');
+        }
+    );
+
+    $('#product_sr_start_time, #product_sr_end_time')
+        .datetimepicker({
+            format: moment_time_format,
+            ignoreReadonly: true,
+        })
+        .on('dp.change', function (ev) {
+            product_sell_report.ajax.reload();
+            product_sell_report_with_purchase_table.ajax.reload();
+            product_sell_grouped_report.ajax.reload();
+            $('.nav-tabs li.active')
+                .find('a[data-toggle="tab"]')
+                .trigger('shown.bs.tab');
+        });
+
+    product_sell_report = $('table#product_sell_report_table').DataTable({
+        processing: true,
+        serverSide: true,
+        fixedHeader: false,
+        aaSorting: [[8, 'desc']], // Sort by transaction_date column
+        ajax: {
+            url: '/reports/product-sell-report',
+            data: function (d) {
+                var start = '';
+                var end = '';
+                var start_time = $('#product_sr_start_time').val();
+                var end_time = $('#product_sr_end_time').val();
+
+                if ($('#product_sr_date_filter').val()) {
+                    start = $('input#product_sr_date_filter')
+                        .data('daterangepicker')
+                        .startDate.format('YYYY-MM-DD');
+
+                    start = moment(
+                        start + ' ' + start_time,
+                        'YYYY-MM-DD' + ' ' + moment_time_format
+                    ).format('YYYY-MM-DD HH:mm');
+                    end = $('input#product_sr_date_filter')
+                        .data('daterangepicker')
+                        .endDate.format('YYYY-MM-DD');
+                    end = moment(
+                        end + ' ' + end_time,
+                        'YYYY-MM-DD' + ' ' + moment_time_format
+                    ).format('YYYY-MM-DD HH:mm');
+                }
+                d.start_date = start;
+                d.end_date = end;
+
+                d.variation_id = $('#variation_id').val();
+                d.customer_id = $('select#customer_id').val();
+                d.location_id = $('select#location_id').val();
+                d.category_id = $('select#psr_filter_category_id').val();
+                d.brand_id = $('select#psr_filter_brand_id').val();
+                d.customer_group_id = $('#psr_customer_group_id').val();
+            },
+            error: function (xhr, error, thrown) {
+                console.log('DataTables Ajax Error:', error, thrown);
+                console.log('Response:', xhr.responseText);
+            },
+        },
+        columns: [
+            { data: 'product_name', name: 'p.name' }, // 0
+            { data: 'sub_sku', name: 'v.sub_sku' }, // 1
+            {
+                data: 'product_custom_field1',
+                name: 'p.product_custom_field1',
+                visible:
+                    $('#psr_product_custom_field1').html().trim().length > 0,
+            }, // 2
+            {
+                data: 'product_custom_field2',
+                name: 'p.product_custom_field2',
+                visible:
+                    $('#psr_product_custom_field2').html().trim().length > 0,
+            }, // 3
+            { data: 'customer', name: 'c.name' }, // 4
+            { data: 'contact_id', name: 'c.contact_id' }, // 5
+            { data: 'contact_no', name: 'c.mobile' }, // 6
+            { data: 'invoice_no', name: 't.invoice_no' }, // 7
+            { data: 'transaction_date', name: 't.transaction_date' }, // 8
+            { data: 'sell_qty', name: 'transaction_sell_lines.quantity' }, // 9
+            {
+                data: 'unit_price',
+                name: 'transaction_sell_lines.unit_price_before_discount',
+            }, // 10
+            {
+                data: 'discount_amount',
+                name: 'transaction_sell_lines.line_discount_amount',
+            }, // 11 - Existing discount
+            {
+                data: 'line_discount',
+                name: 'line_discount',
+                searchable: false,
+                orderable: false,
+            }, // 12 - Line Discount
+            {
+                data: 'invoice_discount',
+                name: 'invoice_discount',
+                searchable: false,
+                orderable: false,
+            }, // 13 - Invoice Discount
+            {
+                data: 'total_discount',
+                name: 'total_discount',
+                searchable: false,
+                orderable: false,
+            }, // 14 - Total Discount
+            { data: 'tax', name: 'tax_rates.name' }, // 15
+            {
+                data: 'unit_sale_price',
+                name: 'transaction_sell_lines.unit_price_inc_tax',
+            }, // 16
+            { data: 'subtotal', name: 'subtotal', searchable: false }, // 17 - Total amount
+            {
+                data: 'payment_methods',
+                name: 'payment_methods',
+                searchable: false,
+            }, // 18
+        ],
+        fnDrawCallback: function (oSettings) {
+            $('#footer_subtotal').text(
+                sum_table_col($('#product_sell_report_table'), 'row_subtotal')
+            );
+            $('#footer_total_sold').html(
+                __sum_stock($('#product_sell_report_table'), 'sell_qty')
+            );
+
+            // NEW: Footer calculations for new discount columns
+            $('#footer_line_discount').text(
+                sum_table_col($('#product_sell_report_table'), 'line_discount')
+            );
+            $('#footer_invoice_discount').text(
+                sum_table_col(
+                    $('#product_sell_report_table'),
+                    'invoice_discount'
+                )
+            );
+            $('#footer_total_discount').text(
+                sum_table_col($('#product_sell_report_table'), 'total_discount')
+            );
+
+            $('#footer_tax').html(
+                __sum_stock($('#product_sell_report_table'), 'tax', 'left')
+            );
+            __currency_convert_recursively($('#product_sell_report_table'));
+        },
+    });
+}

@@ -1,0 +1,3 @@
+'line_discount' => 'Zeilenrabatt',
+'invoice_discount' => 'Rechnungsrabatt',
+'total_discount' => 'Gesamtrabatt',

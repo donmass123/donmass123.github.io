@@ -192,5 +192,13 @@ const tutorialsData = [
     image: "cover/file/3.webp",
     updateDate: "24 Juli 2025",
     description: "📦 POS Untuk Device Android Da IOS 1.7.2."
+  },
+  {
+    title: "📑 Menambahkan Kolom Diskon ke Laporan Penjualan Produk",
+    link: "html/15.html",
+    level: "menengah",
+    image: "cover/15.webp",
+    updateDate: "24 Juli 2025",
+    description: "📦 Menambahkan Kolom Diskon ke Laporan Penjualan Produk."
   }
 ];

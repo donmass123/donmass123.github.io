@@ -1,0 +1,3 @@
+'line_discount' => 'Sconto Riga',
+'invoice_discount' => 'Sconto Fattura',
+'total_discount' => 'Sconto Totale',

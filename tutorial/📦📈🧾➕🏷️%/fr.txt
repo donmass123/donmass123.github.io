@@ -1,0 +1,3 @@
+'line_discount' => 'Remise de Ligne',
+'invoice_discount' => 'Remise de Facture',
+'total_discount' => 'Remise Totale',
