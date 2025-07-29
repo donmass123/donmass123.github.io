@@ -1,0 +1,7 @@
+ALTER TABLE `invoice_layouts`
+ADD COLUMN `watermark_logo` VARCHAR(255) NULL AFTER `logo`,
+ADD COLUMN `show_watermark` TINYINT(1) NOT NULL DEFAULT 0 AFTER `watermark_logo`,
+ADD COLUMN `watermark_width` INT NOT NULL DEFAULT 300 AFTER `show_watermark`,
+ADD COLUMN `watermark_height` INT NOT NULL DEFAULT 300 AFTER `watermark_width`,
+ADD COLUMN `watermark_opacity` DECIMAL(3,2) NOT NULL DEFAULT 0.10 AFTER `watermark_height`,
+ADD COLUMN `watermark_position` VARCHAR(50) NOT NULL DEFAULT 'center' AFTER `watermark_opacity`;

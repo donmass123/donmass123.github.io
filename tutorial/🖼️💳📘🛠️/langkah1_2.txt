@@ -1,0 +1,7 @@
+ALTER TABLE `invoice_layouts`
+DROP COLUMN `watermark_logo`,
+DROP COLUMN `show_watermark`,
+DROP COLUMN `watermark_width`,
+DROP COLUMN `watermark_height`,
+DROP COLUMN `watermark_opacity`,
+DROP COLUMN `watermark_position`;
