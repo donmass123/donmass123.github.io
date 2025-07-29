@@ -200,5 +200,13 @@ const tutorialsData = [
     image: "cover/15.webp",
     updateDate: "24 Juli 2025",
     description: "📦 Menambahkan Kolom Diskon ke Laporan Penjualan Produk."
+  },
+  {
+    title: "📑 Fitur Watermark POS - Panduan Implementasi Lengkap",
+    link: "html/16.html",
+    level: "mahir",
+    image: "cover/16.webp",
+    updateDate: "29 Juli 2025",
+    description: "📦 Fitur Watermark POS - Panduan Implementasi Lengkap."
   }
 ];
