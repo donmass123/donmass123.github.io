@@ -5,8 +5,8 @@
   z-index: 1000;
   left: 0;
   top: 0;
-  width: 100vw;
-  height: 100vh;
+  width: 100vw; /* 100% dari lebar layar */
+  height: 100vh; /* 100% dari tinggi layar */
   background-color: rgba(0, 0, 0, 0.4); /* Overlay lebih halus */
   backdrop-filter: blur(8px); /* Efek blur lebih halus pada background */
   padding-top: 60px;
@@ -22,17 +22,17 @@
   background-color: #ffffff;
   margin: 5% auto;
   padding: 40px;
-  width: 80%;
-  max-width: 550px; /* Ukuran lebih ramping untuk desain tutorial */
-  border-radius: 15px; /* Radius lebih halus untuk desain kotak elegan */
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15); /* Shadow lebih lembut */
+  width: 90%; /* Sesuaikan lebar konten dengan 90% layar */
+  max-width: 600px; /* Batas maksimum lebar konten */
+  border-radius: 15px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
   animation: openModal 0.5s ease-out;
   box-sizing: border-box;
 }
 
 /* Close Button */
 .close {
-  color: #bbb; /* Warna lebih lembut untuk tombol tutup */
+  color: #bbb;
   font-size: 36px;
   font-weight: bold;
   position: absolute;
@@ -43,36 +43,36 @@
 
 .close:hover,
 .close:focus {
-  color: #3498db; /* Biru terang saat hover */
+  color: #3498db;
   cursor: pointer;
 }
 
 /* View Modal Button */
 .view-modal-button {
-  padding: 16px 32px; /* Ukuran tombol yang lebih elegan */
+  padding: 16px 32px;
   margin: 10px auto;
-  background-color: #3498db; /* Biru lembut untuk tombol */
+  background-color: #3498db;
   color: white;
-  font-size: 16px; /* Ukuran font lebih konsisten */
+  font-size: 16px;
   font-weight: 600;
-  border-radius: 12px; /* Sudut lebih halus */
+  border-radius: 12px;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1); /* Bayangan lembut */
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
   display: inline-block;
   text-align: center;
-  white-space: normal; /* Izinkan teks mengalir ke baris baru */
-  word-wrap: break-word; /* Memecah kata jika terlalu panjang */
-  text-transform: uppercase; /* Semua huruf besar untuk tampilan yang lebih elegan */
+  white-space: normal;
+  word-wrap: break-word;
+  text-transform: uppercase;
 }
 
 .view-modal-button:hover {
-  background-color: #2980b9; /* Biru lebih gelap saat hover */
-  transform: scale(1.05); /* Efek zoom halus */
+  background-color: #2980b9;
+  transform: scale(1.05);
 }
 
 .view-modal-button:active {
-  transform: scale(0.98); /* Efek mengecil saat ditekan */
+  transform: scale(0.98);
 }
 
 /* Responsive Styles */
@@ -83,7 +83,7 @@
   }
 
   .view-modal-button {
-    font-size: 5vw; /* Ukuran font responsif dengan tampilan lebih besar */
+    font-size: 5vw;
   }
 }
 
@@ -95,7 +95,7 @@
   }
 
   .view-modal-button {
-    font-size: 6vw; /* Ukuran font responsif di perangkat lebih kecil */
+    font-size: 6vw;
     width: 100%;
     padding: 14px;
   }
@@ -114,7 +114,7 @@
   }
 
   .view-modal-button {
-    font-size: 7vw; /* Ukuran font responsif di perangkat sangat kecil */
+    font-size: 7vw;
     padding: 12px;
   }
 }
@@ -124,7 +124,6 @@
   from {
     opacity: 0;
   }
-
   to {
     opacity: 1;
   }
@@ -135,15 +134,14 @@
   0% {
     transform: scale(0.5) rotateY(90deg);
   }
-
   50% {
     transform: scale(1.05) rotateY(45deg);
   }
-
   100% {
     transform: scale(1) rotateY(0);
   }
 }
+
 
 /* Container untuk tombol URL */
 .url-buttons {
