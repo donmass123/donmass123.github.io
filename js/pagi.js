@@ -280,3 +280,39 @@ document.addEventListener("DOMContentLoaded", function () {
   filterTutorials('all');  // Show all tutorials initially
   displayTutorialCount();  // Display the tutorial count
 });
+// Function to handle the "Spin Random" button click
+document.getElementById('spinRandomBtn').addEventListener('click', function () {
+  spinRandomTutorials();  // Call the function to display 6 random tutorials
+});
+
+// Function to shuffle the tutorials and display 6 random tutorials
+function spinRandomTutorials() {
+  const tutorials = Array.from(document.querySelectorAll('.feature-card')); // Get all the tutorial cards
+  const shuffledTutorials = shuffleArray(tutorials); // Shuffle the array of tutorials
+  const randomTutorials = shuffledTutorials.slice(0, 6); // Get the first 6 tutorials after shuffling
+
+  // Hide all tutorial cards first
+  tutorials.forEach(tutorial => {
+    tutorial.style.display = 'none';
+  });
+
+  // Display the 6 random tutorials
+  randomTutorials.forEach(tutorial => {
+    tutorial.style.display = 'block';
+  });
+
+  // Update the page number text
+  document.getElementById('pageNumber').textContent = 'Page 1'; // Reset page to 1
+  document.getElementById('prevBtn').disabled = true;
+  document.getElementById('nextBtn').disabled = true;
+}
+
+// Function to shuffle the array randomly
+function shuffleArray(array) {
+  let shuffledArray = array.slice(); // Create a copy of the array to avoid modifying the original
+  for (let i = shuffledArray.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1)); // Get a random index
+    [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]]; // Swap the elements
+  }
+  return shuffledArray;
+}

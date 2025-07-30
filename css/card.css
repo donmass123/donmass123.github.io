@@ -271,3 +271,39 @@
   border-color: #bbb;
   transform: translateY(-2px);
 }
+/* General styling for the Spin Random button */
+.spin-random-button {
+    padding: 10px 20px; /* Enough padding for a clean look */
+    font-size: 16px; /* Slightly smaller font size for elegance */
+    color: #fff; /* White text for contrast */
+    background-color: #00796b; /* Elegant dark teal background */
+    border: 2px solid #00796b; /* Subtle border */
+    border-radius: 30px; /* Rounded corners for a smooth look */
+    cursor: pointer; /* Show pointer cursor on hover */
+    transition: all 0.3s ease; /* Smooth transition for hover effect */
+    outline: none; /* Remove outline for better aesthetics */
+}
+
+/* Hover effect for the Spin Random button */
+.spin-random-button:hover {
+    background-color: #004d40; /* Darker teal on hover */
+    border-color: #004d40; /* Darker border color on hover */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Add soft shadow on hover */
+}
+
+/* Focus effect (when the button is clicked or focused) */
+.spin-random-button:focus {
+    border-color: #004d40; /* Match the hover effect border color */
+    box-shadow: 0 0 8px rgba(0, 128, 0, 0.2); /* Greenish glow effect on focus */
+}
+
+/* Style for the button when the page is small */
+@media (max-width: 768px) {
+    .spin-random-button {
+        font-size: 14px; /* Slightly smaller font size on smaller screens */
+    }
+}
+#spinRandomBtn:hover {
+        background-color: #45a049;  /* Slightly darker green on hover */
+        transform: scale(1.05);  /* Slightly enlarge the button on hover */
+    }
