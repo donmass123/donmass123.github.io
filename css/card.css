@@ -249,3 +249,25 @@
     padding: 4px 8px; /* Reduce padding for extra small screens */
   }
 }
+/* Style for the tutorial count display */
+#tutorialCount {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 18px;
+  color: #333;
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  padding: 12px 25px;
+  max-width: 300px;
+  margin: 30px auto;
+  text-align: center;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+/* Slight hover effect to add some interaction */
+#tutorialCount:hover {
+  background-color: #eaeaea;
+  border-color: #bbb;
+  transform: translateY(-2px);
+}

@@ -266,3 +266,17 @@ document.addEventListener("DOMContentLoaded", function () {
   allTutorials = Array.from(tutorials); // Store all tutorials for later use in search
   filterTutorials('all');  // Show all tutorials initially
 });
+
+// Function to display the number of tutorials
+function displayTutorialCount() {
+  const tutorialCount = tutorialsData.length; // Get the length of the tutorialsData array
+  const countElement = document.getElementById('tutorialCount'); // Assuming you have an element with id "tutorialCount"
+  countElement.textContent = `Jumlah Tutorial: ${tutorialCount}`; // Display the count in the element
+}
+
+// Call displayTutorialCount after generating the cards
+document.addEventListener("DOMContentLoaded", function () {
+  generateTutorialCards(); // Generate cards when the page loads
+  filterTutorials('all');  // Show all tutorials initially
+  displayTutorialCount();  // Display the tutorial count
+});

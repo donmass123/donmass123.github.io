@@ -30,13 +30,32 @@
     <a href="#dokumen" class="bubble-btn" title="Dokumen"><i class="fas fa-file-alt"></i></a>
   </div>
 
-  <header
-    style="background-color: #2c2c2c; padding: 40px; text-align: center; border-radius: 15px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); transition: all 0.5s ease;">
-    <h1
-      style="color: white; font-family: 'Roboto', sans-serif; font-size: 40px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; animation: fadeIn 2s ease-in-out;">
-      🚀 <span style="color: #b0bec5;">Tutorial</span> Point Of Sales
+  <header style="
+        background-color: #2c2c2c;
+        padding: 40px;
+        text-align: center;
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        transition: all 0.5s ease;
+      ">
+    <h1 style="
+          color: white;
+          font-family: 'Roboto', sans-serif;
+          font-size: 40px;
+          font-weight: 600;
+          letter-spacing: 1px;
+          text-transform: uppercase;
+          animation: fadeIn 2s ease-in-out;
+        ">
+      🚀 <span style="color: #b0bec5">Tutorial</span> Point Of Sales
     </h1>
-    <p style="color: #b0bec5; font-size: 20px; font-weight: 300; opacity: 0.8; animation: fadeIn 2s ease-in-out 1s;">
+    <p style="
+          color: #b0bec5;
+          font-size: 20px;
+          font-weight: 300;
+          opacity: 0.8;
+          animation: fadeIn 2s ease-in-out 1s;
+        ">
       The Best Solution for Your POS System
     </p>
   </header>
@@ -48,15 +67,28 @@
         class="search-input" />
     </div>
     <div class="filter-container" style="text-align: center; margin-bottom: 20px">
-      <button onclick="filterTutorials('all')" class="filter-button all">Show All</button>
-      <button onclick="filterTutorials('pemula')" class="filter-button pemula">Pemula</button>
-      <button onclick="filterTutorials('menengah')" class="filter-button menengah">Menengah</button>
-      <button onclick="filterTutorials('mahir')" class="filter-button mahir">Mahir</button>
-      <button onclick="filterTutorials('bahaya')" class="filter-button bahaya">Bahaya</button>
-      <button onclick="filterTutorials('module')" class="filter-button module">Module</button>
-      <button onclick="filterTutorials('file')" class="filter-button file">File</button>
+      <button onclick="filterTutorials('all')" class="filter-button all">
+        Show All
+      </button>
+      <button onclick="filterTutorials('pemula')" class="filter-button pemula">
+        Pemula
+      </button>
+      <button onclick="filterTutorials('menengah')" class="filter-button menengah">
+        Menengah
+      </button>
+      <button onclick="filterTutorials('mahir')" class="filter-button mahir">
+        Mahir
+      </button>
+      <button onclick="filterTutorials('bahaya')" class="filter-button bahaya">
+        Bahaya
+      </button>
+      <button onclick="filterTutorials('module')" class="filter-button module">
+        Module
+      </button>
+      <button onclick="filterTutorials('file')" class="filter-button file">
+        File
+      </button>
     </div>
-
 
     <p id="noResultsMessage" style="
           text-align: center;
@@ -71,13 +103,16 @@
     <!-- CARD KONTEN -->
     <div class="card-container" id="tutorialCards"></div>
     <!-- Pagination controls -->
-    <div id="pagination" style="text-align: center; margin-top: 20px;">
-      <button id="prevBtn" onclick="changePage(-1)"
-        style="padding: 10px 20px; margin-right: 10px; font-size: 16px;">Back</button>
-      <span id="pageNumber" style="font-size: 18px;">Page 1</span>
-      <button id="nextBtn" onclick="changePage(1)"
-        style="padding: 10px 20px; margin-left: 10px; font-size: 16px;">Next</button>
+    <div id="pagination" style="text-align: center; margin-top: 20px">
+      <button id="prevBtn" onclick="changePage(-1)" style="padding: 10px 20px; margin-right: 10px; font-size: 16px">
+        Back
+      </button>
+      <span id="pageNumber" style="font-size: 18px">Page 1</span>
+      <button id="nextBtn" onclick="changePage(1)" style="padding: 10px 20px; margin-left: 10px; font-size: 16px">
+        Next
+      </button>
     </div>
+    <div id="tutorialCount"></div>
   </section>
 
   <section id="card">
@@ -91,8 +126,6 @@
     <div id="card-poke" class="card-poke">
       <!-- Pokémon cards will be rendered here -->
     </div>
-
-
   </section>
 
   <section id="mengaktifkan">
@@ -153,8 +186,6 @@
   <script src="js/nav.js"></script>
   <script src="js/card_geser.js"></script>
   <script src="js/Data/tutorial_data.js"></script>
-
-
 </body>
 
 </html>
