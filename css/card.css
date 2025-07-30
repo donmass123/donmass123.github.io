@@ -307,3 +307,34 @@
         background-color: #45a049;  /* Slightly darker green on hover */
         transform: scale(1.05);  /* Slightly enlarge the button on hover */
     }
+/* Define the spin animation */
+@keyframes spinEffect {
+    0% {
+        transform: rotate(0deg);  /* Start from 0 degrees */
+    }
+    50% {
+        transform: rotate(1800deg);  /* 1800 degrees (5 full rotations) */
+    }
+    100% {
+        transform: rotate(3600deg);  /* End at 3600 degrees (10 full rotations) */
+    }
+}
+
+/* Add the spin effect to the button */
+.spin-animation {
+    animation: spinEffect 2s ease-in-out;  /* 2 seconds for the spinning effect */
+    pointer-events: none;  /* Disable clicking while spinning */
+}
+
+/* Styling for the button remains the same */
+#spinRandomBtn {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: white;
+    background-color: #4CAF50;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    outline: none;
+}

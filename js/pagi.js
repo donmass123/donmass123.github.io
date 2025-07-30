@@ -316,3 +316,18 @@ function shuffleArray(array) {
   }
   return shuffledArray;
 }
+// Function to handle the spin animation on the button click
+function spinButton() {
+    const button = document.getElementById('spinRandomBtn');
+    
+    // Add the spin animation class
+    button.classList.add('spin-animation');
+    
+    // Once the animation ends, remove the class to reset the animation
+    button.addEventListener('animationend', () => {
+        button.classList.remove('spin-animation');
+    });
+
+    // Trigger the random tutorial display
+    spinRandomTutorials();  // Assuming the function to display random tutorials exists
+}
