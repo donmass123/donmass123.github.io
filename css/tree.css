@@ -1,191 +1,126 @@
 ul.tree {
-    list-style: none;
-    padding-left: 1.5rem;
-    overflow-x: hidden;
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-    white-space: normal;
-    margin: 0;
-    background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    padding: 1rem;
-    transition: background-color 0.3s ease;
+  list-style: none;
+  padding-left: 1.5rem;
+  overflow-x: hidden;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  white-space: normal;
+  margin: 0;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  transition: background-color 0.3s ease;
 }
 
 ul.tree li {
-    position: relative;
-    margin: 0.6rem 0;
-    display: block;
-    max-width: 100%;
-    word-wrap: break-word; /* Ensures long text wraps */
-    overflow-wrap: break-word; /* Prevents overflow */
-    word-break: break-word; /* Breaks long words if needed */
+  position: relative;
+  margin: 0.6rem 0;
+  display: block;
+  max-width: 100%;
+  word-wrap: break-word;
 }
 
 ul.tree li::before {
-    margin-right: 1rem;
-    font-size: 1.2rem;
-    color: #4caf50;
-    transition: transform 0.3s ease;
+  margin-right: 1rem;
+  font-size: 1.2rem;
+  color: #4caf50;
+  transition: transform 0.3s ease;
 }
 
 ul.tree li.file::before {
-    content: '📄';
-    color: #2196f3;
+  content: '📄';
+  color: #2196f3;
 }
 
 ul.tree li:hover::before {
-    transform: scale(1.1);
+  transform: scale(1.1); 
 }
 
 li span.tag {
-    background-color: #4caf50;
-    color: white;
-    font-size: 0.8rem;
-    border-radius: 12px;
-    padding: 0 8px;
-    margin-left: 0.5rem;
-    display: inline-block;
-    transition: background-color 0.3s ease;
-    text-transform: uppercase;
+  background-color: #4caf50;
+  color: white;
+  font-size: 0.8rem;
+  border-radius: 12px;
+  padding: 0 8px;
+  margin-left: 0.5rem;
+  display: inline-block;
+  transition: background-color 0.3s ease;
+  text-transform: uppercase;
 }
 
 li span.tag-add {
-    background-color: #03a9f4;
+  background-color: #03a9f4;
 }
 
 li span.tag-new {
-    background-color: #f44336;
+  background-color: #f44336;
 }
 
 li span.tag:hover {
-    background-color: #388e3c;
+  background-color: #388e3c;
 }
 
 details summary {
-    cursor: pointer;
-    font-weight: 600;
-    font-size: 1.1rem;
-    color: #333;
-    border: none;
-    background-color: transparent;
-    padding: 0.5rem;
-    border-radius: 6px;
-    transition: background-color 0.3s ease, color 0.3s ease;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #333;
+  border: none;
+  background-color: transparent;
+  padding: 0.5rem;
+  border-radius: 6px;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 details summary:hover {
-    background-color: #e0f7fa;
-    color: #00796b;
+  background-color: #e0f7fa;
+  color: #00796b;
 }
 
 summary::marker {
-    color: #fff;
+  color: #fff;
 }
 
 /* RESPONSIVE STYLING */
 
-/* Mobile-first design (screens up to 768px) */
+/* Small screens (mobile-first approach) */
 @media (max-width: 768px) {
-    ul.tree {
-        font-size: 0.85rem;  /* Smaller font size for mobile */
-        padding-left: 1rem;
-        padding-right: 1rem; /* Add some padding on the right for better touch targets */
-        overflow-x: auto;  /* Enable horizontal scrolling */
-        white-space: nowrap;  /* Prevent line breaks */
-    }
+  ul.tree {
+    font-size: 0.9rem;
+    padding-left: 1rem;
+  }
 
-    li span.tag {
-        font-size: 0.75rem;  /* Slightly smaller tags */
-        padding: 0 6px;
-    }
+  li span.tag {
+    font-size: 0.75rem;
+    padding: 0 6px;
+  }
 
-    details summary {
-        font-size: 1.1rem;
-        padding: 0.6rem; /* Slightly more padding for better clickability */
-    }
+  details summary {
+    font-size: 1.2rem;
+  }
 
-    ul.tree li {
-        margin: 0.8rem 0; /* Increased margin for touch-friendly design */
-        padding-left: 1.2rem;
-    }
-
-    /* Mobile layout: Stack tree items vertically */
-    ul.tree {
-        display: block;
-    }
-
-    li {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        overflow-wrap: break-word; /* Ensures long text will wrap */
-    }
+  ul.tree li {
+    margin: 0.6rem 0;
+    padding-left: 1.5rem;
+  }
 }
 
-/* Tablet design (screens between 769px and 1024px) */
-@media (min-width: 769px) and (max-width: 1024px) {
-    ul.tree {
-        font-size: 0.95rem;  /* Slightly larger font size for tablets */
-        overflow-x: auto;  /* Enable horizontal scrolling */
-        white-space: nowrap;  /* Prevent line breaks */
-    }
+/* Medium and Large screens */
+@media (min-width: 769px) {
+  ul.tree {
+    font-size: 1rem;
+  }
 
-    li span.tag {
-        font-size: 0.8rem;  /* Tags are more readable on tablets */
-        padding: 0 8px;
-    }
+  li span.tag {
+    font-size: 0.8rem;
+    padding: 0 8px;
+  }
 
-    details summary {
-        font-size: 1.2rem;
-    }
+  details summary {
+    font-size: 1.3rem;
+  }
 
-    ul.tree li {
-        padding-left: 1.5rem;
-        margin: 0.7rem 0;
-    }
-
-    /* Tablet layout: Side-by-side display for the tree items */
-    ul.tree {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: flex-start;
-    }
-
-    li {
-        display: inline-block;
-        width: 45%;  /* Items will now take up less width, creating a grid-like view */
-        margin-right: 1rem;
-        overflow-wrap: break-word; /* Ensure wrapping for long text */
-    }
-}
-
-/* Large screens (desktops and above) */
-@media (min-width: 1025px) {
-    ul.tree {
-        font-size: 1rem;  /* Default font size for large screens */
-    }
-
-    li span.tag {
-        font-size: 0.85rem;  /* Adjust tag size for larger screens */
-        padding: 0 9px;
-    }
-
-    details summary {
-        font-size: 1.3rem;
-    }
-
-    ul.tree li {
-        padding-left: 2rem;
-        margin: 1rem 0;  /* Spacing for desktop view */
-    }
-
-    /* Desktop layout: Items display as a full tree with clear indentation */
-    ul.tree {
-        display: block;
-    }
-
-    li {
-        display: block;
-    }
+  ul.tree li {
+    padding-left: 1.5rem;
+  }
 }
