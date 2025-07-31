@@ -1,478 +1,530 @@
 <!DOCTYPE html>
 <html lang="id">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Adding a favicon -->
-    <link
-      rel="icon"
-      href="https://www.iconpacks.net/icons/2/free-rocket-icon-3418-thumb.png"
-      type="image/x-icon"
-    />
-    <title>Tutorial Peningkatan Filter Laporan Stok</title>
 
-    <!-- Link ke stylesheet eksternal -->
-    <link rel="stylesheet" href="../css/tutor.css" />
-    <link rel="stylesheet" href="../css/modal.css" />
-    <link rel="stylesheet" href="../css/sidebar.css" />
-    <link rel="stylesheet" href="../css/bubble.css" />
-    <link rel="stylesheet" href="../css/complete.css" />
-  </head>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Adding a favicon -->
+  <link rel="icon" href="https://www.iconpacks.net/icons/2/free-rocket-icon-3418-thumb.png" type="image/x-icon" />
+  <title>Tutorial Peningkatan Filter Laporan Stok</title>
 
-  <body>
-    <!-- Modal Password -->
-    <div id="passwordModal" class="completion-modal">
-      <div class="completion-modal-content">
-        <span class="completion-close" id="closePasswordModal">&times;</span>
-        <h3>🔐 Masukkan Password</h3>
-        <input
-          type="password"
-          id="tutorialPassword"
-          placeholder="Password..."
-          class="completion-input"
-        />
-        <div class="completion-button-group">
-          <button id="submitPassword" class="completion-btn completion-yes-btn">
-            Akses
+  <!-- Link ke stylesheet eksternal -->
+  <link rel="stylesheet" href="../css/tutor.css" />
+  <link rel="stylesheet" href="../css/modal.css" />
+  <link rel="stylesheet" href="../css/sidebar.css" />
+  <link rel="stylesheet" href="../css/bubble.css" />
+  <link rel="stylesheet" href="../css/complete.css" />
+  <link rel="stylesheet" href="../css/tree.css" />
+</head>
+
+<body>
+  <!-- Modal Password -->
+  <div id="passwordModal" class="completion-modal">
+    <div class="completion-modal-content">
+      <span class="completion-close" id="closePasswordModal">&times;</span>
+      <h3>🔐 Masukkan Password</h3>
+      <input type="password" id="tutorialPassword" placeholder="Password..." class="completion-input" />
+      <div class="completion-button-group">
+        <button id="submitPassword" class="completion-btn completion-yes-btn">
+          Akses
+        </button>
+      </div>
+      <p id="passwordError" style="display: none; color: #dc3545; margin-top: 1rem">
+        ❌ Password salah!
+      </p>
+    </div>
+  </div>
+  <div class="blur-wrapper">
+    <div class="container">
+      <!-- ===== HEADER ===== -->
+      <header>
+        <h1>Tutorial Peningkatan Filter Laporan Stok</h1>
+        <h1>🔧📊📦</h1>
+        <h5>
+          Tutorial komprehensif ini memandu Anda dalam meningkatkan
+          fungsionalitas Laporan Stok di POS dengan menambahkan kemampuan
+          penyaringan tingkat lanjut termasuk filter multi-pilihan
+        </h5>
+      </header>
+      <!-- HOME -->
+      <div class="home-button-wrapper">
+        <a href="../main.html" class="home-button">🏠 Kembali ke Beranda</a>
+      </div>
+
+      <div class="toc-dropdown-wrapper">
+        <label for="toc-dropdown" class="toc-icon">
+          <strong>Daftar Isi</strong>
+        </label>
+        <select id="toc-dropdown" class="toc-dropdown">
+          <!-- Otomatis diisi JS -->
+        </select>
+      </div>
+
+      <!-- ===== SECTIONS ===== -->
+      <section>
+        <h2>Gambaran Umum</h2>
+        <h3>
+          Peningkatan ini mengubah Laporan Stok standar menjadi alat
+          penyaringan yang kuat dengan kemampuan multi-pilihan.
+        </h3>
+        <div class="image-box">
+          <img
+            src="https://ultimate-pos-tutorials.vercel.app/assets/images/stock-report-filter-enhancement-33d3ba7c4d6ac1109a4a659f17d45093.png"
+            alt="#" />
+          <p class="caption">
+            Gambar: Tutorial Peningkatan Filter Laporan Stok.
+          </p>
+        </div>
+        <h3>📦 Unduh File Starter</h3>
+        <a href="https://drive.google.com/file/d/1dH0LWNBIbLHIasbboYe76wCEXivwbWj2/view?usp=drive_link" download
+          class="section-download">⬇️ Unduh</a>
+      </section>
+
+      <section>
+        <h3>Apa yang Ditambah oleh Peningkatan Ini</h3>
+        <ul>
+          <li>
+            Kemampuan multi-pilihan untuk semua filter yang ada (Lokasi,
+            Kategori, Sub-kategori, Merek, Unit)
+          </li>
+          <li>
+            Filter tingkat stok dengan opsi: Semua, Lebih Besar dari Nol,
+            Kurang dari Satu
+          </li>
+          <li>
+            Penanganan opsi "Semua" untuk pengalaman pengguna yang lebih baik
+          </li>
+          <li>
+            Logika pemfilteran yang lebih baik untuk kinerja dan akurasi yang
+            lebih baik
+          </li>
+        </ul>
+        <h3>Manfaat</h3>
+        <ul>
+          <li>
+            ✅ Pemfilteran Multi-dimensi: Pilih beberapa kategori, merek,
+            lokasi secara bersamaan
+          </li>
+          <li>
+            ✅ Pengalaman Pengguna yang lebih baik: Opsi "Semua" yang intuitif
+            dan status filter yang jelas
+          </li>
+          <li>
+            ✅ Peningkatan Kinerja: Kueri Database yang dioptimalkan untuk
+            filter yang kompleks
+          </li>
+          <li>
+            ✅ View Mata Uang yang Tepat: Pemformatan yang konsisten dengan
+            simbol mata uang
+          </li>
+        </ul>
+      </section>
+      <section>
+        <h2>Struktur File</h2>
+        <ul class="tree">
+          <li>
+            <details open>
+              <summary>📁 POS</summary>
+              <ul>
+
+                <!-- App Folder -->
+                <li>
+                  <details>
+                    <summary>📁 App</summary>
+                    <ul>
+                      <!-- Http -->
+                      <li>
+                        <details>
+                          <summary>📁 Http</summary>
+                          <ul>
+                            <li>
+                              <details>
+                                <summary>📁 Controllers</summary>
+                                <ul>
+                                  <li class="file"> ReportController.php
+                                    <ul>
+                                      <li>getStockValue <span class="tag">update</span></li>
+                                      <li>processStockValueFilters <span class="tag tag-add">tambah</span></li>
+                                      <li>getStockReport <span class="tag">update</span></li>
+                                      <li>processEnhancedStockReportFilters <span class="tag tag-add">tambah</span></li>
+                                    </ul>
+                                  </li>
+                                  <li class="file"> ProductController.php
+                                    <ul>
+                                      <li>getSubKategori <span class="tag tag-add">tambah</span></li>
+                                      <li>getSubCategoriesMulti <span class="tag tag-add">tambah</span></li>
+                                    </ul>
+                                  </li>
+                                </ul>
+                              </details>
+                            </li>
+                          </ul>
+                        </details>
+                      </li>
+
+                      <!-- Utils -->
+                      <li>
+                        <details>
+                          <summary>📁 Utils</summary>
+                          <ul>
+                            <li class="file"> TransactionUtil.php <span class="tag">update</span></li>
+                          </ul>
+                        </details>
+                      </li>
+                    </ul>
+                  </details>
+                </li>
+
+                <!-- Routes -->
+                <li>
+                  <details>
+                    <summary>📁 Routes</summary>
+                    <ul>
+                      <li class="file"> web.php <span class="tag tag-add">tambah rute</span></li>
+                    </ul>
+                  </details>
+                </li>
+
+                <!-- Resources -->
+                <li>
+                  <details>
+                    <summary>📁 Resources</summary>
+                    <ul>
+                      <li>
+                        <details>
+                          <summary>📁 Views</summary>
+                          <ul>
+                            <li>
+                              <details>
+                                <summary>📁 Report</summary>
+                                <ul>
+                                  <li class="file"> stock_report.blade.php <span class="tag">update</span></li>
+                                </ul>
+                              </details>
+                            </li>
+                          </ul>
+                        </details>
+                      </li>
+                    </ul>
+                  </details>
+                </li>
+
+                <!-- Public -->
+                <li>
+                  <details>
+                    <summary>📁 Public</summary>
+                    <ul>
+                      <li>
+                        <details>
+                          <summary>📁 Js</summary>
+                          <ul>
+                            <li class="file"> report.js
+                              <ul>
+                                <li>update logika laporan <span class="tag">update</span></li>
+                                <li>stock_report_table <span class="tag tag-add">tambah</span></li>
+                              </ul>
+                            </li>
+                          </ul>
+                        </details>
+                      </li>
+                    </ul>
+                  </details>
+                </li>
+
+              </ul>
+            </details>
+          </li>
+        </ul>
+
+      </section>
+      <section>
+        <h1>Langkah-langkah implementasi</h1>
+      </section>
+      <section>
+        <h2>✅ Langkah 1: Perbarui ReportController.php</h2>
+        <h3>1.1 Menambahkan Metode getStockValue yang Disempurnakan</h3>
+        <p>
+          Ganti metode <strong>getStockValue</strong> yang sudah ada dengan
+          versi yang disempurnakan ini:
+        </p>
+        <p>app/Http/Controllers/ReportController.php</p>
+
+        <div class="url-buttons">
+          <button class="view-modal-button" data-url="../tutorial/🔧📊📦/langkah1_1.txt">
+            app/Http/Controllers/ReportController.php
           </button>
         </div>
-        <p
-          id="passwordError"
-          style="display: none; color: #dc3545; margin-top: 1rem"
-        >
-          ❌ Password salah!
+
+        <h3>1.2 Tambahkan metode processStockValueFilters</h3>
+        <p>
+          Tambahkan metode privat baru ini untuk menangani pemrosesan filter:
         </p>
-      </div>
-    </div>
-    <div class="blur-wrapper">
-      <div class="container">
-        <!-- ===== HEADER ===== -->
-        <header>
-          <h1>Tutorial Peningkatan Filter Laporan Stok</h1>
-          <h1>🔧📊📦</h1>
-          <h5>
-            Tutorial komprehensif ini memandu Anda dalam meningkatkan
-            fungsionalitas Laporan Stok di POS dengan menambahkan kemampuan
-            penyaringan tingkat lanjut termasuk filter multi-pilihan
-          </h5>
-        </header>
-        <!-- HOME -->
+        <p>app/Http/Controllers/ReportController.php</p>
+        <div class="url-buttons">
+          <button class="view-modal-button" data-url="../tutorial/🔧📊📦/langkah1_2.txt">
+            app/Http/Controllers/ReportController.php
+          </button>
+        </div>
+        <h3>1.3 Perbarui Metode getStockReport</h3>
+        <p>
+          Perbarui metode <strong>getStockReport</strong> yang sudah ada untuk
+          menyertakan pemrosesan filter yang disempurnakan:
+        </p>
+        <p>app/Http/Controllers/ReportController.php</p>
+        <div class="url-buttons">
+          <button class="view-modal-button" data-url="../tutorial/🔧📊📦/langkah1_3.txt">
+            app/Http/Controllers/ReportController.php
+          </button>
+        </div>
+
+        <h3>1.4 Tambahkan metode processEnhancedStockReportFilters</h3>
+        <p>
+          Tambahkan metode ini untuk menangani pemfilteran laporan stok yang
+          disempurnakan:
+        </p>
+
+        <p>app/Http/Controllers/ReportController.php</p>
+        <div class="url-buttons">
+          <button class="view-modal-button" data-url="../tutorial/🔧📊📦/langkah1_4.txt">
+            app/Http/Controllers/ReportController.php
+          </button>
+        </div>
+      </section>
+
+      <section>
+        <h2>✅ Langkah 2: Perbarui TransactionUtil.php</h2>
+        <p>
+          Perbarui metode <strong>getOpeningClosingStock</strong> Anda untuk
+          mendukung filter multi-pilihan:
+        </p>
+
+        <p>app/Utils/TransactionUtil.php</p>
+        <div class="url-buttons">
+          <button class="view-modal-button" data-url="../tutorial/🔧📊📦/langkah2.txt">
+            app/Utils/TransactionUtil.php
+          </button>
+        </div>
+      </section>
+
+      <section>
+        <h2>✅ Langkah 3: Perbarui View Blade</h2>
+        <p>
+          Ganti file
+          <strong>resources/views/report/stock_report.blade.php</strong> Anda
+          dengan versi yang telah disempurnakan ini:
+        </p>
+
+        <p>resources/views/report/stock_report.blade.php</p>
+        <div class="url-buttons">
+          <button class="view-modal-button" data-url="../tutorial/🔧📊📦/langkah3.txt">
+            resources/views/report/stock_report.blade.php
+          </button>
+        </div>
+      </section>
+
+      <section>
+        <h2>✅ Langkah 4: Perbarui public/js/report.js</h2>
+        <p>
+          Perbarui file <strong>public/js/report.js</strong> Anda untuk
+          menyertakan filter tingkat stok dalam konfigurasi DataTable dan ubah
+          penanganannya.
+        </p>
+
+        <h3>4.1 Menambahkan Level Stok ke Konfigurasi Tabel Data</h3>
+        <p>
+          Temukan inisialisasi Tabel Data
+          <strong>stock_report_table</strong> Anda dan tambahkan parameter
+          level stok:
+        </p>
+
+        <p>public/js/report.js</p>
+        <div class="url-buttons">
+          <button class="view-modal-button" data-url="../tutorial/🔧📊📦/langkah4_1.txt">
+            public/js/report.js
+          </button>
+        </div>
+        <h3>4.2 Perbarui Penangan Perubahan Filter</h3>
+        <p>
+          Perbarui penangan peristiwa perubahan untuk menyertakan filter
+          tingkat stok:
+        </p>
+
+        <p>public/js/report.js</p>
+        <div class="url-buttons">
+          <button class="view-modal-button" data-url="../tutorial/🔧📊📦/langkah4_2.txt">
+            public/js/report.js
+          </button>
+        </div>
+      </section>
+
+      <section>
+        <h2>
+          ✅ Langkah 5: Menambahkan Metode Subkategori ke ProductController
+        </h2>
+        <p>
+          Jika Anda belum memiliki metode ini, tambahkan metode tersebut ke
+          ProductController Anda untuk menangani pemuatan subkategori dinamis:
+        </p>
+        <h3>5.1 Menambahkan Metode getSubKategori</h3>
+        <p>app/Http/Controllers/ProductController.php</p>
+        <div class="url-buttons">
+          <button class="view-modal-button" data-url="../tutorial/🔧📊📦/langkah5_1.txt">
+            app/Http/Controllers/ProductController.php
+          </button>
+        </div>
+
+        <h3>5.2 Menambahkan metode getSubCategoriesMulti</h3>
+        <p>app/Http/Controllers/ProductController.php</p>
+        <div class="url-buttons">
+          <button class="view-modal-button" data-url="../tutorial/🔧📊📦/langkah5_2.txt">
+            app/Http/Controllers/ProductController.php
+          </button>
+        </div>
+
+        <h3>5.3 Menambahkan Route untuk Metode Subkategori</h3>
+        <p>
+          Tambahkan Route-Route ini ke <strong>routes/web.php</strong> Anda
+          jika belum ada:
+        </p>
+
+        <p>routes/web.php</p>
+        <div class="url-buttons">
+          <button class="view-modal-button" data-url="../tutorial/🔧📊📦/langkah5_3.txt">
+            routes/web.php
+          </button>
+        </div>
+      </section>
+
+      <section>
+        <h2>🧪 Fitur-fitur Utama</h2>
+        <h3>Kemampuan Multi-Pilihan</h3>
+        <ul>
+          <li>
+            <strong>Beberapa Lokasi</strong>: Saring berdasarkan beberapa
+            lokasi bisnis secara bersamaan
+          </li>
+          <li>
+            <strong>Beberapa Kategori</strong>: Pilih beberapa kategori produk
+          </li>
+          <li>
+            <strong>Beberapa Merek</strong>: Saring berdasarkan beberapa merek
+            sekaligus
+          </li>
+          <li>
+            <strong>Beberapa Unit</strong>: Memfilter berdasarkan jenis unit
+            yang berbeda
+          </li>
+        </ul>
+
+        <h3>View Nilai stok yang Ditingkatkan</h3>
+        <ul>
+          <li>
+            <strong>Nilai Harga Beli</strong>: Total nilai saham pada harga
+            beli
+          </li>
+          <li>
+            <strong>Nilai Harga Jual</strong>: Total nilai saham pada harga
+            jual
+          </li>
+          <li>
+            <strong>Potensi Keuntungan</strong>: Selisih antara nilai
+            penjualan dan pembelian
+          </li>
+          <li>
+            <strong>Margin Keuntungan</strong>: Persentase margin keuntungan
+            dengan format yang tepat
+          </li>
+        </ul>
+
+        <h3>Penanganan Kesalahan yang Kuat</h3>
+        <ul>
+          <li>
+            <strong>Manajemen Kesalahan AJAX</strong>: Penanganan kesalahan
+            yang lembut untuk masalah jaringan
+          </li>
+          <li>
+            <strong>Validasi Filter</strong>: Validasi yang tepat untuk input
+            filter
+          </li>
+          <li>
+            <strong>View Mata Uang</strong>: Pemformatan mata uang yang
+            konsisten di semua nilai
+          </li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>🛠️ Manfaatnya</h2>
+        <ul>
+          <li>
+            <strong>Pengalaman Pengguna yang lebih baik</strong>: Antarmuka
+            multi-pilihan yang intuitif dengan opsi yang jelas
+          </li>
+          <li>
+            <strong>Analisis Data yang lebih baik</strong>: Pemfilteran
+            berbagai dimensi untuk wawasan yang komprehensif
+          </li>
+          <li>
+            <strong>Pemformatan yang Konsisten</strong>: View mata uang yang
+            tepat dengan simbol khusus bisnis
+          </li>
+          <li>
+            <strong>Kinerja yang Ditingkatkan</strong>: Kueri yang
+            dioptimalkan untuk filter multi-pilihan
+          </li>
+          <li>
+            <strong>Kode yang Dapat Dipelihara</strong>: Kode yang bersih dan
+            terstruktur dengan baik mengikuti praktik terbaik Laravel
+          </li>
+        </ul>
+        <div class="danger">
+          Peningkatan ini secara signifikan meningkatkan kemampuan pelaporan
+          stok dengan tetap mempertahankan kompatibilitas ke belakang dan
+          mengikuti pola yang sudah ada di aplikasi POS Anda.
+        </div>
+      </section>
+
+      <footer>
         <div class="home-button-wrapper">
           <a href="../main.html" class="home-button">🏠 Kembali ke Beranda</a>
         </div>
-
-        <div class="toc-dropdown-wrapper">
-          <label for="toc-dropdown" class="toc-icon">
-            <strong>Daftar Isi</strong>
-          </label>
-          <select id="toc-dropdown" class="toc-dropdown">
-            <!-- Otomatis diisi JS -->
-          </select>
-        </div>
-
-        <!-- ===== SECTIONS ===== -->
-        <section>
-          <h2>Gambaran Umum</h2>
-          <h3>
-            Peningkatan ini mengubah Laporan Stok standar menjadi alat
-            penyaringan yang kuat dengan kemampuan multi-pilihan.
-          </h3>
-          <div class="image-box">
-            <img
-              src="https://ultimate-pos-tutorials.vercel.app/assets/images/stock-report-filter-enhancement-33d3ba7c4d6ac1109a4a659f17d45093.png"
-              alt="#"
-            />
-            <p class="caption">
-              Gambar: Tutorial Peningkatan Filter Laporan Stok.
-            </p>
-          </div>
-          <h3>📦 Unduh File Starter</h3>
-          <a
-            href="https://drive.google.com/file/d/1dH0LWNBIbLHIasbboYe76wCEXivwbWj2/view?usp=drive_link"
-            download
-            class="section-download"
-            >⬇️ Unduh</a
-          >
-        </section>
-
-        <section>
-          <h3>Apa yang Ditambah oleh Peningkatan Ini</h3>
-          <ul>
-            <li>
-              Kemampuan multi-pilihan untuk semua filter yang ada (Lokasi,
-              Kategori, Sub-kategori, Merek, Unit)
-            </li>
-            <li>
-              Filter tingkat stok dengan opsi: Semua, Lebih Besar dari Nol,
-              Kurang dari Satu
-            </li>
-            <li>
-              Penanganan opsi "Semua" untuk pengalaman pengguna yang lebih baik
-            </li>
-            <li>
-              Logika pemfilteran yang lebih baik untuk kinerja dan akurasi yang
-              lebih baik
-            </li>
-          </ul>
-          <h3>Manfaat</h3>
-          <ul>
-            <li>
-              ✅ Pemfilteran Multi-dimensi: Pilih beberapa kategori, merek,
-              lokasi secara bersamaan
-            </li>
-            <li>
-              ✅ Pengalaman Pengguna yang lebih baik: Opsi "Semua" yang intuitif
-              dan status filter yang jelas
-            </li>
-            <li>
-              ✅ Peningkatan Kinerja: Kueri Database yang dioptimalkan untuk
-              filter yang kompleks
-            </li>
-            <li>
-              ✅ View Mata Uang yang Tepat: Pemformatan yang konsisten dengan
-              simbol mata uang
-            </li>
-          </ul>
-        </section>
-        <section>
-          <h1>Langkah-langkah implementasi</h1>
-        </section>
-        <section>
-          <h2>✅ Langkah 1: Perbarui ReportController.php</h2>
-          <h3>1.1 Menambahkan Metode getStockValue yang Disempurnakan</h3>
-          <p>
-            Ganti metode <strong>getStockValue</strong> yang sudah ada dengan
-            versi yang disempurnakan ini:
-          </p>
-          <p>app/Http/Controllers/ReportController.php</p>
-
-          <div class="url-buttons">
-            <button
-              class="view-modal-button"
-              data-url="../tutorial/🔧📊📦/langkah1_1.txt"
-            >
-              app/Http/Controllers/ReportController.php
-            </button>
-          </div>
-
-          <h3>1.2 Tambahkan metode processStockValueFilters</h3>
-          <p>
-            Tambahkan metode privat baru ini untuk menangani pemrosesan filter:
-          </p>
-          <p>app/Http/Controllers/ReportController.php</p>
-          <div class="url-buttons">
-            <button
-              class="view-modal-button"
-              data-url="../tutorial/🔧📊📦/langkah1_2.txt"
-            >
-              app/Http/Controllers/ReportController.php
-            </button>
-          </div>
-          <h3>1.3 Perbarui Metode getStockReport</h3>
-          <p>
-            Perbarui metode <strong>getStockReport</strong> yang sudah ada untuk
-            menyertakan pemrosesan filter yang disempurnakan:
-          </p>
-          <p>app/Http/Controllers/ReportController.php</p>
-          <div class="url-buttons">
-            <button
-              class="view-modal-button"
-              data-url="../tutorial/🔧📊📦/langkah1_3.txt"
-            >
-              app/Http/Controllers/ReportController.php
-            </button>
-          </div>
-
-          <h3>1.4 Tambahkan metode processEnhancedStockReportFilters</h3>
-          <p>
-            Tambahkan metode ini untuk menangani pemfilteran laporan stok yang
-            disempurnakan:
-          </p>
-
-          <p>app/Http/Controllers/ReportController.php</p>
-          <div class="url-buttons">
-            <button
-              class="view-modal-button"
-              data-url="../tutorial/🔧📊📦/langkah1_4.txt"
-            >
-              app/Http/Controllers/ReportController.php
-            </button>
-          </div>
-        </section>
-
-        <section>
-          <h2>✅ Langkah 2: Perbarui TransactionUtil.php</h2>
-          <p>
-            Perbarui metode <strong>getOpeningClosingStock</strong> Anda untuk
-            mendukung filter multi-pilihan:
-          </p>
-
-          <p>app/Utils/TransactionUtil.php</p>
-          <div class="url-buttons">
-            <button
-              class="view-modal-button"
-              data-url="../tutorial/🔧📊📦/langkah2.txt"
-            >
-              app/Utils/TransactionUtil.php
-            </button>
-          </div>
-        </section>
-
-        <section>
-          <h2>✅ Langkah 3: Perbarui View Blade</h2>
-          <p>
-            Ganti file
-            <strong>resources/views/report/stock_report.blade.php</strong> Anda
-            dengan versi yang telah disempurnakan ini:
-          </p>
-
-          <p>resources/views/report/stock_report.blade.php</p>
-          <div class="url-buttons">
-            <button
-              class="view-modal-button"
-              data-url="../tutorial/🔧📊📦/langkah3.txt"
-            >
-              resources/views/report/stock_report.blade.php
-            </button>
-          </div>
-        </section>
-
-        <section>
-          <h2>✅ Langkah 4: Perbarui public/js/report.js</h2>
-          <p>
-            Perbarui file <strong>public/js/report.js</strong> Anda untuk
-            menyertakan filter tingkat stok dalam konfigurasi DataTable dan ubah
-            penanganannya.
-          </p>
-
-          <h3>4.1 Menambahkan Level Stok ke Konfigurasi Tabel Data</h3>
-          <p>
-            Temukan inisialisasi Tabel Data
-            <strong>stock_report_table</strong> Anda dan tambahkan parameter
-            level stok:
-          </p>
-
-          <p>public/js/report.js</p>
-          <div class="url-buttons">
-            <button
-              class="view-modal-button"
-              data-url="../tutorial/🔧📊📦/langkah4_1.txt"
-            >
-              public/js/report.js
-            </button>
-          </div>
-          <h3>4.2 Perbarui Penangan Perubahan Filter</h3>
-          <p>
-            Perbarui penangan peristiwa perubahan untuk menyertakan filter
-            tingkat stok:
-          </p>
-
-          <p>public/js/report.js</p>
-          <div class="url-buttons">
-            <button
-              class="view-modal-button"
-              data-url="../tutorial/🔧📊📦/langkah4_2.txt"
-            >
-              public/js/report.js
-            </button>
-          </div>
-        </section>
-
-        <section>
-          <h2>
-            ✅ Langkah 5: Menambahkan Metode Subkategori ke ProductController
-          </h2>
-          <p>
-            Jika Anda belum memiliki metode ini, tambahkan metode tersebut ke
-            ProductController Anda untuk menangani pemuatan subkategori dinamis:
-          </p>
-          <h3>5.1 Menambahkan Metode getSubKategori</h3>
-          <p>app/Http/Controllers/ProductController.php</p>
-          <div class="url-buttons">
-            <button
-              class="view-modal-button"
-              data-url="../tutorial/🔧📊📦/langkah5_1.txt"
-            >
-              app/Http/Controllers/ProductController.php
-            </button>
-          </div>
-
-          <h3>5.2 Menambahkan metode getSubCategoriesMulti</h3>
-          <p>app/Http/Controllers/ProductController.php</p>
-          <div class="url-buttons">
-            <button
-              class="view-modal-button"
-              data-url="../tutorial/🔧📊📦/langkah5_2.txt"
-            >
-              app/Http/Controllers/ProductController.php
-            </button>
-          </div>
-
-          <h3>5.3 Menambahkan Route untuk Metode Subkategori</h3>
-          <p>
-            Tambahkan Route-Route ini ke <strong>routes/web.php</strong> Anda
-            jika belum ada:
-          </p>
-
-          <p>routes/web.php</p>
-          <div class="url-buttons">
-            <button
-              class="view-modal-button"
-              data-url="../tutorial/🔧📊📦/langkah5_3.txt"
-            >
-              routes/web.php
-            </button>
-          </div>
-        </section>
-
-        <section>
-          <h2>🧪 Fitur-fitur Utama</h2>
-          <h3>Kemampuan Multi-Pilihan</h3>
-          <ul>
-            <li>
-              <strong>Beberapa Lokasi</strong>: Saring berdasarkan beberapa
-              lokasi bisnis secara bersamaan
-            </li>
-            <li>
-              <strong>Beberapa Kategori</strong>: Pilih beberapa kategori produk
-            </li>
-            <li>
-              <strong>Beberapa Merek</strong>: Saring berdasarkan beberapa merek
-              sekaligus
-            </li>
-            <li>
-              <strong>Beberapa Unit</strong>: Memfilter berdasarkan jenis unit
-              yang berbeda
-            </li>
-          </ul>
-
-          <h3>View Nilai stok yang Ditingkatkan</h3>
-          <ul>
-            <li>
-              <strong>Nilai Harga Beli</strong>: Total nilai saham pada harga
-              beli
-            </li>
-            <li>
-              <strong>Nilai Harga Jual</strong>: Total nilai saham pada harga
-              jual
-            </li>
-            <li>
-              <strong>Potensi Keuntungan</strong>: Selisih antara nilai
-              penjualan dan pembelian
-            </li>
-            <li>
-              <strong>Margin Keuntungan</strong>: Persentase margin keuntungan
-              dengan format yang tepat
-            </li>
-          </ul>
-
-          <h3>Penanganan Kesalahan yang Kuat</h3>
-          <ul>
-            <li>
-              <strong>Manajemen Kesalahan AJAX</strong>: Penanganan kesalahan
-              yang lembut untuk masalah jaringan
-            </li>
-            <li>
-              <strong>Validasi Filter</strong>: Validasi yang tepat untuk input
-              filter
-            </li>
-            <li>
-              <strong>View Mata Uang</strong>: Pemformatan mata uang yang
-              konsisten di semua nilai
-            </li>
-          </ul>
-        </section>
-
-        <section>
-          <h2>🛠️ Manfaatnya</h2>
-          <ul>
-            <li>
-              <strong>Pengalaman Pengguna yang lebih baik</strong>: Antarmuka
-              multi-pilihan yang intuitif dengan opsi yang jelas
-            </li>
-            <li>
-              <strong>Analisis Data yang lebih baik</strong>: Pemfilteran
-              berbagai dimensi untuk wawasan yang komprehensif
-            </li>
-            <li>
-              <strong>Pemformatan yang Konsisten</strong>: View mata uang yang
-              tepat dengan simbol khusus bisnis
-            </li>
-            <li>
-              <strong>Kinerja yang Ditingkatkan</strong>: Kueri yang
-              dioptimalkan untuk filter multi-pilihan
-            </li>
-            <li>
-              <strong>Kode yang Dapat Dipelihara</strong>: Kode yang bersih dan
-              terstruktur dengan baik mengikuti praktik terbaik Laravel
-            </li>
-          </ul>
-          <div class="danger">
-            Peningkatan ini secara signifikan meningkatkan kemampuan pelaporan
-            stok dengan tetap mempertahankan kompatibilitas ke belakang dan
-            mengikuti pola yang sudah ada di aplikasi POS Anda.
-          </div>
-        </section>
-
-        <footer>
-          <div class="home-button-wrapper">
-            <a href="../main.html" class="home-button">🏠 Kembali ke Beranda</a>
-          </div>
-        </footer>
+      </footer>
+    </div>
+  </div>
+  <div id="myModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <iframe id="modalFrame" src="" frameborder="0" style="width: 100%; height: 400px"></iframe>
+    </div>
+  </div>
+  <button id="bubbleUp" title="Kembali ke Atas" aria-label="Kembali ke Atas">
+    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="none" viewBox="0 0 24 24" stroke="white">
+      <path stroke-linecap="round" stroke-width="2" d="M6 15l6-6 6 6" />
+    </svg>
+  </button>
+  <div id="completionModal" class="completion-modal">
+    <div class="completion-modal-content">
+      <span class="completion-close" title="Tutup">&times;</span>
+      <h3>🎉 Selamat, kamu telah menyelesaikan tutorialnya!</h3>
+      <p>Apakah kamu ingin mengunduh file yang telah jadi?</p>
+      <div class="completion-button-group">
+        <a id="completion-download-btn" data-id="file_2" class="completion-btn completion-yes-btn">
+          ✅ Ya
+        </a>
+        <button id="completion-no-btn" class="completion-btn completion-no-btn">
+          ❌ Tidak
+        </button>
       </div>
     </div>
-    <div id="myModal" class="modal">
-      <div class="modal-content">
-        <span class="close">&times;</span>
-        <iframe
-          id="modalFrame"
-          src=""
-          frameborder="0"
-          style="width: 100%; height: 400px"
-        ></iframe>
-      </div>
-    </div>
-    <button id="bubbleUp" title="Kembali ke Atas" aria-label="Kembali ke Atas">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="26"
-        height="26"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="white"
-      >
-        <path stroke-linecap="round" stroke-width="2" d="M6 15l6-6 6 6" />
-      </svg>
-    </button>
-    <div id="completionModal" class="completion-modal">
-      <div class="completion-modal-content">
-        <span class="completion-close" title="Tutup">&times;</span>
-        <h3>🎉 Selamat, kamu telah menyelesaikan tutorialnya!</h3>
-        <p>Apakah kamu ingin mengunduh file yang telah jadi?</p>
-        <div class="completion-button-group">
-          <a
-            id="completion-download-btn"
-            data-id="file_2"
-            class="completion-btn completion-yes-btn"
-          >
-            ✅ Ya
-          </a>
-          <button
-            id="completion-no-btn"
-            class="completion-btn completion-no-btn"
-          >
-            ❌ Tidak
-          </button>
-        </div>
-      </div>
-    </div>
-    <script src="../js/scripts.js"></script>
-    <script src="../js/sidebar.js"></script>
-    <script src="../js/bubble.js"></script>
-    <script src="../js/complete.js"></script>
+  </div>
+  <script src="../js/scripts.js"></script>
+  <script src="../js/sidebar.js"></script>
+  <script src="../js/bubble.js"></script>
+  <script src="../js/complete.js"></script>
   <script src="../js//Data/file_download_data.js"></script>
   <script src="../js//Data/pass_data.js"></script>
 
-    <!-- Link ke file JavaScript -->
-  </body>
+  <!-- Link ke file JavaScript -->
+</body>
+
 </html>
