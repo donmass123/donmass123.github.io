@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="../css/sidebar.css" />
     <link rel="stylesheet" href="../css/bubble.css" />
     <link rel="stylesheet" href="../css/complete.css" />
+    <link rel="stylesheet" href="../css/tree.css" />
 
 
 </head>
@@ -98,6 +99,76 @@
                     </li>
                     <li>Menggunakan sintaksis Laravel Blade untuk rendering bersyarat</li>
                 </ul>
+            </section>
+            <section>
+                <h2>Struktur File</h2>
+                <ul class="tree">
+                    <li>
+                        <details open>
+                            <summary>📁 POS</summary>
+                            <ul class="tree">
+                                <li>
+                                    <details open>
+                                        <summary>📁 resources</summary>
+                                        <ul class="tree">
+                                            <li>
+                                                <details>
+                                                    <summary>📁 views</summary>
+                                                    <ul class="tree">
+                                                        <li>
+                                                            <details>
+                                                                <summary>📁 sale_pos</summary>
+                                                                <ul class="tree">
+                                                                    <li>
+                                                                        <details>
+                                                                            <summary>📁 receipts</summary>
+                                                                            <ul class="tree">
+                                                                                <li class="file">
+                                                                                     classic.blade.php
+                                                                                    <span class="tag">search</span>
+                                                                                    <ul class="tree">
+                                                                                        <li>$receipt_details-&gt;total_due
+                                                                                            <span
+                                                                                                class="tag">L430-L452</span>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </details>
+                                                                    </li>
+                                                                </ul>
+                                                            </details>
+                                                        </li>
+                                                    </ul>
+                                                </details>
+                                            </li>
+                                            <li>
+                                                <details>
+                                                    <summary>📁 lang</summary>
+                                                    <ul class="tree">
+                                                        <li>
+                                                            <details>
+                                                                <summary>📁 en</summary>
+                                                                <ul class="tree">
+                                                                    <li class="file">
+                                                                         lang_v1.php
+                                                                        <span class="tag">update</span>
+                                                                        <span class="tag">opsional</span>
+                                                                    </li>
+                                                                </ul>
+                                                            </details>
+                                                        </li>
+                                                    </ul>
+                                                </details>
+                                            </li>
+                                        </ul>
+                                    </details>
+                                </li>
+                            </ul>
+                        </details>
+                    </li>
+                </ul>
+
             </section>
 
             <section>
@@ -319,7 +390,8 @@
                 <ul>
                     <li>Periksa apakah <code>$receipt_details->all_due</code> dan
                         <code>$receipt_details->total_due</code>
-                        memiliki nilai.</li>
+                        memiliki nilai.
+                    </li>
                     <li>Verifikasi apakah fungsi <code>as_decimal()</code> mem-parsing mata uang dengan benar.</li>
                 </ul>
 
@@ -404,8 +476,8 @@
     <script src="../js/sidebar.js"></script>
     <script src="../js/bubble.js"></script>
     <script src="../js/complete.js"></script>
-  <script src="../js//Data/file_download_data.js"></script>
-  <script src="../js//Data/pass_data.js"></script>
+    <script src="../js//Data/file_download_data.js"></script>
+    <script src="../js//Data/pass_data.js"></script>
 
     <!-- Link ke file JavaScript -->
 </body>
