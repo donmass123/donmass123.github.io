@@ -86,6 +86,164 @@
                 </ul>
             </section>
             <section>
+                <h2>Struktur File</h2>
+                <ul class="tree">
+                    <li>
+                        <details open>
+                            <summary>📁 POS</summary>
+                            <ul class="tree">
+                                <li>
+                                    <details>
+                                        <summary>📁 database</summary>
+                                        <ul class="tree">
+                                            <li>
+                                                <details>
+                                                    <summary>📁 migrations</summary>
+                                                    <ul class="tree">
+                                                        <li class="file">add_watermark_fields_to_invoice_layouts (baru)
+                                                            <span class="tag tag-new">Migration Update</span></li>
+                                                    </ul>
+                                                </details>
+                                            </li>
+                                        </ul>
+                                    </details>
+                                </li>
+
+                                <li>
+                                    <details>
+                                        <summary>📁 app</summary>
+                                        <ul class="tree">
+                                            <li>
+                                                <details>
+                                                    <summary>📁 model</summary>
+                                                    <ul class="tree">
+                                                        <li class="file">InvoiceLayout.php <span
+                                                                class="tag tag-new">Update InvoiceLayout</span></li>
+                                                    </ul>
+                                                </details>
+                                            </li>
+
+                                            <li>
+                                                <details>
+                                                    <summary>📁 http</summary>
+                                                    <ul class="tree">
+                                                        <li>
+                                                            <details>
+                                                                <summary>📁 controllers</summary>
+                                                                <ul class="tree">
+                                                                    <li class="file">InvoiceLayoutController.php <span
+                                                                            class="tag tag-new">Update Metode Store,
+                                                                            Update Metode Update</span></li>
+                                                                </ul>
+                                                            </details>
+                                                        </li>
+                                                    </ul>
+                                                </details>
+                                            </li>
+                                        </ul>
+                                    </details>
+                                </li>
+
+                                <li>
+                                    <details>
+                                        <summary>📁 lang</summary>
+                                        <ul class="tree">
+                                            <li class="file">lang_v1.php <span class="tag tag-new">Update Bahasa</span>
+                                            </li>
+                                        </ul>
+                                    </details>
+                                </li>
+
+                                <li>
+                                    <details>
+                                        <summary>📁 resources</summary>
+                                        <ul class="tree">
+                                            <li>
+                                                <details>
+                                                    <summary>📁 views</summary>
+                                                    <ul class="tree">
+                                                        <li>
+                                                            <details>
+                                                                <summary>📁 invoice_layout</summary>
+                                                                <ul class="tree">
+                                                                    <li class="file">create.blade.php <span
+                                                                            class="tag tag-new">Add Watermark Section to
+                                                                            Form</span></li>
+                                                                    <li class="file">edit.blade.php <span
+                                                                            class="tag tag-new">Update Invoice Layout
+                                                                            Edit Form</span></li>
+                                                                </ul>
+                                                            </details>
+                                                        </li>
+
+                                                        <li>
+                                                            <details>
+                                                                <summary>📁 sale_pos</summary>
+                                                                <ul class="tree">
+                                                                    <li>
+                                                                        <details>
+                                                                            <summary>📁 receipts</summary>
+                                                                            <ul class="tree">
+                                                                                <li class="file">classic.blade.php <span
+                                                                                        class="tag tag-new">Add
+                                                                                        Template</span></li>
+                                                                                <li class="file">detailed.blade.php
+                                                                                    <span class="tag tag-new">Add
+                                                                                        Template</span></li>
+                                                                                <li class="file">
+                                                                                    columnize-taxes.blade.php <span
+                                                                                        class="tag tag-new">Add
+                                                                                        Template</span></li>
+                                                                                <li class="file">elegant.blade.php <span
+                                                                                        class="tag tag-new">Add
+                                                                                        Template</span></li>
+                                                                            </ul>
+                                                                        </details>
+                                                                    </li>
+                                                                </ul>
+                                                            </details>
+                                                        </li>
+                                                    </ul>
+                                                </details>
+                                            </li>
+                                        </ul>
+                                    </details>
+                                </li>
+
+                                <li>
+                                    <details>
+                                        <summary>📁 public</summary>
+                                        <ul class="tree">
+                                            <li>
+                                                <details>
+                                                    <summary>📁 uploads</summary>
+                                                    <ul class="tree">
+                                                        <li class="file">invoice_logos <span
+                                                                class="tag tag-new">Watermark Storage</span></li>
+                                                    </ul>
+                                                </details>
+                                            </li>
+                                        </ul>
+                                    </details>
+                                </li>
+
+                                <li>
+                                    <details>
+                                        <summary>📁 utils</summary>
+                                        <ul class="tree">
+                                            <li class="file">TransactionUtil.php <span class="tag tag-new">Update Metode
+                                                    getReceiptDetails</span></li>
+                                        </ul>
+                                    </details>
+                                </li>
+
+                            </ul>
+                        </details>
+                    </li>
+                </ul>
+
+            </section>
+            <section>
                 <h2>Langkah 1: Database Migration</h2>
 
                 <h3>Buat File Migrasi</h3>
@@ -139,7 +297,8 @@
                 <h2>Langkah 2: Update Model</h2>
 
                 <p>Update Model InvoiceLayout</p>
-                <p>Tambahkan casting untuk kolom watermark di file <code>app/InvoiceLayout.php</code> sebagai berikut:
+                <p>Tambahkan casting untuk kolom watermark di file <code>app/model/InvoiceLayout.php</code> sebagai
+                    berikut:
                 </p>
                 <div class="url-buttons">
                     <button class="view-modal-button" data-url="../tutorial/🖼️💳📘🛠️/langkah2.txt">
@@ -193,7 +352,8 @@
                 <h3>Tambahkan Bagian Watermark ke Formulir Edit</h3>
 
                 <p>Update Formulir Edit Layout Invoice</p>
-                <p>Pada file formulir edit layout invoice (<strong>resources/views/invoice_layout/edit.blade.php</strong>),
+                <p>Pada file formulir edit layout invoice
+                    (<strong>resources/views/invoice_layout/edit.blade.php</strong>),
                     tambahkan bagian pengaturan watermark yang memungkinkan pengguna untuk mengedit pengaturan watermark
                     yang ada.</p>
                 <div class="url-buttons">
@@ -383,9 +543,9 @@
                         public/uploads/invoice_logos/ (penyimpanan watermark)
                     </li>
                 </ul>
-                </section>
+            </section>
 
-                <section>
+            <section>
                 <h2>Pertimbangan Keamanan dan Kinerja</h2>
 
                 <h3>Pertimbangan Keamanan</h3>
@@ -408,7 +568,8 @@
                 <p>Fitur watermark sekarang telah sepenuhnya diimplementasikan dalam sistem POS Anda. Pengguna
                     dapat mengunggah watermark kustom, menyesuaikan tampilannya, dan memposisikan watermark pada faktur
                     sambil menjaga keterbacaan teks.</p>
-                <p>Untuk kustomisasi tambahan atau pemecahan masalah, lihat dokumentasi Laravel dan struktur kode POS.</p>
+                <p>Untuk kustomisasi tambahan atau pemecahan masalah, lihat dokumentasi Laravel dan struktur kode POS.
+                </p>
             </section>
 
 
