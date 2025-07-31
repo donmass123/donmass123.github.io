@@ -1,42 +1,52 @@
 ul.tree {
   list-style: none;
-  padding-left: 1rem;
-  overflow-x: hidden; /* Prevent horizontal scroll */
+  padding-left: 1.5rem;
+  overflow-x: hidden;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  white-space: normal; /* Allow text to wrap inside elements */
-  border: none;
-  box-shadow: none;
+  white-space: normal;
   margin: 0;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  transition: background-color 0.3s ease;
 }
 
 ul.tree li {
   position: relative;
-  margin: 0.4rem 0;
+  margin: 0.6rem 0;
   display: block;
-  max-width: 100%; /* Ensure elements take full width */
+  max-width: 100%;
   word-wrap: break-word;
-  border: none;
-  box-shadow: none;
 }
 
 ul.tree li::before {
   content: '📁';
   margin-right: 1rem;
+  font-size: 1.2rem;
+  color: #4caf50;
+  transition: transform 0.3s ease;
 }
 
 ul.tree li.file::before {
   content: '📄';
+  color: #2196f3;
+}
+
+ul.tree li:hover::before {
+  transform: scale(1.1); 
 }
 
 li span.tag {
   background-color: #4caf50;
   color: white;
-  font-size: 0.75rem;
-  border-radius: 4px;
-  padding: 0 6px;
+  font-size: 0.8rem;
+  border-radius: 12px;
+  padding: 0 8px;
   margin-left: 0.5rem;
   display: inline-block;
-  white-space: nowrap;
+  transition: background-color 0.3s ease;
+  text-transform: uppercase;
 }
 
 li span.tag-add {
@@ -47,14 +57,25 @@ li span.tag-new {
   background-color: #f44336;
 }
 
+li span.tag:hover {
+  background-color: #388e3c;
+}
+
 details summary {
   cursor: pointer;
-  font-weight: bold;
-  word-break: break-word;
-  overflow-wrap: break-word;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #333;
   border: none;
-  box-shadow: none;
-  outline: none;
+  background-color: transparent;
+  padding: 0.5rem;
+  border-radius: 6px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+details summary:hover {
+  background-color: #e0f7fa;
+  color: #00796b;
 }
 
 summary::marker {
@@ -66,43 +87,41 @@ summary::marker {
 /* Small screens (mobile-first approach) */
 @media (max-width: 768px) {
   ul.tree {
-    padding-left: 1rem;  /* Ensure left padding is consistent */
-    font-size: 0.9rem; /* Adjust font size for mobile */
-    overflow-x: hidden; /* Prevent horizontal scroll on small screens */
+    font-size: 0.9rem;
+    padding-left: 1rem;
   }
 
   li span.tag {
-    font-size: 0.7rem; /* Smaller tags for mobile */
-    padding: 0 4px;
+    font-size: 0.75rem;
+    padding: 0 6px;
   }
 
   details summary {
-    font-size: 1rem; /* Slightly larger font for clarity */
+    font-size: 1.2rem;
   }
 
-  /* Ensure tree list items fit properly in mobile view */
   ul.tree li {
-    margin: 0.6rem 0; /* Add some spacing between items */
-    padding-left: 1.5rem; /* Increased padding for better spacing */
+    margin: 0.6rem 0;
+    padding-left: 1.5rem;
   }
 }
 
 /* Medium and Large screens */
 @media (min-width: 769px) {
   ul.tree {
-    font-size: 1rem; /* Set a standard font size for larger screens */
+    font-size: 1rem;
   }
 
   li span.tag {
-    font-size: 0.75rem; /* Adjust tags for readability */
-    padding: 0 6px;
+    font-size: 0.8rem;
+    padding: 0 8px;
   }
 
   details summary {
-    font-size: 1.2rem; /* Larger font size for larger screens */
+    font-size: 1.3rem;
   }
 
   ul.tree li {
-    padding-left: 1.5rem; /* Add space for nested items */
+    padding-left: 1.5rem;
   }
 }
