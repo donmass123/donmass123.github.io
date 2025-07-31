@@ -91,6 +91,8 @@ summary::marker {
         font-size: 0.85rem;  /* Smaller font size for mobile */
         padding-left: 1rem;
         padding-right: 1rem; /* Add some padding on the right for better touch targets */
+        overflow-x: auto;  /* Enable horizontal scrolling */
+        white-space: nowrap;  /* Prevent line breaks */
     }
 
     li span.tag {
@@ -125,6 +127,8 @@ summary::marker {
 @media (min-width: 769px) and (max-width: 1024px) {
     ul.tree {
         font-size: 0.95rem;  /* Slightly larger font size for tablets */
+        overflow-x: auto;  /* Enable horizontal scrolling */
+        white-space: nowrap;  /* Prevent line breaks */
     }
 
     li span.tag {
