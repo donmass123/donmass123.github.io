@@ -80,89 +80,6 @@
           kode QR, Anda perlu menambahkan dukungan kode QR ke pengaturan kode
           batang jika belum ada.
         </p>
-        <section>
-          <h2>Struktur File</h2>
-          <ul class="tree">
-            <li>
-              <details open>
-                <summary>📁 POS</summary>
-                <ul class="tree">
-                  <li>
-                    <details>
-                      <summary>📁 app</summary>
-                      <ul class="tree">
-                        <li>
-                          <details>
-                            <summary>📁 Http</summary>
-                            <ul class="tree">
-                              <li>
-                                <details>
-                                  <summary>📁 Controllers</summary>
-                                  <ul class="tree">
-                                    <li class="file">
-                                       CashRegisterController.php <span class="tag">update</span>
-                                      <ul>
-                                        <li>getRegisterDetails() <span class="tag">update</span></li>
-                                        <li>getCloseRegister() <span class="tag">update</span> <span
-                                            class="tag">opsional</span></li>
-                                      </ul>
-                                    </li>
-                                  </ul>
-                                </details>
-                              </li>
-                            </ul>
-                          </details>
-                        </li>
-                        <li>
-                          <details>
-                            <summary>📁 Utils</summary>
-                            <ul class="tree">
-                              <li class="file">
-                                 CashRegisterUtil.php <span class="tag-add">add</span>
-                                <ul>
-                                  <li>getTodayDueCollections() <span class="tag-add">add</span></li>
-                                </ul>
-                              </li>
-                            </ul>
-                          </details>
-                        </li>
-                      </ul>
-                    </details>
-                  </li>
-                  <li>
-                    <details>
-                      <summary>📁 resources</summary>
-                      <ul class="tree">
-                        <li>
-                          <details>
-                            <summary>📁 views</summary>
-                            <ul class="tree">
-                              <li>
-                                <details>
-                                  <summary>📁 cash_register</summary>
-                                  <ul class="tree">
-                                    <li class="file">
-                                       register_details.blade.php <span class="tag">update</span>
-                                    </li>
-                                    <li class="file">
-                                       close_register.blade.php <span class="tag">update</span> <span
-                                        class="tag">opsional</span>
-                                    </li>
-                                  </ul>
-                                </details>
-                              </li>
-                            </ul>
-                          </details>
-                        </li>
-                      </ul>
-                    </details>
-                  </li>
-                </ul>
-              </details>
-            </li>
-          </ul>
-
-        </section>
 
         <h2>Menambahkan Pengaturan Barcode Kode QR</h2>
         <p>
@@ -212,6 +129,88 @@
           <li>
             Beberapa Opsi Cetak: Pencetakan standar, pengoptimalan printer
             label, dan mode khusus QR
+          </li>
+        </ul>
+      </section>
+      <section>
+        <h2>Struktur File</h2>
+        <ul class="tree">
+          <li>
+            <details open>
+              <summary>📁 POS</summary>
+              <ul class="tree">
+                <li>
+                  <details>
+                    <summary>📁 app</summary>
+                    <ul class="tree">
+                      <li>
+                        <details>
+                          <summary>📁 Http</summary>
+                          <ul class="tree">
+                            <li>
+                              <details>
+                                <summary>📁 Controllers</summary>
+                                <ul class="tree">
+                                  <li class="file">
+                                    CashRegisterController.php <span class="tag">update</span>
+                                    <ul>
+                                      <li>getRegisterDetails() <span class="tag">update</span></li>
+                                      <li>getCloseRegister() <span class="tag">update</span> <span
+                                          class="tag">opsional</span></li>
+                                    </ul>
+                                  </li>
+                                </ul>
+                              </details>
+                            </li>
+                          </ul>
+                        </details>
+                      </li>
+                      <li>
+                        <details>
+                          <summary>📁 Utils</summary>
+                          <ul class="tree">
+                            <li class="file">
+                              CashRegisterUtil.php <span class="tag-add">add</span>
+                              <ul>
+                                <li>getTodayDueCollections() <span class="tag-add">add</span></li>
+                              </ul>
+                            </li>
+                          </ul>
+                        </details>
+                      </li>
+                    </ul>
+                  </details>
+                </li>
+                <li>
+                  <details>
+                    <summary>📁 resources</summary>
+                    <ul class="tree">
+                      <li>
+                        <details>
+                          <summary>📁 views</summary>
+                          <ul class="tree">
+                            <li>
+                              <details>
+                                <summary>📁 cash_register</summary>
+                                <ul class="tree">
+                                  <li class="file">
+                                    register_details.blade.php <span class="tag">update</span>
+                                  </li>
+                                  <li class="file">
+                                    close_register.blade.php <span class="tag">update</span> <span
+                                      class="tag">opsional</span>
+                                  </li>
+                                </ul>
+                              </details>
+                            </li>
+                          </ul>
+                        </details>
+                      </li>
+                    </ul>
+                  </details>
+                </li>
+              </ul>
+            </details>
           </li>
         </ul>
       </section>
