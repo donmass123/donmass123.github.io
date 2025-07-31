@@ -208,5 +208,24 @@ const tutorialsData = [
     image: "cover/16.webp",
     updateDate: "29 Juli 2025",
     description: "📦 Fitur Watermark POS - Panduan Implementasi Lengkap."
+  },
+   {
+    title: "📑 Laporan Penjualan Bulanan Pelanggan - Panduan Implementasi Lengkap",
+    link: "html/17.html",
+    level: "menengah",
+    image: "cover/17.webp",
+    updateDate: "31 Juli 2025",
+    description: "📦 Laporan Penjualan Bulanan Pelanggan - Panduan Implementasi Lengkap."
   }
 ];
+    // Fungsi untuk mengganti title berdasarkan URL
+    function updatePageTitle() {
+      const currentUrl = window.location.href; // Mendapatkan URL halaman saat ini
+      const tutorial = tutorialsData.find(t => currentUrl.includes(t.link)); // Mencari tutorial berdasarkan URL
+      if (tutorial) {
+        document.title = tutorial.title; // Mengubah title halaman dengan judul tutorial
+      }
+    }
+
+    // Memanggil fungsi saat halaman dimuat
+    window.onload = updatePageTitle;
