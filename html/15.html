@@ -96,31 +96,129 @@
         <h2>Pohon Implementasi Lengkap</h2>
         <ul class="tree">
           <li>
-            Backend (PHP)
-            <details>
-              <summary>getproductSellReport() method</summary>
-              <ul>
-                <li>Query modifications</li>
-                <li>New column calculations</li>
-                <li>DataTables response updates</li>
+            <details open>
+              <summary>📁 Backend (PHP)</summary>
+              <ul class="tree">
+                <li class="file">metode getproductSellReport()
+                  <ul>
+                    <li class="file">Modifikasi query</li>
+                    <li class="file">Perhitungan kolom baru</li>
+                    <li class="file">Pembaruan respons DataTables</li>
+                  </ul>
+                </li>
               </ul>
             </details>
           </li>
           <li>
-            Frontend (Blade Template)
-            <ul>
-              <li>Table headers update</li>
-              <li>Footer calculations update</li>
-            </ul>
+            <details>
+              <summary>📁 Frontend (Blade Template)</summary>
+              <ul class="tree">
+                <li class="file">Pembaruan header tabel</li>
+                <li class="file">Pembaruan perhitungan footer</li>
+              </ul>
+            </details>
           </li>
           <li>
-            JavaScript
-            <ul>
-              <li>DataTables configuration</li>
-              <li>Column mappings update</li>
-            </ul>
+            <details>
+              <summary>📁 JavaScript</summary>
+              <ul class="tree">
+                <li class="file">Konfigurasi DataTables</li>
+                <li class="file">Pembaruan pemetaan kolom</li>
+              </ul>
+            </details>
           </li>
         </ul>
+      </section>
+
+      <section>
+        <h2>Struktur File</h2>
+        <ul class="tree">
+          <li>
+            <details open>
+              <summary>📁 POS</summary>
+              <ul class="tree">
+
+                <li>
+                  <details>
+                    <summary>📁 app</summary>
+                    <ul class="tree">
+                      <li>
+                        <details>
+                          <summary>📁 Http</summary>
+                          <ul class="tree">
+                            <li>
+                              <details>
+                                <summary>📁 Controllers</summary>
+                                <ul class="tree">
+                                  <li class="file">ReportController.php <span class="tag tag-add">update method
+                                      getproductSellReport</span></li>
+                                </ul>
+                              </details>
+                            </li>
+                          </ul>
+                        </details>
+                      </li>
+                    </ul>
+                  </details>
+                </li>
+
+                <li>
+                  <details>
+                    <summary>📁 resources</summary>
+                    <ul class="tree">
+                      <li>
+                        <details>
+                          <summary>📁 views</summary>
+                          <ul class="tree">
+                            <li>
+                              <details>
+                                <summary>📁 report</summary>
+                                <ul class="tree">
+                                  <li class="file">product_sell_report.blade.php <span class="tag tag-add">update Header
+                                      Template Blade</span></li>
+                                  <li class="file">product_sell_report.blade.php <span class="tag tag-add">update</span>
+                                  </li>
+                                </ul>
+                              </details>
+                            </li>
+                          </ul>
+                        </details>
+                      </li>
+                    </ul>
+                  </details>
+                </li>
+
+                <li>
+                  <details>
+                    <summary>📁 lang</summary>
+                    <ul class="tree">
+                      <li class="file">lang_v1.php <span class="tag tag-add">ganti semua bahasa</span></li>
+                    </ul>
+                  </details>
+                </li>
+
+                <li>
+                  <details>
+                    <summary>📁 public</summary>
+                    <ul class="tree">
+                      <li>
+                        <details>
+                          <summary>📁 js</summary>
+                          <ul class="tree">
+                            <li class="file">report.js <span class="tag tag-add">update konfigurasi JavaScript
+                                DataTable</span></li>
+                          </ul>
+                        </details>
+                      </li>
+                    </ul>
+                  </details>
+                </li>
+
+              </ul>
+            </details>
+          </li>
+        </ul>
+
       </section>
 
       <section>
