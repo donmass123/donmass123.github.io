@@ -1,126 +1,146 @@
 ul.tree {
-  list-style: none;
-  padding-left: 1.5rem;
-  overflow-x: hidden;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  white-space: normal;
-  margin: 0;
-  background-color: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  padding: 1rem;
-  transition: background-color 0.3s ease;
+    list-style: none;
+    padding-left: 1.5rem;
+    overflow-x: hidden;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    white-space: normal;
+    margin: 0;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+    transition: background-color 0.3s ease;
 }
 
 ul.tree li {
-  position: relative;
-  margin: 0.6rem 0;
-  display: block;
-  max-width: 100%;
-  word-wrap: break-word;
+    position: relative;
+    margin: 0.6rem 0;
+    display: block;
+    max-width: 100%;
+    word-wrap: break-word;
 }
 
 ul.tree li::before {
-  margin-right: 1rem;
-  font-size: 1.2rem;
-  color: #4caf50;
-  transition: transform 0.3s ease;
+    margin-right: 1rem;
+    font-size: 1.2rem;
+    color: #4caf50;
+    transition: transform 0.3s ease;
 }
 
 ul.tree li.file::before {
-  content: '📄';
-  color: #2196f3;
+    content: '📄';
+    color: #2196f3;
 }
 
 ul.tree li:hover::before {
-  transform: scale(1.1); 
+    transform: scale(1.1);
 }
 
 li span.tag {
-  background-color: #4caf50;
-  color: white;
-  font-size: 0.8rem;
-  border-radius: 12px;
-  padding: 0 8px;
-  margin-left: 0.5rem;
-  display: inline-block;
-  transition: background-color 0.3s ease;
-  text-transform: uppercase;
+    background-color: #4caf50;
+    color: white;
+    font-size: 0.8rem;
+    border-radius: 12px;
+    padding: 0 8px;
+    margin-left: 0.5rem;
+    display: inline-block;
+    transition: background-color 0.3s ease;
+    text-transform: uppercase;
 }
 
 li span.tag-add {
-  background-color: #03a9f4;
+    background-color: #03a9f4;
 }
 
 li span.tag-new {
-  background-color: #f44336;
+    background-color: #f44336;
 }
 
 li span.tag:hover {
-  background-color: #388e3c;
+    background-color: #388e3c;
 }
 
 details summary {
-  cursor: pointer;
-  font-weight: 600;
-  font-size: 1.1rem;
-  color: #333;
-  border: none;
-  background-color: transparent;
-  padding: 0.5rem;
-  border-radius: 6px;
-  transition: background-color 0.3s ease, color 0.3s ease;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: #333;
+    border: none;
+    background-color: transparent;
+    padding: 0.5rem;
+    border-radius: 6px;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 details summary:hover {
-  background-color: #e0f7fa;
-  color: #00796b;
+    background-color: #e0f7fa;
+    color: #00796b;
 }
 
 summary::marker {
-  color: #fff;
+    color: #fff;
 }
 
 /* RESPONSIVE STYLING */
 
 /* Small screens (mobile-first approach) */
 @media (max-width: 768px) {
-  ul.tree {
-    font-size: 0.9rem;
-    padding-left: 1rem;
-  }
+    ul.tree {
+        font-size: 0.9rem;
+        padding-left: 1rem;
+    }
 
-  li span.tag {
-    font-size: 0.75rem;
-    padding: 0 6px;
-  }
+    li span.tag {
+        font-size: 0.75rem;
+        padding: 0 6px;
+    }
 
-  details summary {
-    font-size: 1.2rem;
-  }
+    details summary {
+        font-size: 1.2rem;
+    }
 
-  ul.tree li {
-    margin: 0.6rem 0;
-    padding-left: 1.5rem;
-  }
+    ul.tree li {
+        margin: 0.6rem 0;
+        padding-left: 1.5rem;
+    }
 }
 
 /* Medium and Large screens */
-@media (min-width: 769px) {
-  ul.tree {
-    font-size: 1rem;
-  }
+@media (min-width: 769px) and (max-width: 1024px) {
+    ul.tree {
+        font-size: 1rem;
+    }
 
-  li span.tag {
-    font-size: 0.8rem;
-    padding: 0 8px;
-  }
+    li span.tag {
+        font-size: 0.8rem;
+        padding: 0 8px;
+    }
 
-  details summary {
-    font-size: 1.3rem;
-  }
+    details summary {
+        font-size: 1.3rem;
+    }
 
-  ul.tree li {
-    padding-left: 1.5rem;
-  }
+    ul.tree li {
+        padding-left: 1.5rem;
+    }
+}
+
+/* Large screens (desktops and above) */
+@media (min-width: 1025px) {
+    ul.tree {
+        font-size: 1rem;
+    }
+
+    li span.tag {
+        font-size: 0.9rem;
+        padding: 0 10px;
+    }
+
+    details summary {
+        font-size: 1.4rem;
+    }
+
+    ul.tree li {
+        padding-left: 2rem;
+    }
 }
