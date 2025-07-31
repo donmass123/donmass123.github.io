@@ -1,8 +1,6 @@
 ul.tree {
     list-style: none;
     padding-left: 1.5rem;
-    padding-top: 0;  /* Set top padding to 0 */
-    padding-bottom: 0;  /* Set bottom padding to 0 */
     overflow-x: hidden;
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     white-space: normal;
@@ -19,9 +17,9 @@ ul.tree li {
     margin: 0.6rem 0;
     display: block;
     max-width: 100%;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-    word-break: break-word;
+    word-wrap: break-word; /* Ensures long text wraps */
+    overflow-wrap: break-word; /* Prevents overflow */
+    word-break: break-word; /* Breaks long words if needed */
 }
 
 ul.tree li::before {
@@ -90,30 +88,29 @@ summary::marker {
 /* Mobile-first design (screens up to 768px) */
 @media (max-width: 768px) {
     ul.tree {
-        font-size: 0.85rem;  
+        font-size: 0.85rem;  /* Smaller font size for mobile */
         padding-left: 1rem;
-        padding-right: 1rem;
-        overflow-x: auto;
-        white-space: nowrap;
-        padding-top: 0;  /* Set top padding to 0 for mobile */
-        padding-bottom: 0;  /* Set bottom padding to 0 for mobile */
+        padding-right: 1rem; /* Add some padding on the right for better touch targets */
+        overflow-x: auto;  /* Enable horizontal scrolling */
+        white-space: nowrap;  /* Prevent line breaks */
     }
 
     li span.tag {
-        font-size: 0.75rem;
+        font-size: 0.75rem;  /* Slightly smaller tags */
         padding: 0 6px;
     }
 
     details summary {
         font-size: 1.1rem;
-        padding: 0.6rem;
+        padding: 0.6rem; /* Slightly more padding for better clickability */
     }
 
     ul.tree li {
-        margin: 0.8rem 0;
+        margin: 0.8rem 0; /* Increased margin for touch-friendly design */
         padding-left: 1.2rem;
     }
 
+    /* Mobile layout: Stack tree items vertically */
     ul.tree {
         display: block;
     }
@@ -122,22 +119,20 @@ summary::marker {
         display: flex;
         flex-direction: column;
         align-items: flex-start;
-        overflow-wrap: break-word;
+        overflow-wrap: break-word; /* Ensures long text will wrap */
     }
 }
 
 /* Tablet design (screens between 769px and 1024px) */
 @media (min-width: 769px) and (max-width: 1024px) {
     ul.tree {
-        font-size: 0.95rem;  
-        overflow-x: auto;
-        white-space: nowrap;
-        padding-top: 0;  /* Set top padding to 0 for tablet */
-        padding-bottom: 0;  /* Set bottom padding to 0 for tablet */
+        font-size: 0.95rem;  /* Slightly larger font size for tablets */
+        overflow-x: auto;  /* Enable horizontal scrolling */
+        white-space: nowrap;  /* Prevent line breaks */
     }
 
     li span.tag {
-        font-size: 0.8rem;
+        font-size: 0.8rem;  /* Tags are more readable on tablets */
         padding: 0 8px;
     }
 
@@ -150,6 +145,7 @@ summary::marker {
         margin: 0.7rem 0;
     }
 
+    /* Tablet layout: Side-by-side display for the tree items */
     ul.tree {
         display: flex;
         flex-wrap: wrap;
@@ -158,22 +154,20 @@ summary::marker {
 
     li {
         display: inline-block;
-        width: 45%;
+        width: 45%;  /* Items will now take up less width, creating a grid-like view */
         margin-right: 1rem;
-        overflow-wrap: break-word;
+        overflow-wrap: break-word; /* Ensure wrapping for long text */
     }
 }
 
 /* Large screens (desktops and above) */
 @media (min-width: 1025px) {
     ul.tree {
-        font-size: 1rem;
-        padding-top: 0;  /* Set top padding to 0 for large screens */
-        padding-bottom: 0;  /* Set bottom padding to 0 for large screens */
+        font-size: 1rem;  /* Default font size for large screens */
     }
 
     li span.tag {
-        font-size: 0.85rem;
+        font-size: 0.85rem;  /* Adjust tag size for larger screens */
         padding: 0 9px;
     }
 
@@ -183,9 +177,10 @@ summary::marker {
 
     ul.tree li {
         padding-left: 2rem;
-        margin: 1rem 0;
+        margin: 1rem 0;  /* Spacing for desktop view */
     }
 
+    /* Desktop layout: Items display as a full tree with clear indentation */
     ul.tree {
         display: block;
     }
