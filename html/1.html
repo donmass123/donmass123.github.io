@@ -12,21 +12,26 @@
   <link rel="stylesheet" href="../css/sidebar.css" />
   <link rel="stylesheet" href="../css/bubble.css" />
   <link rel="stylesheet" href="../css/complete.css" />
+  <link rel="stylesheet" href="../css/tree.css" />
 </head>
 
 <body>
-<!-- Modal Password -->
-<div id="passwordModal" class="completion-modal">
-  <div class="completion-modal-content">
-    <span class="completion-close" id="closePasswordModal">&times;</span>
-    <h3>🔐 Masukkan Password</h3>
-    <input type="password" id="tutorialPassword" placeholder="Password..." class="completion-input" />
-    <div class="completion-button-group">
-      <button id="submitPassword" class="completion-btn completion-yes-btn">Akses</button>
+  <!-- Modal Password -->
+  <div id="passwordModal" class="completion-modal">
+    <div class="completion-modal-content">
+      <span class="completion-close" id="closePasswordModal">&times;</span>
+      <h3>🔐 Masukkan Password</h3>
+      <input type="password" id="tutorialPassword" placeholder="Password..." class="completion-input" />
+      <div class="completion-button-group">
+        <button id="submitPassword" class="completion-btn completion-yes-btn">
+          Akses
+        </button>
+      </div>
+      <p id="passwordError" style="display: none; color: #dc3545; margin-top: 1rem">
+        ❌ Password salah!
+      </p>
     </div>
-    <p id="passwordError" style="display:none; color:#dc3545; margin-top:1rem;">❌ Password salah!</p>
   </div>
-</div>
 
   <div class="blur-wrapper">
     <div class="container">
@@ -34,9 +39,9 @@
         <h1>Menambahkan Filter Sub-Kategori ke Indeks Produk di POS</h1>
         <h1>🔍📂🛍️</h1>
         <h5>
-          Dalam tutorial ini, kita akan menambahkan filter sub-kategori dinamis
-          ke indeks produk yang secara otomatis terisi berdasarkan kategori yang
-          dipilih.
+          Dalam tutorial ini, kita akan menambahkan filter sub-kategori
+          dinamis ke indeks produk yang secara otomatis terisi berdasarkan
+          kategori yang dipilih.
         </h5>
       </header>
       <!-- HOME -->
@@ -62,6 +67,76 @@
       </section>
 
       <section>
+        <h2>Struktur Folder</h2>
+        <ul class="tree">
+          <li>
+            <details open>
+              <summary>POS</summary>
+              <ul>
+                <li>
+                  <details>
+                    <summary>APP</summary>
+                    <ul>
+                      <li>
+                        <details>
+                          <summary>HTTP</summary>
+                          <ul>
+                            <li>
+                              <details>
+                                <summary>Controllers</summary>
+                                <ul>
+                                  <li class="file">
+                                    ProductController.php <span class="tag tag-new">update</span>
+                                  </li>
+                                </ul>
+                              </details>
+                            </li>
+                          </ul>
+                        </details>
+                      </li>
+                    </ul>
+                  </details>
+                </li>
+
+                <li>
+                  <details>
+                    <summary>Resource</summary>
+                    <ul>
+                      <li>
+                        <details>
+                          <summary>view</summary>
+                          <ul>
+                            <li>
+                              <details>
+                                <summary>product</summary>
+                                <ul>
+                                  <li>
+                                    <details>
+                                      <summary class="file">index.blade.php</summary>
+                                      <ul>
+                                        <li class="file">Tambah Dropdown <span class="tag tag-add">UI</span></li>
+                                        <li class="file">Update JavaScript <span class="tag tag-new">JS</span></li>
+                                        <li class="file">Update Datatable via AJAX <span class="tag">AJAX</span></li>
+                                        <li class="file">Tambah Event <span class="tag tag-add">JS</span></li>
+                                      </ul>
+                                    </details>
+                                  </li>
+                                </ul>
+                              </details>
+                            </li>
+                          </ul>
+                        </details>
+                      </li>
+                    </ul>
+                  </details>
+                </li>
+              </ul>
+            </details>
+          </li>
+        </ul>
+      </section>
+
+      <section>
         <h2>✅ Langkah 1: Aktifkan Sub-Kategori di Pengaturan Bisnis</h2>
         <p>
           <strong>Langkah pertama yang penting</strong>: Buka
@@ -74,9 +149,9 @@
       <section>
         <h2>✅ Langkah 2: Tambahkan Dropdown Sub-Kategori ke View</h2>
         <p>
-          Pada <strong>resources/views/product/index.blade.php</strong>, temukan
-          bagian filter kategori dan tambahkan kode ini tepat setelah menu
-          tarik-turun kategori:
+          Pada <strong>resources/views/product/index.blade.php</strong>,
+          temukan bagian filter kategori dan tambahkan kode ini tepat setelah
+          menu tarik-turun kategori:
         </p>
         <div class="url-buttons">
           <button class="view-modal-button" data-url="../tutorial/🔍📂🛍️/langkah2.txt">
@@ -162,14 +237,16 @@ d.sub_category_id = $('#product_list_filter_sub_category_id').val();
         <ul>
           <li>Mengaktifkan sub-kategori dalam pengaturan bisnis</li>
           <li>Membuat kategori pengujian dengan sub-kategori</li>
-          <li>Menambahkan produk dengan penetapan sub-kategori yang berbeda</li>
+          <li>
+            Menambahkan produk dengan penetapan sub-kategori yang berbeda
+          </li>
           <li>
             Menguji pemfilteran - pilih kategori dan memverifikasi pemuatan
             sub-kategori
           </li>
           <li>
-            Memverifikasi pemfilteran berfungsi - pilih sub-kategori dan periksa
-            hasilnya
+            Memverifikasi pemfilteran berfungsi - pilih sub-kategori dan
+            periksa hasilnya
           </li>
         </ul>
       </section>
@@ -191,13 +268,14 @@ d.sub_category_id = $('#product_list_filter_sub_category_id').val();
             ditambahkan dengan benar
           </li>
           <li>
-            Kesalahan JavaScript: Periksa konsol browser untuk mengetahui adanya
-            kesalahan jQuery atau sintaksis
+            Kesalahan JavaScript: Periksa konsol browser untuk mengetahui
+            adanya kesalahan jQuery atau sintaksis
           </li>
         </ul>
         <div class="tip">
           Selesai! Menu tarik-turun sub-kategori sekarang akan terisi secara
-          otomatis ketika kategori dipilih, dan daftar produk akan menyaringnya.
+          otomatis ketika kategori dipilih, dan daftar produk akan
+          menyaringnya.
         </div>
       </section>
 
@@ -229,7 +307,9 @@ d.sub_category_id = $('#product_list_filter_sub_category_id').val();
         <a id="completion-download-btn" data-id="file_1" class="completion-btn completion-yes-btn">
           ✅ Ya
         </a>
-        <button id="completion-no-btn" class="completion-btn completion-no-btn">❌ Tidak</button>
+        <button id="completion-no-btn" class="completion-btn completion-no-btn">
+          ❌ Tidak
+        </button>
       </div>
     </div>
   </div>
