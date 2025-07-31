@@ -83,16 +83,50 @@ summary::marker {
 
 /* RESPONSIVE STYLING */
 
-/* Small screens (mobile-first approach) */
+/* Mobile-first design (screens up to 768px) */
 @media (max-width: 768px) {
     ul.tree {
-        font-size: 0.9rem;
+        font-size: 0.85rem;  /* Smaller font size for mobile */
         padding-left: 1rem;
+        padding-right: 1rem; /* Add some padding on the right for better touch targets */
     }
 
     li span.tag {
-        font-size: 0.75rem;
+        font-size: 0.75rem;  /* Slightly smaller tags */
         padding: 0 6px;
+    }
+
+    details summary {
+        font-size: 1.1rem;
+        padding: 0.6rem; /* Slightly more padding for better clickability */
+    }
+
+    ul.tree li {
+        margin: 0.8rem 0; /* Increased margin for touch-friendly design */
+        padding-left: 1.2rem;
+    }
+
+    /* Mobile layout: Stack tree items vertically */
+    ul.tree {
+        display: block;
+    }
+
+    li {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+/* Tablet design (screens between 769px and 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+    ul.tree {
+        font-size: 0.95rem;  /* Slightly larger font size for tablets */
+    }
+
+    li span.tag {
+        font-size: 0.8rem;  /* Tags are more readable on tablets */
+        padding: 0 8px;
     }
 
     details summary {
@@ -100,20 +134,33 @@ summary::marker {
     }
 
     ul.tree li {
-        margin: 0.6rem 0;
         padding-left: 1.5rem;
+        margin: 0.7rem 0;
+    }
+
+    /* Tablet layout: Side-by-side display for the tree items */
+    ul.tree {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+    }
+
+    li {
+        display: inline-block;
+        width: 45%;  /* Items will now take up less width, creating a grid-like view */
+        margin-right: 1rem;
     }
 }
 
-/* Medium and Large screens */
-@media (min-width: 769px) and (max-width: 1024px) {
+/* Large screens (desktops and above) */
+@media (min-width: 1025px) {
     ul.tree {
-        font-size: 1rem;
+        font-size: 1rem;  /* Default font size for large screens */
     }
 
     li span.tag {
-        font-size: 0.8rem;
-        padding: 0 8px;
+        font-size: 0.85rem;  /* Adjust tag size for larger screens */
+        padding: 0 9px;
     }
 
     details summary {
@@ -121,26 +168,16 @@ summary::marker {
     }
 
     ul.tree li {
-        padding-left: 1.5rem;
-    }
-}
-
-/* Large screens (desktops and above) */
-@media (min-width: 1025px) {
-    ul.tree {
-        font-size: 1rem;
-    }
-
-    li span.tag {
-        font-size: 0.9rem;
-        padding: 0 10px;
-    }
-
-    details summary {
-        font-size: 1.4rem;
-    }
-
-    ul.tree li {
         padding-left: 2rem;
+        margin: 1rem 0;  /* Spacing for desktop view */
+    }
+
+    /* Desktop layout: Items display as a full tree with clear indentation */
+    ul.tree {
+        display: block;
+    }
+
+    li {
+        display: block;
     }
 }
