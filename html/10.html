@@ -68,66 +68,34 @@
           <li>
             <details open>
               <summary>📁 POS</summary>
-              <ul>
+              <ul class="tree">
                 <li>
                   <details>
-                    <summary>📁 Database Layer</summary>
-                    <ul>
+                    <summary>📁 database</summary>
+                    <ul class="tree">
                       <li>
                         <details>
-                          <summary>🗃️ Migrations</summary>
-                          <ul>
+                          <summary>📁 migration</summary>
+                          <ul class="tree">
                             <li class="file">
-                              create_transaction_exchanges_table.php
+                              create_transaction_exchanges_table.php <span class="tag-add">tambah baru</span>
                             </li>
                             <li class="file">
-                              create_transaction_exchange_lines_table.php
+                              create_transaction_exchange_lines_table.php <span class="tag-add">tambah baru</span>
                             </li>
                             <li class="file">
-                              add_exchange_columns_to_transactions_table.php
+                              add_exchange_columns_to_transactions_table.php <span class="tag-add">tambah baru</span>
                             </li>
                             <li class="file">
-                              add_exchange_columns_to_transaction_sell_lines_table.php
+                              add_exchange_columns_to_transaction_sell_lines_table.php <span class="tag-add">tambah
+                                baru</span>
                             </li>
                             <li class="file">
-                              add_exchange_amount_tracking_columns.php
+                              add_exchange_amount_tracking_columns.php <span class="tag-add">tambah baru</span>
                             </li>
                             <li class="file">
-                              add_column_cancel_to_transaction_exchange_table.php
-                            </li>
-                          </ul>
-                        </details>
-                      </li>
-                      <li>
-                        <details>
-                          <summary>🏗️ Models</summary>
-                          <ul>
-                            <li class="file">TransactionExchange.php</li>
-                            <li class="file">TransactionExchangeLine.php</li>
-                          </ul>
-                        </details>
-                      </li>
-                    </ul>
-                  </details>
-                </li>
-                <li>
-                  <details>
-                    <summary>📁 Application Layer</summary>
-                    <ul>
-                      <li>
-                        <details>
-                          <summary>🎮 Controller</summary>
-                          <ul>
-                            <li class="file">ExchangeController.php</li>
-                          </ul>
-                        </details>
-                      </li>
-                      <li>
-                        <details>
-                          <summary>🛡️ Middleware</summary>
-                          <ul>
-                            <li class="file">
-                              AdminSidebarMenu.php (modification)
+                              add_column_cancel_to_transaction_exchange_table.php <span class="tag-add">tambah
+                                baru</span>
                             </li>
                           </ul>
                         </details>
@@ -137,26 +105,44 @@
                 </li>
                 <li>
                   <details>
-                    <summary>📁 Presentation Layer</summary>
-                    <ul>
+                    <summary>📁 app</summary>
+                    <ul class="tree">
                       <li>
                         <details>
-                          <summary>🖼️ Views</summary>
-                          <ul>
-                            <li class="file">index.blade.php</li>
-                            <li class="file">create.blade.php</li>
-                            <li class="file">show.blade.php</li>
-                            <li class="file">receipt.blade.php</li>
+                          <summary>📁 model</summary>
+                          <ul class="tree">
+                            <li class="file">
+                              TransactionExchange.php <span class="tag-add">tambah baru</span>
+                            </li>
+                            <li class="file">
+                              TransactionExchangeLine.php <span class="tag-add">tambah baru</span>
+                            </li>
                           </ul>
                         </details>
                       </li>
                       <li>
                         <details>
-                          <summary>🎨 Assets</summary>
-                          <ul>
-                            <li class="file">CSS styling (integrated)</li>
-                            <li class="file">
-                              JavaScript functionality (integrated)
+                          <summary>📁 http</summary>
+                          <ul class="tree">
+                            <li>
+                              <details>
+                                <summary>📁 controllers</summary>
+                                <ul class="tree">
+                                  <li class="file">
+                                    ExchangeController.php <span class="tag-add">tambah baru</span>
+                                  </li>
+                                </ul>
+                              </details>
+                            </li>
+                            <li>
+                              <details>
+                                <summary>📁 middleware</summary>
+                                <ul class="tree">
+                                  <li class="file">
+                                    AdminSidebarMenu.php <span class="tag-modify">Modif update</span>
+                                  </li>
+                                </ul>
+                              </details>
                             </li>
                           </ul>
                         </details>
@@ -166,13 +152,54 @@
                 </li>
                 <li>
                   <details>
-                    <summary>📁 Routing Layer</summary>
-                    <ul>
+                    <summary>📁 lang</summary>
+                    <ul class="tree">
+                      <li class="file">
+                        lang_v1.php <span class="tag-add">tambah kalimat</span>
+                      </li>
+                    </ul>
+                  </details>
+                </li>
+                <li>
+                  <details>
+                    <summary>📁 resources</summary>
+                    <ul class="tree">
                       <li>
                         <details>
-                          <summary>🚏 Routes</summary>
-                          <ul>
-                            <li class="file">web.php (exchange routes)</li>
+                          <summary>📁 view</summary>
+                          <ul class="tree">
+                            <li>
+                              <details>
+                                <summary>📁 exchange</summary>
+                                <ul class="tree">
+                                  <li class="file">
+                                    index.blade.php <span class="tag-new">baru</span>
+                                  </li>
+                                  <li class="file">
+                                    create.blade.php <span class="tag-new">baru</span>
+                                  </li>
+                                  <li class="file">
+                                    show.blade.php <span class="tag-new">baru</span>
+                                  </li>
+                                  <li class="file">
+                                    receipt.blade.php <span class="tag-new">baru</span>
+                                  </li>
+                                </ul>
+                              </details>
+                            </li>
+                          </ul>
+                        </details>
+                      </li>
+                      <li>
+                        <details>
+                          <summary>📁 assets</summary>
+                          <ul class="tree">
+                            <li class="file">
+                              CSS styling <span class="tag-integrated">integrated</span>
+                            </li>
+                            <li class="file">
+                              JavaScript functionality <span class="tag-integrated">integrated</span>
+                            </li>
                           </ul>
                         </details>
                       </li>
@@ -181,26 +208,24 @@
                 </li>
                 <li>
                   <details>
-                    <summary>🎨 Fitur-fitur</summary>
-                    <ul>
+                    <summary>📁 routers</summary>
+                    <ul class="tree">
                       <li class="file">
-                        <span class="tag-add">✅ Proses Exchange multi-langkah</span>
+                        web.php <span class="tag-add">exchange routes</span>
                       </li>
-                      <li class="file">
-                        <span class="tag-add">📦 Manajemen Inventaris</span>
-                      </li>
-                      <li class="file">
-                        <span class="tag-add">💰 Pengolahan Pembayaran</span>
-                      </li>
-                      <li class="file">
-                        <span class="tag-add">🧾 Pembuatan Struk</span>
-                      </li>
-                      <li class="file">
-                        <span class="tag-add">📊 Pelacakan Exchange</span>
-                      </li>
-                      <li class="file">
-                        <span class="tag-add">🚫 Pembatalan Penukaran</span>
-                      </li>
+                    </ul>
+                  </details>
+                </li>
+                <li>
+                  <details>
+                    <summary>📁 fitur-fitur</summary>
+                    <ul class="tree">
+                      <li>✅ Proses Exchange multi-Langkah</li>
+                      <li>📦 Manajemen Inventaris</li>
+                      <li>💰 Pengolahan Pembayaran</li>
+                      <li>🧾 Pembuatan Struk</li>
+                      <li>📊 Pelacakan Exchange</li>
+                      <li>🚫 Pembatalan Penukaran</li>
                     </ul>
                   </details>
                 </li>
