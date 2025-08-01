@@ -1,0 +1,24 @@
+use App\Http\Controllers\CustomerMonthlySalesController;
+
+
+Route::middleware(['setData', 'auth', 'SetSessionData', 'language', 'timezone', 'AdminSidebarMenu', 'CheckUserLogin'])->group(function () {
+
+    // After Route::get('/reports/get-stock-value', [ReportController::class, 'getStockValue']);
+
+
+    // Customer Monthly Sales Report Routes
+    Route::get('/reports/customer-monthly-sales', [CustomerMonthlySalesController::class, 'index'])
+        ->name('reports.customer-monthly-sales');
+
+    Route::get('/reports/customer-monthly-sales/data', [CustomerMonthlySalesController::class, 'getCustomerMonthlyData'])
+        ->name('reports.customer-monthly-sales.data');
+
+    Route::get('/reports/customer-monthly-sales/summary', [CustomerMonthlySalesController::class, 'getSummary'])
+        ->name('reports.customer-monthly-sales.summary');
+
+    Route::get('/reports/customer-monthly-sales/details/{customerId}', [CustomerMonthlySalesController::class, 'getCustomerDetails'])
+        ->name('reports.customer-monthly-sales.details');
+
+
+
+});

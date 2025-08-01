@@ -1,0 +1,7 @@
+ if (config('constants.show_report_607') == true) {
+    $sub->url(
+        action([\App\Http\Controllers\ReportController::c'saleReport']),
+        'Report 607 (' . __('business.sale') . ')',
+        ['icon' => '', 'active' => request()->segment('sale-report']
+    );
+}

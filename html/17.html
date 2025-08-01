@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Adding a favicon -->
+    <link rel="icon" href="https://www.iconpacks.net/icons/2/free-rocket-icon-3418-thumb.png" type="image/x-icon" />
+    <title>Fitur Watermark POS - Panduan Implementasi Lengkap</title>
+    <link rel="stylesheet" href="../css/tutor.css" />
+    <link rel="stylesheet" href="../css/modal.css" />
+    <link rel="stylesheet" href="../css/sidebar.css" />
+    <link rel="stylesheet" href="../css/bubble.css" />
+    <link rel="stylesheet" href="../css/complete.css" />
+    <link rel="stylesheet" href="../css/tree.css" />
+    <link rel="stylesheet" href="../css/tabel_tutor.css" />
+</head>
+
+<body>
+    <!-- Modal Password -->
+    <div id="passwordModal" class="completion-modal">
+        <div class="completion-modal-content">
+            <span class="completion-close" id="closePasswordModal">&times;</span>
+            <h3>🔐 Masukkan Password</h3>
+            <input type="password" id="tutorialPassword" placeholder="Password..." class="completion-input" />
+            <div class="completion-button-group">
+                <button id="submitPassword" class="completion-btn completion-yes-btn">
+                    Akses
+                </button>
+            </div>
+            <p id="passwordError" style="display: none; color: #dc3545; margin-top: 1rem">
+                ❌ Password salah!
+            </p>
+        </div>
+    </div>
+
+    <div class="blur-wrapper">
+        <div class="container">
+            <header>
+                <h1>Panduan Implementasi Laporan Penjualan Bulanan Pelanggan</h1>
+                <h1>📊📋📈👤✅</h1>
+                <h5>
+                    Panduan lengkap ini akan membimbing Anda melalui implementasi fitur <strong>Laporan Penjualan
+                        Bulanan Pelanggan</strong> yang kuat di <strong>POS</strong>, memberikan wawasan
+                    terperinci tentang pola pembelian pelanggan dengan rincian bulanan dan analisis keuntungan.
+                </h5>
+            </header>
+            <!-- HOME -->
+            <div class="home-button-wrapper">
+                <a href="../main.html" class="home-button">🏠 Kembali ke Beranda</a>
+            </div>
+
+            <div class="toc-dropdown-wrapper">
+                <label for="toc-dropdown" class="toc-icon">
+                    <strong>Daftar Isi</strong>
+                </label>
+                <select id="toc-dropdown" class="toc-dropdown">
+                    <!-- Otomatis diisi JS -->
+                </select>
+            </div>
+
+            <section>
+                <h2>Ikhtisar</h2>
+                <p>Fitur <strong>Laporan Penjualan Bulanan Pelanggan</strong> menyediakan:</p>
+
+                <ul>
+                    <li><strong>Rincian Penjualan Bulanan:</strong> Melihat penjualan untuk setiap pelanggan selama 12
+                        bulan.</li>
+                    <li><strong>Analisis Keuntungan:</strong> Menghitung laba kotor dan margin keuntungan per pelanggan.
+                    </li>
+                    <li><strong>Statistik Ringkasan:</strong> Total pelanggan, transaksi, penjualan, dan metrik
+                        keuntungan.</li>
+                    <li><strong>Penyaringan Lanjutan:</strong> Penyaringan berdasarkan lokasi, status pembayaran, staf,
+                        dan lainnya.</li>
+                    <li><strong>Modal Detail Pelanggan:</strong> Tampilan rinci transaksi pelanggan individual.</li>
+                    <li><strong>Desain Responsif:</strong> UI modern dengan kartu ringkasan interaktif.</li>
+                </ul>
+                <div class="image-box">
+                    <img src="https://ultimate-pos-tutorials.vercel.app/assets/images/customer-monthly-sale-cc7823f23386e9b193cdf0cdfc967e50.jpeg"
+                        alt="#" />
+                    <p class="caption">Gambar: Panduan Implementasi Laporan Penjualan Bulanan Pelanggan.</p>
+                </div>
+                <h2>Prasyarat</h2>
+
+                <ul>
+                    <li><strong>Sistem POS telah terpasang dan berjalan dengan baik.</strong></li>
+                    <li><strong>Laravel 8+ dengan pengaturan basis data yang tepat.</strong></li>
+                    <li><strong>Akses ke basis data dan kode sumber.</strong></li>
+                    <li><strong>Pengetahuan dasar tentang Laravel, PHP, template Blade, dan DataTables.</strong></li>
+                    <li><strong>Memahami hubungan dalam basis data.</strong></li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Struktur File</h2>
+                <ul class="tree">
+                    <li>
+                        <details open>
+                            <summary>📁 POS</summary>
+                            <ul class="tree">
+                                <li>
+                                    <details>
+                                        <summary>📁 app</summary>
+                                        <ul class="tree">
+                                            <li>
+                                                <details>
+                                                    <summary>📁 Http</summary>
+                                                    <ul class="tree">
+                                                        <li>
+                                                            <details>
+                                                                <summary>📁 Controllers</summary>
+                                                                <ul class="tree">
+                                                                    <li class="file">
+                                                                        CustomerMonthlySalesController.php <span
+                                                                            class="tag-new">baru</span>
+                                                                    </li>
+                                                                </ul>
+                                                            </details>
+                                                        </li>
+                                                        <li>
+                                                            <details>
+                                                                <summary>📁 middleware</summary>
+                                                                <ul class="tree">
+                                                                    <li class="file">
+                                                                        AdminSidebarMenu.php <span
+                                                                            class="tag-add">tambah navigasi menu</span>
+                                                                    </li>
+                                                                </ul>
+                                                            </details>
+                                                        </li>
+                                                    </ul>
+                                                </details>
+                                            </li>
+                                        </ul>
+                                    </details>
+                                </li>
+                                <li>
+                                    <details>
+                                        <summary>📁 resources</summary>
+                                        <ul class="tree">
+                                            <li>
+                                                <details>
+                                                    <summary>📁 views</summary>
+                                                    <ul class="tree">
+                                                        <li>
+                                                            <details>
+                                                                <summary>📁 report</summary>
+                                                                <ul class="tree">
+                                                                    <li class="file">
+                                                                        customer_monthly_sales.blade.php <span
+                                                                            class="tag-new">baru</span>
+                                                                    </li>
+                                                                </ul>
+                                                            </details>
+                                                        </li>
+                                                    </ul>
+                                                </details>
+                                            </li>
+                                        </ul>
+                                    </details>
+                                </li>
+                                <li>
+                                    <details>
+                                        <summary>📁 routes</summary>
+                                        <ul class="tree">
+                                            <li class="file">
+                                                web.php <span class="tag-add">tambah rute report</span>
+                                            </li>
+                                        </ul>
+                                    </details>
+                                </li>
+                            </ul>
+                        </details>
+                    </li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Langkah 1: Struktur Basis Data</h2>
+                <p>Laporan ini menggunakan tabel-tabel yang ada di <strong>POS</strong>. Pastikan tabel-tabel ini ada
+                    dan memiliki hubungan yang tepat:</p>
+                <h3>Tabel Utama yang Digunakan</h3>
+                <ul>
+                    <li><strong>transactions</strong>: Menyimpan data transaksi yang dilakukan oleh pelanggan.</li>
+                    <li><strong>transaction_sell_lines</strong>: Menyimpan detail penjualan dalam setiap transaksi.</li>
+                    <li><strong>transaction_sell_lines_purchase_lines</strong>: Menghubungkan antara penjualan dan
+                        pembelian dalam transaksi.</li>
+                    <li><strong>purchase_lines</strong>: Menyimpan detail pembelian produk dalam transaksi.</li>
+                    <li><strong>contacts</strong>: Menyimpan informasi kontak pelanggan atau pemasok.</li>
+                    <li><strong>variations</strong>: Menyimpan variasi produk (misalnya ukuran, warna).</li>
+                    <li><strong>products</strong>: Menyimpan informasi produk yang dijual di sistem.</li>
+                    <li><strong>business_locations</strong>: Menyimpan data lokasi bisnis yang terlibat dalam transaksi.
+                    </li>
+                    <li><strong>users</strong>: Menyimpan informasi pengguna sistem POS.</li>
+                </ul>
+            </section>
+
+            <section>
+                <h1>Langkah 2: Buat Controller</h1>
+                <p>Buat file controller di <strong>app/Http/Controllers/CustomerMonthlySalesController.php</strong>:</p>
+                <div class="url-buttons">
+                    <button class="view-modal-button" data-url="../tutorial/📊📋📈👤✅/langkah2.txt">
+                        app/Http/Controllers/CustomerMonthlySalesController.php
+                    </button>
+                </div>
+            </section>
+            <section>
+                <h2>Langkah 3: Buat Blade View</h2>
+                <p>Buat file view di <strong>resources/views/report/customer_monthly_sales.blade.php</strong>:</p>
+                <div class="url-buttons">
+                    <button class="view-modal-button" data-url="../tutorial/📊📋📈👤✅/langkah3.txt">
+                        resources/views/report/customer_monthly_sales.blade.php
+                    </button>
+                </div>
+            </section>
+            <section>
+                <h2>Langkah 4: Tambahkan Routes</h2>
+                <p>Tambahkan routes berikut ke file <strong>routes/web.php</strong> atau file routes modul Anda:</p>
+                <div class="url-buttons">
+                    <button class="view-modal-button" data-url="../tutorial/📊📋📈👤✅/langkah4.txt">
+                        routes/web.php
+                    </button>
+                </div>
+            </section>
+            <section>
+                <h2>Langkah 5: Integrasi Menu Navigasi</h2>
+                <p>Tambahkan route Laporan Penjualan Bulanan Pelanggan ke file <strong>AdminSidebarMenu.php</strong>.
+                    Anda dapat meletakkannya setelah navigasi berikut:</p>
+                <div class="url-buttons">
+                    <button class="view-modal-button" data-url="../tutorial/📊📋📈👤✅/langkah5_1.txt">
+                        AdminSidebarMenu.php
+                    </button>
+                </div>
+                <div class="url-buttons">
+                    <button class="view-modal-button" data-url="../tutorial/📊📋📈👤✅/langkah5_2.txt">
+                        AdminSidebarMenu.php
+                    </button>
+                </div>
+            </section>
+            <section>
+                <h2>Fitur Utama Dijelaskan</h2>
+
+                <h3>1. Rincian Penjualan Bulanan</h3>
+                <p>Laporan ini menunjukkan data penjualan untuk setiap pelanggan selama 12 bulan, memudahkan Anda untuk
+                    mengidentifikasi pola musiman dan perilaku pelanggan.</p>
+
+                <h3>2. Analisis Keuntungan</h3>
+                <ul>
+                    <li><strong>Keuntungan Kotor ($):</strong> Dihitung sebagai Penjualan - Harga Pokok Penjualan.</li>
+                    <li><strong>Keuntungan Kotor (%):</strong> Persentase margin keuntungan untuk setiap pelanggan.</li>
+                    <li><strong>Pemrograman Warna:</strong> Hijau untuk keuntungan positif, Merah untuk keuntungan
+                        negatif.</li>
+                </ul>
+
+                <h3>3. Penyaringan Lanjutan</h3>
+                <ul>
+                    <li>Pencarian berdasarkan nama pelanggan.</li>
+                    <li>Penyaringan berdasarkan lokasi bisnis.</li>
+                    <li>Penyaringan berdasarkan status pembayaran.</li>
+                    <li>Penyaringan berdasarkan metode pembayaran.</li>
+                    <li>Penyaringan berdasarkan staf/pengguna.</li>
+                    <li>Pemilihan tahun.</li>
+                </ul>
+
+                <h3>4. Kartu Ringkasan Interaktif</h3>
+                <p>Statistik ringkasan waktu nyata yang diperbarui berdasarkan filter yang diterapkan:</p>
+                <ul>
+                    <li>Total jumlah pelanggan.</li>
+                    <li>Total transaksi.</li>
+                    <li>Total jumlah penjualan.</li>
+                    <li>Total keuntungan.</li>
+                    <li>Margin keuntungan keseluruhan.</li>
+                    <li>Penjualan rata-rata per pelanggan.</li>
+                </ul>
+
+                <h3>5. Modal Detail Pelanggan</h3>
+                <p>Klik tombol "Lihat" untuk melihat informasi rinci tentang pelanggan manapun:</p>
+                <ul>
+                    <li>Informasi kontak pelanggan.</li>
+                    <li>Riwayat transaksi terbaru.</li>
+                    <li>Rincian bulanan (jika diterapkan).</li>
+                </ul>
+
+                <h3>6. Desain Responsif</h3>
+                <ul>
+                    <li>Antarmuka yang ramah seluler.</li>
+                    <li>Kolom yang tetap untuk navigasi yang lebih baik.</li>
+                    <li>Scroll horizontal untuk tabel data bulanan.</li>
+                </ul>
+            </section>
+            <section>
+                <h2>Optimisasi Query Basis Data</h2>
+                <p>Laporan ini menggunakan query yang teroptimasi dengan join yang tepat dan pengindeksan yang benar:
+                </p>
+                <div class="url-buttons">
+                    <button class="view-modal-button" data-url="../tutorial/📊📋📈👤✅/db.txt">
+                        Optimisasi Query Basis Data
+                    </button>
+                </div>
+            </section>
+            <section>
+                <h2>Pemecahan Masalah: Optimisasi Kinerja</h2>
+
+                <h3>1. Dataset Besar</h3>
+                <p>Untuk mengatasi masalah kinerja dengan dataset yang besar, pertimbangkan untuk menambahkan
+                    <strong>paginasi</strong> atau <strong>batasan rentang tanggal</strong> pada query untuk membatasi
+                    jumlah data yang diproses pada satu waktu.
+                </p>
+
+                <h3>2. Query Lambat</h3>
+                <p>Jika query berjalan lambat, pertimbangkan untuk <strong>menambahkan indeks basis data</strong> pada
+                    kolom yang sering digunakan dalam pencarian dan penyaringan. Ini dapat mempercepat eksekusi query
+                    secara signifikan.</p>
+
+                <h3>3. Masalah Memori</h3>
+                <p>Untuk menangani masalah memori, <strong>implementasikan pemrosesan sisi server</strong> untuk dataset
+                    yang sangat besar. Ini akan membantu mengurangi beban memori di sisi klien dan meningkatkan kinerja
+                    secara keseluruhan.</p>
+            </section>
+
+            <section>
+                <h2>Kustomisasi Lanjutan</h2>
+
+                <h3>1. Menambahkan Metrik Baru</h3>
+                <p>Anda dapat memperluas laporan dengan menambahkan kolom yang dihitung baru. Misalnya, untuk menghitung
+                    total penjualan dengan diskon atau menghitung rata-rata pembelian per pelanggan.</p>
+                <div class="url-buttons">
+                    <button class="view-modal-button" data-url="../tutorial/📊📋📈👤✅/adm.txt">
+                        Menambahkan Metrik Baru
+                    </button>
+                </div>
+                <h3>2. Rentang Tanggal Kustom</h3>
+                <p>Gantilah filter tahun dengan <strong>rentang tanggal kustom</strong> untuk memberikan fleksibilitas
+                    lebih kepada pengguna dalam memilih periode laporan yang lebih spesifik.</p>
+                <div class="url-buttons">
+                    <button class="view-modal-button" data-url="../tutorial/📊📋📈👤✅/cdr.txt">
+                        Rentang Tanggal Kustom
+                    </button>
+                </div>
+                <h3>3. Fungsionalitas Ekspor</h3>
+                <p>Jika Anda memerlukan fungsionalitas ekspor di kemudian hari, Anda dapat menambahkan fitur ekspor ke
+                    format seperti <strong>CSV</strong> atau <strong>Excel</strong>. Berikut adalah contoh dasar untuk
+                    menambahkan ekspor CSV:</p>
+                <div class="url-buttons">
+                    <button class="view-modal-button" data-url="../tutorial/📊📋📈👤✅/ef.txt">
+                        Fungsionalitas Ekspor
+                    </button>
+                </div>
+            </section>
+            <section>
+                <h2>Kesimpulan</h2>
+
+                <p>Laporan <strong>Penjualan Bulanan Pelanggan</strong> ini memberikan wawasan yang komprehensif tentang
+                    pola pembelian pelanggan dengan antarmuka modern yang responsif. Implementasi ini mencakup
+                    penyaringan lanjutan, ringkasan waktu nyata, dan tampilan rinci pelanggan, menjadikannya alat yang
+                    kuat untuk analisis bisnis.</p>
+
+                <p>Laporan ini membantu mengidentifikasi:</p>
+                <ul>
+                    <li><strong>Pelanggan dengan kinerja terbaik</strong></li>
+                    <li><strong>Pola pembelian musiman</strong></li>
+                    <li><strong>Margin keuntungan per pelanggan</strong></li>
+                    <li><strong>Tren transaksi pelanggan</strong></li>
+                    <li><strong>Kinerja penjualan di berbagai periode waktu</strong></li>
+                </ul>
+            </section>
+
+            <footer>
+                <!-- HOME -->
+                <div class="home-button-wrapper">
+                    <a href="../main.html" class="home-button">🏠 Kembali ke Beranda</a>
+                </div>
+            </footer>
+        </div>
+    </div>
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <iframe id="modalFrame" src="" frameborder="0" style="width: 100%; height: 400px"></iframe>
+        </div>
+    </div>
+    <button id="bubbleUp" title="Kembali ke Atas" aria-label="Kembali ke Atas">
+        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="none" viewBox="0 0 24 24" stroke="white">
+            <path stroke-linecap="round" stroke-width="2" d="M6 15l6-6 6 6" />
+        </svg>
+    </button>
+    <div id="completionModal" class="completion-modal">
+        <div class="completion-modal-content">
+            <span class="completion-close" title="Tutup">&times;</span>
+            <h3>🎉 Selamat, kamu telah menyelesaikan tutorialnya!</h3>
+            <p>Apakah kamu ingin mengunduh file yang telah jadi?</p>
+            <div class="completion-button-group">
+                <a id="completion-download-btn" data-id="file_16" class="completion-btn completion-yes-btn">
+                    ✅ Ya
+                </a>
+                <button id="completion-no-btn" class="completion-btn completion-no-btn">
+                    ❌ Tidak
+                </button>
+            </div>
+        </div>
+    </div>
+    <script src="../js/scripts.js"></script>
+    <script src="../js/sidebar.js"></script>
+    <script src="../js/bubble.js"></script>
+    <script src="../js/complete.js"></script>
+    <script src="../js//Data/file_download_data.js"></script>
+    <script src="../js//Data/pass_data.js"></script>
+    <!-- Link ke file JavaScript -->
+</body>
+
+</html>

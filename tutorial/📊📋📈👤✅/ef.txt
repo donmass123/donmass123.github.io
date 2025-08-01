@@ -1,0 +1,6 @@
+// In controller
+public function export(Request $request)
+{
+    // Implementation for Excel/PDF export
+    return Excel::download(new CustomerMonthlySalesExport($filters), 'customer_monthly_sales.xlsx');
+}

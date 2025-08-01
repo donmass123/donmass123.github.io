@@ -1,0 +1,13 @@
+ // Customer Monthly Sales Report
+    if (auth()->user()->can('view_reports')) {
+        $sub->url(
+            route('reports.customer-monthly-sales'),
+            __('Customer Monthly Sales Report'),
+            [
+                'icon' => 'fa fa-calendar-o',
+                'active' => request()->segment(2) == 'customer-monthly-sales' ||
+                    (request()->segment(1) == 'reports' &&
+                        request()->segment(2) == 'customer-monthly-sales')
+            ]
+        );
+    }

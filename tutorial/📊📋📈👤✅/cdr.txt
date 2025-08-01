@@ -1,0 +1,7 @@
+// Add to filters
+<div class="col-md-2">
+    <div class="form-group">
+        {!! Form::label('start_date', 'Start Date:') !!}
+        {!! Form::text('start_date', null, ['class' => 'form-control', 'id' => 'start_date', 'readonly']); !!}
+    </div>
+</div>

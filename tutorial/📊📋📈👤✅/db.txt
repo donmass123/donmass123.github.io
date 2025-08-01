@@ -1,0 +1,4 @@
+-- Recommended indexes for better performance
+CREATE INDEX idx_transactions_business_date ON transactions(business_id, transaction_date);
+CREATE INDEX idx_transactions_contact_date ON transactions(contact_id, transaction_date);
+CREATE INDEX idx_transaction_sell_lines_transaction ON transaction_sell_lines(transaction_id);
