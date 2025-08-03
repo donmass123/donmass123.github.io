@@ -216,6 +216,14 @@ const tutorialsData = [
     image: "cover/17.webp",
     updateDate: "31 Juli 2025",
     description: "📦 Laporan Penjualan Bulanan Pelanggan - Panduan Implementasi Lengkap."
+  },
+  {
+    title: "📚 Laporan Lanjutan untuk POS (UPDATE)",
+    link: "https://drive.google.com/file/d/1NHCey6HdU7yJXMxafqmmnCSEQ7TyVyDt/view?usp=sharing",
+    level: "module",
+    image: "cover/module/8.webp",
+    updateDate: "3 Agustus 2025",
+    description: "🧩 laporan lanjutan untuk laporan yang lebih spesif dan lengkap di point of sales."
   }
 ];
     // Fungsi untuk mengganti title berdasarkan URL
