@@ -1,0 +1,321 @@
+<script type="text/javascript">
+    $(document).ready(function() {
+            //Date range as a button
+            $('#sell_list_filter_date_range').daterangepicker(
+                dateRangeSettings,
+                function(start, end) {
+                    $('#sell_list_filter_date_range').val(start.format(moment_date_format) + ' ~ ' + end.format(
+                        moment_date_format));
+                    sell_table.ajax.reload();
+                }
+            );
+            $('#sell_list_filter_date_range').on('cancel.daterangepicker', function(ev, picker) {
+                $('#sell_list_filter_date_range').val('');
+                sell_table.ajax.reload();
+            });
+
+            sell_table = $('#sell_table').DataTable({
+                processing: true,
+                serverSide: true,
+                fixedHeader:false,
+                aaSorting: [
+                    [1, 'desc']
+                ],
+                "ajax": {
+                    "url": "/sells",
+                    "data": function(d) {
+                        if ($('#sell_list_filter_date_range').val()) {
+                            var start = $('#sell_list_filter_date_range').data('daterangepicker')
+                                .startDate.format('YYYY-MM-DD');
+                            var end = $('#sell_list_filter_date_range').data('daterangepicker').endDate
+                                .format('YYYY-MM-DD');
+                            d.start_date = start;
+                            d.end_date = end;
+                        }
+                        d.is_direct_sale = 1;
+
+                        d.location_id = $('#sell_list_filter_location_id').val();
+                        d.customer_id = $('#sell_list_filter_customer_id').val();
+                        
+                        // Updated to handle multiple payment status values
+                        var payment_status = $('#sell_list_filter_payment_status').val();
+                        console.log('Payment Status Selected:', payment_status); // Debug log
+                        
+                        if (payment_status && payment_status.length > 0) {
+                            // Filter out 'all' if present
+                            var filteredStatus = payment_status.filter(function(status) {
+                                return status !== 'all';
+                            });
+                            
+                            if (filteredStatus.length > 0) {
+                                d.payment_status = filteredStatus;
+                                console.log('Sending payment_status:', filteredStatus); // Debug log
+                            }
+                        }
+                        
+                        d.created_by = $('#created_by').val();
+                        d.sales_cmsn_agnt = $('#sales_cmsn_agnt').val();
+                        d.service_staffs = $('#service_staffs').val();
+
+                        if ($('#shipping_status').length) {
+                            d.shipping_status = $('#shipping_status').val();
+                        }
+
+                        if ($('#sell_list_filter_source').length) {
+                            d.source = $('#sell_list_filter_source').val();
+                        }
+
+                        if ($('#only_subscriptions').is(':checked')) {
+                            d.only_subscriptions = 1;
+                        }
+
+                        if ($('#payment_method').length) {
+                            d.payment_method = $('#payment_method').val();
+                        }
+
+                        d = __datatable_ajax_callback(d);
+                    }
+                },
+                scrollY: "75vh",
+                scrollX: true,
+                scrollCollapse: true,
+                columns: [{
+                        data: 'action',
+                        name: 'action',
+                        orderable: false,
+                        "searchable": false
+                    },
+                    {
+                        data: 'transaction_date',
+                        name: 'transaction_date'
+                    },
+                    {
+                        data: 'invoice_no',
+                        name: 'invoice_no'
+                    },
+                    {
+                        data: 'conatct_name',
+                        name: 'conatct_name',
+                        @if (empty($is_contact_name))
+                        visible: false 
+                        @endif
+                    },
+                    {
+                        data: 'mobile',
+                        name: 'contacts.mobile',
+                        @if (empty($is_mobile_enabled))
+                        visible: false 
+                        @endif
+                    },
+                    {
+                        data: 'business_location',
+                        name: 'bl.name',
+                        @if (empty($is_business_location_enabled))
+                        visible: false 
+                        @endif
+                    },
+                    {
+                        data: 'payment_methods',
+                        orderable: false,
+                        "searchable": false,
+                        @if (empty($is_payment_mothods))
+                        visible: false 
+                        @endif
+                    },
+                    {
+                        data: 'final_total',
+                        name: 'final_total'
+                    },
+                    {
+                        data: 'total_paid',
+                        name: 'total_paid',
+                        "searchable": false
+                    },
+                    {
+                        data: 'total_remaining',
+                        name: 'total_remaining'
+                    },
+                    {
+                        data: 'return_due',
+                        orderable: false,
+                        "searchable": false,
+                        @if (empty($is_return_due_enabled))
+                        visible: false
+                        @endif
+                    },
+                    {
+                        data: 'shipping_status',
+                        name: 'shipping_status',
+                        @if (empty($is_shipping_status_enabled))
+                        visible: false
+                        @endif
+                    },
+                    {
+                        data: 'total_items',
+                        name: 'total_items',
+                        "searchable": false
+                    },
+                    {
+                        data: 'payment_status',
+                        name: 'payment_status'
+                    },
+                    {
+                        data: 'types_of_service_name',
+                        name: 'tos.name',
+                        @if (empty($is_types_service_enabled))
+                            visible: false
+                        @endif
+                    },
+                    {
+                        data: 'service_custom_field_1',
+                        name: 'service_custom_field_1',
+                        @if (empty($is_types_service_enabled))
+                            visible: false
+                        @endif
+                    },
+                    {
+                        data: 'custom_field_1',
+                        name: 'transactions.custom_field_1',
+                        @if (empty($custom_labels['sell']['custom_field_1']))
+                            visible: false
+                        @endif
+                    },
+                    {
+                        data: 'custom_field_2',
+                        name: 'transactions.custom_field_2',
+                        @if (empty($custom_labels['sell']['custom_field_2']))
+                            visible: false
+                        @endif
+                    },
+                    {
+                        data: 'custom_field_3',
+                        name: 'transactions.custom_field_3',
+                        @if (empty($custom_labels['sell']['custom_field_3']))
+                            visible: false
+                        @endif
+                    },
+                    {
+                        data: 'custom_field_4',
+                        name: 'transactions.custom_field_4',
+                        @if (empty($custom_labels['sell']['custom_field_4']))
+                            visible: false
+                        @endif
+                    },
+                    {
+                        data: 'added_by',
+                        name: 'u.first_name',
+                        @if (empty($is_added_by_enabled))
+                        visible: false 
+                        @endif
+                    },
+                    {
+                        data: 'additional_notes',
+                        name: 'additional_notes',
+                        @if (empty($is_additional_notes_enabled))
+                        visible: false 
+                        @endif
+                    },
+                    {
+                        data: 'staff_note',
+                        name: 'staff_note',
+                        @if (empty($is_staff_note_enabled))
+                        visible: false 
+                        @endif
+                    },
+                    {
+                        data: 'shipping_details',
+                        name: 'shipping_details',
+                        @if (empty($is_shipping_details))
+                        visible: false 
+                        @endif
+                    },
+                    {
+                        data: 'table_name',
+                        name: 'tables.name',
+                        @if (empty($is_tables_enabled))
+                            visible: false
+                        @endif
+                    },
+                    {
+                        data: 'waiter',
+                        name: 'ss.first_name',
+                        @if (empty($is_service_staff_enabled))
+                            visible: false
+                        @endif
+                    },
+                ],
+                "fnDrawCallback": function(oSettings) {
+                    __currency_convert_recursively($('#sell_table'));
+                },
+                "footerCallback": function(row, data, start, end, display) {
+                    var footer_sale_total = 0;
+                    var footer_total_paid = 0;
+                    var footer_total_remaining = 0;
+                    var footer_total_sell_return_due = 0;
+                    for (var r in data) {
+                        footer_sale_total += $(data[r].final_total).data('orig-value') ? parseFloat($(
+                            data[r].final_total).data('orig-value')) : 0;
+                        footer_total_paid += $(data[r].total_paid).data('orig-value') ? parseFloat($(
+                            data[r].total_paid).data('orig-value')) : 0;
+                        footer_total_remaining += $(data[r].total_remaining).data('orig-value') ?
+                            parseFloat($(data[r].total_remaining).data('orig-value')) : 0;
+                        footer_total_sell_return_due += $(data[r].return_due).find('.sell_return_due')
+                            .data('orig-value') ? parseFloat($(data[r].return_due).find(
+                                '.sell_return_due').data('orig-value')) : 0;
+                    }
+
+                    $('.footer_total_sell_return_due').html(__currency_trans_from_en(
+                        footer_total_sell_return_due));
+                    $('.footer_total_remaining').html(__currency_trans_from_en(footer_total_remaining));
+                    $('.footer_total_paid').html(__currency_trans_from_en(footer_total_paid));
+                    $('.footer_sale_total').html(__currency_trans_from_en(footer_sale_total));
+
+                    $('.footer_payment_status_count').html(__count_status(data, 'payment_status'));
+                    $('.service_type_count').html(__count_status(data, 'types_of_service_name'));
+                    $('.payment_method_count').html(__count_status(data, 'payment_methods'));
+                },
+                createdRow: function(row, data, dataIndex) {
+                    $(row).find('td:eq(6)').attr('class', 'clickable_td');
+                }
+            });
+
+            // Updated event handler to properly trigger on multi-select changes
+            $(document).on('change',
+                '#sell_list_filter_location_id, #sell_list_filter_customer_id, #sell_list_filter_payment_status, #created_by, #sales_cmsn_agnt, #service_staffs, #shipping_status, #sell_list_filter_source, #payment_method',
+                function() {
+                    sell_table.ajax.reload();
+                });
+
+            $('#only_subscriptions').on('ifChanged', function(event) {
+                sell_table.ajax.reload();
+            });
+            
+            // Initialize Select2 for payment status with multi-select capabilities
+            $('#sell_list_filter_payment_status').select2({
+                allowClear: true,
+                closeOnSelect: false  // Keep dropdown open for multiple selections
+            });
+            
+            // Handle "All" selection logic
+            $('#sell_list_filter_payment_status').on('select2:select', function (e) {
+                var selectedValue = e.params.data.id;
+                var currentValues = $(this).val() || [];
+                
+                if (selectedValue === 'all') {
+                    // If "All" is selected, clear other selections and keep only "All"
+                    $(this).val(['all']).trigger('change');
+                } else {
+                    // If any other option is selected, remove "All" if it was selected
+                    if (currentValues.includes('all')) {
+                        var filteredValues = currentValues.filter(function(value) {
+                            return value !== 'all';
+                        });
+                        $(this).val(filteredValues).trigger('change');
+                    }
+                }
+            });
+            
+            // Set default selection to "All"
+            $('#sell_list_filter_payment_status').val(['all']).trigger('change');
+        });
+</script>

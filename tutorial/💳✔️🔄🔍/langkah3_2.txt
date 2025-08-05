@@ -1,0 +1,13 @@
+// Updated to handle multiple payment status values
+var payment_status = $('#sell_list_filter_payment_status').val();
+
+if (payment_status && payment_status.length > 0) {
+    // Filter out 'all' if present
+    var filteredStatus = payment_status.filter(function(status) {
+        return status !== 'all';
+    });
+    
+    if (filteredStatus.length > 0) {
+        d.payment_status = filteredStatus;
+    }
+}

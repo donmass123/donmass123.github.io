@@ -1,0 +1,27 @@
+// Initialize Select2 for payment status with multi-select capabilities
+$('#sell_list_filter_payment_status').select2({
+    allowClear: true,
+    closeOnSelect: false  // Keep dropdown open for multiple selections
+});
+
+// Handle "All" selection logic
+$('#sell_list_filter_payment_status').on('select2:select', function (e) {
+    var selectedValue = e.params.data.id;
+    var currentValues = $(this).val() || [];
+    
+    if (selectedValue === 'all') {
+        // If "All" is selected, clear other selections and keep only "All"
+        $(this).val(['all']).trigger('change');
+    } else {
+        // If any other option is selected, remove "All" if it was selected
+        if (currentValues.includes('all')) {
+            var filteredValues = currentValues.filter(function(value) {
+                return value !== 'all';
+            });
+            $(this).val(filteredValues).trigger('change');
+        }
+    }
+});
+
+// Set default selection to "All"
+$('#sell_list_filter_payment_status').val(['all']).trigger('change');

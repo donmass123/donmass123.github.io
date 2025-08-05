@@ -38,11 +38,11 @@
         <div class="container">
             <header>
                 <h1>Panduan Implementasi Filter Status Pembayaran Multiple</h1>
-                <h1>🛠️📑🔄👥</h1>
+                <h1>💳✔️🔄🔍</h1>
                 <h5>
-                    Panduan ini menunjukkan cara menambahkan tombol <strong>Edit Pelanggan</strong> di sebelah tombol
-                    <strong>Tambah Pelanggan</strong> yang ada di POS. Tombol edit memungkinkan pengguna untuk
-                    memodifikasi detail pelanggan langsung dari antarmuka POS tanpa meninggalkan layar saat ini.
+                    Panduan ini menunjukkan cara mengimplementasikan pemilihan status pembayaran multiple pada aplikasi
+                    POS Laravel, yang memungkinkan pengguna untuk memfilter penjualan berdasarkan beberapa
+                    status pembayaran secara bersamaan.
                 </h5>
             </header>
             <!-- HOME -->
@@ -59,6 +59,201 @@
                 </select>
             </div>
             <section>
+                <h2>Ringkasan</h2>
+                <p>Secara default, POS hanya memungkinkan pemilihan satu status pembayaran sekaligus. Peningkatan ini
+                    memungkinkan:</p>
+                <ul>
+                    <li>Pemilihan beberapa status pembayaran (dibayar + jatuh tempo + sebagian, dll.)</li>
+                    <li>Opsi "All" untuk menampilkan semua data</li>
+                    <li>Antarmuka dropdown multi-pilih yang ramah pengguna</li>
+                    <li>Filter Status Pembayaran Multiple di halaman indeks Penjualan</li>
+                </ul>
+                <div class="image-box">
+                    <img src="https://ultimate-pos-tutorials.vercel.app/assets/images/multiple-payment-status-filter-27e0d80d370e4f3b8d48aa562d162335.png"
+                        alt="#" />
+                    <p class="caption">Gambar: Panduan Implementasi Filter Status Pembayaran Multiple</p>
+                </div>
+                <h2>Prasyarat</h2>
+                <ul>
+                    <li>Aplikasi POS Laravel</li>
+                    <li>Pengetahuan dasar tentang Laravel, template Blade, dan JavaScript</li>
+                    <li>Akses untuk mengedit file controller, view, dan JavaScript</li>
+                </ul>
+            </section>
+            <section>
+                <h2>Langkah 1: Perbarui View Blade</h2>
+                <p>Arahkan ke <strong>resources/views/sell/partials/sell_list_filters.blade.php</strong> dan temukan
+                    bagian
+                    filter status pembayaran.</p>
+
+                <h3>Cari kode ini:</h3>
+                <div class="url-buttons">
+                    <button class="view-modal-button" data-url="../tutorial/💳✔️🔄🔍/langkah1_1.txt">
+                        resources/views/sell/partials/sell_list_filters.blade.php
+                    </button>
+                </div>
+                <h3>Ganti dengan kode ini:</h3>
+                <div class="url-buttons">
+                    <button class="view-modal-button" data-url="../tutorial/💳✔️🔄🔍/langkah1_2.txt">
+                        resources/views/sell/partials/sell_list_filters.blade.php
+                    </button>
+                </div>
+                <h3>Perubahan Utama:</h3>
+                <ul>
+                    <li>Menambahkan [] pada nama field untuk menangani array</li>
+                    <li>Menambahkan opsi 'all' sebagai opsi pertama</li>
+                    <li>Menambahkan <strong>'multiple' => true</strong> untuk multi-pilih</li>
+                    <li>Menambahkan atribut <strong>'id'</strong> untuk penargetan JavaScript</li>
+                    <li>Menghapus placeholder (tidak diperlukan dengan opsi "All")</li>
+                </ul>
+            </section>
+            <section>
+                <h2>Langkah 2: Perbarui Logika Controller</h2>
+                <p>Buka <strong>app/Http/Controllers/SellController.php</strong> dan temukan metode
+                    <strong>index()</strong>.
+                </p>
+
+                <h3>Cari kode penyaringan status pembayaran ini:</h3>
+                <div class="url-buttons">
+                    <button class="view-modal-button" data-url="../tutorial/💳✔️🔄🔍/langkah2_2.txt">
+                        app/Http/Controllers/SellController.php
+                    </button>
+                </div>
+                <h3>Ganti dengan kode ini:</h3>
+                <div class="url-buttons">
+                    <button class="view-modal-button" data-url="../tutorial/💳✔️🔄🔍/langkah2_2.txt">
+                        app/Http/Controllers/SellController.php
+                    </button>
+                </div>
+                <h3>Apa yang dilakukan kode ini:</h3>
+                <ul>
+                    <li>Menangani baik nilai tunggal maupun array untuk kompatibilitas mundur</li>
+                    <li>Memfilter opsi 'all' (ketika 'all' dipilih, tidak ada filter yang diterapkan)</li>
+                    <li>Menggunakan logika <strong>where</strong> dan <strong>orWhere</strong> yang benar untuk beberapa
+                        status
+                    </li>
+                    <li>Mempertahankan logika khusus untuk status 'overdue'</li>
+                </ul>
+            </section>
+            <section>
+                <h2>Langkah 3: Perbarui JavaScript (DataTable)</h2>
+                <p>Di file view Anda (biasanya di bagian bawah <strong>resources/views/sell/index.blade.php</strong>),
+                    temukan konfigurasi DataTable.</p>
+
+                <h3>Cari bagian data AJAX ini:</h3>
+                <div class="url-buttons">
+                    <button class="view-modal-button" data-url="../tutorial/💳✔️🔄🔍/langkah3_1.txt">
+                        resources/views/sell/index.blade.php
+                    </button>
+                </div>
+                <h3>Ganti dengan kode ini:</h3>
+                <div class="url-buttons">
+                    <button class="view-modal-button" data-url="../tutorial/💳✔️🔄🔍/langkah3_2.txt">
+                        resources/views/sell/index.blade.php
+                    </button>
+                </div>
+
+            </section>
+            <section>
+                <h2>Langkah 4: Tambahkan Peningkatan Multi-Select Select2</h2>
+                <p>Cari inisialisasi Select2 yang ada atau tambahkan ini ke bagian JavaScript Anda:</p>
+                <div class="url-buttons">
+                    <button class="view-modal-button" data-url="../tutorial/💳✔️🔄🔍/langkah4.txt">
+                        Select2 yang ada atau tambahkan ini ke bagian JavaScript Anda
+                    </button>
+                </div>
+            </section>
+            <section>
+                <h2>Contoh File JavaScript Lengkap</h2>
+                <p>Berikut adalah bagaimana bagian JavaScript DataTable Anda seharusnya terlihat:</p>
+                <div class="url-buttons">
+                    <button class="view-modal-button" data-url="../tutorial/💳✔️🔄🔍/complate.txt">
+                        JavaScript
+                    </button>
+                </div>
+            </section>
+            <section>
+                <h2>Menguji Implementasi</h2>
+
+                <h3>1. Uji Fungsionalitas Dasar</h3>
+                <ul>
+                    <li>Buka halaman penjualan</li>
+                    <li>Verifikasi bahwa "All" dipilih secara default</li>
+                    <li>Pastikan semua data tercantum</li>
+                </ul>
+
+                <h3>2. Uji Pemilihan Tunggal</h3>
+                <ul>
+                    <li>Pilih hanya "Paid"</li>
+                    <li>Verifikasi hanya transaksi yang dibayar yang muncul</li>
+                    <li>Pastikan "All" otomatis hilang</li>
+                </ul>
+
+                <h3>3. Uji Pemilihan Multiple</h3>
+                <ul>
+                    <li>Pilih "Due" + "Partial"</li>
+                    <li>Verifikasi transaksi dengan status tersebut ditampilkan</li>
+                    <li>Uji kombinasi yang berbeda</li>
+                </ul>
+
+                <h3>4. Uji Pemilihan "All"</h3>
+                <ul>
+                    <li>Pilih beberapa status tertentu</li>
+                    <li>Klik "All"</li>
+                    <li>Verifikasi bahwa pilihan lain terhapus dan semua data ditampilkan</li>
+                </ul>
+
+                <h3>Pemecahan Masalah</h3>
+                <h4>Masalah: Filter Tidak Berfungsi</h4>
+                <p>Cek:</p>
+                <ul>
+                    <li>Konsol browser untuk kesalahan JavaScript</li>
+                    <li>ID elemen sesuai: <strong>#sell_list_filter_payment_status</strong></li>
+                    <li>Tab Jaringan untuk melihat apakah permintaan AJAX mencakup parameter
+                        <strong>payment_status</strong>
+                    </li>
+                </ul>
+
+                <h4>Masalah: Opsi "All" Tidak Berfungsi dengan Benar</h4>
+                <p>Cek:</p>
+                <ul>
+                    <li>Inisialisasi Select2 berjalan setelah DOM siap</li>
+                    <li>Penanganan event terpasang dengan benar</li>
+                    <li>Tidak ada kesalahan JavaScript di konsol</li>
+                </ul>
+
+                <h4>Masalah: Controller Tidak Menerima Data</h4>
+                <p>Tambahkan kode debug sementara:</p>
+                <strong>\Log::info('Payment Status Filter:', ['payment_statuses' =>
+                    request()->input('payment_status')]);</strong>
+
+                <h3>Fitur yang Disertakan</h3>
+                <ul>
+                    <li>✅ Dropdown multi-pilih - Pilih beberapa status pembayaran sekaligus</li>
+                    <li>✅ Opsi "All" - Tampilkan semua data saat dipilih</li>
+                    <li>✅ Logika pemilihan cerdas - "All" menghapus pilihan lain, pilihan lain menghapus "All"</li>
+                    <li>✅ Kompatibilitas mundur - Bekerja dengan logika pemilihan tunggal yang ada</li>
+                    <li>✅ Antarmuka pengguna yang ramah - Dropdown tetap terbuka untuk pemilihan ganda</li>
+                    <li>✅ Status default - "All" dipilih secara default</li>
+                </ul>
+
+                <h3>Opsi Kustomisasi</h3>
+                <h4>Ubah Pilihan Default</h4>
+                <p>Untuk mengubah pilihan default, ubah baris ini:</p>
+                <strong>$('#sell_list_filter_payment_status').val(['paid']).trigger('change'); // Default ke
+                    "Paid"</strong>
+
+                <h4>Hapus Opsi "All"</h4>
+                <p>Jika Anda tidak menginginkan opsi "All", hapus dari template blade dan sederhanakan logika
+                    JavaScript-nya.</p>
+
+                <h4>Tambahkan Status Pembayaran Lainnya</h4>
+                <p>Tambahkan status baru ke array template blade dan tangani di logika controller.</p>
+
+                <h3>Kesimpulan</h3>
+                <p>Implementasi ini memberikan filter status pembayaran multiple yang kuat dan ramah pengguna untuk
+                    POS. Pengguna kini dapat memfilter berdasarkan status tunggal, beberapa status, atau
+                    melihat semua data dengan antarmuka yang intuitif.</p>
             </section>
 
             <footer>
@@ -101,7 +296,7 @@
     <script src="../js/complete.js"></script>
     <script src="../js//Data/file_download_data.js"></script>
     <script src="../js/Data/pass_data.js"></script>
-<script src="../js/Data/tutorial_data.js"></script>
+    <script src="../js/Data/tutorial_data.js"></script>
     <!-- Link ke file JavaScript -->
 </body>
 
