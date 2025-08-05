@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Adding a favicon -->
+    <link rel="icon" href="https://www.iconpacks.net/icons/2/free-rocket-icon-3418-thumb.png" type="image/x-icon" />
+    <title>Panduan Implementasi Filter Status Pembayaran Ganda</title>
+    <link rel="stylesheet" href="../css/tutor.css" />
+    <link rel="stylesheet" href="../css/modal.css" />
+    <link rel="stylesheet" href="../css/sidebar.css" />
+    <link rel="stylesheet" href="../css/bubble.css" />
+    <link rel="stylesheet" href="../css/complete.css" />
+    <link rel="stylesheet" href="../css/tree.css" />
+    <link rel="stylesheet" href="../css/tabel_tutor.css" />
+</head>
+
+<body>
+    <!-- Modal Password -->
+    <div id="passwordModal" class="completion-modal">
+        <div class="completion-modal-content">
+            <span class="completion-close" id="closePasswordModal">&times;</span>
+            <h3>🔐 Masukkan Password</h3>
+            <input type="password" id="tutorialPassword" placeholder="Password..." class="completion-input" />
+            <div class="completion-button-group">
+                <button id="submitPassword" class="completion-btn completion-yes-btn">
+                    Akses
+                </button>
+            </div>
+            <p id="passwordError" style="display: none; color: #dc3545; margin-top: 1rem">
+                ❌ Password salah!
+            </p>
+        </div>
+    </div>
+
+    <div class="blur-wrapper">
+        <div class="container">
+            <header>
+                <h1>Panduan Implementasi Tombol Edit Pelanggan</h1>
+                <h1>🛠️📑🔄👥</h1>
+                <h5>
+                    Panduan ini menunjukkan cara menambahkan tombol <strong>Edit Pelanggan</strong> di sebelah tombol
+                    <strong>Tambah Pelanggan</strong> yang ada di POS. Tombol edit memungkinkan pengguna untuk
+                    memodifikasi detail pelanggan langsung dari antarmuka POS tanpa meninggalkan layar saat ini.
+                </h5>
+            </header>
+            <!-- HOME -->
+            <div class="home-button-wrapper">
+                <a href="../main.html" class="home-button">🏠 Kembali ke Beranda</a>
+            </div>
+
+            <div class="toc-dropdown-wrapper">
+                <label for="toc-dropdown" class="toc-icon">
+                    <strong>Daftar Isi</strong>
+                </label>
+                <select id="toc-dropdown" class="toc-dropdown">
+                    <!-- Otomatis diisi JS -->
+                </select>
+            </div>
+            <section>
+                <div class="image-box">
+                    <img src="data:image/png;base64,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"
+                        alt="#" />
+                    <p class="caption">Gambar: Panduan Implementasi Filter Status Pembayaran Ganda</p>
+                </div>
+                <p>Ikuti langkah-langkah di bawah ini untuk mengimplementasikan fitur ini:</p>
+                <ul class="tree">
+                    <li>
+                        <details open>
+                            <summary>your-laravel-project/</summary>
+                            <ul class="tree">
+                                <li>
+                                    <details>
+                                        <summary>📁 app</summary>
+                                        <ul class="tree">
+                                            <li>
+                                                <details>
+                                                    <summary>📁 Http</summary>
+                                                    <ul class="tree">
+                                                        <li>
+                                                            <details>
+                                                                <summary>📁 Controllers</summary>
+                                                                <ul class="tree">
+                                                                    <li class="file">
+                                                                        ContactController.php <span
+                                                                            class="tag-add">MODIFIKASI</span>
+                                                                    </li>
+                                                                </ul>
+                                                            </details>
+                                                        </li>
+                                                    </ul>
+                                                </details>
+                                            </li>
+                                        </ul>
+                                    </details>
+                                </li>
+                                <li>
+                                    <details>
+                                        <summary>📁 public</summary>
+                                        <ul class="tree">
+                                            <li>
+                                                <details>
+                                                    <summary>📁 js</summary>
+                                                    <ul class="tree">
+                                                        <li class="file">
+                                                            pos.js <span class="tag-add">MODIFIKASI</span>
+                                                        </li>
+                                                    </ul>
+                                                </details>
+                                            </li>
+                                        </ul>
+                                    </details>
+                                </li>
+                                <li>
+                                    <details>
+                                        <summary>📁 resources</summary>
+                                        <ul class="tree">
+                                            <li>
+                                                <details>
+                                                    <summary>📁 views</summary>
+                                                    <ul class="tree">
+                                                        <li>
+                                                            <details>
+                                                                <summary>📁 contact</summary>
+                                                                <ul class="tree">
+                                                                    <li class="file">
+                                                                        edit_customer_modal.blade.php <span
+                                                                            class="tag-new">BUAT</span>
+                                                                    </li>
+                                                                </ul>
+                                                            </details>
+                                                        </li>
+                                                        <li>
+                                                            <details>
+                                                                <summary>📁 sale_pos</summary>
+                                                                <ul class="tree">
+                                                                    <li class="file">
+                                                                        create.blade.php <span
+                                                                            class="tag-add">MODIFIKASI</span>
+                                                                    </li>
+                                                                    <li class="file">
+                                                                        edit.blade.php <span
+                                                                            class="tag-add">MODIFIKASI</span>
+                                                                    </li>
+                                                                    <li>
+                                                                        <details>
+                                                                            <summary>📁 partials</summary>
+                                                                            <ul class="tree">
+                                                                                <li class="file">
+                                                                                    pos_form.blade.php <span
+                                                                                        class="tag-add">MODIFIKASI</span>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </details>
+                                                                    </li>
+                                                                </ul>
+                                                            </details>
+                                                        </li>
+                                                    </ul>
+                                                </details>
+                                            </li>
+                                        </ul>
+                                    </details>
+                                </li>
+                                <li>
+                                    <details>
+                                        <summary>📁 routes</summary>
+                                        <ul class="tree">
+                                            <li class="file">
+                                                web.php <span class="tag-add">PERIKSA RUTE ADA</span>
+                                            </li>
+                                        </ul>
+                                    </details>
+                                </li>
+                            </ul>
+                        </details>
+                    </li>
+                </ul>
+                <h3>Tabel File</h3>
+                <div class="table-wrapper">
+                    <table class="file-changes">
+                        <thead>
+                            <tr>
+                                <th>File</th>
+                                <th>Aksi</th>
+                                <th>Deskripsi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>pos_form.blade.php</td>
+                                <td><span class="status required">Modifikasi</span></td>
+                                <td>Tambahkan tombol edit di samping tombol tambah yang sudah ada</td>
+                            </tr>
+                            <tr>
+                                <td>create.blade.php</td>
+                                <td><span class="status required">Modifikasi</span></td>
+                                <td>Tambahkan kontainer modal edit untuk halaman pembuatan POS</td>
+                            </tr>
+                            <tr>
+                                <td>edit.blade.php</td>
+                                <td><span class="status required">Modifikasi</span></td>
+                                <td>Tambahkan kontainer modal edit untuk halaman pengeditan POS</td>
+                            </tr>
+                            <tr>
+                                <td>ContactController.php</td>
+                                <td><span class="status required">Modifikasi</span></td>
+                                <td>Tambahkan penanganan modal untuk metode edit yang sudah ada</td>
+                            </tr>
+                            <tr>
+                                <td>edit_customer_modal.blade.php</td>
+                                <td><span class="status required">Buat</span></td>
+                                <td>Template modal baru untuk mengedit pelanggan</td>
+                            </tr>
+                            <tr>
+                                <td>pos.js</td>
+                                <td><span class="status required">Modifikasi</span></td>
+                                <td>Tambahkan fungsi JavaScript untuk fungsionalitas edit</td>
+                            </tr>
+                            <tr>
+                                <td>web.php</td>
+                                <td><span class="status optional">Verifikasi</span></td>
+                                <td>Pastikan rute edit ada (biasanya sudah ada)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+
+            </section>
+
+            <section>
+                <h2>Fitur</h2>
+                <ul>
+                    <li>✅ Edit detail pelanggan dalam modal popup</li>
+                    <li>✅ Perlindungan otomatis untuk pelanggan walk-in (tidak dapat mengedit pelanggan default)</li>
+                    <li>✅ Pembaruan dropdown pelanggan secara real-time setelah pengeditan</li>
+                    <li>✅ Kontrol akses berbasis izin</li>
+                    <li>✅ Integrasi mulus dengan fungsionalitas POS yang ada</li>
+                    <li>✅ Tidak mengganggu logika pemilihan pelanggan yang ada</li>
+                </ul>
+
+                <h2>Prasyarat</h2>
+                <ul>
+                    <li>POS dengan fungsionalitas pelanggan yang berfungsi</li>
+                    <li>Laravel framework dengan Blade templating</li>
+                    <li>jQuery dan file JavaScript POS yang ada</li>
+                    <li>Sistem izin pengguna yang sudah diterapkan</li>
+                </ul>
+            </section>
+            <section>
+                <h3>Langkah 1: Perbarui Template Form POS</h3>
+                <p>Perbarui file <strong>resources/views/sale_pos/partials/pos_form.blade.php</strong> Anda untuk
+                    menambahkan tombol edit.</p>
+
+                <p>Cari bagian ini:</p>
+                <div class="url-buttons">
+                    <button class="view-modal-button" data-url="../tutorial/🛠️📑🔄👥/langkah1_1.txt">
+                        resources/views/sale_pos/partials/pos_form.blade.php
+                    </button>
+                </div>
+                <p>Ganti dengan:</p>
+                <div class="url-buttons">
+                    <button class="view-modal-button" data-url="../tutorial/🛠️📑🔄👥/langkah1_2.txt">
+                        resources/views/sale_pos/partials/pos_form.blade.php
+                    </button>
+                </div>
+            </section>
+            <section>
+                <h2>Langkah 2: Tambahkan Kontainer Modal Edit</h2>
+                <p>Tambahkan kontainer modal ke kedua halaman POS di mana fungsi edit diperlukan.</p>
+
+                <h3>Untuk Halaman POS Create</h3>
+                <p>Tambahkan ini ke <strong>resources/views/sale_pos/create.blade.php</strong> (biasanya setelah modal
+                    kontak yang sudah ada):</p>
+                <div class="url-buttons">
+                    <button class="view-modal-button" data-url="../tutorial/🛠️📑🔄👥/langkah2_1.txt">
+                        resources/views/sale_pos/create.blade.php
+                    </button>
+                </div>
+
+                <h3>Untuk Halaman POS Edit</h3>
+                <p>Tambahkan ini ke <strong>resources/views/sale_pos/edit.blade.php</strong> (biasanya setelah modal
+                    kontak
+                    yang sudah ada):</p>
+                <div class="url-buttons">
+                    <button class="view-modal-button" data-url="../tutorial/🛠️📑🔄👥/langkah2_2.txt">
+                        resources/views/sale_pos/create.blade.php
+                    </button>
+                </div>
+
+                <h3>💡 Tips:</h3>
+                <p>Cari kontainer modal yang sudah ada seperti <strong>&lt;div class="modal fade
+                        contact_modal"&gt;</strong>
+                    dan tambahkan kontainer modal edit tepat setelahnya.</p>
+
+                <h3>📋 Catatan:</h3>
+                <p>Kedua halaman create dan edit memerlukan kontainer modal karena:</p>
+                <ul>
+                    <li><strong>create.blade.php</strong> - Untuk penjualan/transaksi baru</li>
+                    <li><strong>edit.blade.php</strong> - Untuk memodifikasi penjualan/transaksi yang sudah ada</li>
+                </ul>
+            </section>
+            <section>
+                <h2>Langkah 3: Buat Template Modal Edit Pelanggan</h2>
+                <p>Buat file baru: <strong>resources/views/contact/edit_customer_modal.blade.php</strong></p>
+                <div class="url-buttons">
+                    <button class="view-modal-button" data-url="../tutorial/🛠️📑🔄👥/langkah3.txt">
+                        resources/views/contact/edit_customer_modal.blade.php
+                    </button>
+                </div>
+            </section>
+
+            <section>
+                <h2>Langkah 4: Perbarui ContactController</h2>
+                <p>Tambahkan penanganan modal ke metode edit yang ada di
+                    <strong>app/Http/Controllers/ContactController.php</strong> Anda:
+                </p>
+                <div class="url-buttons">
+                    <button class="view-modal-button" data-url="../tutorial/🛠️📑🔄👥/langkah4.txt">
+                        app/Http/Controllers/ContactController.php
+                    </button>
+                </div>
+            </section>
+
+            <section>
+                <h2>Langkah 5: Tambahkan JavaScript ke pos.js</h2>
+                <p>Tambahkan kode JavaScript ini ke akhir file <strong>public/js/pos.js</strong> Anda:</p>
+                <div class="url-buttons">
+                    <button class="view-modal-button" data-url="../tutorial/🛠️📑🔄👥/langkah5.txt">
+                        public/js/pos.js
+                    </button>
+                </div>
+            </section>
+            <section>
+                <h2>Langkah Verifikasi</h2>
+                <p>Setelah implementasi, pastikan bahwa:</p>
+                <ul>
+                    <li>Tombol edit muncul di sebelah tombol tambah pelanggan</li>
+                    <li>Tombol dinonaktifkan untuk pengguna tanpa izin <strong>customer.update</strong></li>
+                    <li>Validasi klik bekerja - menunjukkan error jika tidak ada pelanggan yang dipilih</li>
+                    <li>Perlindungan pelanggan walk-in - tidak dapat mengedit pelanggan default</li>
+                    <li>Modal memuat data pelanggan dengan benar</li>
+                    <li>Validasi form bekerja termasuk keunikan ID kontak</li>
+                    <li>Dropdown pelanggan terupdate setelah edit berhasil</li>
+                    <li>Alamat pengiriman terupdate secara otomatis</li>
+                </ul>
+
+                <h3>Pemecahan Masalah</h3>
+                <h4>Masalah Umum</h4>
+                <ul>
+                    <li><strong>Masalah:</strong> Tombol edit tidak muncul<br><strong>Solusi:</strong> Periksa apakah
+                        Anda memiliki izin yang benar dan HTML tombol ditempatkan dengan benar.</li>
+                    <li><strong>Masalah:</strong> Modal menunjukkan "Data kontak tidak
+                        tersedia"<br><strong>Solusi:</strong> Verifikasi bahwa metode
+                        <strong>ContactController::edit</strong> mencakup kode penanganan modal dan route-nya ada.
+                    </li>
+                    <li><strong>Masalah:</strong> Dropdown pelanggan tidak terupdate setelah
+                        edit<br><strong>Solusi:</strong> Pastikan callback sukses mencakup
+                        <strong>$('select#customer_id').trigger('change');</strong>
+                    </li>
+                    <li><strong>Masalah:</strong> Validasi form tidak berfungsi<br><strong>Solusi:</strong> Periksa
+                        apakah semua pustaka JavaScript yang diperlukan (jQuery Validation) sudah dimuat.</li>
+                </ul>
+
+                <h3>Langkah Debugging</h3>
+                <ul>
+                    <li>Periksa konsol browser untuk kesalahan JavaScript</li>
+                    <li>Periksa log Laravel di <strong>storage/logs/laravel.log</strong></li>
+                    <li>Verifikasi route ada dengan menggunakan <strong>php artisan route:list | grep contacts</strong>
+                    </li>
+                    <li>Uji akses URL langsung ke <strong>/contacts/{id}/edit?modal=1</strong></li>
+                </ul>
+
+                <h3>Pertimbangan Keamanan</h3>
+                <ul>
+                    <li>✅ Pemeriksaan izin mencegah akses yang tidak sah</li>
+                    <li>✅ Perlindungan pelanggan walk-in mencegah pengeditan sistem default</li>
+                    <li>✅ Perlindungan CSRF melalui form Laravel</li>
+                    <li>✅ Validasi dan sanitasi input</li>
+                    <li>✅ Isolasi ID bisnis mencegah akses data antar tenant</li>
+                </ul>
+
+                <h3>Catatan Performa</h3>
+                <ul>
+                    <li>Konten modal hanya dimuat saat dibutuhkan (AJAX)</li>
+                    <li>Menggunakan fungsi validasi dan utilitas yang sudah ada</li>
+                    <li>Dampak minimal pada waktu muat halaman</li>
+                    <li>Pembaruan dropdown pelanggan yang efisien</li>
+                </ul>
+            </section>
+            <section>
+                <h2>Opsi Kustomisasi</h2>
+
+                <h3>Menambahkan Bidang Kustom</h3>
+                <p>Untuk menambahkan bidang kustom ke modal edit, ubah template
+                    <strong>edit_customer_modal.blade.php</strong> dan tambahkan bidang yang sesuai.
+                </p>
+
+                <h3>Mengubah Ikon Tombol</h3>
+                <p>Perbarui kelas tag <strong>&lt;i&gt;</strong> di HTML tombol:</p>
+                <strong>&lt;i class="fa fa-pencil text-warning fa-lg"&gt;&lt;/i&gt;</strong>
+                <p><strong><!-- Ikon edit alternatif --></strong></p>
+
+                <h3>Aturan Validasi Kustom</h3>
+                <p>Tambahkan aturan validasi di dalam fungsi <strong>initializeEditCustomerForm()</strong>:</p>
+                <strong>rules: {
+                    mobile: {
+                    required: true,
+                    minlength: 10
+                    }
+                    }</strong>
+
+                <h3>Kesimpulan</h3>
+                <p>Implementasi ini memberikan pengalaman edit pelanggan yang mulus yang terintegrasi dengan sempurna
+                    dengan fungsionalitas POS yang ada, sambil menjaga standar keamanan, kinerja, dan pengalaman
+                    pengguna.</p>
+            </section>
+
+            <footer>
+                <!-- HOME -->
+                <div class="home-button-wrapper">
+                    <a href="../main.html" class="home-button">🏠 Kembali ke Beranda</a>
+                </div>
+            </footer>
+        </div>
+    </div>
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <iframe id="modalFrame" src="" frameborder="0" style="width: 100%; height: 400px"></iframe>
+        </div>
+    </div>
+    <button id="bubbleUp" title="Kembali ke Atas" aria-label="Kembali ke Atas">
+        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="none" viewBox="0 0 24 24" stroke="white">
+            <path stroke-linecap="round" stroke-width="2" d="M6 15l6-6 6 6" />
+        </svg>
+    </button>
+    <div id="completionModal" class="completion-modal">
+        <div class="completion-modal-content">
+            <span class="completion-close" title="Tutup">&times;</span>
+            <h3>🎉 Selamat, kamu telah menyelesaikan tutorialnya!</h3>
+            <p>Apakah kamu ingin mengunduh file yang telah jadi?</p>
+            <div class="completion-button-group">
+                <a id="completion-download-btn" data-id="file_16" class="completion-btn completion-yes-btn">
+                    ✅ Ya
+                </a>
+                <button id="completion-no-btn" class="completion-btn completion-no-btn">
+                    ❌ Tidak
+                </button>
+            </div>
+        </div>
+    </div>
+    <script src="../js/scripts.js"></script>
+    <script src="../js/sidebar.js"></script>
+    <script src="../js/bubble.js"></script>
+    <script src="../js/complete.js"></script>
+    <script src="../js//Data/file_download_data.js"></script>
+    <script src="../js//Data/pass_data.js"></script>
+    <!-- Link ke file JavaScript -->
+</body>
+
+</html>

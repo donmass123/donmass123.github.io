@@ -1,0 +1,161 @@
+// Edit customer functionality - Add this to your pos.js file
+
+// Edit customer button click handler
+$(document).on('click', '.edit_customer', function () {
+    var customerId = $('#customer_id').val();
+    var defaultCustomerId = $('#default_customer_id').val();
+
+    // Basic validation
+    if (!customerId) {
+        toastr.error('Please select a customer to edit');
+        return;
+    }
+
+    // Prevent editing walk-in customer
+    if (defaultCustomerId && customerId === defaultCustomerId) {
+        toastr.error('Cannot edit walk-in customer');
+        return;
+    }
+
+    // Show modal with loading
+    $('.contact_edit_modal').html(
+        '<div class="modal-dialog modal-lg">' +
+            '<div class="modal-content">' +
+            '<div class="modal-body text-center">' +
+            '<i class="fa fa-spinner fa-spin fa-2x"></i><br>Loading customer data...' +
+            '</div></div></div>'
+    );
+    $('.contact_edit_modal').modal('show');
+
+    // Load customer data
+    $.get(base_path + '/contacts/' + customerId + '/edit?modal=1')
+        .done(function (result) {
+            if (result.success) {
+                $('.contact_edit_modal').html(result.html);
+                initializeEditCustomerForm();
+            } else {
+                toastr.error(result.msg || 'Error loading customer data');
+                $('.contact_edit_modal').modal('hide');
+            }
+        })
+        .fail(function () {
+            toastr.error('Error loading customer data');
+            $('.contact_edit_modal').modal('hide');
+        });
+});
+
+// Initialize edit customer form after loading
+function initializeEditCustomerForm() {
+    // Initialize form validation (similar to existing quick_add_contact)
+    $('form#contact_edit_form').validate({
+        rules: {
+            contact_id: {
+                remote: {
+                    url: '/contacts/check-contacts-id',
+                    type: 'post',
+                    data: {
+                        contact_id: function () {
+                            return $('form#contact_edit_form')
+                                .find('#contact_id')
+                                .val();
+                        },
+                        hidden_id: function () {
+                            return (
+                                $('form#contact_edit_form')
+                                    .find('#hidden_id')
+                                    .val() || ''
+                            );
+                        },
+                    },
+                },
+            },
+        },
+        messages: {
+            contact_id: {
+                remote: LANG.contact_id_already_exists,
+            },
+        },
+        submitHandler: function (form) {
+            submitEditCustomerForm(form);
+        },
+    });
+
+    // Initialize select2 if exists
+    if ($('.contact_edit_modal .select2').length) {
+        $('.contact_edit_modal .select2').select2({
+            dropdownParent: $('.contact_edit_modal'),
+        });
+    }
+
+    // Handle contact type radio buttons
+    $('.contact_edit_modal input[name="contact_type_radio"]').change(
+        function () {
+            var contactType = $(this).val();
+            if (contactType === 'individual') {
+                $('.contact_edit_modal .individual').show();
+                $('.contact_edit_modal .business').hide();
+            } else {
+                $('.contact_edit_modal .individual').hide();
+                $('.contact_edit_modal .business').show();
+            }
+        }
+    );
+
+    // Handle more info button
+    $('.contact_edit_modal .more_btn').click(function () {
+        var target = $(this).data('target');
+        $('.contact_edit_modal ' + target).removeClass('hide');
+        $(this).hide();
+    });
+}
+
+// Submit edit customer form (similar to existing submitQuickContactForm)
+function submitEditCustomerForm(form) {
+    var data = $(form).serialize();
+    $.ajax({
+        method: 'PUT',
+        url: $(form).attr('action'),
+        dataType: 'json',
+        data: data,
+        beforeSend: function (xhr) {
+            __disable_submit_button($(form).find('button[type="submit"]'));
+        },
+        success: function (result) {
+            if (result.success == true) {
+                var name = result.data.name;
+                if (result.data.supplier_business_name) {
+                    name += ' - ' + result.data.supplier_business_name;
+                }
+
+                // Update the select option text (similar to existing functionality)
+                $(
+                    'select#customer_id option[value="' + result.data.id + '"]'
+                ).text(name);
+
+                // Trigger change to update all related data
+                $('select#customer_id').trigger('change');
+
+                $('.contact_edit_modal').modal('hide');
+                toastr.success(result.msg);
+
+                // Update shipping address (reuse existing function)
+                update_shipping_address(result.data);
+            } else {
+                toastr.error(result.msg);
+            }
+        },
+        error: function () {
+            toastr.error('Error updating customer');
+        },
+        complete: function () {
+            $(form).find('button[type="submit"]').removeAttr('disabled');
+        },
+    });
+}
+
+// Handle edit modal close (similar to existing contact_modal)
+$('.contact_edit_modal').on('hidden.bs.modal', function () {
+    $('form#contact_edit_form')
+        .find('button[type="submit"]')
+        .removeAttr('disabled');
+});

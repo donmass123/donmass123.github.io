@@ -1,0 +1,4 @@
+<!-- Edit Customer Modal - Content loaded via AJAX -->
+<div class="modal fade contact_edit_modal" tabindex="-1" role="dialog">
+    <!-- Content will be loaded here via AJAX -->
+</div>
