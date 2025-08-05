@@ -224,7 +224,23 @@ const tutorialsData = [
     image: "cover/module/8.webp",
     updateDate: "3 Agustus 2025",
     description: "🧩 laporan lanjutan untuk laporan yang lebih spesif dan lengkap di point of sales."
-  }
+  },
+  {
+    title: "📑 Panduan Implementasi Filter Status Pembayaran Ganda",
+    link: "html/18.html",
+    level: "menengah",
+    image: "cover/18.webp",
+    updateDate: "5 Agustus 2025",
+    description: "📦 Panduan Implementasi Filter Status Pembayaran Ganda"
+  },
+  {
+    title: "📑 Panduan Implementasi Tombol Edit Pelanggan",
+    link: "html/19.html",
+    level: "menengah",
+    image: "cover/19.webp",
+    updateDate: "5 Agustus 2025",
+    description: "📦 Panduan Implementasi Tombol Edit Pelanggan"
+  },
 ];
     // Fungsi untuk mengganti title berdasarkan URL
     function updatePageTitle() {
