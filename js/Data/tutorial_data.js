@@ -241,6 +241,22 @@ const tutorialsData = [
     updateDate: "5 Agustus 2025",
     description: "📦 Panduan Implementasi Tombol Edit Pelanggan"
   },
+  {
+    title: "📑 Menambahkan Pemasok ke Produk – Panduan Implementasi Lengkap",
+    link: "html/20.html",
+    level: "mahir",
+    image: "cover/20.webp",
+    updateDate: "11 Agustus 2025",
+    description: "📦 Menambahkan Pemasok ke Produk – Panduan Implementasi Lengkap"
+  },
+  {
+    title: "📑 Widget Dasbor Kinerja yang Ditingkatkan",
+    link: "html/21.html",
+    level: "mahir",
+    image: "cover/21.webp",
+    updateDate: "11 Agustus 2025",
+    description: "📦 Widget Dasbor Kinerja yang Ditingkatkan"
+  },
 ];
     // Fungsi untuk mengganti title berdasarkan URL
     function updatePageTitle() {

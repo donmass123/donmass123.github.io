@@ -19,4 +19,6 @@ const downloadData = [
   { id: "file_17", url: "https://drive.google.com/drive/folders/1XkxmeiOt6B16sVbm3Qd3r2nwIK2G4A1I?usp=sharing" },
   { id: "file_18", url: "https://drive.google.com/drive/folders/1P6ayar8m4VeQhRa_PQGfTCn5z_IezscU?usp=sharing" },
   { id: "file_19", url: "https://drive.google.com/drive/folders/1I4e9zOSLF2MzOIOOYbDgRkCjY4MNCzlT?usp=sharing" },
+  { id: "file_20", url: "https://drive.google.com/drive/folders/1H2BYOnHMrCgKgH1ytI5ahw1kqrD8iKmt?usp=sharing" },
+  { id: "file_21", url: "https://drive.google.com/drive/folders/1QbEhQ1GIsMjeKn2YKFhnZ74qcFeQcx62?usp=sharing" },
 ];
