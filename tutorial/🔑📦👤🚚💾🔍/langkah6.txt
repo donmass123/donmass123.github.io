@@ -1,0 +1,3 @@
+'bulk_update_supplier' => 'Bulk Update Supplier',
+'supplier_updated_success' => 'Supplier updated successfully',
+'no_products_selected' => 'No products selected',

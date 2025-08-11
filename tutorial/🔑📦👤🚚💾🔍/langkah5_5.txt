@@ -1,0 +1,4 @@
+&nbsp;
+    <button type="button" class="tw-dw-btn tw-dw-btn-xs tw-dw-btn-outline tw-dw-btn-info bulk-update-supplier">
+        <i class="fa fa-users"></i> @lang('lang_v1.bulk_update_supplier')
+    </button>

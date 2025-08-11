@@ -1,0 +1,45 @@
+public function bulkUpdateSupplier(Request $request)
+{
+    if (!auth()->user()->can('product.update')) {
+        abort(403, 'Unauthorized action.');
+    }
+
+    try {
+        $selected_products = $request->input('selected_products');
+        $supplier_id = $request->input('supplier_id');
+        $business_id = $request->session()->get('user.business_id');
+
+        if (empty($selected_products)) {
+            $output = [
+                'success' => 0,
+                'msg' => __('lang_v1.no_products_selected')
+            ];
+            return $output;
+        }
+
+        $product_ids = explode(',', $selected_products);
+
+        DB::beginTransaction();
+
+        Product::where('business_id', $business_id)
+            ->whereIn('id', $product_ids)
+            ->update(['supplier_id' => $supplier_id]);
+
+        DB::commit();
+
+        $output = [
+            'success' => 1,
+            'msg' => __('lang_v1.supplier_updated_success')
+        ];
+    } catch (\Exception $e) {
+        DB::rollBack();
+        \Log::emergency("File:" . $e->getFile() . "Line:" . $e->getLine() . "Message:" . $e->getMessage());
+
+        $output = [
+            'success' => 0,
+            'msg' => __('messages.something_went_wrong')
+        ];
+    }
+
+    return $output;
+}

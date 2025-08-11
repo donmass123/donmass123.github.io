@@ -1,0 +1,11 @@
+<div class="col-sm-4">
+    <div class="form-group">
+        {!! Form::label('supplier_id', __('contact.supplier') . ':') !!}
+        <div class="input-group">
+            {!! Form::select('supplier_id', $suppliers, $product->supplier_id, ['placeholder' => __('messages.please_select'), 'class' => 'form-control select2']); !!}
+            <span class="input-group-btn">
+                <button type="button" @if(!auth()->user()->can('supplier.create')) disabled @endif class="btn btn-default bg-white btn-flat btn-modal" data-href="{{action([\App\Http\Controllers\ContactController::class, 'create'], ['quick_add' => true, 'type' => 'supplier'])}}" title="@lang('contact.add_supplier')" data-container=".view_modal"><i class="fa fa-plus-circle text-primary fa-lg"></i></button>
+            </span>
+        </div>
+    </div>
+</div>

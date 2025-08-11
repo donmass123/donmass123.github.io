@@ -1,0 +1,36 @@
+<!-- Bulk Supplier Update Modal -->
+<div class="modal fade" id="bulk_supplier_modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+                <h4 class="modal-title">@lang('lang_v1.bulk_update_supplier')</h4>
+            </div>
+            <form id="bulk_supplier_form" method="POST" action="{{ route('products.bulk-update-supplier') }}">
+                @csrf
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="bulk_supplier_id">@lang('contact.supplier'):</label>
+                        <select name="supplier_id" id="bulk_supplier_id" class="form-control select2" style="width: 100%;">
+                            <option value="">@lang('lang_v1.none')</option>
+                            @if(isset($suppliers))
+                                @foreach($suppliers as $id => $name)
+                                    @if($id != '')
+                                        <option value="{{ $id }}">{{ $name }}</option>
+                                    @endif
+                                @endforeach
+                            @endif
+                        </select>
+                    </div>
+                    <input type="hidden" name="selected_products" id="bulk_selected_products">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">@lang('messages.close')</button>
+                    <button type="submit" class="btn btn-primary">@lang('messages.update')</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

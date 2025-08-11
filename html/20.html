@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Adding a favicon -->
+    <link rel="icon" href="https://www.iconpacks.net/icons/2/free-rocket-icon-3418-thumb.png" type="image/x-icon" />
+    <title>Panduan Implementasi Filter Status Pembayaran Ganda</title>
+    <link rel="stylesheet" href="../css/tutor.css" />
+    <link rel="stylesheet" href="../css/modal.css" />
+    <link rel="stylesheet" href="../css/sidebar.css" />
+    <link rel="stylesheet" href="../css/bubble.css" />
+    <link rel="stylesheet" href="../css/complete.css" />
+    <link rel="stylesheet" href="../css/tree.css" />
+    <link rel="stylesheet" href="../css/tabel_tutor.css" />
+</head>
+
+<body>
+    <!-- Modal Password -->
+    <div id="passwordModal" class="completion-modal">
+        <div class="completion-modal-content">
+            <span class="completion-close" id="closePasswordModal">&times;</span>
+            <h3>🔐 Masukkan Password</h3>
+            <input type="password" id="tutorialPassword" placeholder="Password..." class="completion-input" />
+            <div class="completion-button-group">
+                <button id="submitPassword" class="completion-btn completion-yes-btn">
+                    Akses
+                </button>
+            </div>
+            <p id="passwordError" style="display: none; color: #dc3545; margin-top: 1rem">
+                ❌ Password salah!
+            </p>
+        </div>
+    </div>
+
+    <div class="blur-wrapper">
+        <div class="container">
+            <header>
+                <h1>Menambahkan Pemasok ke Produk – Panduan Implementasi Lengkap</h1>
+                <h1>🔑📦👤🚚💾🔍</h1>
+                <h5>
+                    Panduan ini akan memandu Anda melalui proses lengkap untuk menambahkan fungsionalitas supplier ke
+                    produk POS Anda. Fitur ini memungkinkan Anda untuk.
+                </h5>
+            </header>
+            <!-- HOME -->
+            <div class="home-button-wrapper">
+                <a href="../main.html" class="home-button">🏠 Kembali ke Beranda</a>
+            </div>
+
+            <div class="toc-dropdown-wrapper">
+                <label for="toc-dropdown" class="toc-icon">
+                    <strong>Daftar Isi</strong>
+                </label>
+                <select id="toc-dropdown" class="toc-dropdown">
+                    <!-- Otomatis diisi JS -->
+                </select>
+            </div>
+            <section>
+                <h2>Ikhtisar</h2>
+                <p>Panduan ini akan memandu Anda melalui proses lengkap untuk menambahkan fungsionalitas supplier ke
+                    produk POS Anda. Fitur ini memungkinkan Anda untuk:</p>
+                <ul>
+                    <li>Menetapkan supplier ke produk saat pembuatan dan pengeditan</li>
+                    <li>Menyaring produk berdasarkan supplier dalam daftar produk</li>
+                    <li>Memperbarui supplier secara massal untuk beberapa produk</li>
+                    <li>Melihat informasi supplier di detail produk</li>
+                </ul>
+                <div class="image-box">
+                    <img src="https://ultimate-pos-tutorials.vercel.app/assets/images/supplier-create-page-428a7eeba037a7f201baf3f118dd6dc4.png"  alt="#" />
+                    <p class="caption">Gambar: 1</p>
+                </div>
+                <div class="image-box">
+                    <img src="https://ultimate-pos-tutorials.vercel.app/assets/images/supplier-index-page-table-b5dad79a14d179bfc29bcb687ea519a2.png"  alt="#" />
+                    <p class="caption">Gambar: 2</p>
+                </div>
+                <div class="image-box">
+                    <img src="https://ultimate-pos-tutorials.vercel.app/assets/images/supplier-index-page-bulk-3e73d833cce47dd365c7d371e4a44492.png"  alt="#" />
+                    <p class="caption">Gambar: 3</p>
+                </div>
+            </section>
+
+            <section>
+                <h2>Langkah 1: Struktur Database</h2>
+                <h3>Migrasi dan SQL Langsung</h3>
+                <p>POS sudah memiliki tabel kontak yang menyimpan informasi supplier. Kami hanya perlu menambahkan kunci
+                    asing (foreign key) ke tabel produk.</p>
+
+                <h3>Buat Migrasi:</h3>
+                <strong>php artisan make:migration add_supplier_id_to_products_table</strong>
+
+                <h3>Konten Migrasi:</h3>
+                <div class="url-buttons">
+                    <button class="view-modal-button" data-url="../tutorial/🔑📦👤🚚💾🔍/langkah1_1.txt">
+                        php artisan make:migration add_supplier_id_to_products_table
+                    </button>
+                </div>
+                <h3>SQL Langsung (Alternatif):</h3>
+                <div class="url-buttons">
+                    <button class="view-modal-button" data-url="../tutorial/🔑📦👤🚚💾🔍/langkah1_2.txt">
+                        SQL Langsung (Alternatif)
+                    </button>
+                </div>
+                <p>Untuk menjalankan migrasi dan memperbarui database Anda, gunakan perintah berikut:</p>
+                <strong>php artisan migrate</strong>
+            </section>
+
+            <section>
+                <h2>Langkah 2: Pembaruan Model</h2>
+
+                <h3>Perbarui Model Produk</h3>
+                <p>File: <strong>app/Product.php</strong></p>
+                <p>Tambahkan metode relasi berikut:</p>
+                <div class="url-buttons">
+                    <button class="view-modal-button" data-url="../tutorial/🔑📦👤🚚💾🔍/langkah2_1.txt">
+                        app/Product.php
+                    </button>
+                </div>
+                <h3>Perbarui Model Kontak</h3>
+                <p>File: <strong>app/Contact.php</strong></p>
+                <p>Tambahkan metode relasi berikut:</p>
+                <div class="url-buttons">
+                    <button class="view-modal-button" data-url="../tutorial/🔑📦👤🚚💾🔍/langkah2_2.txt">
+                        app/Contact.php
+                    </button>
+                </div>
+            </section>
+
+            <section>
+
+                <h2>Langkah 3: Pembaruan Controller</h2>
+
+                <h3>Perubahan pada ProductController</h3>
+                <p>File: <strong>app/Http/Controllers/ProductController.php</strong></p>
+
+                <h4>3.1 Perbarui metode <strong>index()</strong></h4>
+                <p>Tambahkan join supplier ke query (sekitar baris 50):</p>
+                <strong>
+                    ->leftJoin('contacts as suppliers', 'products.supplier_id', '=', 'suppliers.id')
+                </strong>
+
+                <p>Tambahkan supplier ke pernyataan select (sekitar baris 80):</p>
+                <strong>
+                    'suppliers.name as supplier'
+                </strong>
+
+                <p>Tambahkan filter supplier ke query (sekitar baris 120):</p>
+                <strong>
+                    $supplier_id = request()->get('supplier_id', null);
+                    if (!empty($supplier_id)) {
+                    $products->where('products.supplier_id', $supplier_id);
+                    }
+                </strong>
+
+                <p>Tambahkan kolom supplier ke DataTables (sekitar baris 100):</p>
+                <strong>
+                    ->addColumn('supplier', function ($row) {
+                    return $row->supplier ?? '--';
+                    })
+                </strong>
+
+                <p>Perbarui <strong>rawColumns</strong>:</p>
+                <strong>
+                    ->rawColumns(['action', 'image', 'mass_delete', 'product', 'selling_price', 'purchase_price',
+                    'category', 'current_stock', 'supplier'])
+                </strong>
+
+                <h3>3.2 Perbarui metode <strong>create()</strong></h3>
+                <p>Tambahkan dropdown supplier (sekitar baris 150):</p>
+                <strong>
+                    $suppliers = \App\Contact::suppliersDropdown($business_id);
+                </strong>
+
+                <p>Perbarui pernyataan <strong>compact</strong>:</p>
+                <div class="url-buttons">
+                    <button class="view-modal-button" data-url="../tutorial/🔑📦👤🚚💾🔍/langkah3_1.txt">
+                        compact
+                    </button>
+                </div>
+                <h3>3.3 Perbarui metode <strong>store()</strong></h3>
+                <p>Tambahkan <strong>'supplier_id'</strong> ke array <strong>form_fields</strong> (sekitar baris 170):
+                </p>
+                <strong>
+                    $form_fields = ['name', 'brand_id', 'unit_id', 'category_id', 'supplier_id', 'tax', 'type',
+                    'barcode_type', 'sku', 'alert_quantity', 'tax_type', 'weight', 'product_description',
+                    'sub_unit_ids', 'preparation_time_in_minutes', 'product_custom_field1', /* ... rest of custom fields
+                    ... */];
+                </strong>
+
+                <h3>3.4 Perbarui metode <strong>edit()</strong></h3>
+                <p>Tambahkan dropdown supplier (sekitar baris 350):</p>
+                <strong>
+                    $suppliers = \App\Contact::suppliersDropdown($business_id);
+                </strong>
+
+                <p>Perbarui pernyataan <strong>compact</strong>:</p>
+                <div class="url-buttons">
+                    <button class="view-modal-button" data-url="../tutorial/🔑📦👤🚚💾🔍/langkah3_2.txt">
+                        compact
+                    </button>
+                </div>
+                <h3>3.5 Perbarui metode <strong>update()</strong></h3>
+                <p>Tambahkan <strong>'supplier_id'</strong> ke array <strong>product_details</strong> (sekitar baris
+                    400):</p>
+                <strong>
+                    $product_details = $request->only(['name', 'brand_id', 'unit_id', 'category_id', 'supplier_id',
+                    'tax', 'barcode_type', 'sku', 'alert_quantity', 'tax_type', 'weight', 'product_description',
+                    'sub_unit_ids', 'preparation_time_in_minutes', /* ... rest of custom fields ... */]);
+                </strong>
+
+                <p>Tambahkan penugasan manual:</p>
+                <strong>
+                    $product->supplier_id = $product_details['supplier_id'];
+                </strong>
+
+                <h3>3.6 Perbarui metode <strong>view()</strong></h3>
+                <p>Tambahkan supplier ke dalam array <strong>with</strong> (sekitar baris 800):</p>
+                <strong>
+                    $product = Product::where('business_id', $business_id)
+                    ->with(['brand', 'unit', 'category', 'sub_category', 'product_tax', 'variations',
+                    'variations.product_variation', 'variations.group_prices', 'variations.media', 'product_locations',
+                    'warranty', 'media', 'supplier'])
+                    ->findOrFail($id);
+                </strong>
+
+                <h3>3.7 Tambahkan metode pembaruan supplier secara massal</h3>
+                <div class="url-buttons">
+                    <button class="view-modal-button" data-url="../tutorial/🔑📦👤🚚💾🔍/langkah3_3.txt">
+                        metode pembaruan supplier secara massal
+                    </button>
+                </div>
+                <h3>3.8 Perbarui metode lain</h3>
+
+                <h4>Metode <strong>quickAdd()</strong>:</h4>
+                <p>Tambahkan dropdown supplier:</p>
+                <strong>
+                    $suppliers = \App\Contact::suppliersDropdown($business_id);
+                </strong>
+
+                <h4>Metode <strong>saveQuickProduct()</strong>:</h4>
+                <p>Tambahkan <strong>'supplier_id'</strong> ke dalam array <strong>form_fields</strong>:</p>
+                <strong>
+                    // Tambahkan 'supplier_id' ke dalam array form_fields
+                </strong>
+
+                <h4>Metode <strong>bulkEdit()</strong> dan <strong>bulkUpdate()</strong>:</h4>
+                <p>Tambahkan penanganan supplier seperti yang ditunjukkan pada panduan implementasi sebelumnya:</p>
+                <strong>
+                    // Tambahkan penanganan supplier seperti yang ditunjukkan sebelumnya
+                </strong>
+            </section>
+
+            <section>
+                <h2>Langkah 4: Rute</h2>
+
+                <h3>File: <strong>routes/web.php</strong></h3>
+                <p>Tambahkan rute untuk pembaruan supplier secara massal:</p>
+                <strong>
+                    Route::post('/products/bulk-update-supplier', [ProductController::class, 'bulkUpdateSupplier'])
+                    ->name('products.bulk-update-supplier');
+                </strong>
+            </section>
+
+            <section>
+                <h2>Langkah 5: Pembaruan Tampilan</h2>
+
+                <h3>5.1 Halaman Indeks Produk</h3>
+                <p>File: <strong>resources/views/product/index.blade.php</strong></p>
+
+                <h4>Tambahkan filter supplier (setelah filter brand sekitar baris 90):</h4>
+                <div class="url-buttons">
+                    <button class="view-modal-button" data-url="../tutorial/🔑📦👤🚚💾🔍/langkah5_1.txt">
+                        sekitar baris 90
+                    </button>
+                </div>
+                <h3>Pembaruan Konfigurasi JavaScript DataTable</h3>
+
+                <h4>1. Tambahkan ke fungsi data ajax:</h4>
+                <strong>
+                    d.supplier_id = $('#product_list_filter_supplier_id').val();
+                </strong>
+
+                <h4>2. Tambahkan ke array kolom (setelah kolom brand):</h4>
+                <strong>
+                    {
+                    data: 'supplier',
+                    name: 'suppliers.name'
+                    },
+                </strong>
+
+                <h4>3. Perbarui event listener perubahan:</h4>
+                <strong>
+                    $(document).on('change',
+                    '#product_list_filter_type, #product_list_filter_category_id, #product_list_filter_brand_id,
+                    #product_list_filter_supplier_id, #product_list_filter_unit_id, #product_list_filter_tax_id,
+                    #location_id, #active_state, #repair_model_id',
+                    function() {
+                    // existing code
+                    });
+                </strong>
+
+                <h4>4. Tambahkan modal pembaruan supplier massal:</h4>
+                <div class="url-buttons">
+                    <button class="view-modal-button" data-url="../tutorial/🔑📦👤🚚💾🔍/langkah5_2.txt">
+                        pembaruan supplier massal
+                    </button>
+                </div>
+
+                <h4>Tambahkan tombol supplier massal:</h4>
+                <div class="url-buttons">
+                    <button class="view-modal-button" data-url="../tutorial/🔑📦👤🚚💾🔍/langkah5_3.txt">
+                        Tambahkan tombol supplier massal
+                    </button>
+                </div>
+                <h3>5.2 Tabel Produk</h3>
+                <p>File: <strong>resources/views/product/partials/product_list.blade.php</strong></p>
+
+                <h4>Tambahkan header kolom supplier (setelah kolom brand):</h4>
+
+                <div class="url-buttons">
+                    <button class="view-modal-button" data-url="../tutorial/🔑📦👤🚚💾🔍/langkah5_4.txt">
+                        setelah kolom brand
+                    </button>
+                </div>
+
+                <h4>Tambahkan tombol pembaruan supplier massal (di tfoot setelah tombol yang ada):</h4>
+                <div class="url-buttons">
+                    <button class="view-modal-button" data-url="../tutorial/🔑📦👤🚚💾🔍/langkah5_5.txt">
+                        foot setelah tombol yang ada
+                    </button>
+                </div>
+                <h3>5.3 Formulir Produk</h3>
+                <h3>Formulir Pembuatan Produk (resources/views/product/create.blade.php)</h3>
+                <h4>Tambahkan setelah kolom brand:</h4>
+                <div class="url-buttons">
+                    <button class="view-modal-button" data-url="../tutorial/🔑📦👤🚚💾🔍/langkah5_6.txt">
+                        Formulir Produk ADD
+                    </button>
+                </div>
+                <h3>Formulir Pengeditan Produk (resources/views/product/edit.blade.php)</h3>
+                <h4>Tambahkan setelah kolom brand:</h4>
+                <div class="url-buttons">
+                    <button class="view-modal-button" data-url="../tutorial/🔑📦👤🚚💾🔍/langkah5_7.txt">
+                        Formulir Produk EDIT
+                    </button>
+                </div>
+                <h3>5.4 Modal Lihat Produk</h3>
+                <p>File: <strong>resources/views/product/view-modal.blade.php</strong></p>
+
+                <h4>Tambahkan informasi supplier setelah kolom brand:</h4>
+                <div class="url-buttons">
+                    <button class="view-modal-button" data-url="../tutorial/🔑📦👤🚚💾🔍/langkah5_8.txt">
+                        resources/views/product/view-modal.blade.php
+                    </button>
+                </div>
+                <h3>5.5 Formulir Quick Add</h3>
+                <p>File: <strong>resources/views/product/partials/quick_add_product.blade.php</strong></p>
+
+                <h4>Tambahkan setelah kolom brand:</h4>
+                <div class="url-buttons">
+                    <button class="view-modal-button" data-url="../tutorial/🔑📦👤🚚💾🔍/langkah5_9.txt">
+                        resources/views/product/partials/quick_add_product.blade.php
+                    </button>
+                </div>
+            </section>
+
+            <section>
+                <h2>Langkah 6: Berkas Bahasa</h2>
+
+                <h3>File: <strong>resources/lang/en/lang_v1.php</strong></h3>
+
+                <h4>Tambahkan terjemahan berikut:</h4>
+                <div class="url-buttons">
+                    <button class="view-modal-button" data-url="../tutorial/🔑📦👤🚚💾🔍/langkah6.txt">
+                        resources/lang/en/lang_v1.php
+                    </button>
+                </div>
+            </section>
+
+            <section>
+                <h2>Langkah 7: Pengujian</h2>
+
+                <h3>7.1 Fungsionalitas Dasar</h3>
+                <ul>
+                    <li><strong>Buat Produk:</strong> Uji pembuatan produk dengan pemilihan supplier</li>
+                    <li><strong>Edit Produk:</strong> Uji pengeditan produk yang sudah ada dan mengganti supplier</li>
+                    <li><strong>Lihat Produk:</strong> Verifikasi apakah supplier muncul di modal detail produk</li>
+                    <li><strong>Filter Produk:</strong> Uji penyaringan produk berdasarkan supplier di halaman indeks
+                    </li>
+                </ul>
+
+                <h3>7.2 Operasi Massal</h3>
+                <ul>
+                    <li><strong>Pilih Beberapa Produk:</strong> Gunakan kotak centang untuk memilih beberapa produk</li>
+                    <li><strong>Pembaruan Massal Supplier:</strong> Klik tombol pembaruan supplier massal dan tetapkan
+                        supplier</li>
+                    <li><strong>Verifikasi Perubahan:</strong> Periksa apakah semua produk yang dipilih memiliki
+                        supplier baru</li>
+                </ul>
+
+                <h3>7.3 Kasus Uji Ekstrem</h3>
+                <ul>
+                    <li><strong>Tanpa Supplier Dipilih:</strong> Uji dengan nilai supplier kosong atau null</li>
+                    <li><strong>Supplier Tidak Valid:</strong> Uji dengan ID supplier yang tidak ada</li>
+                    <li><strong>Pengujian Izin:</strong> Uji dengan izin pengguna yang berbeda</li>
+                    <li><strong>Dataset Besar:</strong> Uji dengan banyak produk yang dipilih untuk pembaruan massal
+                    </li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Langkah 8: Peningkatan Opsional</h2>
+
+                <h3>8.1 Statistik Supplier</h3>
+                <ul>
+                    <li><strong>Produk per Supplier:</strong> Tampilkan laporan jumlah produk per supplier</li>
+                    <li><strong>Level Stok per Supplier:</strong> Tampilkan laporan level stok berdasarkan supplier</li>
+                    <li><strong>Riwayat Pembelian per Supplier:</strong> Tampilkan riwayat pembelian berdasarkan
+                        supplier</li>
+                </ul>
+
+                <h3>8.2 Penyaringan Lanjutan</h3>
+                <ul>
+                    <li><strong>Produk Tanpa Supplier:</strong> Tambahkan opsi untuk menampilkan produk tanpa supplier
+                    </li>
+                    <li><strong>Pemberitahuan Stok Berdasarkan Supplier:</strong> Tambahkan pemberitahuan stok
+                        berdasarkan supplier</li>
+                    <li><strong>Pemilihan Multi-Supplier:</strong> Tambahkan kemampuan untuk memilih beberapa supplier
+                        sekaligus</li>
+                </ul>
+
+                <h3>8.3 Impor/Ekspor</h3>
+                <ul>
+                    <li><strong>Impor CSV dengan Nama Supplier:</strong> Perbarui impor produk untuk menyertakan nama
+                        supplier dalam format CSV</li>
+                    <li><strong>Ekspor Excel dengan Detail Supplier:</strong> Perbarui ekspor produk untuk menyertakan
+                        detail supplier dalam format Excel</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Kesimpulan</h2>
+                <p>Anda telah berhasil mengimplementasikan fungsionalitas supplier untuk produk di POS. Fitur ini
+                    menyediakan:</p>
+                <ul>
+                    <li>✅ Penugasan supplier saat pembuatan/pengeditan produk</li>
+                    <li>✅ Penyaringan produk berdasarkan supplier dalam daftar produk</li>
+                    <li>✅ Pembaruan supplier massal untuk beberapa produk</li>
+                    <li>✅ Informasi supplier di detail produk</li>
+                    <li>✅ Integrasi dengan manajemen supplier yang sudah ada</li>
+                </ul>
+                <p>Implementasi ini mengikuti konvensi POS dan menjaga kompatibilitas dengan fitur yang sudah ada.</p>
+            </section>
+
+            <footer>
+                <!-- HOME -->
+                <div class="home-button-wrapper">
+                    <a href="../main.html" class="home-button">🏠 Kembali ke Beranda</a>
+                </div>
+            </footer>
+        </div>
+    </div>
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <iframe id="modalFrame" src="" frameborder="0" style="width: 100%; height: 400px"></iframe>
+        </div>
+    </div>
+    <button id="bubbleUp" title="Kembali ke Atas" aria-label="Kembali ke Atas">
+        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="none" viewBox="0 0 24 24" stroke="white">
+            <path stroke-linecap="round" stroke-width="2" d="M6 15l6-6 6 6" />
+        </svg>
+    </button>
+    <div id="completionModal" class="completion-modal">
+        <div class="completion-modal-content">
+            <span class="completion-close" title="Tutup">&times;</span>
+            <h3>🎉 Selamat, kamu telah menyelesaikan tutorialnya!</h3>
+            <p>Apakah kamu ingin mengunduh file yang telah jadi?</p>
+            <div class="completion-button-group">
+                <a id="completion-download-btn" data-id="file_16" class="completion-btn completion-yes-btn">
+                    ✅ Ya
+                </a>
+                <button id="completion-no-btn" class="completion-btn completion-no-btn">
+                    ❌ Tidak
+                </button>
+            </div>
+        </div>
+    </div>
+    <script src="../js/scripts.js"></script>
+    <script src="../js/sidebar.js"></script>
+    <script src="../js/bubble.js"></script>
+    <script src="../js/complete.js"></script>
+    <script src="../js//Data/file_download_data.js"></script>
+    <script src="../js/Data/pass_data.js"></script>
+    <script src="../js/Data/tutorial_data.js"></script>
+    <!-- Link ke file JavaScript -->
+</body>
+
+</html>

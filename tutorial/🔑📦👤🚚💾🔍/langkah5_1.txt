@@ -1,0 +1,11 @@
+<div class="col-md-3">
+    <div class="form-group">
+        {!! Form::label('supplier_id', __('contact.supplier') . ':') !!}
+        {!! Form::select('supplier_id', $suppliers ?? [], null, [
+            'class' => 'form-control select2',
+            'style' => 'width:100%',
+            'id' => 'product_list_filter_supplier_id',
+            'placeholder' => __('lang_v1.all'),
+        ]) !!}
+    </div>
+</div>

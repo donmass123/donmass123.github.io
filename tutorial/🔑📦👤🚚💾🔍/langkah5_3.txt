@@ -1,0 +1,46 @@
+// Bulk supplier update functionality
+$(document).on('click', '.bulk-update-supplier', function(e) {
+    e.preventDefault();
+    var selected_rows = getSelectedRows();
+
+    if (selected_rows.length > 0) {
+        $('#bulk_selected_products').val(selected_rows);
+        $('#bulk_supplier_modal').modal('show');
+        
+        $('#bulk_supplier_id').select2({
+            dropdownParent: $('#bulk_supplier_modal')
+        });
+    } else {
+        swal('@lang("lang_v1.no_row_selected")');
+    }
+});
+
+$(document).on('submit', '#bulk_supplier_form', function(e) {
+    e.preventDefault();
+    var form = $(this);
+    var data = form.serialize();
+
+    $.ajax({
+        method: 'POST',
+        url: form.attr('action'),
+        dataType: 'json',
+        data: data,
+        beforeSend: function(xhr) {
+            form.find('button[type="submit"]').attr('disabled', true);
+        },
+        success: function(result) {
+            if (result.success == 1) {
+                $('#bulk_supplier_modal').modal('hide');
+                toastr.success(result.msg);
+                product_table.ajax.reload();
+            } else {
+                toastr.error(result.msg);
+            }
+            form.find('button[type="submit"]').attr('disabled', false);
+        },
+        error: function(xhr) {
+            toastr.error('@lang("messages.something_went_wrong")');
+            form.find('button[type="submit"]').attr('disabled', false);
+        }
+    });
+});
