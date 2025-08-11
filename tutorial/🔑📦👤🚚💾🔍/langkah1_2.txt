@@ -1,0 +1,12 @@
+-- Add supplier_id column to products table
+ALTER TABLE `products` 
+ADD COLUMN `supplier_id` BIGINT UNSIGNED NULL AFTER `brand_id`;
+
+-- Add foreign key constraint
+ALTER TABLE `products` 
+ADD CONSTRAINT `fk_products_supplier_id` 
+FOREIGN KEY (`supplier_id`) REFERENCES `contacts`(`id`) ON DELETE SET NULL;
+
+-- Add index for better performance
+ALTER TABLE `products` 
+ADD INDEX `idx_products_supplier_id` (`supplier_id`);

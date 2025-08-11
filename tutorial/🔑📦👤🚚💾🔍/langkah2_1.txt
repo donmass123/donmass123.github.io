@@ -1,0 +1,9 @@
+/**
+ * Get the supplier that owns the product.
+ */
+public function supplier()
+{
+    return $this->belongsTo(\App\Contact::class, 'supplier_id')
+                ->whereIn('type', ['supplier', 'both'])
+                ->active();
+}
