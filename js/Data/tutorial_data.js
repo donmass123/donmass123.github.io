@@ -218,14 +218,6 @@ const tutorialsData = [
     description: "📦 Laporan Penjualan Bulanan Pelanggan - Panduan Implementasi Lengkap."
   },
   {
-    title: "📚 Laporan Lanjutan untuk POS (UPDATE)",
-    link: "https://drive.google.com/file/d/1NHCey6HdU7yJXMxafqmmnCSEQ7TyVyDt/view?usp=sharing",
-    level: "module",
-    image: "cover/module/8.webp",
-    updateDate: "3 Agustus 2025",
-    description: "🧩 laporan lanjutan untuk laporan yang lebih spesif dan lengkap di point of sales."
-  },
-  {
     title: "📑 Panduan Implementasi Filter Status Pembayaran Ganda",
     link: "html/18.html",
     level: "menengah",
@@ -256,6 +248,14 @@ const tutorialsData = [
     image: "cover/21.webp",
     updateDate: "11 Agustus 2025",
     description: "📦 Widget Dasbor Kinerja yang Ditingkatkan"
+  },
+  {
+    title: "📚 Laporan Lanjutan untuk POS 1.0.7 (UPDATE)",
+    link: "https://drive.google.com/file/d/14HJCbZVDo6k6U00X9i08WSlcf0h93TJ5/view?usp=sharing",
+    level: "module",
+    image: "cover/module/8.webp",
+    updateDate: "11 Agustus 2025",
+    description: "🧩 laporan lanjutan untuk laporan yang lebih spesif dan lengkap di point of sales."
   },
 ];
     // Fungsi untuk mengganti title berdasarkan URL
