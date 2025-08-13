@@ -68,17 +68,164 @@
                     <li>Melihat informasi supplier di detail produk</li>
                 </ul>
                 <div class="image-box">
-                    <img src="https://ultimate-pos-tutorials.vercel.app/assets/images/supplier-create-page-428a7eeba037a7f201baf3f118dd6dc4.png"  alt="#" />
+                    <img src="https://ultimate-pos-tutorials.vercel.app/assets/images/supplier-create-page-428a7eeba037a7f201baf3f118dd6dc4.png"
+                        alt="#" />
                     <p class="caption">Gambar: 1</p>
                 </div>
                 <div class="image-box">
-                    <img src="https://ultimate-pos-tutorials.vercel.app/assets/images/supplier-index-page-table-b5dad79a14d179bfc29bcb687ea519a2.png"  alt="#" />
+                    <img src="https://ultimate-pos-tutorials.vercel.app/assets/images/supplier-index-page-table-b5dad79a14d179bfc29bcb687ea519a2.png"
+                        alt="#" />
                     <p class="caption">Gambar: 2</p>
                 </div>
                 <div class="image-box">
-                    <img src="https://ultimate-pos-tutorials.vercel.app/assets/images/supplier-index-page-bulk-3e73d833cce47dd365c7d371e4a44492.png"  alt="#" />
+                    <img src="https://ultimate-pos-tutorials.vercel.app/assets/images/supplier-index-page-bulk-3e73d833cce47dd365c7d371e4a44492.png"
+                        alt="#" />
                     <p class="caption">Gambar: 3</p>
                 </div>
+                <h2>STRUKTUR FILE</h2>
+                <ul class="tree">
+                    <li>
+                        <details open>
+                            <summary>POS/</summary>
+                            <ul class="tree">
+                                <li>
+                                    <details>
+                                        <summary>📁 Database</summary>
+                                        <ul class="tree">
+                                            <li>
+                                                <details>
+                                                    <summary>📁 migrations</summary>
+                                                    <ul class="tree">
+                                                        <li class="file">
+                                                            add_supplier_id_to_products_table.php <span
+                                                                class="tag-add">(Tambah database)</span>
+                                                        </li>
+                                                    </ul>
+                                                </details>
+                                            </li>
+                                        </ul>
+                                    </details>
+                                </li>
+                                <li>
+                                    <details>
+                                        <summary>📁 App</summary>
+                                        <ul class="tree">
+                                            <li class="file">
+                                                Product.php <span class="tag-add">(Update method)</span>
+                                            </li>
+                                            <li class="file">
+                                                Contact.php <span class="tag-add">(Update method)</span>
+                                            </li>
+                                            <li>
+                                                <details>
+                                                    <summary>📁 Http</summary>
+                                                    <ul class="tree">
+                                                        <li>
+                                                            <details>
+                                                                <summary>📁 Controllers</summary>
+                                                                <ul class="tree">
+                                                                    <li class="file">
+                                                                        ProductController.php <span
+                                                                            class="tag-add">(Update methods: index(),
+                                                                            create(), store(), update(), view(),
+                                                                            bulkUpdateSupplier(), quickAdd(),
+                                                                            saveQuickProduct(), bulkEdit())</span>
+                                                                    </li>
+                                                                </ul>
+                                                            </details>
+                                                        </li>
+                                                    </ul>
+                                                </details>
+                                            </li>
+                                        </ul>
+                                    </details>
+                                </li>
+                                <li>
+                                    <details>
+                                        <summary>📁 routes</summary>
+                                        <ul class="tree">
+                                            <li class="file">
+                                                web.php <span class="tag-add">(Tambah rute)</span>
+                                            </li>
+                                        </ul>
+                                    </details>
+                                </li>
+                                <li>
+                                    <details>
+                                        <summary>📁 Resources</summary>
+                                        <ul class="tree">
+                                            <li>
+                                                <details>
+                                                    <summary>📁 view</summary>
+                                                    <ul class="tree">
+                                                        <li>
+                                                            <details>
+                                                                <summary>📁 product</summary>
+                                                                <ul class="tree">
+                                                                    <li class="file">
+                                                                        index.php <span class="tag-add">(Update
+                                                                            view)</span>
+                                                                    </li>
+                                                                    <li class="file">
+                                                                        create.blade.php <span class="tag-add">(Add
+                                                                            form)</span>
+                                                                    </li>
+                                                                    <li class="file">
+                                                                        edit.blade.php <span class="tag-add">(Add
+                                                                            form)</span>
+                                                                    </li>
+                                                                    <li class="file">
+                                                                        view-modal.blade.php <span
+                                                                            class="tag-add">(Tambah supplier)</span>
+                                                                    </li>
+                                                                    <li>
+                                                                        <details>
+                                                                            <summary>📁 partials</summary>
+                                                                            <ul class="tree">
+                                                                                <li class="file">
+                                                                                    product_list.blade.php <span
+                                                                                        class="tag-add">(Tambah
+                                                                                        supplier)</span>
+                                                                                </li>
+                                                                                <li class="file">
+                                                                                    quick_add_product.blade.php <span
+                                                                                        class="tag-add">(Tambah
+                                                                                        form)</span>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </details>
+                                                                    </li>
+                                                                </ul>
+                                                            </details>
+                                                        </li>
+                                                    </ul>
+                                                </details>
+                                            </li>
+                                        </ul>
+                                    </details>
+                                </li>
+                                <li>
+                                    <details>
+                                        <summary>📁 lang</summary>
+                                        <ul class="tree">
+                                            <li>
+                                                <details>
+                                                    <summary>📁 id</summary>
+                                                    <ul class="tree">
+                                                        <li class="file">
+                                                            lang_v1.php <span class="tag-add">(Tambah bahasa)</span>
+                                                        </li>
+                                                    </ul>
+                                                </details>
+                                            </li>
+                                        </ul>
+                                    </details>
+                                </li>
+                            </ul>
+                        </details>
+                    </li>
+                </ul>
+
             </section>
 
             <section>
