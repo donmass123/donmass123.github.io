@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Adding a favicon -->
+    <link rel="icon" href="https://www.iconpacks.net/icons/2/free-rocket-icon-3418-thumb.png" type="image/x-icon" />
+    <title>Panduan Implementasi Filter Status Pembayaran Ganda</title>
+    <link rel="stylesheet" href="../css/tutor.css" />
+    <link rel="stylesheet" href="../css/modal.css" />
+    <link rel="stylesheet" href="../css/sidebar.css" />
+    <link rel="stylesheet" href="../css/bubble.css" />
+    <link rel="stylesheet" href="../css/complete.css" />
+    <link rel="stylesheet" href="../css/tree.css" />
+    <link rel="stylesheet" href="../css/tabel_tutor.css" />
+</head>
+
+<body>
+    <!-- Modal Password -->
+    <div id="passwordModal" class="completion-modal">
+        <div class="completion-modal-content">
+            <span class="completion-close" id="closePasswordModal">&times;</span>
+            <h3>🔐 Masukkan Password</h3>
+            <input type="password" id="tutorialPassword" placeholder="Password..." class="completion-input" />
+            <div class="completion-button-group">
+                <button id="submitPassword" class="completion-btn completion-yes-btn">
+                    Akses
+                </button>
+            </div>
+            <p id="passwordError" style="display: none; color: #dc3545; margin-top: 1rem">
+                ❌ Password salah!
+            </p>
+        </div>
+    </div>
+
+    <div class="blur-wrapper">
+        <div class="container">
+            <header>
+                <h1>Widget Dashboard Kinerja Enhanced</h1>
+                <h1>📊✨⚡️🚀</h1>
+                <h5>
+                    Sistem widget dashboard modern dan responsif dengan indikator kinerja waktu nyata dan perbandingan
+                    berbasis persentase untuk sistem POS.
+                </h5>
+            </header>
+            <!-- HOME -->
+            <div class="home-button-wrapper">
+                <a href="../main.html" class="home-button">🏠 Kembali ke Beranda</a>
+            </div>
+
+            <div class="toc-dropdown-wrapper">
+                <label for="toc-dropdown" class="toc-icon">
+                    <strong>Daftar Isi</strong>
+                </label>
+                <select id="toc-dropdown" class="toc-dropdown">
+                    <!-- Otomatis diisi JS -->
+                </select>
+            </div>
+            <section>
+
+                <div class="image-box">
+                    <img src="https://ultimate-pos-tutorials.vercel.app/assets/images/enhanced-dashboard-widgets-098df423d8103142989260aca84f2acf.png"
+                        alt="#" />
+                    <p class="caption">Gambar: 1</p>
+                </div>
+                <h2>Overview</h2>
+                <p>Widget Dashboard Kinerja Enhanced menyediakan antarmuka intelijen bisnis yang komprehensif dengan
+                    fitur-fitur berikut:</p>
+                <ul>
+                    <li>Perhitungan persentase waktu nyata dibandingkan dengan periode sebelumnya</li>
+                    <li>Indikator berwarna cerdas untuk wawasan kinerja instan</li>
+                    <li>Kartu metrik interaktif dengan animasi hover</li>
+                    <li>Indikator status untuk metrik sekunder</li>
+                    <li>Desain responsif menggunakan Tailwind CSS</li>
+                </ul>
+            </section>
+            <section>
+                <h2>Jenis Widget</h2>
+                <ol>
+                    <li>
+                        <strong>Kartu Metrik Utama</strong>
+                        <ul>
+                            <li><strong>Kartu Kinerja Penjualan</strong>
+                                <ul>
+                                    <li><strong>Metrik:</strong> Total Penjualan</li>
+                                    <li><strong>Logika Lencana:</strong> Hijau untuk peningkatan ↗️, Merah untuk
+                                        penurunan ↘️</li>
+                                    <li><strong>Perbandingan:</strong> Periode saat ini vs periode sebelumnya</li>
+                                    <li><strong>Visual:</strong> Ikon keranjang belanja dengan tema biru langit</li>
+                                </ul>
+                            </li>
+                            <li><strong>Kartu Analisis Laba</strong>
+                                <ul>
+                                    <li><strong>Metrik:</strong> Laba Bersih</li>
+                                    <li><strong>Logika Lencana:</strong> Hijau untuk peningkatan laba ↗️, Merah untuk
+                                        penurunan ↘️</li>
+                                    <li><strong>Perhitungan:</strong> Penjualan - Jumlah Terutang - Pengeluaran</li>
+                                    <li><strong>Visual:</strong> Ikon uang dolar dengan tema hijau</li>
+                                </ul>
+                            </li>
+                            <li><strong>Kartu Pelacakan Pembayaran</strong>
+                                <ul>
+                                    <li><strong>Metrik:</strong> Faktur Terutang</li>
+                                    <li><strong>Logika Lencana:</strong> Hijau untuk penurunan ↘️ (lebih baik), Merah
+                                        untuk peningkatan ↗️</li>
+                                    <li><strong>Tujuan:</strong> Pemantauan pembayaran pelanggan yang belum dibayar</li>
+                                    <li><strong>Visual:</strong> Ikon dokumen dengan tema kuning/peringatan</li>
+                                </ul>
+                            </li>
+                            <li><strong>Kartu Pemantauan Pengembalian</strong>
+                                <ul>
+                                    <li><strong>Metrik:</strong> Pengembalian Penjualan</li>
+                                    <li><strong>Logika Lencana:</strong> Hijau untuk penurunan ↘️ (lebih baik), Merah
+                                        untuk peningkatan ↗️</li>
+                                    <li><strong>Tujuan:</strong> Analisis tren pengembalian produk</li>
+                                    <li><strong>Visual:</strong> Ikon panah pengembalian dengan tema merah</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ol>
+            </section>
+            <section>
+                <h2>Kartu Status Sekunder</h2>
+                <ol>
+                    <li>
+                        <strong>Kartu Pelacakan Pembelian</strong>
+                        <ul>
+                            <li><strong>Metrik:</strong> Total Pembelian</li>
+                            <li><strong>Indikator:</strong> Titik berwarna + teks persentase</li>
+                            <li><strong>Logika:</strong> Titik hijau untuk peningkatan, Merah untuk penurunan</li>
+                            <li><strong>Posisi:</strong> Indikator status di bawah kanan</li>
+                        </ul>
+                    </li>
+                    <li><strong>Kartu Pembayaran Pemasok</strong>
+                        <ul>
+                            <li><strong>Metrik:</strong> Pembelian Terutang</li>
+                            <li><strong>Indikator:</strong> Kode warna pintar (Hijau untuk penurunan)</li>
+                            <li><strong>Tujuan:</strong> Kewajiban pembayaran pemasok</li>
+                            <li><strong>Logika:</strong> Jumlah utang yang lebih rendah = Kinerja yang lebih baik</li>
+                        </ul>
+                    </li>
+                    <li><strong>Kartu Pengembalian Pembelian</strong>
+                        <ul>
+                            <li><strong>Metrik:</strong> Pengembalian Pembelian</li>
+                            <li><strong>Indikator:</strong> Titik status dengan perubahan persentase</li>
+                            <li><strong>Tujuan:</strong> Pemantauan tren pengembalian pemasok</li>
+                        </ul>
+                    </li>
+                    <li><strong>Kartu Pengendalian Pengeluaran</strong>
+                        <ul>
+                            <li><strong>Metrik:</strong> Total Pengeluaran</li>
+                            <li><strong>Indikator:</strong> Titik biru untuk pengeluaran operasional</li>
+                            <li><strong>Logika:</strong> Hijau untuk penurunan (penghematan biaya)</li>
+                        </ul>
+                    </li>
+                </ol>
+            </section>
+
+            <section>
+                <h2>Fitur Utama</h2>
+                <h2>🎨 Desain Visual</h2>
+                <ul>
+                    <li>Styling modern menggunakan Tailwind CSS</li>
+                    <li>Efek Glassmorphism untuk kartu sekunder</li>
+                    <li>Animasi hover dan transisi yang halus</li>
+                    <li>Layout grid responsif (1-4 kolom berdasarkan ukuran layar)</li>
+                    <li>Skema warna profesional per jenis metrik</li>
+                </ul>
+
+                <h2>📊 Logika Pintar</h2>
+                <ul>
+                    <li>Perhitungan persentase membandingkan periode saat ini vs periode sebelumnya</li>
+                    <li>Logika terbalik untuk metrik di mana nilai yang lebih rendah lebih baik (utang, pengembalian)
+                    </li>
+                    <li>Psikologi warna: Hijau = Baik, Merah = Perhatian diperlukan</li>
+                    <li>Pembaruan waktu nyata melalui panggilan AJAX</li>
+                </ul>
+
+                <h2>🔄 Elemen Interaktif</h2>
+                <ul>
+                    <li>Filter rentang tanggal dengan penyesuaian otomatis periode perbandingan</li>
+                    <li>Filter berbasis lokasi untuk bisnis multi-lokasi</li>
+                    <li>Efek hover dengan animasi skala</li>
+                    <li>Status loading selama pembaruan data</li>
+                </ul>
+
+                <h2>📱 Perilaku Responsif</h2>
+                <ul>
+                    <li>Desktop: Layout grid 4 kolom</li>
+                    <li>Tablet: Grid responsif 2 kolom</li>
+                    <li>Mobile: Layout satu kolom bertumpuk</li>
+                    <li>Elemen antarmuka yang ramah sentuhan</li>
+                </ul>
+            </section>
+            <section>
+                <h2>Implementasi Teknis</h2>
+                <h3>Integrasi Backend</h3>
+                <div class="url-buttons">
+                    <button class="view-modal-button" data-url="../tutorial/📊✨⚡️🚀/ti.txt">
+                        Integrasi Backend
+                    </button>
+                </div>
+                <h3>JavaScript Frontend</h3>
+                <div class="url-buttons">
+                    <button class="view-modal-button" data-url="../tutorial/📊✨⚡️🚀/fj.txt">
+                        JavaScript Frontend
+                    </button>
+                </div>
+                <h3>Penataan CSS</h3>
+                <div class="url-buttons">
+                    <button class="view-modal-button" data-url="../tutorial/📊✨⚡️🚀/css.txt">
+                        Penataan CSS
+                    </button>
+                </div>
+            </section>
+            <section>
+                <h2>Manfaat Kinerja</h2>
+
+                <h3>📈 Intelijen Bisnis</h3>
+                <ul>
+                    <li>Wawasan kinerja instan dalam sekejap</li>
+                    <li>Identifikasi tren melalui perbandingan persentase</li>
+                    <li>Penyorotan area masalah dengan kode warna pintar</li>
+                    <li>Konteks historis untuk pengambilan keputusan yang lebih baik</li>
+                </ul>
+
+                <h3>👥 Pengalaman Pengguna</h3>
+                <ul>
+                    <li>Bahasa visual yang intuitif (warna menyampaikan makna)</li>
+                    <li>Pengurangan beban kognitif (persentase vs angka mentah)</li>
+                    <li>Optimasi untuk mobile guna pemantauan di mana saja</li>
+                    <li>Penampilan profesional membangun kepercayaan pengguna</li>
+                </ul>
+
+                <h3>⚡ Keuntungan Teknis</h3>
+                <ul>
+                    <li>Implementasi ringan (overhead JS minimal)</li>
+                    <li>Desain yang dapat diskalakan (mudah menambahkan metrik baru)</li>
+                    <li>Integrasi framework (bekerja dengan Laravel/Blade yang ada)</li>
+                    <li>Kemampuan real-time (siap dengan AJAX)</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Opsi Konfigurasi</h2>
+
+                <h3>Periode Perbandingan</h3>
+                <ul>
+                    <li>Periode sebelumnya dengan panjang yang sama (default)</li>
+                    <li>Perbandingan bulan-ke-bulan</li>
+                    <li>Analisis tahun-ke-tahun</li>
+                    <li>Periode dasar kustom</li>
+                </ul>
+
+                <h3>Skema Warna</h3>
+                <ul>
+                    <li>Metrik utama: Biru, Hijau, Kuning, Merah</li>
+                    <li>Indikator status: Hijau, Kuning, Merah, Biru</li>
+                    <li>Skema warna kustom sesuai dengan branding bisnis</li>
+                </ul>
+
+                <h3>Pengaturan Animasi</h3>
+                <ul>
+                    <li>Efek hover: Skala, bayangan, transisi warna</li>
+                    <li>Status loading: Animasi pemutar</li>
+                    <li>Transisi pembaruan: Efek fade in/out</li>
+                    <li>Animasi bertahap: Kartu muncul secara berurutan</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>File Integrasi</h2>
+                <p>Implementasi lengkap terdiri dari tiga file utama:</p>
+                <ul>
+                    <li><strong>home/index.blade.php</strong> - Tata letak dashboard lengkap dengan kartu metrik yang
+                        diperbarui</li>
+                    <li><strong>HomeController.php</strong> - Logika backend untuk perhitungan persentase dan pemrosesan
+                        data</li>
+                    <li><strong>home.js</strong> - JavaScript frontend untuk pembaruan waktu nyata dan animasi</li>
+                </ul>
+            </section>
+            <section>
+                <h2>Dukungan Browser</h2>
+                <ul>
+                    <li>✅ Browser modern (Chrome, Firefox, Safari, Edge)</li>
+                    <li>✅ Browser mobile (Safari iOS, Chrome Mobile)</li>
+                    <li>✅ Desain responsif di semua ukuran layar</li>
+                    <li>✅ Peningkatan progresif (bekerja tanpa JS)</li>
+                </ul>
+            </section>
+            <section>
+                <h2>Peningkatan Masa Depan</h2>
+
+                <h3>Ekstensi Potensial</h3>
+                <ul>
+                    <li>Perbandingan rentang tanggal kustom</li>
+                    <li>Pelacakan tujuan dengan indikator kemajuan</li>
+                    <li>Kemampuan drill-down untuk analisis lebih detail</li>
+                    <li>Fungsi ekspor untuk laporan</li>
+                    <li>Sistem notifikasi untuk peringatan ambang batas</li>
+                    <li>Dukungan multi-mata uang untuk bisnis internasional</li>
+                </ul>
+            </section>
+
+
+            <footer>
+                <!-- HOME -->
+                <div class="home-button-wrapper">
+                    <a href="../main.html" class="home-button">🏠 Kembali ke Beranda</a>
+                </div>
+            </footer>
+        </div>
+    </div>
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <iframe id="modalFrame" src="" frameborder="0" style="width: 100%; height: 400px"></iframe>
+        </div>
+    </div>
+    <button id="bubbleUp" title="Kembali ke Atas" aria-label="Kembali ke Atas">
+        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="none" viewBox="0 0 24 24" stroke="white">
+            <path stroke-linecap="round" stroke-width="2" d="M6 15l6-6 6 6" />
+        </svg>
+    </button>
+    <div id="completionModal" class="completion-modal">
+        <div class="completion-modal-content">
+            <span class="completion-close" title="Tutup">&times;</span>
+            <h3>🎉 Selamat, kamu telah menyelesaikan tutorialnya!</h3>
+            <p>Apakah kamu ingin mengunduh file yang telah jadi?</p>
+            <div class="completion-button-group">
+                <a id="completion-download-btn" data-id="file_16" class="completion-btn completion-yes-btn">
+                    ✅ Ya
+                </a>
+                <button id="completion-no-btn" class="completion-btn completion-no-btn">
+                    ❌ Tidak
+                </button>
+            </div>
+        </div>
+    </div>
+    <script src="../js/scripts.js"></script>
+    <script src="../js/sidebar.js"></script>
+    <script src="../js/bubble.js"></script>
+    <script src="../js/complete.js"></script>
+    <script src="../js//Data/file_download_data.js"></script>
+    <script src="../js/Data/pass_data.js"></script>
+    <script src="../js/Data/tutorial_data.js"></script>
+    <!-- Link ke file JavaScript -->
+</body>
+
+</html>

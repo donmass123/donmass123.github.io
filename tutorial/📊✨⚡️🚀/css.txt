@@ -1,0 +1,9 @@
+/* Dynamic badge colors */
+.metric-badge.badge-positive { /* Green theme */ }
+.metric-badge.badge-negative { /* Red theme */ }
+.metric-badge.badge-warning { /* Yellow theme */ }
+
+/* Status indicators */
+.status-dot.dot-green { /* Success state */ }
+.status-dot.dot-red { /* Alert state */ }
+.status-dot.dot-yellow { /* Warning state */ }

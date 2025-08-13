@@ -1,0 +1,12 @@
+// HomeController enhancement
+public function getDashboardTotalsWithComparison($start, $end, $location_id)
+{
+    // Calculate current period data
+    // Calculate previous period for comparison  
+    // Return percentage changes
+    return [
+        'total_sell' => $current_sell,
+        'sell_change' => $percentage_change,
+        // ... other metrics
+    ];
+}

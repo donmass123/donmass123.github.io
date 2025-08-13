@@ -1,0 +1,12 @@
+// Real-time updates
+function updateMetricBadge(selector, percentage, reverseLogic) {
+    // Smart color application
+    // Smooth animations
+    // Badge text updates
+}
+
+function updateStatusIndicator(selector, percentage, suffix, reverseLogic) {
+    // Status dot color changes
+    // Percentage text updates
+    // Visual feedback
+}
