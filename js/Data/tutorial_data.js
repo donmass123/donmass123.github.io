@@ -257,6 +257,14 @@ const tutorialsData = [
     updateDate: "11 Agustus 2025",
     description: "🧩 laporan lanjutan untuk laporan yang lebih spesif dan lengkap di point of sales."
   },
+  {
+    title: "📚 Reset Inventory untuk POS 1.0. (UPDATE)",
+    link: "https://drive.google.com/file/d/1uMWDTZZo9-2vRNkO0PFlnln_J804jeEL/view?usp=sharing",
+    level: "module",
+    image: "cover/module/9.webp",
+    updateDate: "15 Agustus 2025",
+    description: "🧩 Module ini dikhususkan untuk menghapus seluruh inventory di setiap bisnis."
+  },
 ];
     // Fungsi untuk mengganti title berdasarkan URL
     function updatePageTitle() {
