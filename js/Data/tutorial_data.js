@@ -265,6 +265,14 @@ const tutorialsData = [
     updateDate: "15 Agustus 2025",
     description: "🧩 Module ini dikhususkan untuk menghapus seluruh inventory di setiap bisnis."
   },
+  {
+    title: "📚 Kurs Pertukaran Multi-Mata Uang untuk V2 (UPDATE)",
+    link: "https://drive.google.com/file/d/181HbOhPqWTuuInJscPDxwXtvyeWWFpG1/view?usp=sharing",
+    level: "module",
+    image: "cover/module/10.webp",
+    updateDate: "15 Agustus 2025",
+    description: "🧩 Kurs Pertukaran Multi-Mata Uang untuk V2 (UPDATE) adalah modul yang memungkinkan pengguna untuk mengelola dan mengonversi mata uang dengan mudah dalam sistem POS."
+  },
 ];
     // Fungsi untuk mengganti title berdasarkan URL
     function updatePageTitle() {
